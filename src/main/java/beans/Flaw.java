@@ -1,7 +1,7 @@
-import javafx.util.Pair;
+package beans;
 
 import javax.persistence.*;
-import java.util.List;
+import java.lang.*;
 
 /**
  * User: artemk

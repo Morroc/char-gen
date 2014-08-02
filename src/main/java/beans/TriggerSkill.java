@@ -1,7 +1,10 @@
+package beans;
+
 import enums.SkillLevel;
 import enums.SkillType;
 
 import javax.persistence.*;
+import java.lang.*;
 
 /**
  * User: artemk
