@@ -1,4 +1,4 @@
-package beans;
+package entity;
 
 import enums.SkillLevel;
 import enums.SkillType;
