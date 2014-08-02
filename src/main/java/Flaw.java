@@ -1,7 +1,6 @@
-package main.java;
-
 import javafx.util.Pair;
 
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -9,13 +8,48 @@ import java.util.List;
  * Date: 8/1/14
  * Time: 7:51 PM
  */
+@Entity
+@Table(name = "flaw")
 public class Flaw {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "cost")
     private int cost;
+    @Column(name = "description")
     private String description;
-    private List<Pair<Attribute, Integer>> turnOffPreconditions;
-    private boolean isTurnOffAvailable;
-    private int turnOffCost;
+    @Column(name = "turnoffpreconditions")
+    private String turnOffPreconditions;
+    @ManyToOne
+    @JoinColumn(name = "character_id")
+    private Character character;
+    @ManyToOne
+    @JoinColumn(name = "race_id")
+    private Race race;
+
+    public Flaw() {
+    }
+
+    public Flaw(int id, String name, int cost, String description, String turnOffPreconditions, Character character, Race race) {
+        this.id = id;
+        this.name = name;
+        this.cost = cost;
+        this.description = description;
+        this.turnOffPreconditions = turnOffPreconditions;
+        this.character = character;
+        this.race = race;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -41,56 +75,27 @@ public class Flaw {
         this.description = description;
     }
 
-    public List<Pair<Attribute, Integer>> getTurnOffPreconditions() {
+    public String getTurnOffPreconditions() {
         return turnOffPreconditions;
     }
 
-    public void setTurnOffPreconditions(List<Pair<Attribute, Integer>> turnOffPreconditions) {
+    public void setTurnOffPreconditions(String turnOffPreconditions) {
         this.turnOffPreconditions = turnOffPreconditions;
     }
 
-    public boolean isTurnOffAvailable() {
-        return isTurnOffAvailable;
+    public Character getCharacter() {
+        return character;
     }
 
-    public void setTurnOffAvailable(boolean turnOffAvailable) {
-        isTurnOffAvailable = turnOffAvailable;
+    public void setCharacter(Character character) {
+        this.character = character;
     }
 
-    public int getTurnOffCost() {
-        return turnOffCost;
+    public Race getRace() {
+        return race;
     }
 
-    public void setTurnOffCost(int turnOffCost) {
-        this.turnOffCost = turnOffCost;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Flaw)) return false;
-
-        Flaw flaw = (Flaw) o;
-
-        if (cost != flaw.cost) return false;
-        if (isTurnOffAvailable != flaw.isTurnOffAvailable) return false;
-        if (turnOffCost != flaw.turnOffCost) return false;
-        if (description != null ? !description.equals(flaw.description) : flaw.description != null) return false;
-        if (name != null ? !name.equals(flaw.name) : flaw.name != null) return false;
-        if (turnOffPreconditions != null ? !turnOffPreconditions.equals(flaw.turnOffPreconditions) : flaw.turnOffPreconditions != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + cost;
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (turnOffPreconditions != null ? turnOffPreconditions.hashCode() : 0);
-        result = 31 * result + (isTurnOffAvailable ? 1 : 0);
-        result = 31 * result + turnOffCost;
-        return result;
+    public void setRace(Race race) {
+        this.race = race;
     }
 }

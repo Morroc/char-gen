@@ -1,22 +1,66 @@
-package main.java;
-
-import java.util.Map;
+import javax.persistence.*;
 
 /**
  * User: artemk
  * Date: 2/19/14
  * Time: 1:01 PM
  */
+@Entity
+@Table(name = "attribute")
 public class Attribute {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+    @Column(name = "cost")
     private int cost;
+    @Column(name = "value")
     private int value;
+    @Column(name = "maxvalue")
     private int maxValue;
+    @Column(name = "minvalue")
     private int minValue;
+    @Column(name = "from1to3nongeneratingcost")
     private int from1To3NonGeneratingCost;
+    @Column(name = "costrisecoefficient")
     private double costRiseCoefficient;
+    @Column(name = "nongeneratingrisecoefficient")
     private double nonGeneratingRiseCoefficient;
-    private boolean isGeneratingPrice;
+    @Column(name = "actionlevelbonus")
     private String actionLevelBonus;
+    @ManyToOne
+    @JoinColumn(name = "race_id")
+    private Race race;
+    @ManyToOne
+    @JoinColumn(name = "character_id")
+    private Character character;
+
+    public Attribute() {
+    }
+
+    public Attribute(int id, int cost, int value, int maxValue, int minValue,
+                     int from1To3NonGeneratingCost, double costRiseCoefficient,
+                     double nonGeneratingRiseCoefficient, String actionLevelBonus, Race race, Character character) {
+        this.id = id;
+        this.cost = cost;
+        this.value = value;
+        this.maxValue = maxValue;
+        this.minValue = minValue;
+        this.from1To3NonGeneratingCost = from1To3NonGeneratingCost;
+        this.costRiseCoefficient = costRiseCoefficient;
+        this.nonGeneratingRiseCoefficient = nonGeneratingRiseCoefficient;
+        this.actionLevelBonus = actionLevelBonus;
+        this.race = race;
+        this.character = character;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getCost() {
         return cost;
@@ -74,14 +118,6 @@ public class Attribute {
         this.nonGeneratingRiseCoefficient = nonGeneratingRiseCoefficient;
     }
 
-    public boolean isGeneratingPrice() {
-        return isGeneratingPrice;
-    }
-
-    public void setGeneratingPrice(boolean generatingPrice) {
-        isGeneratingPrice = generatingPrice;
-    }
-
     public String getActionLevelBonus() {
         return actionLevelBonus;
     }
@@ -90,42 +126,19 @@ public class Attribute {
         this.actionLevelBonus = actionLevelBonus;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Attribute)) return false;
-
-        Attribute attribute = (Attribute) o;
-
-        if (cost != attribute.cost) return false;
-        if (Double.compare(attribute.costRiseCoefficient, costRiseCoefficient) != 0) return false;
-        if (from1To3NonGeneratingCost != attribute.from1To3NonGeneratingCost) return false;
-        if (isGeneratingPrice != attribute.isGeneratingPrice) return false;
-        if (maxValue != attribute.maxValue) return false;
-        if (minValue != attribute.minValue) return false;
-        if (Double.compare(attribute.nonGeneratingRiseCoefficient, nonGeneratingRiseCoefficient) != 0) return false;
-        if (value != attribute.value) return false;
-        if (actionLevelBonus != null ? !actionLevelBonus.equals(attribute.actionLevelBonus) : attribute.actionLevelBonus != null)
-            return false;
-
-        return true;
+    public Race getRace() {
+        return race;
     }
 
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = cost;
-        result = 31 * result + value;
-        result = 31 * result + maxValue;
-        result = 31 * result + minValue;
-        result = 31 * result + from1To3NonGeneratingCost;
-        temp = Double.doubleToLongBits(costRiseCoefficient);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(nonGeneratingRiseCoefficient);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (isGeneratingPrice ? 1 : 0);
-        result = 31 * result + (actionLevelBonus != null ? actionLevelBonus.hashCode() : 0);
-        return result;
+    public void setRace(Race race) {
+        this.race = race;
+    }
+
+    public Character getCharacter() {
+        return character;
+    }
+
+    public void setCharacter(Character character) {
+        this.character = character;
     }
 }

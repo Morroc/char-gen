@@ -1,29 +1,58 @@
-package main.java;
+import javax.persistence.*;
 
 /**
  * User: artemk
  * Date: 8/1/14
  * Time: 7:34 PM
  */
+@Entity
+@Table(name = "attachedskill")
 public class AttachedSkill {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "value")
     private int value;
+    @Column(name = "basecost")
     private int baseCost;
-    private boolean isGeneratingPrice;
+    @Column(name = "default")
     private boolean isDefault;
+    @Column(name = "difficult")
     private boolean isDifficult;
+    @Column(name = "theoretical")
     private boolean isTheoretical;
-    private double wisdomBonus;
+    @Column(name = "acquiringcost")
     private int acquiringCost;
+    @ManyToOne
+    @JoinColumn(name = "character_id")
+    private Character character;
 
-    private int getNonGeneratingRiseCost(int previousValue, int wantedValue) {
-        int cost = 1;
-        return cost;
+    public AttachedSkill() {
     }
 
-    private int getTheoreticalMax() {
-        int cost = 1;
-        return cost;
+    public AttachedSkill(int id, String name, int value, int baseCost,
+                         boolean aDefault, boolean difficult, boolean theoretical,
+                         int acquiringCost, Character character) {
+        this.id = id;
+        this.name = name;
+        this.value = value;
+        this.baseCost = baseCost;
+        isDefault = aDefault;
+        isDifficult = difficult;
+        isTheoretical = theoretical;
+        this.acquiringCost = acquiringCost;
+        this.character = character;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -50,14 +79,6 @@ public class AttachedSkill {
         this.baseCost = baseCost;
     }
 
-    public boolean isGeneratingPrice() {
-        return isGeneratingPrice;
-    }
-
-    public void setGeneratingPrice(boolean generatingPrice) {
-        isGeneratingPrice = generatingPrice;
-    }
-
     public boolean isDefault() {
         return isDefault;
     }
@@ -82,14 +103,6 @@ public class AttachedSkill {
         isTheoretical = theoretical;
     }
 
-    public double getWisdomBonus() {
-        return wisdomBonus;
-    }
-
-    public void setWisdomBonus(double wisdomBonus) {
-        this.wisdomBonus = wisdomBonus;
-    }
-
     public int getAcquiringCost() {
         return acquiringCost;
     }
@@ -98,40 +111,25 @@ public class AttachedSkill {
         this.acquiringCost = acquiringCost;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof AttachedSkill)) return false;
-
-        AttachedSkill that = (AttachedSkill) o;
-
-        if (acquiringCost != that.acquiringCost) return false;
-        if (baseCost != that.baseCost) return false;
-        if (isDefault != that.isDefault) return false;
-        if (isDifficult != that.isDifficult) return false;
-        if (isGeneratingPrice != that.isGeneratingPrice) return false;
-        if (isTheoretical != that.isTheoretical) return false;
-        if (value != that.value) return false;
-        if (Double.compare(that.wisdomBonus, wisdomBonus) != 0) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-
-        return true;
+    public Character getCharacter() {
+        return character;
     }
 
-    @Override
-    public int hashCode() {
-        int result;
-        long temp;
-        result = name != null ? name.hashCode() : 0;
-        result = 31 * result + value;
-        result = 31 * result + baseCost;
-        result = 31 * result + (isGeneratingPrice ? 1 : 0);
-        result = 31 * result + (isDefault ? 1 : 0);
-        result = 31 * result + (isDifficult ? 1 : 0);
-        result = 31 * result + (isTheoretical ? 1 : 0);
-        temp = Double.doubleToLongBits(wisdomBonus);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + acquiringCost;
-        return result;
+    public void setCharacter(Character character) {
+        this.character = character;
     }
+
+    //    private int getNonGeneratingRiseCost(int previousValue, int wantedValue) {
+//        int cost = 1;
+//        return cost;
+//    }
+
+//    private int getTheoreticalMax() {
+//        int cost = 1;
+//        return cost;
+//    }
+
+//    private boolean isGeneratingPrice() {
+//        return true;
+//    }
 }

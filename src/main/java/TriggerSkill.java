@@ -1,21 +1,51 @@
-package main.java;
+import enums.SkillLevel;
+import enums.SkillType;
 
-import main.java.enums.SkillLevel;
-import main.java.enums.SkillType;
+import javax.persistence.*;
 
 /**
  * User: artemk
  * Date: 8/1/14
  * Time: 7:19 PM
  */
+@Entity
+@Table(name = "triggerskill")
 public class TriggerSkill {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+    @Column(name = "name")
     private String name;
-    private boolean isGeneratingPrice;
+    @Column(name = "type")
     private SkillType type;
+    @Column(name = "nongeneratingcostcoefficient")
     private int nonGeneratingCostCoefficient;
-    private boolean isTalented;
+    @Column(name = "level")
     private SkillLevel level;
-    private boolean isTeacherPresent;
+    @ManyToOne
+    @JoinColumn(name = "character_id")
+    private Character character;
+
+    public TriggerSkill() {
+    }
+
+    public TriggerSkill(int id, String name, SkillType type, int nonGeneratingCostCoefficient, SkillLevel level, Character character) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.nonGeneratingCostCoefficient = nonGeneratingCostCoefficient;
+        this.level = level;
+        this.character = character;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -23,14 +53,6 @@ public class TriggerSkill {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public boolean isGeneratingPrice() {
-        return isGeneratingPrice;
-    }
-
-    public void setGeneratingPrice(boolean generatingPrice) {
-        isGeneratingPrice = generatingPrice;
     }
 
     public SkillType getType() {
@@ -49,14 +71,6 @@ public class TriggerSkill {
         this.nonGeneratingCostCoefficient = nonGeneratingCostCoefficient;
     }
 
-    public boolean isTalented() {
-        return isTalented;
-    }
-
-    public void setTalented(boolean talented) {
-        isTalented = talented;
-    }
-
     public SkillLevel getLevel() {
         return level;
     }
@@ -65,41 +79,11 @@ public class TriggerSkill {
         this.level = level;
     }
 
-    public boolean isTeacherPresent() {
-        return isTeacherPresent;
+    public Character getCharacter() {
+        return character;
     }
 
-    public void setTeacherPresent(boolean teacherPresent) {
-        isTeacherPresent = teacherPresent;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TriggerSkill)) return false;
-
-        TriggerSkill that = (TriggerSkill) o;
-
-        if (isGeneratingPrice != that.isGeneratingPrice) return false;
-        if (isTalented != that.isTalented) return false;
-        if (isTeacherPresent != that.isTeacherPresent) return false;
-        if (nonGeneratingCostCoefficient != that.nonGeneratingCostCoefficient) return false;
-        if (level != that.level) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (type != that.type) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (isGeneratingPrice ? 1 : 0);
-        result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + nonGeneratingCostCoefficient;
-        result = 31 * result + (isTalented ? 1 : 0);
-        result = 31 * result + (level != null ? level.hashCode() : 0);
-        result = 31 * result + (isTeacherPresent ? 1 : 0);
-        return result;
+    public void setCharacter(Character character) {
+        this.character = character;
     }
 }

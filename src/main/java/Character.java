@@ -1,5 +1,4 @@
-package main.java;
-
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -7,16 +6,59 @@ import java.util.List;
  * Date: 8/1/14
  * Time: 9:09 PM
  */
+@Entity
+@Table(name = "character")
 public class Character {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "age")
     private String age;
+    @ManyToOne
+    @JoinColumn(name = "race_id")
     private Race race;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "character")
     private List<Attribute> attributes;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "character")
     private List<TriggerSkill> triggerSkills;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "character")
     private List<AttachedSkill> attachedSkills;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "character")
     private List<Merit> merits;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "character")
     private List<Flaw> flaws;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "character")
     private List<BirthMerit> birthMerits;
+
+    public Character() {
+    }
+
+    public Character(int id, String name, String age, Race race,
+                     List<Attribute> attributes, List<TriggerSkill> triggerSkills,
+                     List<AttachedSkill> attachedSkills, List<Merit> merits,
+                     List<Flaw> flaws, List<BirthMerit> birthMerits) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.race = race;
+//        this.attributes = attributes;
+        this.triggerSkills = triggerSkills;
+        this.attachedSkills = attachedSkills;
+        this.merits = merits;
+        this.flaws = flaws;
+        this.birthMerits = birthMerits;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -88,42 +130,5 @@ public class Character {
 
     public void setBirthMerits(List<BirthMerit> birthMerits) {
         this.birthMerits = birthMerits;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Character)) return false;
-
-        Character character = (Character) o;
-
-        if (age != null ? !age.equals(character.age) : character.age != null) return false;
-        if (attachedSkills != null ? !attachedSkills.equals(character.attachedSkills) : character.attachedSkills != null)
-            return false;
-        if (attributes != null ? !attributes.equals(character.attributes) : character.attributes != null) return false;
-        if (birthMerits != null ? !birthMerits.equals(character.birthMerits) : character.birthMerits != null)
-            return false;
-        if (flaws != null ? !flaws.equals(character.flaws) : character.flaws != null) return false;
-        if (merits != null ? !merits.equals(character.merits) : character.merits != null) return false;
-        if (name != null ? !name.equals(character.name) : character.name != null) return false;
-        if (race != null ? !race.equals(character.race) : character.race != null) return false;
-        if (triggerSkills != null ? !triggerSkills.equals(character.triggerSkills) : character.triggerSkills != null)
-            return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (age != null ? age.hashCode() : 0);
-        result = 31 * result + (race != null ? race.hashCode() : 0);
-        result = 31 * result + (attributes != null ? attributes.hashCode() : 0);
-        result = 31 * result + (triggerSkills != null ? triggerSkills.hashCode() : 0);
-        result = 31 * result + (attachedSkills != null ? attachedSkills.hashCode() : 0);
-        result = 31 * result + (merits != null ? merits.hashCode() : 0);
-        result = 31 * result + (flaws != null ? flaws.hashCode() : 0);
-        result = 31 * result + (birthMerits != null ? birthMerits.hashCode() : 0);
-        return result;
     }
 }

@@ -1,5 +1,4 @@
-package main.java;
-
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -7,12 +6,47 @@ import java.util.List;
  * Date: 8/1/14
  * Time: 6:54 PM
  */
+@Entity
+@Table(name = "race")
 public class Race {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "maxAge")
     private int maxAge;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "race")
     private List<Attribute> attributes;
-    private List<Merit> defaultRaceMerits;
-    private List<Flaw> defaultRaceFlaws;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "race")
+    private List<Merit> raceMerits;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "race")
+    private List<Flaw> raceFlaws;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "race")
+    private List<BirthMerit> raceBirthMerits;
+
+    public Race() {
+    }
+
+    public Race(int id, String name, int maxAge, List<Attribute> attributes,
+                List<Merit> raceMerits, List<Flaw> raceFlaws, List<BirthMerit> raceBirthMerits) {
+        this.id = id;
+        this.name = name;
+        this.maxAge = maxAge;
+        this.attributes = attributes;
+        this.raceMerits = raceMerits;
+        this.raceFlaws = raceFlaws;
+        this.raceBirthMerits = raceBirthMerits;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -38,47 +72,27 @@ public class Race {
         this.attributes = attributes;
     }
 
-    public List<Merit> getDefaultRaceMerits() {
-        return defaultRaceMerits;
+    public List<Merit> getRaceMerits() {
+        return raceMerits;
     }
 
-    public void setDefaultRaceMerits(List<Merit> defaultRaceMerits) {
-        this.defaultRaceMerits = defaultRaceMerits;
+    public void setRaceMerits(List<Merit> raceMerits) {
+        this.raceMerits = raceMerits;
     }
 
-    public List<Flaw> getDefaultRaceFlaws() {
-        return defaultRaceFlaws;
+    public List<Flaw> getRaceFlaws() {
+        return raceFlaws;
     }
 
-    public void setDefaultRaceFlaws(List<Flaw> defaultRaceFlaws) {
-        this.defaultRaceFlaws = defaultRaceFlaws;
+    public void setRaceFlaws(List<Flaw> raceFlaws) {
+        this.raceFlaws = raceFlaws;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Race)) return false;
-
-        Race race = (Race) o;
-
-        if (maxAge != race.maxAge) return false;
-        if (attributes != null ? !attributes.equals(race.attributes) : race.attributes != null) return false;
-        if (defaultRaceFlaws != null ? !defaultRaceFlaws.equals(race.defaultRaceFlaws) : race.defaultRaceFlaws != null)
-            return false;
-        if (defaultRaceMerits != null ? !defaultRaceMerits.equals(race.defaultRaceMerits) : race.defaultRaceMerits != null)
-            return false;
-        if (name != null ? !name.equals(race.name) : race.name != null) return false;
-
-        return true;
+    public List<BirthMerit> getRaceBirthMerits() {
+        return raceBirthMerits;
     }
 
-    @Override
-    public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + maxAge;
-        result = 31 * result + (attributes != null ? attributes.hashCode() : 0);
-        result = 31 * result + (defaultRaceMerits != null ? defaultRaceMerits.hashCode() : 0);
-        result = 31 * result + (defaultRaceFlaws != null ? defaultRaceFlaws.hashCode() : 0);
-        return result;
+    public void setRaceBirthMerits(List<BirthMerit> raceBirthMerits) {
+        this.raceBirthMerits = raceBirthMerits;
     }
 }
