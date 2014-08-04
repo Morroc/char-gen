@@ -35,20 +35,6 @@ public class AttachedSkill {
     public AttachedSkill() {
     }
 
-    public AttachedSkill(int id, String name, int value, int baseCost,
-                         boolean aDefault, boolean difficult, boolean theoretical,
-                         int acquiringCost, Character character) {
-        this.id = id;
-        this.name = name;
-        this.value = value;
-        this.baseCost = baseCost;
-        isDefault = aDefault;
-        isDifficult = difficult;
-        isTheoretical = theoretical;
-        this.acquiringCost = acquiringCost;
-        this.character = character;
-    }
-
     public int getId() {
         return id;
     }

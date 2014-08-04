@@ -33,15 +33,6 @@ public class TriggerSkill {
     public TriggerSkill() {
     }
 
-    public TriggerSkill(int id, String name, SkillType type, int nonGeneratingCostCoefficient, SkillLevel level, Character character) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.nonGeneratingCostCoefficient = nonGeneratingCostCoefficient;
-        this.level = level;
-        this.character = character;
-    }
-
     public int getId() {
         return id;
     }

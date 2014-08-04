@@ -38,22 +38,6 @@ public class Character {
     public Character() {
     }
 
-    public Character(int id, String name, String age, Race race,
-                     List<Attribute> attributes, List<TriggerSkill> triggerSkills,
-                     List<AttachedSkill> attachedSkills, List<Merit> merits,
-                     List<Flaw> flaws, List<BirthMerit> birthMerits) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.race = race;
-//        this.attributes = attributes;
-        this.triggerSkills = triggerSkills;
-        this.attachedSkills = attachedSkills;
-        this.merits = merits;
-        this.flaws = flaws;
-        this.birthMerits = birthMerits;
-    }
-
     public int getId() {
         return id;
     }

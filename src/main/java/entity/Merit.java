@@ -35,18 +35,6 @@ public class Merit {
     public Merit() {
     }
 
-    public Merit(int id, String name, int cost, String description, String preconditions,
-                 String actionBonus, Character character, Race race) {
-        this.id = id;
-        this.name = name;
-        this.cost = cost;
-        this.description = description;
-        this.preconditions = preconditions;
-        this.actionBonus = actionBonus;
-        this.character = character;
-        this.race = race;
-    }
-
     public int getId() {
         return id;
     }

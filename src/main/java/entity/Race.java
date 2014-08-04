@@ -27,19 +27,10 @@ public class Race {
     private List<Flaw> raceFlaws;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "race")
     private List<BirthMerit> raceBirthMerits;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "race")
+    private List<Character> characters;
 
     public Race() {
-    }
-
-    public Race(int id, String name, int maxAge, List<Attribute> attributes,
-                List<Merit> raceMerits, List<Flaw> raceFlaws, List<BirthMerit> raceBirthMerits) {
-        this.id = id;
-        this.name = name;
-        this.maxAge = maxAge;
-        this.attributes = attributes;
-        this.raceMerits = raceMerits;
-        this.raceFlaws = raceFlaws;
-        this.raceBirthMerits = raceBirthMerits;
     }
 
     public int getId() {
@@ -96,5 +87,13 @@ public class Race {
 
     public void setRaceBirthMerits(List<BirthMerit> raceBirthMerits) {
         this.raceBirthMerits = raceBirthMerits;
+    }
+
+    public List<Character> getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(List<Character> characters) {
+        this.characters = characters;
     }
 }

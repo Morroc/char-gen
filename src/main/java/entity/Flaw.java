@@ -33,16 +33,6 @@ public class Flaw {
     public Flaw() {
     }
 
-    public Flaw(int id, String name, int cost, String description, String turnOffPreconditions, Character character, Race race) {
-        this.id = id;
-        this.name = name;
-        this.cost = cost;
-        this.description = description;
-        this.turnOffPreconditions = turnOffPreconditions;
-        this.character = character;
-        this.race = race;
-    }
-
     public int getId() {
         return id;
     }

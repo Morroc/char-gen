@@ -40,22 +40,6 @@ public class Attribute {
     public Attribute() {
     }
 
-    public Attribute(int id, int cost, int value, int maxValue, int minValue,
-                     int from1To3NonGeneratingCost, double costRiseCoefficient,
-                     double nonGeneratingRiseCoefficient, String actionLevelBonus, Race race, Character character) {
-        this.id = id;
-        this.cost = cost;
-        this.value = value;
-        this.maxValue = maxValue;
-        this.minValue = minValue;
-        this.from1To3NonGeneratingCost = from1To3NonGeneratingCost;
-        this.costRiseCoefficient = costRiseCoefficient;
-        this.nonGeneratingRiseCoefficient = nonGeneratingRiseCoefficient;
-        this.actionLevelBonus = actionLevelBonus;
-        this.race = race;
-        this.character = character;
-    }
-
     public int getId() {
         return id;
     }
