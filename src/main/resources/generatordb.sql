@@ -1,12 +1,12 @@
 CREATE  TABLE IF NOT EXISTS `generatordb`.`race` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL ,
   `maxage` INT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
 CREATE  TABLE IF NOT EXISTS `generatordb`.`personage` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL ,
   `age` INT NULL ,
   `race_id` INT NOT NULL ,
@@ -20,7 +20,7 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`personage` (
 ENGINE = InnoDB;
 
 CREATE  TABLE IF NOT EXISTS `generatordb`.`triggerskill` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL ,
   `type` VARCHAR(45) NULL ,
   `nongeneratingcostcoefficient` DOUBLE NULL ,
@@ -36,7 +36,7 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`triggerskill` (
 ENGINE = InnoDB;
 
 CREATE  TABLE IF NOT EXISTS `generatordb`.`attachedskill` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL ,
   `value` INT NULL ,
   `basecost` INT NULL ,
@@ -55,7 +55,7 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`attachedskill` (
 ENGINE = InnoDB;
 
 CREATE  TABLE IF NOT EXISTS `generatordb`.`merit` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL ,
   `cost` INT NULL ,
   `description` TEXT NULL ,
@@ -79,7 +79,7 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`merit` (
 ENGINE = InnoDB;
 
 CREATE  TABLE IF NOT EXISTS `generatordb`.`birthmerit` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL ,
   `probability` DOUBLE NULL ,
   `value` INT NULL ,
@@ -104,7 +104,7 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`birthmerit` (
 ENGINE = InnoDB;
 
 CREATE  TABLE IF NOT EXISTS `generatordb`.`attribute` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `cost` INT NULL ,
   `value` INT NULL ,
   `maxvalue` INT NULL ,
@@ -132,7 +132,7 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`attribute` (
 ENGINE = InnoDB;
 
 CREATE  TABLE IF NOT EXISTS `generatordb`.`flaw` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL ,
   `cost` INT NULL ,
   `description` TEXT NULL ,
