@@ -19,7 +19,7 @@ import java.util.List;
  * Time: 3:41 PM
  */
 public class RaceDAOImpl implements RaceDAO {
-    private static final Logger logger = Logger.getLogger(AttachedSkillDAOImpl.class);
+    private static final Logger logger = Logger.getLogger(RaceDAOImpl.class);
 
     @Override
     public void addRace(Race race) throws SQLException {

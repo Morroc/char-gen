@@ -20,7 +20,7 @@ import java.util.List;
  * Time: 3:23 PM
  */
 public class PersonageDAOImpl implements PersonageDAO {
-    private static final Logger logger = Logger.getLogger(AttachedSkillDAOImpl.class);
+    private static final Logger logger = Logger.getLogger(PersonageDAOImpl.class);
 
     @Override
     public void addPersonage(Personage personage) throws SQLException {

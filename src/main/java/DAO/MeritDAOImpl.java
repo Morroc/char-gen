@@ -1,14 +1,14 @@
 package DAO;
 
+import entity.Merit;
 import entity.Personage;
-import entity.TriggerSkill;
+import entity.Race;
 import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import utils.HibernateUtil;
 
-import javax.swing.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,18 +16,18 @@ import java.util.List;
 /**
  * User: artemk
  * Date: 8/6/14
- * Time: 3:25 PM
+ * Time: 4:05 PM
  */
-public class TriggerSkillDAOImpl implements TriggerSkillDAO {
-    private static final Logger logger = Logger.getLogger(TriggerSkillDAOImpl.class);
+public class MeritDAOImpl implements MeritDAO{
+    private static final Logger logger = Logger.getLogger(MeritDAOImpl.class);
 
     @Override
-    public void addTriggerSkill(TriggerSkill triggerSkill) throws SQLException {
+    public void addMerit(Merit merit) throws SQLException {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(triggerSkill);
+            session.save(merit);
             session.getTransaction().commit();
         } catch (Exception e) {
             logger.error("Ошибка при вставке", e);
@@ -39,12 +39,12 @@ public class TriggerSkillDAOImpl implements TriggerSkillDAO {
     }
 
     @Override
-    public void updateTriggerSkill(TriggerSkill triggerSkill) throws SQLException {
+    public void updateMerit(Merit merit) throws SQLException {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.update(triggerSkill);
+            session.update(merit);
             session.getTransaction().commit();
         } catch (Exception e) {
             logger.error("Ошибка при вставке", e);
@@ -56,13 +56,13 @@ public class TriggerSkillDAOImpl implements TriggerSkillDAO {
     }
 
     @Override
-    public TriggerSkill getTriggerSkillById(int triggerSkillId) throws SQLException {
+    public Merit getMeritById(int triggerSkillId) throws SQLException {
         Session session = null;
-        TriggerSkill triggerSkill = null;
+        Merit merit = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            triggerSkill = (TriggerSkill) session.load(TriggerSkill.class, triggerSkillId);
-            Hibernate.initialize(triggerSkill);
+            merit = (Merit) session.load(Merit.class, triggerSkillId);
+            Hibernate.initialize(merit);
         } catch (Exception e) {
             logger.error("Ошибка 'findById'", e);
         } finally {
@@ -70,35 +70,35 @@ public class TriggerSkillDAOImpl implements TriggerSkillDAO {
                 session.close();
             }
         }
-        return triggerSkill;
+        return merit;
     }
 
     @Override
-    public TriggerSkill getTriggerSkillByName(String triggerSkillName) throws SQLException {
+    public Merit getMeritByName(String meritName) throws SQLException {
         Session session = null;
-        TriggerSkill triggerSkill = null;
+        Merit merit = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            List<TriggerSkill> attachedSkills = session.createSQLQuery("select * from triggerskill where name= :name")
-                    .addEntity(TriggerSkill.class)
-                    .setString("name", triggerSkillName)
+            List<Merit> merits = session.createSQLQuery("select * from merit where name= :name")
+                    .addEntity(Merit.class)
+                    .setString("name", meritName)
                     .list();
-            triggerSkill = attachedSkills.get(0);
+            merit = merits.get(0);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
             }
         }
-        return triggerSkill;
+        return merit;
     }
 
     @Override
-    public List<TriggerSkill> getAllTriggerSkills() throws SQLException {
+    public List<Merit> getAllMerits() throws SQLException {
         Session session = null;
-        List<TriggerSkill> triggerSkills = new ArrayList<TriggerSkill>();
+        List<Merit> merits = new ArrayList<Merit>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            triggerSkills = session.createCriteria(TriggerSkill.class).list();
+            merits = session.createCriteria(Merit.class).list();
         } catch (Exception e) {
             logger.error("Ошибка 'getAll'", e);
         } finally {
@@ -106,16 +106,16 @@ public class TriggerSkillDAOImpl implements TriggerSkillDAO {
                 session.close();
             }
         }
-        return triggerSkills;
+        return merits;
     }
 
     @Override
-    public void deleteTriggerSkill(TriggerSkill triggerSkill) throws SQLException {
+    public void deleteMerit(Merit merit) throws SQLException {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.delete(triggerSkill);
+            session.delete(merit);
             session.getTransaction().commit();
         } catch (Exception e) {
             logger.error("Ошибка при удалении", e);
@@ -127,17 +127,17 @@ public class TriggerSkillDAOImpl implements TriggerSkillDAO {
     }
 
     @Override
-    public List<TriggerSkill> getTriggerSkillsByPersonage(Personage personage) throws SQLException {
+    public List<Merit> getMeritsByPersonage(Personage personage) throws SQLException {
         Session session = null;
-        List<TriggerSkill> triggerSkills = new ArrayList<TriggerSkill>();
+        List<Merit> merits = new ArrayList<Merit>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             int personageId = personage.getId();
             Query query = session.createSQLQuery(
-                    "select * from triggerskill inner join personage on triggerskill.personage_id = :id"
-            ).addEntity(TriggerSkill.class).setInteger("id", personageId);
-            triggerSkills = (List<TriggerSkill>) query.list();
+                    "select * from merit inner join personage on merit.personage_id = :id"
+            ).addEntity(Merit.class).setInteger("id", personageId);
+            merits = (List<Merit>) query.list();
             session.getTransaction().commit();
 
         } finally {
@@ -145,6 +145,28 @@ public class TriggerSkillDAOImpl implements TriggerSkillDAO {
                 session.close();
             }
         }
-        return triggerSkills;
+        return merits;
+    }
+
+    @Override
+    public List<Merit> getMeritsByRace(Race race) throws SQLException {
+        Session session = null;
+        List<Merit> merits = new ArrayList<Merit>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            int raceId = race.getId();
+            Query query = session.createSQLQuery(
+                    "select * from merit inner join race on merit.race_id = :id"
+            ).addEntity(Merit.class).setInteger("id", raceId);
+            merits = (List<Merit>) query.list();
+            session.getTransaction().commit();
+
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return merits;
     }
 }
