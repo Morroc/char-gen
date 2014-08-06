@@ -23,17 +23,17 @@ public class Personage
     @ManyToOne
     @JoinColumn(name = "race_id")
     private Race race;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "character")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personage")
     private List<Attribute> attributes;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "character")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personage")
     private List<TriggerSkill> triggerSkills;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "character")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personage")
     private List<AttachedSkill> attachedSkills;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "character")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personage")
     private List<Merit> merits;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "character")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personage")
     private List<Flaw> flaws;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "character")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personage")
     private List<BirthMerit> birthMerits;
 
     public Personage() {
