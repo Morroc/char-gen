@@ -20,11 +20,11 @@ public interface AttachedSkillDAO {
 
     public AttachedSkill getAttachedSkillById(int attachedSkillId) throws SQLException;
 
+    public AttachedSkill getAttachedSkillByName(String attachedSkillName) throws SQLException;
+
     public List<AttachedSkill> getAllAttachedSkills() throws SQLException;
 
     public void deleteAttachedSkill(AttachedSkill attachedSkill) throws SQLException;
 
     public List<AttachedSkill> getAttachedSkillsByPersonage(Personage personage) throws SQLException;
-
-    public AttachedSkill getAttachedSkillByName(String attachedSkillName) throws SQLException;
 }
