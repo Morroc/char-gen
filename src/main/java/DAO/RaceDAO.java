@@ -1,9 +1,9 @@
 package DAO;
 
-import entity.*;
+import entity.Race;
 
 import java.sql.SQLException;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * User: artemk
@@ -19,7 +19,7 @@ public interface RaceDAO {
 
     public Race getRaceByName(String raceName) throws SQLException;
 
-    public Collection getAllRaces() throws SQLException;
+    public List<Race> getAllRaces() throws SQLException;
 
     public void deleteRace(Race race) throws SQLException;
 }

@@ -2,6 +2,7 @@ package DAO;
 
 import entity.*;
 import entity.Personage;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import utils.HibernateUtil;
@@ -58,7 +59,8 @@ public class PersonageDAOImpl implements PersonageDAO {
         Personage personage = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            personage = (Personage) session.load(Personage.class, personageId);
+            personage =  (Personage) session.load(Personage.class, personageId);
+            Hibernate.initialize(personage);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById'", JOptionPane.OK_OPTION);
         } finally {
@@ -70,9 +72,9 @@ public class PersonageDAOImpl implements PersonageDAO {
     }
 
     @Override
-    public Collection getAllPersonages() throws SQLException {
+    public List<Personage> getAllPersonages() throws SQLException {
         Session session = null;
-        List characters = new ArrayList<Personage>();
+        List<Personage> characters = new ArrayList<Personage>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             characters = session.createCriteria(Personage.class).list();
@@ -104,18 +106,17 @@ public class PersonageDAOImpl implements PersonageDAO {
     }
 
     @Override
-    public Collection getPersonagesByRace(Race race) throws SQLException {
+    public List<Personage> getPersonagesByRace(Race race) throws SQLException {
         Session session = null;
-        List attachedSkills = new ArrayList<AttachedSkill>();
+        List<Personage> personages = new ArrayList<Personage>();
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             int raceId = race.getId();
-            Query query = session.createQuery(
-                    "select * from personage inner join race on personage.race_id = race.id;"
-            )
-                    .setLong("race_id", raceId);
-            attachedSkills = (List<AttachedSkill>) query.list();
+            Query query = session.createSQLQuery(
+                    "select * from personage inner join race on personage.race_id = :id"
+            ).addEntity(Personage.class).setInteger("id", raceId);
+            personages = (List<Personage>) query.list();
             session.getTransaction().commit();
 
         } finally {
@@ -123,6 +124,6 @@ public class PersonageDAOImpl implements PersonageDAO {
                 session.close();
             }
         }
-        return attachedSkills;
+        return personages;
     }
 }

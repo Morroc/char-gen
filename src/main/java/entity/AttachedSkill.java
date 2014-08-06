@@ -20,7 +20,7 @@ public class AttachedSkill {
     private int value;
     @Column(name = "basecost")
     private int baseCost;
-    @Column(name = "default")
+    @Column(name = "defaultskill")
     private boolean isDefault;
     @Column(name = "difficult")
     private boolean isDifficult;

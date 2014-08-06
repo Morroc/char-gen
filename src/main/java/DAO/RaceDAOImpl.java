@@ -1,5 +1,6 @@
 package DAO;
 
+import entity.Personage;
 import entity.Race;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
@@ -60,7 +61,7 @@ public class RaceDAOImpl implements RaceDAO{
             race =  (Race) session.load(Race.class, raceId);
             Hibernate.initialize(race);
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById'", JOptionPane.OK_OPTION);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -75,9 +76,11 @@ public class RaceDAOImpl implements RaceDAO{
         Race race = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            List<Race> races = session.createSQLQuery("select * from race where name='"+ raceName +"'").addEntity(Race.class).list();
-            int raceId = races.get(0).getId();
-            race = getRaceById(raceId);
+            List<Race> races = session.createSQLQuery("select * from race where name= :name")
+                    .addEntity(Race.class)
+                    .setString("name", raceName)
+                    .list();
+            race = races.get(0);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -87,9 +90,9 @@ public class RaceDAOImpl implements RaceDAO{
     }
 
     @Override
-    public Collection getAllRaces() throws SQLException {
+    public List<Race> getAllRaces() throws SQLException {
         Session session = null;
-        List races = new ArrayList<Race>();
+        List<Race> races = new ArrayList<Race>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             races = session.createCriteria(Race.class).list();

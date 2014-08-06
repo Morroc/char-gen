@@ -4,6 +4,7 @@ import entity.AttachedSkill;
 
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
 
 import entity.Personage;
 
@@ -19,9 +20,11 @@ public interface AttachedSkillDAO {
 
     public AttachedSkill getAttachedSkillById(int attachedSkillId) throws SQLException;
 
-    public Collection getAllAttachedSkills() throws SQLException;
+    public List<AttachedSkill> getAllAttachedSkills() throws SQLException;
 
     public void deleteAttachedSkill(AttachedSkill attachedSkill) throws SQLException;
 
-    public Collection getAttachedSkillsByPersonage(Personage personage) throws SQLException;
+    public List<AttachedSkill> getAttachedSkillsByPersonage(Personage personage) throws SQLException;
+
+    public AttachedSkill getAttachedSkillByName(String attachedSkillName) throws SQLException;
 }

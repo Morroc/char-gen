@@ -27,7 +27,7 @@ public class Factory {
         return attachedSkillDAO;
     }
 
-    public PersonageDAO getCharacterDAO(){
+    public PersonageDAO getPersonageDAO(){
         if (personageDAO == null){
             personageDAO = new PersonageDAOImpl();
         }

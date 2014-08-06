@@ -5,6 +5,7 @@ import entity.Personage;
 
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * User: artemk
@@ -18,9 +19,9 @@ public interface PersonageDAO {
 
     public Personage getPersonageById(int personageId) throws SQLException;
 
-    public Collection getAllPersonages() throws SQLException;
+    public List<Personage> getAllPersonages() throws SQLException;
 
     public void deletePersonage(Personage personage) throws SQLException;
 
-    public Collection getPersonagesByRace(Race race) throws SQLException;
+    public List<Personage> getPersonagesByRace(Race race) throws SQLException;
 }

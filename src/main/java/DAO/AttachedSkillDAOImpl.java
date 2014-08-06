@@ -8,6 +8,7 @@ import javax.swing.*;
 
 import entity.AttachedSkill;
 import entity.Personage;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Query;
 import utils.HibernateUtil;
@@ -59,6 +60,7 @@ public class AttachedSkillDAOImpl implements AttachedSkillDAO {
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             attachedSkill = (AttachedSkill) session.load(AttachedSkill.class, attachedSkillId);
+            Hibernate.initialize(attachedSkill);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById'", JOptionPane.OK_OPTION);
         } finally {
@@ -70,9 +72,28 @@ public class AttachedSkillDAOImpl implements AttachedSkillDAO {
     }
 
     @Override
-    public Collection getAllAttachedSkills() throws SQLException {
+    public AttachedSkill getAttachedSkillByName(String attachedSkillName) throws SQLException {
         Session session = null;
-        List attachedSkills = new ArrayList<AttachedSkill>();
+        AttachedSkill attachedSkill = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            List<AttachedSkill> attachedSkills = session.createSQLQuery("select * from attachedskill where name= :name")
+                    .addEntity(AttachedSkill.class)
+                    .setString("name", attachedSkillName)
+                    .list();
+            attachedSkill = attachedSkills.get(0);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return attachedSkill;
+    }
+
+    @Override
+    public List<AttachedSkill> getAllAttachedSkills() throws SQLException {
+        Session session = null;
+        List<AttachedSkill> attachedSkills = new ArrayList<AttachedSkill>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             attachedSkills = session.createCriteria(AttachedSkill.class).list();
@@ -104,17 +125,16 @@ public class AttachedSkillDAOImpl implements AttachedSkillDAO {
     }
 
     @Override
-    public Collection getAttachedSkillsByPersonage(Personage personage) throws SQLException {
+    public List<AttachedSkill> getAttachedSkillsByPersonage(Personage personage) throws SQLException {
         Session session = null;
-        List attachedSkills = new ArrayList<AttachedSkill>();
+        List<AttachedSkill> attachedSkills = new ArrayList<AttachedSkill>();
         try {
-            session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
             int personageId = personage.getId();
-            Query query = session.createQuery(
-                    "select * from attachedskill inner join personage on attachedskill.personage_id = personage.id;"
-            )
-                    .setLong("personage_id", personageId);
+            Query query = session.createSQLQuery(
+                    "select * from attachedskill inner join personage on attachedskill.personage_id = :id"
+            ).addEntity(AttachedSkill.class).setInteger("id", personageId);
             attachedSkills = (List<AttachedSkill>) query.list();
             session.getTransaction().commit();
 
