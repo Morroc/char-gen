@@ -29,8 +29,8 @@ public class AttachedSkill {
     @Column(name = "acquiringcost")
     private int acquiringCost;
     @ManyToOne
-    @JoinColumn(name = "character_id")
-    private Character character;
+    @JoinColumn(name = "personage_id")
+    private Personage personage;
 
     public AttachedSkill() {
     }
@@ -99,12 +99,12 @@ public class AttachedSkill {
         this.acquiringCost = acquiringCost;
     }
 
-    public Character getCharacter() {
-        return character;
+    public Personage getPersonage() {
+        return personage;
     }
 
-    public void setCharacter(Character character) {
-        this.character = character;
+    public void setPersonage(Personage personage) {
+        this.personage = personage;
     }
 
     //    private int getNonGeneratingRiseCost(int previousValue, int wantedValue) {

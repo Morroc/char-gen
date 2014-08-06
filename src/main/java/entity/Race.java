@@ -28,7 +28,7 @@ public class Race {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "race")
     private List<BirthMerit> raceBirthMerits;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "race")
-    private List<Character> characters;
+    private List<Personage> personages;
 
     public Race() {
     }
@@ -89,11 +89,11 @@ public class Race {
         this.raceBirthMerits = raceBirthMerits;
     }
 
-    public List<Character> getCharacters() {
-        return characters;
+    public List<Personage> getPersonages() {
+        return personages;
     }
 
-    public void setCharacters(List<Character> characters) {
-        this.characters = characters;
+    public void setPersonages(List<Personage> personages) {
+        this.personages = personages;
     }
 }

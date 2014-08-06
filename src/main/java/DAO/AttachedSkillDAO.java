@@ -5,7 +5,7 @@ import entity.AttachedSkill;
 import java.sql.SQLException;
 import java.util.Collection;
 
-import entity.Character;
+import entity.Personage;
 
 /**
  * User: artemk
@@ -23,5 +23,5 @@ public interface AttachedSkillDAO {
 
     public void deleteAttachedSkill(AttachedSkill attachedSkill) throws SQLException;
 
-    public Collection getAttachedSkillsByCharacter(Character character) throws SQLException;
+    public Collection getAttachedSkillsByPersonage(Personage personage) throws SQLException;
 }

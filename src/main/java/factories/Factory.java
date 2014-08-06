@@ -9,7 +9,7 @@ import DAO.*;
  */
 public class Factory {
     private static AttachedSkillDAO attachedSkillDAO = null;
-    private static CharacterDAO characterDAO = null;
+    private static PersonageDAO personageDAO = null;
     private static RaceDAO raceDAO = null;
     private static Factory instance = null;
 
@@ -27,11 +27,11 @@ public class Factory {
         return attachedSkillDAO;
     }
 
-    public CharacterDAO getCharacterDAO(){
-        if (characterDAO == null){
-            characterDAO = new CharacterDAOImpl();
+    public PersonageDAO getCharacterDAO(){
+        if (personageDAO == null){
+            personageDAO = new PersonageDAOImpl();
         }
-        return characterDAO;
+        return personageDAO;
     }
 
     public RaceDAO getRaceDAO(){

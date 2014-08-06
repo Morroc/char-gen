@@ -1,12 +1,9 @@
 import entity.*;
-import entity.Character;
-import factories.Factory;
+import entity.Personage;
 import org.apache.log4j.Logger;
-import org.hibernate.Hibernate;
-
-import java.sql.SQLException;
-import java.util.Collection;
-import java.util.Iterator;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import utils.HibernateUtil;
 
 /**
  * User: artemk
@@ -14,6 +11,7 @@ import java.util.Iterator;
  * Time: 12:21 PM
  */
 public class CharGenMain {
+    @SuppressWarnings("unchecked")
     public static void main(String[] args) {
         final Logger logger = Logger.getLogger(CharGenMain.class);
 
@@ -39,34 +37,54 @@ public class CharGenMain {
 //            logger.info("Раса : " + race.getName() + "  Максимальный возраст : " + race.getMaxAge());
 //        }
 
-        Character shmublon = new Character();
+//        Personage shmublon = new Personage();
+//        shmublon.setName("Shmublon");
+//        shmublon.setAge("500");
+//        try {
+//            Race elf = Factory.getInstance().getRaceDAO().getRaceByName("Elf");
+//            shmublon.setRace(elf);
+//        } catch (SQLException e) {
+//            logger.error("SQL exception" + e);
+//        }
+//
+//        try {
+//            Factory.getInstance().getCharacterDAO().addPersonage(shmublon);
+//        } catch (SQLException e) {
+//            logger.error("SQL exception" + e);
+//        }
+//
+//        Collection characters = null;
+//        try {
+//            characters = Factory.getInstance().getCharacterDAO().getAllCharacters();
+//        } catch (SQLException e) {
+//            logger.error("SQL exception" + e);
+//        }
+//        Iterator iterator = characters.iterator();
+//        logger.info("========Все персонажи=========");
+//        while (iterator.hasNext()) {
+//            Personage character = (Personage) iterator.next();
+//            logger.info("Имя : " + character.getName() + " Возраст : " + character.getAge() + " Раса : " + character.getRace().getName());
+//        }
+
+        SessionFactory sf = HibernateUtil.getSessionFactory();
+        Session session = sf.openSession();
+
+        session.beginTransaction();
+
+        Race race = new Race();
+        race.setName("Human");
+        race.setMaxAge(150);
+        session.save(race);
+
+        Personage shmublon = new Personage();
         shmublon.setName("Shmublon");
-        shmublon.setAge("500");
-        try {
-            Race elf = Factory.getInstance().getRaceDAO().getRaceByName("Elf");
-            shmublon.setRace(elf);
-        } catch (SQLException e) {
-            logger.error("SQL exception" + e);
-        }
+        shmublon.setAge(30);
+        shmublon.setRace(race);
 
-        try {
-            Factory.getInstance().getCharacterDAO().addCharacter(shmublon);
-        } catch (SQLException e) {
-            logger.error("SQL exception" + e);
-        }
+        session.save(shmublon);
 
-        Collection characters = null;
-        try {
-            characters = Factory.getInstance().getCharacterDAO().getAllCharacters();
-        } catch (SQLException e) {
-            logger.error("SQL exception" + e);
-        }
-        Iterator iterator = characters.iterator();
-        logger.info("========Все персонажи=========");
-        while (iterator.hasNext()) {
-            Character character = (Character) iterator.next();
-            logger.info("Имя : " + character.getName() + " Возраст : " + character.getAge() + " Раса : " + character.getRace().getName());
-        }
+        session.getTransaction().commit();
+        session.close();
 
     }
 }

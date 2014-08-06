@@ -1,7 +1,7 @@
 package DAO;
 
 import entity.*;
-import entity.Character;
+import entity.Personage;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import utils.HibernateUtil;
@@ -17,14 +17,14 @@ import java.util.List;
  * Date: 8/3/14
  * Time: 3:23 PM
  */
-public class CharacterDAOImpl implements CharacterDAO {
+public class PersonageDAOImpl implements PersonageDAO {
     @Override
-    public void addCharacter(Character character) throws SQLException {
+    public void addPersonage(Personage personage) throws SQLException {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(character);
+            session.save(personage);
             session.getTransaction().commit();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
@@ -36,12 +36,12 @@ public class CharacterDAOImpl implements CharacterDAO {
     }
 
     @Override
-    public void updateCharacter(Character character) throws SQLException {
+    public void updatePersonage(Personage personage) throws SQLException {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.update(character);
+            session.update(personage);
             session.getTransaction().commit();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
@@ -53,12 +53,12 @@ public class CharacterDAOImpl implements CharacterDAO {
     }
 
     @Override
-    public Character getCharacterById(int characterId) throws SQLException {
+    public Personage getPersonageById(int personageId) throws SQLException {
         Session session = null;
-        Character character = null;
+        Personage personage = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            character = (Character) session.load(Character.class, characterId);
+            personage = (Personage) session.load(Personage.class, personageId);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById'", JOptionPane.OK_OPTION);
         } finally {
@@ -66,16 +66,16 @@ public class CharacterDAOImpl implements CharacterDAO {
                 session.close();
             }
         }
-        return character;
+        return personage;
     }
 
     @Override
-    public Collection getAllCharacters() throws SQLException {
+    public Collection getAllPersonages() throws SQLException {
         Session session = null;
-        List characters = new ArrayList<Character>();
+        List characters = new ArrayList<Personage>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            characters = session.createCriteria(Character.class).list();
+            characters = session.createCriteria(Personage.class).list();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'getAll'", JOptionPane.OK_OPTION);
         } finally {
@@ -87,12 +87,12 @@ public class CharacterDAOImpl implements CharacterDAO {
     }
 
     @Override
-    public void deleteCharacter(Character character) throws SQLException {
+    public void deletePersonage(Personage personage) throws SQLException {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.delete(character);
+            session.delete(personage);
             session.getTransaction().commit();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при удалении", JOptionPane.OK_OPTION);
@@ -104,17 +104,17 @@ public class CharacterDAOImpl implements CharacterDAO {
     }
 
     @Override
-    public Collection getCharactersByRace(Race race) throws SQLException {
+    public Collection getPersonagesByRace(Race race) throws SQLException {
         Session session = null;
         List attachedSkills = new ArrayList<AttachedSkill>();
         try {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
-            int race_id = race.getId();
+            int raceId = race.getId();
             Query query = session.createQuery(
-                    "select * from generatordb.character inner join race on generatordb.character.race_id = race.id;"
+                    "select * from personage inner join race on personage.race_id = race.id;"
             )
-                    .setLong("race_id", race_id);
+                    .setLong("race_id", raceId);
             attachedSkills = (List<AttachedSkill>) query.list();
             session.getTransaction().commit();
 

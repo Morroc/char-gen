@@ -24,8 +24,8 @@ public class Flaw {
     @Column(name = "turnoffpreconditions")
     private String turnOffPreconditions;
     @ManyToOne
-    @JoinColumn(name = "character_id")
-    private Character character;
+    @JoinColumn(name = "personage_id")
+    private Personage personage;
     @ManyToOne
     @JoinColumn(name = "race_id")
     private Race race;
@@ -73,12 +73,12 @@ public class Flaw {
         this.turnOffPreconditions = turnOffPreconditions;
     }
 
-    public Character getCharacter() {
-        return character;
+    public Personage getPersonage() {
+        return personage;
     }
 
-    public void setCharacter(Character character) {
-        this.character = character;
+    public void setPersonage(Personage personage) {
+        this.personage = personage;
     }
 
     public Race getRace() {

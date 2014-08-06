@@ -5,14 +5,14 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`race` (
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
-CREATE  TABLE IF NOT EXISTS `generatordb`.`character` (
+CREATE  TABLE IF NOT EXISTS `generatordb`.`personage` (
   `id` INT NOT NULL ,
   `name` VARCHAR(45) NULL ,
-  `age` VARCHAR(45) NULL ,
+  `age` INT NULL ,
   `race_id` INT NOT NULL ,
   PRIMARY KEY (`id`, `race_id`) ,
-  INDEX `fk_character_race1` (`race_id` ASC) ,
-  CONSTRAINT `fk_character_race1`
+  INDEX `fk_personage_race1` (`race_id` ASC) ,
+  CONSTRAINT `fk_personage_race1`
     FOREIGN KEY (`race_id` )
     REFERENCES `generatordb`.`race` (`id` )
     ON DELETE NO ACTION
@@ -25,12 +25,12 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`triggerskill` (
   `type` VARCHAR(45) NULL ,
   `nongeneratingcostcoefficient` DOUBLE NULL ,
   `level` VARCHAR(45) NULL ,
-  `character_id` INT NOT NULL ,
-  PRIMARY KEY (`id`, `character_id`) ,
-  INDEX `fk_triggerskill_character1` (`character_id` ASC) ,
-  CONSTRAINT `fk_triggerskill_character1`
-    FOREIGN KEY (`character_id` )
-    REFERENCES `generatordb`.`character` (`id` )
+  `personage_id` INT NOT NULL ,
+  PRIMARY KEY (`id`, `personage_id`) ,
+  INDEX `fk_triggerskill_personage1` (`personage_id` ASC) ,
+  CONSTRAINT `fk_triggerskill_personage1`
+    FOREIGN KEY (`personage_id` )
+    REFERENCES `generatordb`.`personage` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -44,12 +44,12 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`attachedskill` (
   `difficult` TINYINT(1) NULL ,
   `theoretical` TINYINT(1) NULL ,
   `acquiringcost` INT NULL ,
-  `character_id` INT NOT NULL ,
-  PRIMARY KEY (`id`, `character_id`) ,
-  INDEX `fk_attachedskill_character1` (`character_id` ASC) ,
-  CONSTRAINT `fk_attachedskill_character1`
-    FOREIGN KEY (`character_id` )
-    REFERENCES `generatordb`.`character` (`id` )
+  `personage_id` INT NOT NULL ,
+  PRIMARY KEY (`id`, `personage_id`) ,
+  INDEX `fk_attachedskill_personage1` (`personage_id` ASC) ,
+  CONSTRAINT `fk_attachedskill_personage1`
+    FOREIGN KEY (`personage_id` )
+    REFERENCES `generatordb`.`personage` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -62,18 +62,18 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`merit` (
   `actionbonus` TEXT NULL ,
   `preconditions` TEXT NULL ,
   `race_id` INT NOT NULL ,
-  `character_id` INT NOT NULL ,
-  PRIMARY KEY (`id`, `race_id`, `character_id`) ,
+  `personage_id` INT NOT NULL ,
+  PRIMARY KEY (`id`, `race_id`, `personage_id`) ,
   INDEX `fk_merit_race1` (`race_id` ASC) ,
-  INDEX `fk_merit_character1` (`character_id` ASC) ,
+  INDEX `fk_merit_personage1` (`personage_id` ASC) ,
   CONSTRAINT `fk_merit_race1`
     FOREIGN KEY (`race_id` )
     REFERENCES `generatordb`.`race` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_merit_character1`
-    FOREIGN KEY (`character_id` )
-    REFERENCES `generatordb`.`character` (`id` )
+  CONSTRAINT `fk_merit_personage1`
+    FOREIGN KEY (`personage_id` )
+    REFERENCES `generatordb`.`personage` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -87,18 +87,18 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`birthmerit` (
   `description` TEXT NULL ,
   `actionbonus` TEXT NULL ,
   `race_id` INT NOT NULL ,
-  `character_id` INT NOT NULL ,
-  PRIMARY KEY (`id`, `race_id`, `character_id`) ,
+  `personage_id` INT NOT NULL ,
+  PRIMARY KEY (`id`, `race_id`, `personage_id`) ,
   INDEX `fk_birthmerit_race1` (`race_id` ASC) ,
-  INDEX `fk_birthmerit_character1` (`character_id` ASC) ,
+  INDEX `fk_birthmerit_personage1` (`personage_id` ASC) ,
   CONSTRAINT `fk_birthmerit_race1`
     FOREIGN KEY (`race_id` )
     REFERENCES `generatordb`.`race` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_birthmerit_character1`
-    FOREIGN KEY (`character_id` )
-    REFERENCES `generatordb`.`character` (`id` )
+  CONSTRAINT `fk_birthmerit_personage1`
+    FOREIGN KEY (`personage_id` )
+    REFERENCES `generatordb`.`personage` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -114,19 +114,19 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`attribute` (
   `nongeneratingrisecoefficient` DOUBLE NULL ,
   `actionlevelbonus` TEXT NULL ,
   `race_id` INT NOT NULL ,
-  `character_id` INT NOT NULL ,
-  `character_race_id` INT NOT NULL ,
-  PRIMARY KEY (`id`, `race_id`, `character_id`, `character_race_id`) ,
+  `personage_id` INT NOT NULL ,
+  `personage_race_id` INT NOT NULL ,
+  PRIMARY KEY (`id`, `race_id`, `personage_id`, `personage_race_id`) ,
   INDEX `fk_attribute_race1` (`race_id` ASC) ,
-  INDEX `fk_attribute_character1` (`character_id` ASC, `character_race_id` ASC) ,
+  INDEX `fk_attribute_personage1` (`personage_id` ASC, `personage_race_id` ASC) ,
   CONSTRAINT `fk_attribute_race1`
     FOREIGN KEY (`race_id` )
     REFERENCES `generatordb`.`race` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_attribute_character1`
-    FOREIGN KEY (`character_id` , `character_race_id` )
-    REFERENCES `generatordb`.`character` (`id` , `race_id` )
+  CONSTRAINT `fk_attribute_personage1`
+    FOREIGN KEY (`personage_id` , `personage_race_id` )
+    REFERENCES `generatordb`.`personage` (`id` , `race_id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -137,14 +137,14 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`flaw` (
   `cost` INT NULL ,
   `description` TEXT NULL ,
   `turnoffpreconditions` TEXT NULL ,
-  `character_id` INT NOT NULL ,
+  `personage_id` INT NOT NULL ,
   `race_id` INT NOT NULL ,
-  PRIMARY KEY (`id`, `character_id`, `race_id`) ,
-  INDEX `fk_flaw_character1` (`character_id` ASC) ,
+  PRIMARY KEY (`id`, `personage_id`, `race_id`) ,
+  INDEX `fk_flaw_personage1` (`personage_id` ASC) ,
   INDEX `fk_flaw_race1` (`race_id` ASC) ,
-  CONSTRAINT `fk_flaw_character1`
-    FOREIGN KEY (`character_id` )
-    REFERENCES `generatordb`.`character` (`id` )
+  CONSTRAINT `fk_flaw_personage1`
+    FOREIGN KEY (`personage_id` )
+    REFERENCES `generatordb`.`personage` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_flaw_race1`

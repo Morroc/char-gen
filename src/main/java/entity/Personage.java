@@ -9,8 +9,9 @@ import java.util.List;
  * Time: 9:09 PM
  */
 @Entity
-@Table(name = "character")
-public class Character {
+@Table(name = "personage")
+public class Personage
+{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -18,7 +19,7 @@ public class Character {
     @Column(name = "name")
     private String name;
     @Column(name = "age")
-    private String age;
+    private int age;
     @ManyToOne
     @JoinColumn(name = "race_id")
     private Race race;
@@ -35,7 +36,7 @@ public class Character {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "character")
     private List<BirthMerit> birthMerits;
 
-    public Character() {
+    public Personage() {
     }
 
     public int getId() {
@@ -54,11 +55,11 @@ public class Character {
         this.name = name;
     }
 
-    public String getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(int age) {
         this.age = age;
     }
 

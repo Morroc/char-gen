@@ -7,10 +7,10 @@ import java.util.List;
 import javax.swing.*;
 
 import entity.AttachedSkill;
+import entity.Personage;
 import org.hibernate.Session;
 import org.hibernate.Query;
 import utils.HibernateUtil;
-import entity.Character;
 
 /**
  * User: artemk
@@ -104,17 +104,17 @@ public class AttachedSkillDAOImpl implements AttachedSkillDAO {
     }
 
     @Override
-    public Collection getAttachedSkillsByCharacter(Character character) throws SQLException {
+    public Collection getAttachedSkillsByPersonage(Personage personage) throws SQLException {
         Session session = null;
         List attachedSkills = new ArrayList<AttachedSkill>();
         try {
             session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
-            int character_id = character.getId();
+            int personageId = personage.getId();
             Query query = session.createQuery(
-                    "select * from attachedskill inner join generatordb.character on attachedskill.character_id = generatordb.character.id;"
+                    "select * from attachedskill inner join personage on attachedskill.personage_id = personage.id;"
             )
-                    .setLong("character_id", character_id);
+                    .setLong("personage_id", personageId);
             attachedSkills = (List<AttachedSkill>) query.list();
             session.getTransaction().commit();
 

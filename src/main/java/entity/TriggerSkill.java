@@ -27,8 +27,8 @@ public class TriggerSkill {
     @Column(name = "level")
     private SkillLevel level;
     @ManyToOne
-    @JoinColumn(name = "character_id")
-    private Character character;
+    @JoinColumn(name = "personage_id")
+    private Personage personage;
 
     public TriggerSkill() {
     }
@@ -73,11 +73,11 @@ public class TriggerSkill {
         this.level = level;
     }
 
-    public Character getCharacter() {
-        return character;
+    public Personage getPersonage() {
+        return personage;
     }
 
-    public void setCharacter(Character character) {
-        this.character = character;
+    public void setPersonage(Personage personage) {
+        this.personage = personage;
     }
 }
