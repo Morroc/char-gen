@@ -2,6 +2,7 @@ package DAO;
 
 import entity.*;
 import entity.Personage;
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -19,6 +20,8 @@ import java.util.List;
  * Time: 3:23 PM
  */
 public class PersonageDAOImpl implements PersonageDAO {
+    private static final Logger logger = Logger.getLogger(AttachedSkillDAOImpl.class);
+
     @Override
     public void addPersonage(Personage personage) throws SQLException {
         Session session = null;
@@ -28,7 +31,7 @@ public class PersonageDAOImpl implements PersonageDAO {
             session.save(personage);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
+            logger.error("Ошибка при вставке", e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -45,7 +48,7 @@ public class PersonageDAOImpl implements PersonageDAO {
             session.update(personage);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
+            logger.error("Ошибка при вставке", e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -59,10 +62,10 @@ public class PersonageDAOImpl implements PersonageDAO {
         Personage personage = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            personage =  (Personage) session.load(Personage.class, personageId);
+            personage = (Personage) session.load(Personage.class, personageId);
             Hibernate.initialize(personage);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById'", JOptionPane.OK_OPTION);
+            logger.error("Ошибка 'findById'", e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -79,7 +82,7 @@ public class PersonageDAOImpl implements PersonageDAO {
             session = HibernateUtil.getSessionFactory().openSession();
             characters = session.createCriteria(Personage.class).list();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'getAll'", JOptionPane.OK_OPTION);
+            logger.error("Ошибка 'getAll'", e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -97,7 +100,7 @@ public class PersonageDAOImpl implements PersonageDAO {
             session.delete(personage);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при удалении", JOptionPane.OK_OPTION);
+            logger.error("Ошибка при удалении", e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();

@@ -1,33 +1,33 @@
 package DAO;
 
 import entity.Personage;
-import entity.Race;
+import entity.TriggerSkill;
 import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import utils.HibernateUtil;
 
 import javax.swing.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
  * User: artemk
- * Date: 8/3/14
- * Time: 3:41 PM
+ * Date: 8/6/14
+ * Time: 3:25 PM
  */
-public class RaceDAOImpl implements RaceDAO {
+public class TriggerSkillDAOImpl implements TriggerSkillDAO {
     private static final Logger logger = Logger.getLogger(AttachedSkillDAOImpl.class);
 
     @Override
-    public void addRace(Race race) throws SQLException {
+    public void addTriggerSkill(TriggerSkill triggerSkill) throws SQLException {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.save(race);
+            session.save(triggerSkill);
             session.getTransaction().commit();
         } catch (Exception e) {
             logger.error("Ошибка при вставке", e);
@@ -39,12 +39,12 @@ public class RaceDAOImpl implements RaceDAO {
     }
 
     @Override
-    public void updateRace(Race race) throws SQLException {
+    public void updateTriggerSkill(TriggerSkill triggerSkill) throws SQLException {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.update(race);
+            session.update(triggerSkill);
             session.getTransaction().commit();
         } catch (Exception e) {
             logger.error("Ошибка при вставке", e);
@@ -56,13 +56,13 @@ public class RaceDAOImpl implements RaceDAO {
     }
 
     @Override
-    public Race getRaceById(int raceId) throws SQLException {
+    public TriggerSkill getTriggerSkillById(int triggerSkillId) throws SQLException {
         Session session = null;
-        Race race = null;
+        TriggerSkill triggerSkill = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            race = (Race) session.load(Race.class, raceId);
-            Hibernate.initialize(race);
+            triggerSkill = (TriggerSkill) session.load(TriggerSkill.class, triggerSkillId);
+            Hibernate.initialize(triggerSkill);
         } catch (Exception e) {
             logger.error("Ошибка 'findById'", e);
         } finally {
@@ -70,35 +70,35 @@ public class RaceDAOImpl implements RaceDAO {
                 session.close();
             }
         }
-        return race;
+        return triggerSkill;
     }
 
     @Override
-    public Race getRaceByName(String raceName) throws SQLException {
+    public TriggerSkill getTriggerSkillByName(String triggerSkillName) throws SQLException {
         Session session = null;
-        Race race = null;
+        TriggerSkill triggerSkill = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            List<Race> races = session.createSQLQuery("select * from race where name= :name")
-                    .addEntity(Race.class)
-                    .setString("name", raceName)
+            List<TriggerSkill> attachedSkills = session.createSQLQuery("select * from triggerskill where name= :name")
+                    .addEntity(TriggerSkill.class)
+                    .setString("name", triggerSkillName)
                     .list();
-            race = races.get(0);
+            triggerSkill = attachedSkills.get(0);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
             }
         }
-        return race;
+        return triggerSkill;
     }
 
     @Override
-    public List<Race> getAllRaces() throws SQLException {
+    public List<TriggerSkill> getAllTriggerSkills() throws SQLException {
         Session session = null;
-        List<Race> races = new ArrayList<Race>();
+        List<TriggerSkill> triggerSkills = new ArrayList<TriggerSkill>();
         try {
             session = HibernateUtil.getSessionFactory().openSession();
-            races = session.createCriteria(Race.class).list();
+            triggerSkills = session.createCriteria(TriggerSkill.class).list();
         } catch (Exception e) {
             logger.error("Ошибка 'getAll'", e);
         } finally {
@@ -106,16 +106,16 @@ public class RaceDAOImpl implements RaceDAO {
                 session.close();
             }
         }
-        return races;
+        return triggerSkills;
     }
 
     @Override
-    public void deleteRace(Race race) throws SQLException {
+    public void deleteTriggerSkill(TriggerSkill triggerSkill) throws SQLException {
         Session session = null;
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-            session.delete(race);
+            session.delete(triggerSkill);
             session.getTransaction().commit();
         } catch (Exception e) {
             logger.error("Ошибка при удалении", e);
@@ -124,5 +124,27 @@ public class RaceDAOImpl implements RaceDAO {
                 session.close();
             }
         }
+    }
+
+    @Override
+    public List<TriggerSkill> getTriggerSkillsByPersonage(Personage personage) throws SQLException {
+        Session session = null;
+        List<TriggerSkill> triggerSkills = new ArrayList<TriggerSkill>();
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+            int personageId = personage.getId();
+            Query query = session.createSQLQuery(
+                    "select * from triggerskill inner join personage on triggerskill.personage_id = :id"
+            ).addEntity(TriggerSkill.class).setInteger("id", personageId);
+            triggerSkills = (List<TriggerSkill>) query.list();
+            session.getTransaction().commit();
+
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return triggerSkills;
     }
 }

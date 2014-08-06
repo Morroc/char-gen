@@ -8,6 +8,7 @@ import javax.swing.*;
 
 import entity.AttachedSkill;
 import entity.Personage;
+import org.apache.log4j.Logger;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Query;
@@ -19,6 +20,8 @@ import utils.HibernateUtil;
  * Time: 1:55 PM
  */
 public class AttachedSkillDAOImpl implements AttachedSkillDAO {
+    private static final Logger logger = Logger.getLogger(AttachedSkillDAOImpl.class);
+
     @Override
     public void addAttachedSkill(AttachedSkill attachedSkill) throws SQLException {
         Session session = null;
@@ -28,7 +31,7 @@ public class AttachedSkillDAOImpl implements AttachedSkillDAO {
             session.save(attachedSkill);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
+            logger.error("Ошибка при вставке", e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -45,7 +48,7 @@ public class AttachedSkillDAOImpl implements AttachedSkillDAO {
             session.update(attachedSkill);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при вставке", JOptionPane.OK_OPTION);
+             logger.error("Ошибка при вставке", e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -62,7 +65,7 @@ public class AttachedSkillDAOImpl implements AttachedSkillDAO {
             attachedSkill = (AttachedSkill) session.load(AttachedSkill.class, attachedSkillId);
             Hibernate.initialize(attachedSkill);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'findById'", JOptionPane.OK_OPTION);
+            logger.error("Ошибка 'findById'", e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -98,7 +101,7 @@ public class AttachedSkillDAOImpl implements AttachedSkillDAO {
             session = HibernateUtil.getSessionFactory().openSession();
             attachedSkills = session.createCriteria(AttachedSkill.class).list();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка 'getAll'", JOptionPane.OK_OPTION);
+            logger.error("Ошибка 'getAll'", e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
@@ -116,7 +119,7 @@ public class AttachedSkillDAOImpl implements AttachedSkillDAO {
             session.delete(attachedSkill);
             session.getTransaction().commit();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка при удалении", JOptionPane.OK_OPTION);
+            logger.error("Ошибка при удалении", e);
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
