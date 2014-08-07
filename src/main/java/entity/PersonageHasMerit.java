@@ -17,11 +17,11 @@ public class PersonageHasMerit {
 
     @ManyToOne
     @JoinColumn(name = "merit_id")
-    private Merit meritByPersonageId;
+    private Merit meritByPersonage;
 
     @ManyToOne
     @JoinColumn(name = "personage_id")
-    private Personage personageByMeritId;
+    private Personage personageByMerit;
 
     public PersonageHasMerit() {
     }
@@ -34,19 +34,19 @@ public class PersonageHasMerit {
         this.id = id;
     }
 
-    public Merit getMeritByPersonageId() {
-        return meritByPersonageId;
+    public Merit getMeritByPersonage() {
+        return meritByPersonage;
     }
 
-    public void setMeritByPersonageId(Merit meritByPersonageId) {
-        this.meritByPersonageId = meritByPersonageId;
+    public void setMeritByPersonage(Merit meritByPersonage) {
+        this.meritByPersonage = meritByPersonage;
     }
 
-    public Personage getPersonageByMeritId() {
-        return personageByMeritId;
+    public Personage getPersonageByMerit() {
+        return personageByMerit;
     }
 
-    public void setPersonageByMeritId(Personage personageByMeritId) {
-        this.personageByMeritId = personageByMeritId;
+    public void setPersonageByMerit(Personage personageByMerit) {
+        this.personageByMerit = personageByMerit;
     }
 }

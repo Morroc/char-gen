@@ -23,8 +23,8 @@ public class Personage
     @ManyToOne
     @JoinColumn(name = "race_id")
     private Race race;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByMeritId")
-    private List<Merit> personagesByMerit;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByMerit")
+    private List<PersonageHasMerit> personagesByMerit;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personage")
     private List<TriggerSkill> triggerSkills;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personage")
@@ -80,5 +80,13 @@ public class Personage
 
     public void setAttachedSkills(List<AttachedSkill> attachedSkills) {
         this.attachedSkills = attachedSkills;
+    }
+
+    public List<PersonageHasMerit> getPersonagesByMerit() {
+        return personagesByMerit;
+    }
+
+    public void setPersonagesByMerit(List<PersonageHasMerit> personagesByMerit) {
+        this.personagesByMerit = personagesByMerit;
     }
 }

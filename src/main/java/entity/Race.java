@@ -19,8 +19,8 @@ public class Race {
     private String name;
     @Column(name = "maxAge")
     private int maxAge;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "raceByMeritId")
-    private List<Merit> racesByMerit;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "raceByMerit")
+    private List<RaceHasMerit> racesByMerit;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "race")
     private List<Personage> personages;
 
@@ -51,11 +51,11 @@ public class Race {
         this.maxAge = maxAge;
     }
 
-    public List<Merit> getRacesByMerit() {
+    public List<RaceHasMerit> getRacesByMerit() {
         return racesByMerit;
     }
 
-    public void setRacesByMerit(List<Merit> racesByMerit) {
+    public void setRacesByMerit(List<RaceHasMerit> racesByMerit) {
         this.racesByMerit = racesByMerit;
     }
 

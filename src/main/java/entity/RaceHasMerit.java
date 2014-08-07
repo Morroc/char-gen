@@ -17,11 +17,11 @@ public class RaceHasMerit {
 
     @ManyToOne
     @JoinColumn(name = "merit_id")
-    private Merit meritByRaceId;
+    private Merit meritByRace;
 
     @ManyToOne
     @JoinColumn(name = "race_id")
-    private Race raceByMeritId;
+    private Race raceByMerit;
 
     public RaceHasMerit() {
     }
@@ -34,19 +34,19 @@ public class RaceHasMerit {
         this.id = id;
     }
 
-    public Merit getMeritByRaceId() {
-        return meritByRaceId;
+    public Merit getMeritByRace() {
+        return meritByRace;
     }
 
-    public void setMeritByRaceId(Merit meritByRaceId) {
-        this.meritByRaceId = meritByRaceId;
+    public void setMeritByRace(Merit meritByRace) {
+        this.meritByRace = meritByRace;
     }
 
-    public Race getRaceByMeritId() {
-        return raceByMeritId;
+    public Race getRaceByMerit() {
+        return raceByMerit;
     }
 
-    public void setRaceByMeritId(Race raceByMeritId) {
-        this.raceByMeritId = raceByMeritId;
+    public void setRaceByMerit(Race raceByMerit) {
+        this.raceByMerit = raceByMerit;
     }
 }

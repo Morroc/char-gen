@@ -26,10 +26,10 @@ public class Merit {
     private String preconditions;
     @Column(name = "actionbonus")
     private String actionBonus;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "meritByRaceId")
-    private List<Merit> meritsByRace;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "meritByPersonageId")
-    private List<Merit> meritsByPersonage;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "meritByRace")
+    private List<RaceHasMerit> meritsByRace;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "meritByPersonage")
+    private List<PersonageHasMerit> meritsByPersonage;
 
     public Merit() {
     }
@@ -82,19 +82,19 @@ public class Merit {
         this.actionBonus = actionBonus;
     }
 
-    public List<Merit> getMeritsByRace() {
+    public List<RaceHasMerit> getMeritsByRace() {
         return meritsByRace;
     }
 
-    public void setMeritsByRace(List<Merit> meritsByRace) {
+    public void setMeritsByRace(List<RaceHasMerit> meritsByRace) {
         this.meritsByRace = meritsByRace;
     }
 
-    public List<Merit> getMeritsByPersonage() {
+    public List<PersonageHasMerit> getMeritsByPersonage() {
         return meritsByPersonage;
     }
 
-    public void setMeritsByPersonage(List<Merit> meritsByPersonage) {
+    public void setMeritsByPersonage(List<PersonageHasMerit> meritsByPersonage) {
         this.meritsByPersonage = meritsByPersonage;
     }
 }
