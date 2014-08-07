@@ -23,18 +23,13 @@ public class Personage
     @ManyToOne
     @JoinColumn(name = "race_id")
     private Race race;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personage")
-    private List<Attribute> attributes;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByMeritId")
+    private List<Merit> personagesByMerit;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personage")
     private List<TriggerSkill> triggerSkills;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personage")
     private List<AttachedSkill> attachedSkills;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personage")
-    private List<Merit> merits;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personage")
-    private List<Flaw> flaws;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personage")
-    private List<BirthMerit> birthMerits;
+
 
     public Personage() {
     }
@@ -71,14 +66,6 @@ public class Personage
         this.race = race;
     }
 
-    public List<Attribute> getAttributes() {
-        return attributes;
-    }
-
-    public void setAttributes(List<Attribute> attributes) {
-        this.attributes = attributes;
-    }
-
     public List<TriggerSkill> getTriggerSkills() {
         return triggerSkills;
     }
@@ -93,29 +80,5 @@ public class Personage
 
     public void setAttachedSkills(List<AttachedSkill> attachedSkills) {
         this.attachedSkills = attachedSkills;
-    }
-
-    public List<Merit> getMerits() {
-        return merits;
-    }
-
-    public void setMerits(List<Merit> merits) {
-        this.merits = merits;
-    }
-
-    public List<Flaw> getFlaws() {
-        return flaws;
-    }
-
-    public void setFlaws(List<Flaw> flaws) {
-        this.flaws = flaws;
-    }
-
-    public List<BirthMerit> getBirthMerits() {
-        return birthMerits;
-    }
-
-    public void setBirthMerits(List<BirthMerit> birthMerits) {
-        this.birthMerits = birthMerits;
     }
 }

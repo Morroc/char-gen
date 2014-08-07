@@ -17,6 +17,8 @@
         <mapping class="entity.Personage"/>
         <mapping class="entity.Flaw"/>
         <mapping class="entity.Merit"/>
+        <mapping class="entity.PersonageHasMerit"/>
+        <mapping class="entity.RaceHasMerit"/>
         <mapping class="entity.Race"/>
         <mapping class="entity.TriggerSkill"/>
     </session-factory>

@@ -133,11 +133,14 @@ public class MeritDAOImpl implements MeritDAO{
         try {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
+
             int personageId = personage.getId();
+
             Query query = session.createSQLQuery(
                     "select * from merit inner join personage on merit.personage_id = :id"
             ).addEntity(Merit.class).setInteger("id", personageId);
             merits = (List<Merit>) query.list();
+
             session.getTransaction().commit();
 
         } finally {

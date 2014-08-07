@@ -65,38 +65,40 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`birthmerit` (
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
-CREATE  TABLE IF NOT EXISTS `generatordb`.`birthmerit_has_personage` (
+CREATE  TABLE IF NOT EXISTS `generatordb`.`race_has_birthmerit` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `birthmerit_id` INT NOT NULL ,
-  `personage_id` INT NOT NULL ,
-  PRIMARY KEY (`birthmerit_id`, `personage_id`) ,
-  INDEX `fk_birthmerit_has_personage_personage1` (`personage_id` ASC) ,
-  INDEX `fk_birthmerit_has_personage_birthmerit1` (`birthmerit_id` ASC) ,
-  CONSTRAINT `fk_birthmerit_has_personage_birthmerit1`
-    FOREIGN KEY (`birthmerit_id` )
-    REFERENCES `generatordb`.`birthmerit` (`id` )
+  `race_id` INT NOT NULL ,
+  PRIMARY KEY (`id`, `birthmerit_id`, `race_id`) ,
+  INDEX `fk_race_has_birthmerit_birthmerit1` (`birthmerit_id` ASC) ,
+  INDEX `fk_race_has_birthmerit_race1` (`race_id` ASC) ,
+  CONSTRAINT `fk_race_has_birthmerit_race1`
+    FOREIGN KEY (`race_id` )
+    REFERENCES `generatordb`.`race` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_birthmerit_has_personage_personage1`
-    FOREIGN KEY (`personage_id` )
-    REFERENCES `generatordb`.`personage` (`id` )
+  CONSTRAINT `fk_race_has_birthmerit_birthmerit1`
+    FOREIGN KEY (`birthmerit_id` )
+    REFERENCES `generatordb`.`birthmerit` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE  TABLE IF NOT EXISTS `generatordb`.`birthmerit_has_race` (
+CREATE  TABLE IF NOT EXISTS `generatordb`.`personage_has_birthmerit` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `birthmerit_id` INT NOT NULL ,
-  `race_id` INT NOT NULL ,
-  PRIMARY KEY (`birthmerit_id`, `race_id`) ,
-  INDEX `fk_birthmerit_has_race_race1` (`race_id` ASC) ,
-  INDEX `fk_birthmerit_has_race_birthmerit1` (`birthmerit_id` ASC) ,
-  CONSTRAINT `fk_birthmerit_has_race_birthmerit1`
-    FOREIGN KEY (`birthmerit_id` )
-    REFERENCES `generatordb`.`birthmerit` (`id` )
+  `personage_id` INT NOT NULL ,
+  PRIMARY KEY (`id`, `birthmerit_id`, `personage_id`) ,
+  INDEX `fk_personage_has_birthmerit_birthmerit1` (`birthmerit_id` ASC) ,
+  INDEX `fk_personage_has_birthmerit_personage1` (`personage_id` ASC) ,
+  CONSTRAINT `fk_personage_has_birthmerit_personage1`
+    FOREIGN KEY (`personage_id` )
+    REFERENCES `generatordb`.`personage` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_birthmerit_has_race_race1`
-    FOREIGN KEY (`race_id` )
-    REFERENCES `generatordb`.`race` (`id` )
+  CONSTRAINT `fk_personage_has_birthmerit_birthmerit1`
+    FOREIGN KEY (`birthmerit_id` )
+    REFERENCES `generatordb`.`birthmerit` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -114,38 +116,40 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`attribute` (
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
-CREATE  TABLE IF NOT EXISTS `generatordb`.`attribute_has_race` (
+CREATE  TABLE IF NOT EXISTS `generatordb`.`race_has_attribute` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `attribute_id` INT NOT NULL ,
   `race_id` INT NOT NULL ,
-  PRIMARY KEY (`attribute_id`, `race_id`) ,
-  INDEX `fk_attribute_has_race_race1` (`race_id` ASC) ,
-  INDEX `fk_attribute_has_race_attribute1` (`attribute_id` ASC) ,
-  CONSTRAINT `fk_attribute_has_race_attribute1`
-    FOREIGN KEY (`attribute_id` )
-    REFERENCES `generatordb`.`attribute` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_attribute_has_race_race1`
+  PRIMARY KEY (`id`, `attribute_id`, `race_id`) ,
+  INDEX `fk_race_has_attribute_attribute1` (`attribute_id` ASC) ,
+  INDEX `fk_race_has_attribute_race1` (`race_id` ASC) ,
+  CONSTRAINT `fk_race_has_attribute_race1`
     FOREIGN KEY (`race_id` )
     REFERENCES `generatordb`.`race` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_race_has_attribute_attribute1`
+    FOREIGN KEY (`attribute_id` )
+    REFERENCES `generatordb`.`attribute` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE  TABLE IF NOT EXISTS `generatordb`.`attribute_has_personage` (
+CREATE  TABLE IF NOT EXISTS `generatordb`.`personage_has_attribute` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `attribute_id` INT NOT NULL ,
   `personage_id` INT NOT NULL ,
-  PRIMARY KEY (`attribute_id`, `personage_id`) ,
-  INDEX `fk_attribute_has_personage_personage1` (`personage_id` ASC) ,
-  INDEX `fk_attribute_has_personage_attribute1` (`attribute_id` ASC) ,
-  CONSTRAINT `fk_attribute_has_personage_attribute1`
-    FOREIGN KEY (`attribute_id` )
-    REFERENCES `generatordb`.`attribute` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_attribute_has_personage_personage1`
+  PRIMARY KEY (`id`, `attribute_id`, `personage_id`) ,
+  INDEX `fk_personage_has_attribute_attribute1` (`attribute_id` ASC) ,
+  INDEX `fk_personage_has_attribute_personage1` (`personage_id` ASC) ,
+  CONSTRAINT `fk_personage_has_attribute_personage1`
     FOREIGN KEY (`personage_id` )
     REFERENCES `generatordb`.`personage` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_personage_has_attribute_attribute1`
+    FOREIGN KEY (`attribute_id` )
+    REFERENCES `generatordb`.`attribute` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -159,38 +163,40 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`flaw` (
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
-CREATE  TABLE IF NOT EXISTS `generatordb`.`flaw_has_race` (
+CREATE  TABLE IF NOT EXISTS `generatordb`.`personage_has_flaw` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `flaw_id` INT NOT NULL ,
-  `race_id` INT NOT NULL ,
-  PRIMARY KEY (`flaw_id`, `race_id`) ,
-  INDEX `fk_flaw_has_race_race1` (`race_id` ASC) ,
-  INDEX `fk_flaw_has_race_flaw1` (`flaw_id` ASC) ,
-  CONSTRAINT `fk_flaw_has_race_flaw1`
-    FOREIGN KEY (`flaw_id` )
-    REFERENCES `generatordb`.`flaw` (`id` )
+  `personage_id` INT NOT NULL ,
+  PRIMARY KEY (`id`, `flaw_id`, `personage_id`) ,
+  INDEX `fk_personage_has_flaw_flaw1` (`flaw_id` ASC) ,
+  INDEX `fk_personage_has_flaw_personage1` (`personage_id` ASC) ,
+  CONSTRAINT `fk_personage_has_flaw_personage1`
+    FOREIGN KEY (`personage_id` )
+    REFERENCES `generatordb`.`personage` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_flaw_has_race_race1`
-    FOREIGN KEY (`race_id` )
-    REFERENCES `generatordb`.`race` (`id` )
+  CONSTRAINT `fk_personage_has_flaw_flaw1`
+    FOREIGN KEY (`flaw_id` )
+    REFERENCES `generatordb`.`flaw` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE  TABLE IF NOT EXISTS `generatordb`.`flaw_has_personage` (
+CREATE  TABLE IF NOT EXISTS `generatordb`.`race_has_flaw` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `flaw_id` INT NOT NULL ,
-  `personage_id` INT NOT NULL ,
-  PRIMARY KEY (`flaw_id`, `personage_id`) ,
-  INDEX `fk_flaw_has_personage_personage1` (`personage_id` ASC) ,
-  INDEX `fk_flaw_has_personage_flaw1` (`flaw_id` ASC) ,
-  CONSTRAINT `fk_flaw_has_personage_flaw1`
-    FOREIGN KEY (`flaw_id` )
-    REFERENCES `generatordb`.`flaw` (`id` )
+  `race_id` INT NOT NULL ,
+  PRIMARY KEY (`id`, `flaw_id`, `race_id`) ,
+  INDEX `fk_race_has_flaw_flaw1` (`flaw_id` ASC) ,
+  INDEX `fk_race_has_flaw_race1` (`race_id` ASC) ,
+  CONSTRAINT `fk_race_has_flaw_race1`
+    FOREIGN KEY (`race_id` )
+    REFERENCES `generatordb`.`race` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_flaw_has_personage_personage1`
-    FOREIGN KEY (`personage_id` )
-    REFERENCES `generatordb`.`personage` (`id` )
+  CONSTRAINT `fk_race_has_flaw_flaw1`
+    FOREIGN KEY (`flaw_id` )
+    REFERENCES `generatordb`.`flaw` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -205,38 +211,40 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`merit` (
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
-CREATE  TABLE IF NOT EXISTS `generatordb`.`merit_has_personage` (
+CREATE  TABLE IF NOT EXISTS `generatordb`.`personage_has_merit` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `merit_id` INT NOT NULL ,
   `personage_id` INT NOT NULL ,
-  PRIMARY KEY (`merit_id`, `personage_id`) ,
-  INDEX `fk_merit_has_personage_personage1` (`personage_id` ASC) ,
-  INDEX `fk_merit_has_personage_merit1` (`merit_id` ASC) ,
-  CONSTRAINT `fk_merit_has_personage_merit1`
-    FOREIGN KEY (`merit_id` )
-    REFERENCES `generatordb`.`merit` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_merit_has_personage_personage1`
+  PRIMARY KEY (`id`, `merit_id`, `personage_id`) ,
+  INDEX `fk_personage_has_merit_merit1` (`merit_id` ASC) ,
+  INDEX `fk_personage_has_merit_personage1` (`personage_id` ASC) ,
+  CONSTRAINT `fk_personage_has_merit_personage1`
     FOREIGN KEY (`personage_id` )
     REFERENCES `generatordb`.`personage` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_personage_has_merit_merit1`
+    FOREIGN KEY (`merit_id` )
+    REFERENCES `generatordb`.`merit` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE  TABLE IF NOT EXISTS `generatordb`.`merit_has_race` (
+CREATE  TABLE IF NOT EXISTS `generatordb`.`race_has_merit` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
   `merit_id` INT NOT NULL ,
   `race_id` INT NOT NULL ,
-  PRIMARY KEY (`merit_id`, `race_id`) ,
-  INDEX `fk_merit_has_race_race1` (`race_id` ASC) ,
-  INDEX `fk_merit_has_race_merit1` (`merit_id` ASC) ,
-  CONSTRAINT `fk_merit_has_race_merit1`
-    FOREIGN KEY (`merit_id` )
-    REFERENCES `generatordb`.`merit` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_merit_has_race_race1`
+  PRIMARY KEY (`id`, `merit_id`, `race_id`) ,
+  INDEX `fk_race_has_merit_merit1` (`merit_id` ASC) ,
+  INDEX `fk_race_has_merit_race1` (`race_id` ASC) ,
+  CONSTRAINT `fk_race_has_merit_race1`
     FOREIGN KEY (`race_id` )
     REFERENCES `generatordb`.`race` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_race_has_merit_merit1`
+    FOREIGN KEY (`merit_id` )
+    REFERENCES `generatordb`.`merit` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

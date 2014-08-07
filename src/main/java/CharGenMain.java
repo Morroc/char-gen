@@ -24,9 +24,16 @@ public class CharGenMain {
 
 
         try {
-            AttachedSkill attachedSkill = Factory.getInstance().getAttachedSkillDAO().getAttachedSkillByName("Sword");
-            attachedSkill.setName("Axe");
-            Factory.getInstance().getAttachedSkillDAO().updateAttachedSkill(attachedSkill);
+            Race race = new Race();
+            race.setName("Dwarf");
+            race.setMaxAge(300);
+            Factory.getInstance().getRaceDAO().addRace(race);
+
+            Personage personage = new Personage();
+            personage.setName("Wulfer");
+            personage.setAge(100);
+            personage.setRace(race);
+            Factory.getInstance().getPersonageDAO().addPersonage(personage);
         } catch (SQLException e) {
             logger.error("SQL exception" + e);
         }

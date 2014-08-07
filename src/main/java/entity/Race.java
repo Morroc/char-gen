@@ -19,14 +19,8 @@ public class Race {
     private String name;
     @Column(name = "maxAge")
     private int maxAge;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "race")
-    private List<Attribute> attributes;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "race")
-    private List<Merit> raceMerits;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "race")
-    private List<Flaw> raceFlaws;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "race")
-    private List<BirthMerit> raceBirthMerits;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "raceByMeritId")
+    private List<Merit> racesByMerit;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "race")
     private List<Personage> personages;
 
@@ -57,36 +51,12 @@ public class Race {
         this.maxAge = maxAge;
     }
 
-    public List<Attribute> getAttributes() {
-        return attributes;
+    public List<Merit> getRacesByMerit() {
+        return racesByMerit;
     }
 
-    public void setAttributes(List<Attribute> attributes) {
-        this.attributes = attributes;
-    }
-
-    public List<Merit> getRaceMerits() {
-        return raceMerits;
-    }
-
-    public void setRaceMerits(List<Merit> raceMerits) {
-        this.raceMerits = raceMerits;
-    }
-
-    public List<Flaw> getRaceFlaws() {
-        return raceFlaws;
-    }
-
-    public void setRaceFlaws(List<Flaw> raceFlaws) {
-        this.raceFlaws = raceFlaws;
-    }
-
-    public List<BirthMerit> getRaceBirthMerits() {
-        return raceBirthMerits;
-    }
-
-    public void setRaceBirthMerits(List<BirthMerit> raceBirthMerits) {
-        this.raceBirthMerits = raceBirthMerits;
+    public void setRacesByMerit(List<Merit> racesByMerit) {
+        this.racesByMerit = racesByMerit;
     }
 
     public List<Personage> getPersonages() {

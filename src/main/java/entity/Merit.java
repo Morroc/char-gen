@@ -2,6 +2,7 @@ package entity;
 
 import javax.persistence.*;
 import java.lang.*;
+import java.util.List;
 
 /**
  * User: artemk
@@ -25,12 +26,10 @@ public class Merit {
     private String preconditions;
     @Column(name = "actionbonus")
     private String actionBonus;
-    @ManyToOne
-    @JoinColumn(name = "personage_id")
-    private Personage personage;
-    @ManyToOne
-    @JoinColumn(name = "race_id")
-    private Race race;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "meritByRaceId")
+    private List<Merit> meritsByRace;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "meritByPersonageId")
+    private List<Merit> meritsByPersonage;
 
     public Merit() {
     }
@@ -83,19 +82,19 @@ public class Merit {
         this.actionBonus = actionBonus;
     }
 
-    public Personage getPersonage() {
-        return personage;
+    public List<Merit> getMeritsByRace() {
+        return meritsByRace;
     }
 
-    public void setPersonage(Personage personage) {
-        this.personage = personage;
+    public void setMeritsByRace(List<Merit> meritsByRace) {
+        this.meritsByRace = meritsByRace;
     }
 
-    public Race getRace() {
-        return race;
+    public List<Merit> getMeritsByPersonage() {
+        return meritsByPersonage;
     }
 
-    public void setRace(Race race) {
-        this.race = race;
+    public void setMeritsByPersonage(List<Merit> meritsByPersonage) {
+        this.meritsByPersonage = meritsByPersonage;
     }
 }
