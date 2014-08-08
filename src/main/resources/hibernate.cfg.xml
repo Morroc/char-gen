@@ -1,25 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
 <hibernate-configuration>
     <session-factory>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/generatordb</property>
-        <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password"></property>
-        <property name="show_sql">true</property>
-        <property name="format_sql">true</property>
-        <property name="use_sql_comments">true</property>
-
-        <mapping class="entity.AttachedSkill"/>
-        <mapping class="entity.Attribute"/>
-        <mapping class="entity.BirthMerit"/>
-        <mapping class="entity.Personage"/>
-        <mapping class="entity.Flaw"/>
-        <mapping class="entity.Merit"/>
-        <mapping class="entity.PersonageHasMerit"/>
-        <mapping class="entity.RaceHasMerit"/>
-        <mapping class="entity.Race"/>
-        <mapping class="entity.TriggerSkill"/>
+        <mapping class="entity.AttachedSkill" />
+        <mapping class="entity.Attribute" />
+        <mapping class="entity.BirthMerit" />
+        <mapping class="entity.Flaw" />
+        <mapping class="entity.Merit" />
+        <mapping class="entity.Personage" />
+        <mapping class="entity.PersonageHasMerit" />
+        <mapping class="entity.Race" />
+        <mapping class="entity.RaceHasMerit" />
+        <mapping class="entity.TriggerSkill" />
     </session-factory>
 </hibernate-configuration>

@@ -6,7 +6,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>kredito.de</groupId>
     <artifactId>autotest</artifactId>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <version>1.0.0</version>
 
     <properties>
@@ -29,11 +29,6 @@
     </repositories>
 
     <dependencies>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.1.0.Final</version>
-        </dependency>
 
         <dependency>
             <groupId>log4j</groupId>
@@ -42,9 +37,19 @@
         </dependency>
 
         <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <version>1.0.1.Final</version>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>3.3.2.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>3.3.1.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-commons-annotations</artifactId>
+            <version>3.3.0.ga</version>
         </dependency>
 
         <dependency>
@@ -102,6 +107,12 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
             <version>${org.springframework-version}</version>
         </dependency>
 

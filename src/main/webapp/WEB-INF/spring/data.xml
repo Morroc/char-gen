@@ -50,7 +50,7 @@
             <value>classpath:hibernate.cfg.xml</value>
         </property>
         <property name="configurationClass">
-            <value>org.hibernate.cfg.Configuration</value>
+            <value>org.hibernate.cfg.AnnotationConfiguration</value>
         </property>
         <property name="hibernateProperties">
             <props>
