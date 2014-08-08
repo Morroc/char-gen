@@ -1,17 +1,13 @@
 package DAO;
 
-import entity.*;
 import entity.Personage;
-import org.apache.log4j.Logger;
-import org.hibernate.Hibernate;
+import entity.Race;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import utils.HibernateUtil;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import javax.swing.*;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -19,114 +15,55 @@ import java.util.List;
  * Date: 8/3/14
  * Time: 3:23 PM
  */
+@Repository
 public class PersonageDAOImpl implements PersonageDAO {
-    private static final Logger logger = Logger.getLogger(PersonageDAOImpl.class);
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
-    public void addPersonage(Personage personage) throws SQLException {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.save(personage);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            logger.error("Ошибка при вставке", e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
+    public void addPersonage(Personage personage) {
+        sessionFactory.getCurrentSession().save(personage);
     }
 
     @Override
-    public void updatePersonage(Personage personage) throws SQLException {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.update(personage);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            logger.error("Ошибка при вставке", e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
+    public void updatePersonage(Personage personage) {
+        sessionFactory.getCurrentSession().update(personage);
     }
 
     @Override
-    public Personage getPersonageById(int personageId) throws SQLException {
-        Session session = null;
-        Personage personage = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            personage = (Personage) session.load(Personage.class, personageId);
-            Hibernate.initialize(personage);
-        } catch (Exception e) {
-            logger.error("Ошибка 'findById'", e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-        return personage;
+    public Personage getPersonageById(int personageId) {
+        return (Personage) sessionFactory.getCurrentSession().load(Personage.class, personageId);
     }
 
     @Override
-    public List<Personage> getAllPersonages() throws SQLException {
-        Session session = null;
-        List<Personage> characters = new ArrayList<Personage>();
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            characters = session.createCriteria(Personage.class).list();
-        } catch (Exception e) {
-            logger.error("Ошибка 'getAll'", e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-        return characters;
+    public Personage getPersonageByName(String personageName) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Personage> personages = session.createSQLQuery("select * from personage where name= :name")
+                .addEntity(Personage.class)
+                .setString("name", personageName)
+                .list();
+        return personages.get(0);
     }
 
     @Override
-    public void deletePersonage(Personage personage) throws SQLException {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.delete(personage);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            logger.error("Ошибка при удалении", e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
+    public List<Personage> getAllPersonages() {
+        return sessionFactory.getCurrentSession().createQuery("from personage").list();
     }
 
     @Override
-    public List<Personage> getPersonagesByRace(Race race) throws SQLException {
-        Session session = null;
-        List<Personage> personages = new ArrayList<Personage>();
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            int raceId = race.getId();
-            Query query = session.createSQLQuery(
-                    "select * from personage inner join race on personage.race_id = :id"
-            ).addEntity(Personage.class).setInteger("id", raceId);
-            personages = (List<Personage>) query.list();
-            session.getTransaction().commit();
+    public void deletePersonage(Personage personage) {
+        sessionFactory.getCurrentSession().delete(personage);
+    }
 
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-        return personages;
+    @Override
+    public List<Personage> getPersonagesByRace(Race race) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createSQLQuery(
+                "select * from personage inner join race on personage.race_id = :id"
+        )
+                .addEntity(Personage.class)
+                .setInteger("id", race.getId());
+
+        return (List<Personage>) query.list();
     }
 }

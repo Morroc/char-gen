@@ -26,6 +26,11 @@ public class RaceHasMerit {
     public RaceHasMerit() {
     }
 
+    public RaceHasMerit(Merit meritByRace, Race raceByMerit) {
+        this.meritByRace = meritByRace;
+        this.raceByMerit = raceByMerit;
+    }
+
     public int getId() {
         return id;
     }

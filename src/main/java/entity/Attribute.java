@@ -30,12 +30,6 @@ public class Attribute {
     private double nonGeneratingRiseCoefficient;
     @Column(name = "actionlevelbonus")
     private String actionLevelBonus;
-    @ManyToOne
-    @JoinColumn(name = "race_id")
-    private Race race;
-    @ManyToOne
-    @JoinColumn(name = "personage_id")
-    private Personage personage;
 
     public Attribute() {
     }
@@ -110,21 +104,5 @@ public class Attribute {
 
     public void setActionLevelBonus(String actionLevelBonus) {
         this.actionLevelBonus = actionLevelBonus;
-    }
-
-    public Race getRace() {
-        return race;
-    }
-
-    public void setRace(Race race) {
-        this.race = race;
-    }
-
-    public Personage getPersonage() {
-        return personage;
-    }
-
-    public void setPersonage(Personage personage) {
-        this.personage = personage;
     }
 }

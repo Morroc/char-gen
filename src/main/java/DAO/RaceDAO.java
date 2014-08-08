@@ -11,15 +11,15 @@ import java.util.List;
  * Time: 3:36 PM
  */
 public interface RaceDAO {
-    public void addRace(Race race) throws SQLException;
+    public void addRace(Race race);
 
-    public void updateRace(Race race) throws SQLException;
+    public void updateRace(Race race);
 
-    public Race getRaceById(int raceId) throws SQLException;
+    public Race getRaceById(int raceId);
 
-    public Race getRaceByName(String raceName) throws SQLException;
+    public Race getRaceByName(String raceName);
 
-    public List<Race> getAllRaces() throws SQLException;
+    public List<Race> getAllRaces();
 
-    public void deleteRace(Race race) throws SQLException;
+    public void deleteRace(Race race);
 }

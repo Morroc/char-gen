@@ -1,151 +1,69 @@
 package DAO;
 
-import java.sql.SQLException;
-import java.util.Collection;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.*;
-
 import entity.AttachedSkill;
 import entity.Personage;
-import org.apache.log4j.Logger;
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
 import org.hibernate.Query;
-import utils.HibernateUtil;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * User: artemk
  * Date: 8/3/14
  * Time: 1:55 PM
  */
+@Repository
 public class AttachedSkillDAOImpl implements AttachedSkillDAO {
-    private static final Logger logger = Logger.getLogger(AttachedSkillDAOImpl.class);
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
-    public void addAttachedSkill(AttachedSkill attachedSkill) throws SQLException {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.save(attachedSkill);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            logger.error("Ошибка при вставке", e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
+    public void addAttachedSkill(AttachedSkill attachedSkill) {
+        sessionFactory.getCurrentSession().save(attachedSkill);
     }
 
     @Override
-    public void updateAttachedSkill(AttachedSkill attachedSkill) throws SQLException {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.update(attachedSkill);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-             logger.error("Ошибка при вставке", e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
+    public void updateAttachedSkill(AttachedSkill attachedSkill) {
+        sessionFactory.getCurrentSession().update(attachedSkill);
     }
 
     @Override
-    public AttachedSkill getAttachedSkillById(int attachedSkillId) throws SQLException {
-        Session session = null;
-        AttachedSkill attachedSkill = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            attachedSkill = (AttachedSkill) session.load(AttachedSkill.class, attachedSkillId);
-            Hibernate.initialize(attachedSkill);
-        } catch (Exception e) {
-            logger.error("Ошибка 'findById'", e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-        return attachedSkill;
+    public AttachedSkill getAttachedSkillById(int attachedSkillId) {
+        return (AttachedSkill) sessionFactory.getCurrentSession().load(AttachedSkill.class, attachedSkillId);
     }
 
     @Override
-    public AttachedSkill getAttachedSkillByName(String attachedSkillName) throws SQLException {
-        Session session = null;
-        AttachedSkill attachedSkill = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            List<AttachedSkill> attachedSkills = session.createSQLQuery("select * from attachedskill where name= :name")
-                    .addEntity(AttachedSkill.class)
-                    .setString("name", attachedSkillName)
-                    .list();
-            attachedSkill = attachedSkills.get(0);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-        return attachedSkill;
+    public AttachedSkill getAttachedSkillByName(String attachedSkillName) {
+        Session session = sessionFactory.getCurrentSession();
+        List<AttachedSkill> attachedSkills = session.createSQLQuery("select * from attachedskill where name= :name")
+                .addEntity(Personage.class)
+                .setString("name", attachedSkillName)
+                .list();
+        return attachedSkills.get(0);
     }
 
     @Override
-    public List<AttachedSkill> getAllAttachedSkills() throws SQLException {
-        Session session = null;
-        List<AttachedSkill> attachedSkills = new ArrayList<AttachedSkill>();
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            attachedSkills = session.createCriteria(AttachedSkill.class).list();
-        } catch (Exception e) {
-            logger.error("Ошибка 'getAll'", e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-        return attachedSkills;
+    public List<AttachedSkill> getAllAttachedSkills() {
+        return sessionFactory.getCurrentSession().createQuery("from attachedskill").list();
     }
 
     @Override
-    public void deleteAttachedSkill(AttachedSkill attachedSkill) throws SQLException {
-        Session session = null;
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            session.delete(attachedSkill);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            logger.error("Ошибка при удалении", e);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
+    public void deleteAttachedSkill(AttachedSkill attachedSkill) {
+        sessionFactory.getCurrentSession().delete(attachedSkill);
     }
 
     @Override
-    public List<AttachedSkill> getAttachedSkillsByPersonage(Personage personage) throws SQLException {
-        Session session = null;
-        List<AttachedSkill> attachedSkills = new ArrayList<AttachedSkill>();
-        try {
-            session = HibernateUtil.getSessionFactory().openSession();
-            session.beginTransaction();
-            int personageId = personage.getId();
-            Query query = session.createSQLQuery(
-                    "select * from attachedskill inner join personage on attachedskill.personage_id = :id"
-            ).addEntity(AttachedSkill.class).setInteger("id", personageId);
-            attachedSkills = (List<AttachedSkill>) query.list();
-            session.getTransaction().commit();
+    public List<AttachedSkill> getAttachedSkillsByPersonage(Personage personage) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createSQLQuery(
+                "select * from attachedskill inner join personage on attachedskill.personage_id = :id"
+        )
+                .addEntity(AttachedSkill.class)
+                .setInteger("id", personage.getId());
 
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-        return attachedSkills;
+        return (List<AttachedSkill>) query.list();
     }
 }

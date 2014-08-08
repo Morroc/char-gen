@@ -23,9 +23,11 @@ public class Flaw {
     private String description;
     @Column(name = "turnoffpreconditions")
     private String turnOffPreconditions;
+    @SuppressWarnings("JpaDataSourceORMInspection")
     @ManyToOne
     @JoinColumn(name = "personage_id")
     private Personage personage;
+    @SuppressWarnings("JpaDataSourceORMInspection")
     @ManyToOne
     @JoinColumn(name = "race_id")
     private Race race;

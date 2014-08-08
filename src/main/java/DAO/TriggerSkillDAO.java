@@ -13,17 +13,17 @@ import java.util.List;
  * Time: 3:22 PM
  */
 public interface TriggerSkillDAO {
-    public void addTriggerSkill(TriggerSkill triggerSkill) throws SQLException;
+    public void addTriggerSkill(TriggerSkill triggerSkill);
 
-    public void updateTriggerSkill(TriggerSkill triggerSkill) throws SQLException;
+    public void updateTriggerSkill(TriggerSkill triggerSkill);
 
-    public TriggerSkill getTriggerSkillById(int triggerSkillId) throws SQLException;
+    public TriggerSkill getTriggerSkillById(int triggerSkillId);
 
-    public TriggerSkill getTriggerSkillByName(String triggerSkillName) throws SQLException;
+    public TriggerSkill getTriggerSkillByName(String triggerSkillName);
 
-    public List<TriggerSkill> getAllTriggerSkills() throws SQLException;
+    public List<TriggerSkill> getAllTriggerSkills();
 
-    public void deleteTriggerSkill(TriggerSkill triggerSkill) throws SQLException;
+    public void deleteTriggerSkill(TriggerSkill triggerSkill);
 
-    public List<TriggerSkill> getTriggerSkillsByPersonage(Personage personage) throws SQLException;
+    public List<TriggerSkill> getTriggerSkillsByPersonage(Personage personage);
 }

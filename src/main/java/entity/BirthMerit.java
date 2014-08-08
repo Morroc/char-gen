@@ -26,12 +26,6 @@ public class BirthMerit {
     private String description;
     @Column(name = "actionbonus")
     private String actionBonus;
-    @ManyToOne
-    @JoinColumn(name = "personage_id")
-    private Personage personage;
-    @ManyToOne
-    @JoinColumn(name = "race_id")
-    private Race race;
 
     public BirthMerit() {
     }
@@ -90,21 +84,5 @@ public class BirthMerit {
 
     public void setActionBonus(String actionBonus) {
         this.actionBonus = actionBonus;
-    }
-
-    public Personage getPersonage() {
-        return personage;
-    }
-
-    public void setPersonage(Personage personage) {
-        this.personage = personage;
-    }
-
-    public Race getRace() {
-        return race;
-    }
-
-    public void setRace(Race race) {
-        this.race = race;
     }
 }

@@ -17,7 +17,7 @@ public class Race {
     private int id;
     @Column(name = "name")
     private String name;
-    @Column(name = "maxAge")
+    @Column(name = "maxage")
     private int maxAge;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "raceByMerit")
     private List<RaceHasMerit> racesByMerit;

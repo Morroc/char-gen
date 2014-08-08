@@ -13,15 +13,17 @@ import java.util.List;
  * Time: 2:24 PM
  */
 public interface PersonageDAO {
-    public void addPersonage(Personage personage) throws SQLException;
+    public void addPersonage(Personage personage);
 
-    public void updatePersonage(Personage personage) throws SQLException;
+    public void updatePersonage(Personage personage);
 
-    public Personage getPersonageById(int personageId) throws SQLException;
+    public Personage getPersonageById(int personageId);
 
-    public List<Personage> getAllPersonages() throws SQLException;
+    public Personage getPersonageByName(String personageName);
 
-    public void deletePersonage(Personage personage) throws SQLException;
+    public List<Personage> getAllPersonages();
 
-    public List<Personage> getPersonagesByRace(Race race) throws SQLException;
+    public void deletePersonage(Personage personage);
+
+    public List<Personage> getPersonagesByRace(Race race);
 }

@@ -13,19 +13,15 @@ import java.util.List;
  * Time: 4:01 PM
  */
 public interface MeritDAO {
-    public void addMerit(Merit merit) throws SQLException;
+    public void addMerit(Merit merit);
 
-    public void updateMerit(Merit merit) throws SQLException;
+    public void updateMerit(Merit merit);
 
-    public Merit getMeritById(int meritId) throws SQLException;
+    public Merit getMeritById(int meritId);
 
-    public Merit getMeritByName(String meritName) throws SQLException;
+    public Merit getMeritByName(String meritName);
 
-    public List<Merit> getAllMerits() throws SQLException;
+    public List<Merit> getAllMerits();
 
-    public void deleteMerit(Merit merit) throws SQLException;
-
-    public List<Merit> getMeritsByPersonage(Personage personage) throws SQLException;
-
-    public List<Merit> getMeritsByRace(Race race) throws SQLException;
+    public void deleteMerit(Merit merit);
 }

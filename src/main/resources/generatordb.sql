@@ -40,7 +40,7 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`attachedskill` (
   `name` VARCHAR(45) NULL ,
   `value` INT NULL ,
   `basecost` INT NULL ,
-  `default` TINYINT(1) NULL ,
+  `defaultskill` TINYINT(1) NULL ,
   `difficult` TINYINT(1) NULL ,
   `theoretical` TINYINT(1) NULL ,
   `acquiringcost` INT NULL ,
