@@ -11,8 +11,8 @@
 </head>
 <body>
 
-<a href="<c:url value="/index" />">
-    Character generator
+<a href="<c:url value="/raceManager" />">
+    Race manager
 </a><br/>
 
 </body>

@@ -21,7 +21,7 @@ public class RaceController {
     @Autowired
     private RaceService raceService;
 
-    @RequestMapping("/index")
+    @RequestMapping("/raceManager")
     public String listRaces(Model model) {
 
         model.addAttribute("race", new Race());
@@ -32,23 +32,23 @@ public class RaceController {
 
     @RequestMapping("/")
     public String home() {
-        return "redirect:/index";
+        return "redirect:/raceManager";
     }
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/addRace", method = RequestMethod.POST)
     public String addRace(@ModelAttribute("race") Race race,
                              BindingResult result) {
 
         raceService.addRace(race);
 
-        return "redirect:/index";
+        return "redirect:/raceManager";
     }
 
-    @RequestMapping("/delete/{raceId}")
+    @RequestMapping("/deleteRace/{raceId}")
     public String deleteContact(@PathVariable("raceId") Integer raceId) {
 
         raceService.deleteRaceById(raceId);
 
-        return "redirect:/index";
+        return "redirect:/raceManager";
     }
 }

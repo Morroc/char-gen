@@ -3,7 +3,6 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,7 +13,7 @@
 
 <h2>Race editor</h2>
 
-<form:form method="post" action="add" commandName="race">
+<form:form method="post" action="addRace" commandName="race">
 
     <table>
         <tr>
@@ -48,7 +47,7 @@
             <tr>
                 <td>${race.name}</td>
                 <td>${race.maxAge}</td>
-                <td><a href="delete/${race.id}">Удалить</a></td>
+                <td><a href="deleteRace/${race.id}">Удалить</a></td>
             </tr>
         </c:forEach>
     </table>
