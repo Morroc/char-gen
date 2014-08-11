@@ -3,6 +3,7 @@ package web;
 import entity.Race;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,10 +24,10 @@ public class RaceController {
     private RaceService raceService;
 
     @RequestMapping("/index")
-    public String listRaces(Map<String, Object> map) {
+    public String listRaces(Map<String, Object> model) {
 
-        map.put("race", new Race());
-        map.put("raceList", raceService.getAllRaces());
+        model.put("race", new Race());
+        model.put("raceList", raceService.getAllRaces());
 
         return "race";
     }
