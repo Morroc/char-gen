@@ -8,47 +8,47 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
-    <title><fmt:message key="label.title" /></title>
+    <title><spring:message code="label.title" /></title>
 </head>
 <body>
 
-<h2><fmt:message key="label.title" /></h2>
+<h2><spring:message code="label.title" /></h2>
 
 <form:form method="post" action="add" commandName="race">
 
     <table>
         <tr>
-            <td><form:label path="raceName">
-                <fmt:message key="label.raceName" />
+            <td><form:label path="name">
+                <spring:message code="label.raceName" />
             </form:label></td>
-            <td><form:input path="raceName" /></td>
+            <td><form:input path="name" /></td>
         </tr>
         <tr>
             <td><form:label path="maxAge">
-                <fmt:message key="label.maxAge" />
+                <spring:message code="label.maxAge" />
             </form:label></td>
             <td><form:input path="maxAge" /></td>
         </tr>
         <tr>
             <td colspan="2"><input type="submit"
-                                   value="<fmt:message key="label.addRace"/>" /></td>
+                                   value="<spring:message code="label.addRace"/>" /></td>
         </tr>
     </table>
 </form:form>
 
-<h3><fmt:message key="label.races" /></h3>
+<h3><spring:message code="label.races" /></h3>
 <c:if test="${!empty raceList}">
     <table class="data">
         <tr>
-            <th><fmt:message key="label.raceName" /></th>
-            <th><fmt:message key="label.maxAge" /></th>
+            <th><spring:message code="label.raceName" /></th>
+            <th><spring:message code="label.maxAge" /></th>
             <th>&nbsp;</th>
         </tr>
         <c:forEach items="${raceList}" var="race">
             <tr>
                 <td>${race.name}</td>
-                <td>${race.max}</td>
-                <td><a href="delete/${race.id}"><fmt:message key="label.deleteRace" /></a></td>
+                <td>${race.maxAge}</td>
+                <td><a href="delete/${race.id}"><spring:message code="label.deleteRace" /></a></td>
             </tr>
         </c:forEach>
     </table>

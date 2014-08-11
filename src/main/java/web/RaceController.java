@@ -28,7 +28,7 @@ public class RaceController {
         map.put("race", new Race());
         map.put("raceList", raceService.getAllRaces());
 
-        return "race.jsp";
+        return "race";
     }
 
     @RequestMapping("/")
