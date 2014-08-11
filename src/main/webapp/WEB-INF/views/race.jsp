@@ -8,47 +8,47 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
-    <title><spring:message code="label.title" /></title>
+    <title>Race editor</title>
 </head>
 <body>
 
-<h2><spring:message code="label.title" /></h2>
+<h2>Race editor</h2>
 
 <form:form method="post" action="add" commandName="race">
 
     <table>
         <tr>
             <td><form:label path="name">
-                <spring:message code="label.raceName" />
+                Название расы
             </form:label></td>
             <td><form:input path="name" /></td>
         </tr>
         <tr>
             <td><form:label path="maxAge">
-                <spring:message code="label.maxAge" />
+                Максимально возможный возраст
             </form:label></td>
             <td><form:input path="maxAge" /></td>
         </tr>
         <tr>
             <td colspan="2"><input type="submit"
-                                   value="<spring:message code="label.addRace"/>" /></td>
+                                   value="Добавить расу" /></td>
         </tr>
     </table>
 </form:form>
 
-<h3><spring:message code="label.races" /></h3>
+<h3>Все расы</h3>
 <c:if test="${!empty raceList}">
     <table class="data">
         <tr>
-            <th><spring:message code="label.raceName" /></th>
-            <th><spring:message code="label.maxAge" /></th>
+            <th>Название расы</th>
+            <th>Максимально возможный возраст</th>
             <th>&nbsp;</th>
         </tr>
         <c:forEach items="${raceList}" var="race">
             <tr>
                 <td>${race.name}</td>
                 <td>${race.maxAge}</td>
-                <td><a href="delete/${race.id}"><spring:message code="label.deleteRace" /></a></td>
+                <td><a href="delete/${race.id}">Удалить</a></td>
             </tr>
         </c:forEach>
     </table>

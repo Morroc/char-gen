@@ -7,12 +7,12 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
-    <title><spring:message code="label.title"/></title>
+    <title>Character generator</title>
 </head>
 <body>
 
 <a href="<c:url value="/index" />">
-    <spring:message code="label.title"/>
+    Character generator
 </a><br/>
 
 </body>
