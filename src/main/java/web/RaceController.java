@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import services.RaceService;
 
 import java.util.Map;
@@ -19,15 +16,16 @@ import java.util.Map;
  * Time: 1:04 PM
  */
 @Controller
+@SessionAttributes
 public class RaceController {
     @Autowired
     private RaceService raceService;
 
     @RequestMapping("/index")
-    public String listRaces(Map<String, Object> model) {
+    public String listRaces(Model model) {
 
-        model.put("race", new Race());
-        model.put("raceList", raceService.getAllRaces());
+        model.addAttribute("race", new Race());
+        model.addAttribute("raceList", raceService.getAllRaces());
 
         return "race";
     }
