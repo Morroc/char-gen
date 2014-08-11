@@ -36,7 +36,7 @@ public class RaceController {
         return "redirect:/index";
     }
 
-    @RequestMapping(value = "/addRace", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String addRace(@ModelAttribute("race") Race race,
                              BindingResult result) {
 
@@ -45,7 +45,7 @@ public class RaceController {
         return "redirect:/index";
     }
 
-    @RequestMapping("/deleteRace/{raceId}")
+    @RequestMapping("/delete/{raceId}")
     public String deleteContact(@PathVariable("raceId") Integer raceId) {
 
         raceService.deleteRaceById(raceId);

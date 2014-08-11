@@ -47,7 +47,7 @@ public class AttachedSkillDAOImpl implements AttachedSkillDAO {
 
     @Override
     public List<AttachedSkill> getAllAttachedSkills() {
-        return sessionFactory.getCurrentSession().createQuery("from attachedskill").list();
+        return sessionFactory.getCurrentSession().createQuery("from AttachedSkill").list();
     }
 
     @Override

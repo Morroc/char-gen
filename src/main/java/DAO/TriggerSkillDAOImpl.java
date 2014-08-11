@@ -47,7 +47,7 @@ public class TriggerSkillDAOImpl implements TriggerSkillDAO {
 
     @Override
     public List<TriggerSkill> getAllTriggerSkills() {
-        return sessionFactory.getCurrentSession().createQuery("from triggerskill").list();
+        return sessionFactory.getCurrentSession().createQuery("from TriggerSkill").list();
     }
 
     @Override

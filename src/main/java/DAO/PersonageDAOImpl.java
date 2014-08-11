@@ -47,7 +47,7 @@ public class PersonageDAOImpl implements PersonageDAO {
 
     @Override
     public List<Personage> getAllPersonages() {
-        return sessionFactory.getCurrentSession().createQuery("from personage").list();
+        return sessionFactory.getCurrentSession().createQuery("from Personage").list();
     }
 
     @Override

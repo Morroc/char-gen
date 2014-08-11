@@ -34,7 +34,7 @@ public class PersonageHasMeritDAOImpl implements PersonageHasMeritDAO{
 
     @Override
     public List<PersonageHasMerit> getAllPersonageHasMerits() {
-        return sessionFactory.getCurrentSession().createQuery("from personage_has_merit").list();
+        return sessionFactory.getCurrentSession().createQuery("from PersonageHasMerit").list();
     }
 
     @Override

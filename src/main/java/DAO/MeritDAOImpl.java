@@ -46,7 +46,7 @@ public class MeritDAOImpl implements MeritDAO {
 
     @Override
     public List<Merit> getAllMerits() {
-        return sessionFactory.getCurrentSession().createQuery("from merit").list();
+        return sessionFactory.getCurrentSession().createQuery("from Merit").list();
     }
 
     @Override

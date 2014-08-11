@@ -34,7 +34,7 @@ public class RaceHasMeritDAOImpl implements RaceHasMeritDAO{
 
     @Override
     public List<RaceHasMerit> getAllRaceHasMerits() {
-        return sessionFactory.getCurrentSession().createQuery("from race_has_merit").list();
+        return sessionFactory.getCurrentSession().createQuery("from RaceHasMerit").list();
     }
 
     @Override

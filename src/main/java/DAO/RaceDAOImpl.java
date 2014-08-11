@@ -45,7 +45,7 @@ public class RaceDAOImpl implements RaceDAO {
 
     @Override
     public List<Race> getAllRaces() {
-        return sessionFactory.getCurrentSession().createQuery("from race").list();
+        return sessionFactory.getCurrentSession().createQuery("from Race").list();
     }
 
     @Override
