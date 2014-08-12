@@ -14,6 +14,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
     <context:component-scan base-package="DAO"/>
     <context:component-scan base-package="services"/>
     <context:component-scan base-package="entity"/>
+    <context:component-scan base-package="converters"/>
 
     <!-- Файл с настройками ресурсов для работы с данными (Data Access Resources) -->
     <import resource="data.xml"/>

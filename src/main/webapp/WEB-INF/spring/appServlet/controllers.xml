@@ -10,4 +10,13 @@
     <!-- Определяем папку, в которой будем искать веб компоненты (контроллеры)-->
     <context:component-scan base-package="web" />
 
+    <bean id="conversionService"
+          class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="converters.StringToRaceConverter"/>
+            </set>
+        </property>
+    </bean>
+
 </beans>

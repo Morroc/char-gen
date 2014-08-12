@@ -25,14 +25,9 @@ public class RaceController {
     public String listRaces(Model model) {
 
         model.addAttribute("race", new Race());
-        model.addAttribute("raceList", raceService.getAllRaces());
+        model.addAttribute("racesList", raceService.getAllRaces());
 
         return "race";
-    }
-
-    @RequestMapping("/")
-    public String home() {
-        return "redirect:/raceManager";
     }
 
     @RequestMapping(value = "/addRace", method = RequestMethod.POST)
@@ -45,7 +40,7 @@ public class RaceController {
     }
 
     @RequestMapping("/deleteRace/{raceId}")
-    public String deleteContact(@PathVariable("raceId") Integer raceId) {
+    public String deleteRace(@PathVariable("raceId") Integer raceId) {
 
         raceService.deleteRaceById(raceId);
 

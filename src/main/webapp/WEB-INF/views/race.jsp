@@ -36,14 +36,14 @@
 </form:form>
 
 <h3>Все расы</h3>
-<c:if test="${!empty raceList}">
+<c:if test="${!empty racesList}">
     <table class="data">
         <tr>
             <th>Название расы</th>
             <th>Максимально возможный возраст</th>
             <th>&nbsp;</th>
         </tr>
-        <c:forEach items="${raceList}" var="race">
+        <c:forEach items="${racesList}" var="race">
             <tr>
                 <td>${race.name}</td>
                 <td>${race.maxAge}</td>

@@ -32,4 +32,9 @@ public class RaceService {
     public void deleteRaceById(int raceId) {
         raceDAO.deleteRace(raceDAO.getRaceById(raceId));
     }
+
+    @Transactional
+    public Race getRaceById(int raceId) {
+        return raceDAO.getRaceById(raceId);
+    }
 }

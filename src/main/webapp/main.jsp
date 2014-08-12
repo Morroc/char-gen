@@ -15,5 +15,9 @@
     Race manager
 </a><br/>
 
+<a href="<c:url value="/personageManager" />">
+    Personage manager
+</a><br/>
+
 </body>
 </html>
