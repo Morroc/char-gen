@@ -45,7 +45,9 @@ public class PersonageController {
     public String addPersonage(@Validated @ModelAttribute("personage") Personage personage,
                                BindingResult result) {
 
-        System.out.println(result.getAllErrors().get(0).getDefaultMessage());
+        if(!result.getAllErrors().isEmpty()) {
+            System.out.println(result.getAllErrors().get(0).getDefaultMessage());
+        }
         personageService.addPersonage(personage);
 
         return "redirect:/personageManager";
