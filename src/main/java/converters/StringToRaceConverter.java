@@ -3,7 +3,6 @@ package converters;
 import entity.Race;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
-import org.springframework.stereotype.Component;
 import services.RaceService;
 
 /**
