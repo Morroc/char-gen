@@ -1,21 +1,14 @@
 package web;
 
-import converters.StringToRaceConverter;
 import entity.Personage;
-import entity.Race;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
 import services.PersonageService;
 import services.RaceService;
-
-import javax.servlet.http.HttpServletRequest;
-import java.beans.PropertyEditorSupport;
 
 /**
  * User: artemk
@@ -38,7 +31,7 @@ public class PersonageController {
         model.addAttribute("personagesList", personageService.getAllPersonages());
         model.addAttribute("racesList", raceService.getAllRaces());
 
-        return "personage";
+        return "personage_editor";
     }
 
     @RequestMapping(value = "/addPersonage", method = RequestMethod.POST)

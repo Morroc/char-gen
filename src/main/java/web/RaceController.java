@@ -8,8 +8,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import services.RaceService;
 
-import java.util.Map;
-
 /**
  * User: artemk
  * Date: 8/8/14
@@ -27,7 +25,7 @@ public class RaceController {
         model.addAttribute("race", new Race());
         model.addAttribute("racesList", raceService.getAllRaces());
 
-        return "race";
+        return "race_editor";
     }
 
     @RequestMapping(value = "/addRace", method = RequestMethod.POST)
