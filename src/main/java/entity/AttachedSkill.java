@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * User: artemk
@@ -8,7 +9,7 @@ import javax.persistence.*;
  * Time: 7:34 PM
  */
 @Entity
-@Table(name = "attachedskill")
+@Table(name = "attached_skill")
 public class AttachedSkill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,21 +17,18 @@ public class AttachedSkill {
     private int id;
     @Column(name = "name")
     private String name;
-    @Column(name = "value")
-    private int value;
-    @Column(name = "basecost")
+    @Column(name = "base_cost")
     private int baseCost;
-    @Column(name = "defaultskill")
-    private boolean isDefault;
+    @Column(name = "default_skill")
+    private boolean defaultSkill;
     @Column(name = "difficult")
-    private boolean isDifficult;
+    private boolean difficult;
     @Column(name = "theoretical")
-    private boolean isTheoretical;
-    @Column(name = "acquiringcost")
+    private boolean theoretical;
+    @Column(name = "acquiring_cost")
     private int acquiringCost;
-    @ManyToOne
-    @JoinColumn(name = "personage_id")
-    private Personage personage;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "attachedSkillByPersonage")
+    private List<PersonageHasAttachedSkill> attachedSkillsByPersonage;
 
     public AttachedSkill() {
     }
@@ -51,44 +49,12 @@ public class AttachedSkill {
         this.name = name;
     }
 
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
-    }
-
     public int getBaseCost() {
         return baseCost;
     }
 
     public void setBaseCost(int baseCost) {
         this.baseCost = baseCost;
-    }
-
-    public boolean isDefault() {
-        return isDefault;
-    }
-
-    public void setDefault(boolean aDefault) {
-        isDefault = aDefault;
-    }
-
-    public boolean isDifficult() {
-        return isDifficult;
-    }
-
-    public void setDifficult(boolean difficult) {
-        isDifficult = difficult;
-    }
-
-    public boolean isTheoretical() {
-        return isTheoretical;
-    }
-
-    public void setTheoretical(boolean theoretical) {
-        isTheoretical = theoretical;
     }
 
     public int getAcquiringCost() {
@@ -99,12 +65,36 @@ public class AttachedSkill {
         this.acquiringCost = acquiringCost;
     }
 
-    public Personage getPersonage() {
-        return personage;
+    public boolean isDefaultSkill() {
+        return defaultSkill;
     }
 
-    public void setPersonage(Personage personage) {
-        this.personage = personage;
+    public void setDefaultSkill(boolean defaultSkill) {
+        this.defaultSkill = defaultSkill;
+    }
+
+    public boolean isDifficult() {
+        return difficult;
+    }
+
+    public void setDifficult(boolean difficult) {
+        this.difficult = difficult;
+    }
+
+    public boolean isTheoretical() {
+        return theoretical;
+    }
+
+    public void setTheoretical(boolean theoretical) {
+        this.theoretical = theoretical;
+    }
+
+    public List<PersonageHasAttachedSkill> getAttachedSkillsByPersonage() {
+        return attachedSkillsByPersonage;
+    }
+
+    public void setAttachedSkillsByPersonage(List<PersonageHasAttachedSkill> attachedSkillsByPersonage) {
+        this.attachedSkillsByPersonage = attachedSkillsByPersonage;
     }
 
     //    private int getNonGeneratingRiseCost(int previousValue, int wantedValue) {

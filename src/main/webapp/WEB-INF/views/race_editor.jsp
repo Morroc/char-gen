@@ -7,11 +7,11 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
-    <title>Race editor</title>
+    <title>Race manager</title>
 </head>
 <body>
 
-<h2>Race editor</h2>
+<h2>Race manager</h2>
 
 <form:form method="post" action="addRace" commandName="race">
 

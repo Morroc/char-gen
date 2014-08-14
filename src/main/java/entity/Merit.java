@@ -1,7 +1,6 @@
 package entity;
 
 import javax.persistence.*;
-import java.lang.*;
 import java.util.List;
 
 /**
@@ -24,7 +23,7 @@ public class Merit {
     private String description;
     @Column(name = "preconditions")
     private String preconditions;
-    @Column(name = "actionbonus")
+    @Column(name = "action_bonus")
     private String actionBonus;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "meritByRace")
     private List<RaceHasMerit> meritsByRace;

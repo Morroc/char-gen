@@ -5,6 +5,7 @@ import enums.SkillType;
 
 import javax.persistence.*;
 import java.lang.*;
+import java.util.List;
 
 /**
  * User: artemk
@@ -12,7 +13,7 @@ import java.lang.*;
  * Time: 7:19 PM
  */
 @Entity
-@Table(name = "triggerskill")
+@Table(name = "trigger_skill")
 public class TriggerSkill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,13 +23,10 @@ public class TriggerSkill {
     private String name;
     @Column(name = "type")
     private SkillType type;
-    @Column(name = "nongeneratingcostcoefficient")
+    @Column(name = "non_generating_cost_coefficient")
     private int nonGeneratingCostCoefficient;
-    @Column(name = "level")
-    private SkillLevel level;
-    @ManyToOne
-    @JoinColumn(name = "personage_id")
-    private Personage personage;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "triggerSkillByPersonage")
+    private List<PersonageHasTriggerSkill> triggerSkillsByPersonage;
 
     public TriggerSkill() {
     }
@@ -65,19 +63,11 @@ public class TriggerSkill {
         this.nonGeneratingCostCoefficient = nonGeneratingCostCoefficient;
     }
 
-    public SkillLevel getLevel() {
-        return level;
+    public List<PersonageHasTriggerSkill> getTriggerSkillsByPersonage() {
+        return triggerSkillsByPersonage;
     }
 
-    public void setLevel(SkillLevel level) {
-        this.level = level;
-    }
-
-    public Personage getPersonage() {
-        return personage;
-    }
-
-    public void setPersonage(Personage personage) {
-        this.personage = personage;
+    public void setTriggerSkillsByPersonage(List<PersonageHasTriggerSkill> triggerSkillsByPersonage) {
+        this.triggerSkillsByPersonage = triggerSkillsByPersonage;
     }
 }

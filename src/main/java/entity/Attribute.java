@@ -15,20 +15,18 @@ public class Attribute {
     @Column(name = "id")
     private int id;
     @Column(name = "cost")
-    private int cost;
-    @Column(name = "value")
     private int value;
-    @Column(name = "maxvalue")
+    @Column(name = "max_value")
     private int maxValue;
-    @Column(name = "minvalue")
+    @Column(name = "min_value")
     private int minValue;
-    @Column(name = "from1to3nongeneratingcost")
+    @Column(name = "from_1_to_3_non_generating_cost")
     private int from1To3NonGeneratingCost;
-    @Column(name = "costrisecoefficient")
+    @Column(name = "cost_rise_coefficient")
     private double costRiseCoefficient;
-    @Column(name = "nongeneratingrisecoefficient")
+    @Column(name = "non_generating_rise_coefficient")
     private double nonGeneratingRiseCoefficient;
-    @Column(name = "actionlevelbonus")
+    @Column(name = "action_level_bonus")
     private String actionLevelBonus;
 
     public Attribute() {
@@ -40,14 +38,6 @@ public class Attribute {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getCost() {
-        return cost;
-    }
-
-    public void setCost(int cost) {
-        this.cost = cost;
     }
 
     public int getValue() {

@@ -2,6 +2,7 @@ package DAO;
 
 import entity.Personage;
 import entity.Race;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -32,7 +33,9 @@ public class PersonageDAOImpl implements PersonageDAO {
 
     @Override
     public Personage getPersonageById(int personageId) {
-        return (Personage) sessionFactory.getCurrentSession().load(Personage.class, personageId);
+        Personage personage = (Personage) sessionFactory.getCurrentSession().load(Personage.class, personageId);
+        Hibernate.initialize(personage);
+        return personage;
     }
 
     @Override

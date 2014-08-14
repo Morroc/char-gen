@@ -38,7 +38,7 @@ public class TriggerSkillDAOImpl implements TriggerSkillDAO {
     @Override
     public TriggerSkill getTriggerSkillByName(String triggerSkillName) {
         Session session = sessionFactory.getCurrentSession();
-        List<TriggerSkill> triggerSkills = session.createSQLQuery("select * from triggerskill where name= :name")
+        List<TriggerSkill> triggerSkills = session.createSQLQuery("select * from trigger_skill where name= :name")
                 .addEntity(TriggerSkill.class)
                 .setString("name", triggerSkillName)
                 .list();
@@ -59,7 +59,7 @@ public class TriggerSkillDAOImpl implements TriggerSkillDAO {
     public List<TriggerSkill> getTriggerSkillsByPersonage(Personage personage) {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createSQLQuery(
-                "select * from triggerskill inner join personage on triggerskill.personage_id = :id"
+                "select * from trigger_skill inner join personage on trigger_skill.personage_id = :id"
         )
                 .addEntity(TriggerSkill.class)
                 .setInteger("id", personage.getId());

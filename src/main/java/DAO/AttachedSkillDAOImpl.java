@@ -38,7 +38,7 @@ public class AttachedSkillDAOImpl implements AttachedSkillDAO {
     @Override
     public AttachedSkill getAttachedSkillByName(String attachedSkillName) {
         Session session = sessionFactory.getCurrentSession();
-        List<AttachedSkill> attachedSkills = session.createSQLQuery("select * from attachedskill where name= :name")
+        List<AttachedSkill> attachedSkills = session.createSQLQuery("select * from attached_skill where name= :name")
                 .addEntity(Personage.class)
                 .setString("name", attachedSkillName)
                 .list();
@@ -59,7 +59,7 @@ public class AttachedSkillDAOImpl implements AttachedSkillDAO {
     public List<AttachedSkill> getAttachedSkillsByPersonage(Personage personage) {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createSQLQuery(
-                "select * from attachedskill inner join personage on attachedskill.personage_id = :id"
+                "select * from attached_skill inner join personage on attached_skill.personage_id = :id"
         )
                 .addEntity(AttachedSkill.class)
                 .setInteger("id", personage.getId());

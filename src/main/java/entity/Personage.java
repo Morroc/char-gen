@@ -25,10 +25,10 @@ public class Personage
     private Race race;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByMerit")
     private List<PersonageHasMerit> personagesByMerit;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personage")
-    private List<TriggerSkill> triggerSkills;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personage")
-    private List<AttachedSkill> attachedSkills;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByTriggerSkill")
+    private List<PersonageHasTriggerSkill> triggerSkills;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByAttachedSkill")
+    private List<PersonageHasAttachedSkill> attachedSkills;
 
 
     public Personage() {
@@ -66,19 +66,19 @@ public class Personage
         this.race = race;
     }
 
-    public List<TriggerSkill> getTriggerSkills() {
+    public List<PersonageHasTriggerSkill> getTriggerSkills() {
         return triggerSkills;
     }
 
-    public void setTriggerSkills(List<TriggerSkill> triggerSkills) {
+    public void setTriggerSkills(List<PersonageHasTriggerSkill> triggerSkills) {
         this.triggerSkills = triggerSkills;
     }
 
-    public List<AttachedSkill> getAttachedSkills() {
+    public List<PersonageHasAttachedSkill> getAttachedSkills() {
         return attachedSkills;
     }
 
-    public void setAttachedSkills(List<AttachedSkill> attachedSkills) {
+    public void setAttachedSkills(List<PersonageHasAttachedSkill> attachedSkills) {
         this.attachedSkills = attachedSkills;
     }
 

@@ -12,6 +12,8 @@
         <mapping class="entity.Merit" />
         <mapping class="entity.Personage" />
         <mapping class="entity.PersonageHasMerit" />
+        <mapping class="entity.PersonageHasAttachedSkill" />
+        <mapping class="entity.PersonageHasTriggerSkill" />
         <mapping class="entity.Race" />
         <mapping class="entity.RaceHasMerit" />
         <mapping class="entity.TriggerSkill" />

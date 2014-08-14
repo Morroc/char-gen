@@ -21,16 +21,8 @@ public class Flaw {
     private int cost;
     @Column(name = "description")
     private String description;
-    @Column(name = "turnoffpreconditions")
+    @Column(name = "turn_off_preconditions")
     private String turnOffPreconditions;
-    @SuppressWarnings("JpaDataSourceORMInspection")
-    @ManyToOne
-    @JoinColumn(name = "personage_id")
-    private Personage personage;
-    @SuppressWarnings("JpaDataSourceORMInspection")
-    @ManyToOne
-    @JoinColumn(name = "race_id")
-    private Race race;
 
     public Flaw() {
     }
@@ -73,21 +65,5 @@ public class Flaw {
 
     public void setTurnOffPreconditions(String turnOffPreconditions) {
         this.turnOffPreconditions = turnOffPreconditions;
-    }
-
-    public Personage getPersonage() {
-        return personage;
-    }
-
-    public void setPersonage(Personage personage) {
-        this.personage = personage;
-    }
-
-    public Race getRace() {
-        return race;
-    }
-
-    public void setRace(Race race) {
-        this.race = race;
     }
 }

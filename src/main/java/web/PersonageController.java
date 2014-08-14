@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import services.AttachedSkillService;
 import services.PersonageService;
 import services.RaceService;
 
@@ -24,8 +25,11 @@ public class PersonageController {
     @Autowired
     private RaceService raceService;
 
+    @Autowired
+    private AttachedSkillService attachedSkillService;
+
     @RequestMapping("/personageManager")
-    public String listRaces(Model model) {
+    public String listPersonages(Model model) {
 
         model.addAttribute("personage", new Personage());
         model.addAttribute("personagesList", personageService.getAllPersonages());
@@ -52,6 +56,14 @@ public class PersonageController {
         personageService.deletePersonageById(personageId);
 
         return "redirect:/personageManager";
+    }
+
+    @RequestMapping("/personage/{personageId}")
+    public String personage(@PathVariable("personageId") Integer personageId, Model model) {
+
+        model.addAttribute("personage", personageService.getPersonageById(personageId));
+
+        return "personage";
     }
 
 }

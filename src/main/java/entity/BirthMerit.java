@@ -8,7 +8,7 @@ import javax.persistence.*;
  * Time: 7:14 PM
  */
 @Entity
-@Table(name = "birthmerit")
+@Table(name = "birth_merit")
 public class BirthMerit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,13 +18,11 @@ public class BirthMerit {
     private String name;
     @Column(name = "probability")
     private double probability;
-    @Column(name = "value")
-    private int value;
     @Column(name = "cost")
     private int cost;
     @Column(name = "description")
     private String description;
-    @Column(name = "actionbonus")
+    @Column(name = "action_bonus")
     private String actionBonus;
 
     public BirthMerit() {
@@ -52,14 +50,6 @@ public class BirthMerit {
 
     public void setProbability(double probability) {
         this.probability = probability;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
     }
 
     public int getCost() {

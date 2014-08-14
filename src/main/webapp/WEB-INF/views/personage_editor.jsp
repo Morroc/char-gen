@@ -7,11 +7,11 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
-    <title>Personage editor</title>
+    <title>Personage manager</title>
 </head>
 <body>
 
-<h2>Personage editor</h2>
+<h2>Personage manager</h2>
 
 <form:form method="post" action="addPersonage" commandName="personage">
 
@@ -66,7 +66,7 @@
             <tr>
                 <td>${personage.name}</td>
                 <td>${personage.age}</td>
-                <td>${personage.race.name}</td>
+                <td><a href="/personage/${personage.id}">${personage.race.name}</a></td>
                 <td><a href="deletePersonage/${personage.id}">Удалить</a></td>
             </tr>
         </c:forEach>

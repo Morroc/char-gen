@@ -32,4 +32,9 @@ public class PersonageService {
     public void deletePersonageById(int personageId) {
         personageDAO.deletePersonage(personageDAO.getPersonageById(personageId));
     }
+
+    @Transactional
+    public Personage getPersonageById(int personageId) {
+        return personageDAO.getPersonageById(personageId);
+    }
 }
