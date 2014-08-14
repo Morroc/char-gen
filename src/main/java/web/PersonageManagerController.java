@@ -1,15 +1,12 @@
 package web;
 
 import entity.Personage;
-import entity.PersonageHasAttachedSkill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import services.AttachedSkillService;
 import services.PersonageService;
 import services.RaceService;
 
@@ -26,9 +23,6 @@ public class PersonageManagerController {
 
     @Autowired
     private RaceService raceService;
-
-    @Autowired
-    private AttachedSkillService attachedSkillService;
 
     @RequestMapping("/personageManager")
     public String listPersonages(Model model) {
@@ -55,36 +49,5 @@ public class PersonageManagerController {
         personageService.deletePersonageById(personageId);
 
         return "redirect:/personageManager";
-    }
-
-    @RequestMapping("/personage/{personageId}")
-    public String personage(@PathVariable("personageId") Integer personageId, Model model) {
-
-        model.addAttribute("personageHasAttachedSkill", new PersonageHasAttachedSkill());
-        model.addAttribute("personage", personageService.getPersonageById(personageId));
-        model.addAttribute("attachedSkillsListByPersonage", attachedSkillService.getAttachedSkillsByPersonageId(personageId));
-        model.addAttribute("allAttachedSkillsList", attachedSkillService.getAllAttachedSkills());
-
-        return "personage";
-    }
-
-    @RequestMapping(value = "/personage/linkAttachedSkillToPersonage", method = RequestMethod.POST)
-    public String addPersonageHasAttachedSkill(@Validated @ModelAttribute("personageHasAttachedSkill") PersonageHasAttachedSkill personageHasAttachedSkill,
-                               BindingResult result) {
-
-        attachedSkillService.addLinkWithPersonage(personageHasAttachedSkill);
-        int personageId = personageHasAttachedSkill.getPersonageByAttachedSkill().getId();
-
-        return "redirect:/personage/" + personageId;
-    }
-
-    @RequestMapping("/personage/unlinkAttachedSkill/{attachedSkillId}")
-    public String unlinkAttachedSkill(@PathVariable("attachedSkillId") Integer attachedSkillId) {
-
-        PersonageHasAttachedSkill personageHasAttachedSkill = attachedSkillService.getPersonageHasAttachedSkillByAttachedSkillId(attachedSkillId);
-        int personageId = personageHasAttachedSkill.getPersonageByAttachedSkill().getId();
-        attachedSkillService.deleteLinkWithPersonage(personageHasAttachedSkill);
-
-        return "redirect:/personage/" + personageId;
     }
 }
