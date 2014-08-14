@@ -20,7 +20,7 @@ import services.RaceService;
  */
 @Controller
 @SessionAttributes
-public class PersonageController {
+public class PersonageManagerController {
     @Autowired
     private PersonageService personageService;
 
@@ -62,7 +62,8 @@ public class PersonageController {
 
         model.addAttribute("personageHasAttachedSkill", new PersonageHasAttachedSkill());
         model.addAttribute("personage", personageService.getPersonageById(personageId));
-        model.addAttribute("attachedSkillsList", attachedSkillService.getAllAttachedSkills());
+        model.addAttribute("attachedSkillsListByPersonage", attachedSkillService.getAttachedSkillsByPersonageId(personageId));
+        model.addAttribute("allAttachedSkillsList", attachedSkillService.getAllAttachedSkills());
 
         return "personage";
     }
@@ -77,4 +78,13 @@ public class PersonageController {
         return "redirect:/personage/" + personageId;
     }
 
+    @RequestMapping("/personage/unlinkAttachedSkill/{attachedSkillId}")
+    public String unlinkAttachedSkill(@PathVariable("attachedSkillId") Integer attachedSkillId) {
+
+        PersonageHasAttachedSkill personageHasAttachedSkill = attachedSkillService.getPersonageHasAttachedSkillByAttachedSkillId(attachedSkillId);
+        int personageId = personageHasAttachedSkill.getPersonageByAttachedSkill().getId();
+        attachedSkillService.deleteLinkWithPersonage(personageHasAttachedSkill);
+
+        return "redirect:/personage/" + personageId;
+    }
 }

@@ -2,6 +2,7 @@ package DAO;
 
 import entity.AttachedSkill;
 import entity.Personage;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -32,7 +33,9 @@ public class AttachedSkillDAOImpl implements AttachedSkillDAO {
 
     @Override
     public AttachedSkill getAttachedSkillById(int attachedSkillId) {
-        return (AttachedSkill) sessionFactory.getCurrentSession().load(AttachedSkill.class, attachedSkillId);
+        AttachedSkill attachedSkill = (AttachedSkill) sessionFactory.getCurrentSession().load(AttachedSkill.class, attachedSkillId);
+        Hibernate.initialize(attachedSkill);
+        return attachedSkill;
     }
 
     @Override

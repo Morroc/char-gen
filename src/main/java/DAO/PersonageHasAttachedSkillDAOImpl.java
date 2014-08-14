@@ -1,6 +1,7 @@
 package DAO;
 
 import entity.PersonageHasAttachedSkill;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -40,6 +41,16 @@ public class PersonageHasAttachedSkillDAOImpl implements PersonageHasAttachedSki
     @Override
     public void deletePersonageHasAttachedSkill(PersonageHasAttachedSkill personageHasAttachedSkill) {
         sessionFactory.getCurrentSession().delete(personageHasAttachedSkill);
+    }
+
+    @Override
+    public PersonageHasAttachedSkill getPersonageHasAttachedSkillByAttachedSkillId(int attachedSkillId) {
+        Session session = sessionFactory.getCurrentSession();
+        List<PersonageHasAttachedSkill> personageHasAttachedSkills = session.createSQLQuery("select * from personage_has_attached_skill where attached_skill_id = :id")
+                .addEntity(PersonageHasAttachedSkill.class)
+                .setInteger("id", attachedSkillId)
+                .list();
+        return personageHasAttachedSkills.get(0);
     }
 
 }

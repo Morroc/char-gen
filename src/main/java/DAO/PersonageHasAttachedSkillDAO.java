@@ -19,4 +19,6 @@ public interface PersonageHasAttachedSkillDAO {
     public List<PersonageHasAttachedSkill> getAllPersonageHasAttachedSkills();
 
     public void deletePersonageHasAttachedSkill(PersonageHasAttachedSkill personageHasAttachedSkill);
+
+    public PersonageHasAttachedSkill getPersonageHasAttachedSkillByAttachedSkillId(int attachedSkillId);
 }
