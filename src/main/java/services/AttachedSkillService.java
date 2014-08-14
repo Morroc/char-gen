@@ -2,7 +2,9 @@ package services;
 
 import DAO.AttachedSkillDAO;
 import DAO.PersonageDAO;
+import DAO.PersonageHasAttachedSkillDAO;
 import entity.AttachedSkill;
+import entity.PersonageHasAttachedSkill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +22,7 @@ public class AttachedSkillService {
     private AttachedSkillDAO attachedSkillDAO;
 
     @Autowired
-    private PersonageDAO personageDAO;
+    private PersonageHasAttachedSkillDAO personageHasAttachedSkillDAO;
 
     @Transactional
     public void addAttachedSkill(AttachedSkill attachedSkill) {
@@ -38,7 +40,12 @@ public class AttachedSkillService {
     }
 
     @Transactional
-    public List<AttachedSkill> getAttachedSkillsByPersonageId(int personageId) {
-        return attachedSkillDAO.getAttachedSkillsByPersonage(personageDAO.getPersonageById(personageId));
+    public void addLinkWithPersonage(PersonageHasAttachedSkill personageHasAttachedSkill) {
+        personageHasAttachedSkillDAO.addPersonageHasAttachedSkill(personageHasAttachedSkill);
+    }
+
+    @Transactional
+    public AttachedSkill getAttachedSkillById(int attachedSkillId) {
+        return attachedSkillDAO.getAttachedSkillById(attachedSkillId);
     }
 }

@@ -30,7 +30,7 @@ public class MeritService {
     private PersonageHasMeritDAO personageHasMeritDAO;
 
     @Transactional
-    public void addMeritToRace(Merit merit, Race race) {
+    public void linkMeritToRace(Merit merit, Race race) {
         meritDAO.addMerit(merit);
         RaceHasMerit raceHasMerit = new RaceHasMerit(merit, race);
         raceHasMeritDAO.addRaceHasMerit(raceHasMerit);

@@ -15,5 +15,46 @@
 
 <h3>Прикрепленные навыки</h3>
 
+<form:form method="post" action="linkAttachedSkillToPersonage" commandName="personageHasAttachedSkill">
+
+    <table>
+        <tr>
+            <td>
+                <form:label path="attachedSkillByPersonage">
+                    Прикрепленный навык
+                </form:label>
+            </td>
+            <td>
+                <form:select path="attachedSkillByPersonage" items="${attachedSkillsList}" itemValue="id" itemLabel="name"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <form:input path="personageByAttachedSkill" type="hidden" value="${personage.id}"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <form:label path="currentValue">
+                    Значение
+                </form:label>
+            </td>
+            <td>
+                <form:input path="currentValue"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2"><input type="submit"
+                                   value="Добавить навык"/></td>
+        </tr>
+    </table>
+</form:form>
+
+<h3>Прикрепленные навыки</h3>
+
 </body>
 </html>

@@ -1,12 +1,14 @@
 package web;
 
 import entity.Personage;
+import entity.PersonageHasAttachedSkill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import services.AttachedSkillService;
 import services.PersonageService;
 import services.RaceService;
@@ -42,9 +44,6 @@ public class PersonageController {
     public String addPersonage(@Validated @ModelAttribute("personage") Personage personage,
                                BindingResult result) {
 
-        if(!result.getAllErrors().isEmpty()) {
-            System.out.println(result.getAllErrors().get(0).getDefaultMessage());
-        }
         personageService.addPersonage(personage);
 
         return "redirect:/personageManager";
@@ -61,9 +60,21 @@ public class PersonageController {
     @RequestMapping("/personage/{personageId}")
     public String personage(@PathVariable("personageId") Integer personageId, Model model) {
 
+        model.addAttribute("personageHasAttachedSkill", new PersonageHasAttachedSkill());
         model.addAttribute("personage", personageService.getPersonageById(personageId));
+        model.addAttribute("attachedSkillsList", attachedSkillService.getAllAttachedSkills());
 
         return "personage";
+    }
+
+    @RequestMapping(value = "/personage/linkAttachedSkillToPersonage", method = RequestMethod.POST)
+    public String addPersonageHasAttachedSkill(@Validated @ModelAttribute("personageHasAttachedSkill") PersonageHasAttachedSkill personageHasAttachedSkill,
+                               BindingResult result) {
+
+        attachedSkillService.addLinkWithPersonage(personageHasAttachedSkill);
+        int personageId = personageHasAttachedSkill.getPersonageByAttachedSkill().getId();
+
+        return "redirect:/personage/" + personageId;
     }
 
 }

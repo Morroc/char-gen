@@ -17,11 +17,14 @@ public class PersonageHasAttachedSkill {
 
     @ManyToOne
     @JoinColumn(name = "attached_skill_id")
-    private Merit attachedSkillByPersonage;
+    private AttachedSkill attachedSkillByPersonage;
 
     @ManyToOne
     @JoinColumn(name = "personage_id")
     private Personage personageByAttachedSkill;
+
+    @Column(name = "current_value")
+    private int currentValue;
 
     public int getId() {
         return id;
@@ -31,11 +34,11 @@ public class PersonageHasAttachedSkill {
         this.id = id;
     }
 
-    public Merit getAttachedSkillByPersonage() {
+    public AttachedSkill getAttachedSkillByPersonage() {
         return attachedSkillByPersonage;
     }
 
-    public void setAttachedSkillByPersonage(Merit attachedSkillByPersonage) {
+    public void setAttachedSkillByPersonage(AttachedSkill attachedSkillByPersonage) {
         this.attachedSkillByPersonage = attachedSkillByPersonage;
     }
 
@@ -45,5 +48,13 @@ public class PersonageHasAttachedSkill {
 
     public void setPersonageByAttachedSkill(Personage personageByAttachedSkill) {
         this.personageByAttachedSkill = personageByAttachedSkill;
+    }
+
+    public int getCurrentValue() {
+        return currentValue;
+    }
+
+    public void setCurrentValue(int currentValue) {
+        this.currentValue = currentValue;
     }
 }

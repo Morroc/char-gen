@@ -64,9 +64,9 @@
         </tr>
         <c:forEach items="${personagesList}" var="personage">
             <tr>
-                <td>${personage.name}</td>
+                <td><a href="/personage/${personage.id}">${personage.name}</a></td>
                 <td>${personage.age}</td>
-                <td><a href="/personage/${personage.id}">${personage.race.name}</a></td>
+                <td>${personage.race.name}</td>
                 <td><a href="deletePersonage/${personage.id}">Удалить</a></td>
             </tr>
         </c:forEach>

@@ -59,7 +59,13 @@ public class AttachedSkillDAOImpl implements AttachedSkillDAO {
     public List<AttachedSkill> getAttachedSkillsByPersonage(Personage personage) {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createSQLQuery(
-                "select * from attached_skill inner join personage on attached_skill.personage_id = :id"
+                "select atsk.* \n" +
+                        "from attached_skill atsk \n" +
+                        "\tinner join personage_has_attached_skill phat \n" +
+                        "\t  on phat.attached_skill_id = atsk.id \n" +
+                        "\tinner join personage p\n" +
+                        "\t  on p.id = phat.personage_id\n" +
+                        "where p.id = :id"
         )
                 .addEntity(AttachedSkill.class)
                 .setInteger("id", personage.getId());
