@@ -11,6 +11,8 @@
 </head>
 <body>
 
+<h2><a href="/main.jsp">Home</a><h2>
+
 <h2>Personage ${personage.name}</h2>
 
 <h3>Прикрепленные навыки</h3>

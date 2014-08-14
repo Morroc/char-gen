@@ -11,6 +11,8 @@
 </head>
 <body>
 
+<h2><a href="/main.jsp">Home</a><h2>
+
 <h2>Attached skills manager</h2>
 
 <form:form method="post" action="addAttachedSkill" commandName="attachedSkill">

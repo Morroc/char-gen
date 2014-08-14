@@ -11,6 +11,8 @@
 </head>
 <body>
 
+<h2><a href="/main.jsp">Home</a><h2>
+
 <h2>Race manager</h2>
 
 <form:form method="post" action="addRace" commandName="race">
