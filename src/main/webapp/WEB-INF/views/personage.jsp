@@ -63,8 +63,26 @@
                         <input type="checkbox" disabled="disabled">
                     </td>
                 </c:if>
-                <td><a href="unlinkAttachedSkill/${attachedSkill.id}">Отвязать</a></td>
+                <%--<td><a href="unlinkAttachedSkillByPersonageIdAndAttachedSkillId/${attachedSkill.id}?personageId=${personage.id}">Отвязать</a></td>--%>
             </tr>
+        </c:forEach>
+    </table>
+</c:if>
+
+<h3>Значения прикрепленных навыыков</h3>
+
+<c:if test="${!empty personageHasAttachedSkillsByPersonage}">
+    <table class="data">
+        <tr>
+            <th>Название навыка</th>
+            <th>Текущее значение</th>
+            <th>&nbsp;</th>
+        </tr>
+        <c:forEach items="${personageHasAttachedSkillsByPersonage}" var="personageHasAttachedSkill">
+            <tr>
+                <td>${personageHasAttachedSkill.attachedSkillByPersonage.name}</td>
+                <td>${personageHasAttachedSkill.currentValue}</td>
+                <td><a href="unlinkAttachedSkill/${personageHasAttachedSkill.id}?personageId=${personage.id}">Отвязать</a></td>
         </c:forEach>
     </table>
 </c:if>

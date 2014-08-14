@@ -1,6 +1,7 @@
 package DAO;
 
 import entity.PersonageHasAttachedSkill;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.List;
  * Time: 12:43 PM
  */
 @Repository
-public class PersonageHasAttachedSkillDAOImpl implements PersonageHasAttachedSkillDAO{
+public class PersonageHasAttachedSkillDAOImpl implements PersonageHasAttachedSkillDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -30,7 +31,9 @@ public class PersonageHasAttachedSkillDAOImpl implements PersonageHasAttachedSki
 
     @Override
     public PersonageHasAttachedSkill getPersonageHasAttachedSkillById(int personageHasAttachedSkillId) {
-        return (PersonageHasAttachedSkill) sessionFactory.getCurrentSession().load(PersonageHasAttachedSkill.class, personageHasAttachedSkillId);
+        PersonageHasAttachedSkill personageHasAttachedSkill = (PersonageHasAttachedSkill) sessionFactory.getCurrentSession().load(PersonageHasAttachedSkill.class, personageHasAttachedSkillId);
+        Hibernate.initialize(personageHasAttachedSkill);
+        return personageHasAttachedSkill;
     }
 
     @Override
@@ -44,13 +47,25 @@ public class PersonageHasAttachedSkillDAOImpl implements PersonageHasAttachedSki
     }
 
     @Override
-    public PersonageHasAttachedSkill getPersonageHasAttachedSkillByAttachedSkillId(int attachedSkillId) {
+    public PersonageHasAttachedSkill getPersonageHasAttachedSkillByAttachedSkillIdAndPersonageId(int attachedSkillId, int personageId) {
         Session session = sessionFactory.getCurrentSession();
-        List<PersonageHasAttachedSkill> personageHasAttachedSkills = session.createSQLQuery("select * from personage_has_attached_skill where attached_skill_id = :id")
+        List<PersonageHasAttachedSkill> personageHasAttachedSkills = session.createSQLQuery(
+                "select * from personage_has_attached_skill " +
+                        "where attached_skill_id = :attached_skill_id and personage_id = :personage_id")
                 .addEntity(PersonageHasAttachedSkill.class)
-                .setInteger("id", attachedSkillId)
+                .setInteger("attached_skill_id", attachedSkillId)
+                .setInteger("personage_id", personageId)
                 .list();
         return personageHasAttachedSkills.get(0);
     }
 
+    @Override
+    public List<PersonageHasAttachedSkill> getPersonageHasAttachedSkillByPersonageId(int personageId) {
+        Session session = sessionFactory.getCurrentSession();
+        List<PersonageHasAttachedSkill> personageHasAttachedSkills = session.createSQLQuery("select * from personage_has_attached_skill where personage_id = :id")
+                .addEntity(PersonageHasAttachedSkill.class)
+                .setInteger("id", personageId)
+                .list();
+        return personageHasAttachedSkills;
+    }
 }

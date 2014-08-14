@@ -53,11 +53,6 @@ public class AttachedSkillService {
     }
 
     @Transactional
-    public PersonageHasAttachedSkill getPersonageHasAttachedSkillByAttachedSkillId(int attachedSkillId) {
-        return personageHasAttachedSkillDAO.getPersonageHasAttachedSkillByAttachedSkillId(attachedSkillId);
-    }
-
-    @Transactional
     public AttachedSkill getAttachedSkillById(int attachedSkillId) {
         return attachedSkillDAO.getAttachedSkillById(attachedSkillId);
     }

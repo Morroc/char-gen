@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import services.AttachedSkillService;
+import services.PersonageHasAttachedSkillService;
 import services.PersonageService;
 
 /**
@@ -24,10 +25,14 @@ public class PersonageController {
     @Autowired
     private AttachedSkillService attachedSkillService;
 
+    @Autowired
+    private PersonageHasAttachedSkillService personageHasAttachedSkillService;
+
     @RequestMapping("/personage/{personageId}")
     public String personage(@PathVariable("personageId") Integer personageId, Model model) {
 
         model.addAttribute("personageHasAttachedSkill", new PersonageHasAttachedSkill());
+        model.addAttribute("personageHasAttachedSkillsByPersonage", personageHasAttachedSkillService.getPersonageHasAttachedSkillsByPersonageId(personageId));
         model.addAttribute("personage", personageService.getPersonageById(personageId));
         model.addAttribute("attachedSkillsListByPersonage", attachedSkillService.getAttachedSkillsByPersonageId(personageId));
         model.addAttribute("allAttachedSkillsList", attachedSkillService.getAllAttachedSkills());
@@ -45,11 +50,14 @@ public class PersonageController {
         return "redirect:/personage/" + personageId;
     }
 
-    @RequestMapping("/personage/unlinkAttachedSkill/{attachedSkillId}")
-    public String unlinkAttachedSkill(@PathVariable("attachedSkillId") Integer attachedSkillId) {
+//    @RequestMapping(value = "/personage/unlinkAttachedSkill/{attachedSkillId}")
+//    public String unlinkAttachedSkill(@PathVariable("attachedSkillId") Integer attachedSkillId,
+//                                      @RequestParam("personageId") Integer personageId) {
 
-        PersonageHasAttachedSkill personageHasAttachedSkill = attachedSkillService.getPersonageHasAttachedSkillByAttachedSkillId(attachedSkillId);
-        int personageId = personageHasAttachedSkill.getPersonageByAttachedSkill().getId();
+    @RequestMapping(value = "/personage/unlinkAttachedSkill/{personageHasAttachedSkillId}")
+    public String unlinkAttachedSkill(@PathVariable("personageHasAttachedSkillId") PersonageHasAttachedSkill personageHasAttachedSkill,
+                                      @RequestParam("personageId") Integer personageId) {
+
         attachedSkillService.deleteLinkWithPersonage(personageHasAttachedSkill);
 
         return "redirect:/personage/" + personageId;

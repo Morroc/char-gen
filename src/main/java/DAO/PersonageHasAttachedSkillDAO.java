@@ -20,5 +20,7 @@ public interface PersonageHasAttachedSkillDAO {
 
     public void deletePersonageHasAttachedSkill(PersonageHasAttachedSkill personageHasAttachedSkill);
 
-    public PersonageHasAttachedSkill getPersonageHasAttachedSkillByAttachedSkillId(int attachedSkillId);
+    public PersonageHasAttachedSkill getPersonageHasAttachedSkillByAttachedSkillIdAndPersonageId(int attachedSkillId, int personageId);
+
+    public List<PersonageHasAttachedSkill> getPersonageHasAttachedSkillByPersonageId(int personageId);
 }
