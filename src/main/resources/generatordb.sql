@@ -15,7 +15,9 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`race` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL ,
   `maxage` INT NULL ,
-  PRIMARY KEY (`id`) )
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB;
 
 
@@ -31,6 +33,8 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`personage` (
   `race_id` INT NOT NULL ,
   PRIMARY KEY (`id`, `race_id`) ,
   INDEX `fk_personage_race1` (`race_id` ASC) ,
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_personage_race1`
     FOREIGN KEY (`race_id` )
     REFERENCES `generatordb`.`race` (`id` )
@@ -47,12 +51,14 @@ DROP TABLE IF EXISTS `generatordb`.`attached_skill` ;
 CREATE  TABLE IF NOT EXISTS `generatordb`.`attached_skill` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL ,
-  `basecost` INT NULL ,
-  `default` TINYINT(1) NULL ,
+  `base_cost` INT NULL ,
+  `default_skill` TINYINT(1) NULL ,
   `difficult` TINYINT(1) NULL ,
   `theoretical` TINYINT(1) NULL ,
   `acquiring_cost` INT NULL ,
-  PRIMARY KEY (`id`) )
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB;
 
 
@@ -65,8 +71,9 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`trigger_skill` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL ,
   `type` VARCHAR(45) NULL ,
-  `non_generating_cost_coefficient` DOUBLE NULL ,
-  PRIMARY KEY (`id`) )
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB;
 
 
@@ -77,14 +84,11 @@ DROP TABLE IF EXISTS `generatordb`.`attribute` ;
 
 CREATE  TABLE IF NOT EXISTS `generatordb`.`attribute` (
   `id` INT NOT NULL AUTO_INCREMENT ,
-  `cost` INT NULL ,
-  `max_value` INT NULL ,
-  `min_value` INT NULL ,
-  `from_1_to_3_non_generating_cost` INT NULL ,
-  `cost_rise_coefficient` DOUBLE NULL ,
-  `non_generating_rise_coefficient` DOUBLE NULL ,
+  `name` VARCHAR(45) NULL ,
   `action_level_bonus` TEXT NULL ,
-  PRIMARY KEY (`id`) )
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB;
 
 
@@ -96,11 +100,12 @@ DROP TABLE IF EXISTS `generatordb`.`birth_merit` ;
 CREATE  TABLE IF NOT EXISTS `generatordb`.`birth_merit` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL ,
-  `probability` DOUBLE NULL ,
   `cost` INT NULL ,
   `description` TEXT NULL ,
   `action_bonus` TEXT NULL ,
-  PRIMARY KEY (`id`) )
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB;
 
 
@@ -116,7 +121,9 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`merit` (
   `description` TEXT NULL ,
   `action_bonus` TEXT NULL ,
   `preconditions` TEXT NULL ,
-  PRIMARY KEY (`id`) )
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB;
 
 
@@ -131,7 +138,9 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`flaw` (
   `cost` INT NULL ,
   `description` TEXT NULL ,
   `turn_off_preconditions` TEXT NULL ,
-  PRIMARY KEY (`id`) )
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
 ENGINE = InnoDB;
 
 
@@ -145,9 +154,11 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`race_has_merit` (
   `merit_id` INT NOT NULL ,
   `race_id` INT NOT NULL ,
   `default_for_race` TINYINT(1) NULL ,
+  `race_cost` INT NULL ,
   PRIMARY KEY (`id`, `merit_id`, `race_id`) ,
   INDEX `fk_race_has_merit_merit1` (`merit_id` ASC) ,
   INDEX `fk_race_has_merit_race1` (`race_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_race_has_merit_race1`
     FOREIGN KEY (`race_id` )
     REFERENCES `generatordb`.`race` (`id` )
@@ -173,6 +184,7 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`personage_has_merit` (
   PRIMARY KEY (`id`, `merit_id`, `personage_id`) ,
   INDEX `fk_personage_has_merit_merit1` (`merit_id` ASC) ,
   INDEX `fk_personage_has_merit_personage1` (`personage_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_personage_has_merit_personage1`
     FOREIGN KEY (`personage_id` )
     REFERENCES `generatordb`.`personage` (`id` )
@@ -199,6 +211,7 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`race_has_flaw` (
   PRIMARY KEY (`id`, `flaw_id`, `race_id`) ,
   INDEX `fk_race_has_flaw_flaw1` (`flaw_id` ASC) ,
   INDEX `fk_race_has_flaw_race1` (`race_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_race_has_flaw_race1`
     FOREIGN KEY (`race_id` )
     REFERENCES `generatordb`.`race` (`id` )
@@ -224,6 +237,7 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`personage_has_flaw` (
   PRIMARY KEY (`id`, `flaw_id`, `personage_id`) ,
   INDEX `fk_personage_has_flaw_flaw1` (`flaw_id` ASC) ,
   INDEX `fk_personage_has_flaw_personage1` (`personage_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_personage_has_flaw_personage1`
     FOREIGN KEY (`personage_id` )
     REFERENCES `generatordb`.`personage` (`id` )
@@ -246,9 +260,17 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`race_has_attribute` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `attribute_id` INT NOT NULL ,
   `race_id` INT NOT NULL ,
+  `base_cost` INT NULL ,
+  `from_1_to_3_non_generating_cost` INT NULL ,
+  `from_3_to_6_non_generating_cost` INT NULL ,
+  `from_6_to_9_non_generating_cost` INT NULL ,
+  `from_9_to_12_non_generating_cost` INT NULL ,
+  `max_value` INT NULL ,
+  `rise_cost` INT NULL ,
   PRIMARY KEY (`id`, `attribute_id`, `race_id`) ,
   INDEX `fk_race_has_attribute_attribute1` (`attribute_id` ASC) ,
   INDEX `fk_race_has_attribute_race1` (`race_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_race_has_attribute_race1`
     FOREIGN KEY (`race_id` )
     REFERENCES `generatordb`.`race` (`id` )
@@ -275,6 +297,7 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`personage_has_attribute` (
   PRIMARY KEY (`id`, `attribute_id`, `personage_id`) ,
   INDEX `fk_personage_has_attribute_attribute1` (`attribute_id` ASC) ,
   INDEX `fk_personage_has_attribute_personage1` (`personage_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_personage_has_attribute_personage1`
     FOREIGN KEY (`personage_id` )
     REFERENCES `generatordb`.`personage` (`id` )
@@ -289,17 +312,19 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `generatordb`.`race_has_birthmerit`
+-- Table `generatordb`.`race_has_birth_merit`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `generatordb`.`race_has_birthmerit` ;
+DROP TABLE IF EXISTS `generatordb`.`race_has_birth_merit` ;
 
-CREATE  TABLE IF NOT EXISTS `generatordb`.`race_has_birthmerit` (
+CREATE  TABLE IF NOT EXISTS `generatordb`.`race_has_birth_merit` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `birth_merit_id` INT NOT NULL ,
   `race_id` INT NOT NULL ,
+  `probability` DOUBLE NULL ,
   PRIMARY KEY (`id`, `birth_merit_id`, `race_id`) ,
   INDEX `fk_race_has_birthmerit_birthmerit1` (`birth_merit_id` ASC) ,
   INDEX `fk_race_has_birthmerit_race1` (`race_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_race_has_birthmerit_race1`
     FOREIGN KEY (`race_id` )
     REFERENCES `generatordb`.`race` (`id` )
@@ -314,11 +339,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `generatordb`.`personage_has_birthmerit`
+-- Table `generatordb`.`personage_has_birth_merit`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `generatordb`.`personage_has_birthmerit` ;
+DROP TABLE IF EXISTS `generatordb`.`personage_has_birth_merit` ;
 
-CREATE  TABLE IF NOT EXISTS `generatordb`.`personage_has_birthmerit` (
+CREATE  TABLE IF NOT EXISTS `generatordb`.`personage_has_birth_merit` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `birth_merit_id` INT NOT NULL ,
   `personage_id` INT NOT NULL ,
@@ -326,6 +351,7 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`personage_has_birthmerit` (
   PRIMARY KEY (`id`, `birth_merit_id`, `personage_id`) ,
   INDEX `fk_personage_has_birthmerit_birthmerit1` (`birth_merit_id` ASC) ,
   INDEX `fk_personage_has_birthmerit_personage1` (`personage_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_personage_has_birthmerit_personage1`
     FOREIGN KEY (`personage_id` )
     REFERENCES `generatordb`.`personage` (`id` )
@@ -340,18 +366,22 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `generatordb`.`personage_has_triggerskill`
+-- Table `generatordb`.`personage_has_trigger_skill`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `generatordb`.`personage_has_triggerskill` ;
+DROP TABLE IF EXISTS `generatordb`.`personage_has_trigger_skill` ;
 
-CREATE  TABLE IF NOT EXISTS `generatordb`.`personage_has_triggerskill` (
+CREATE  TABLE IF NOT EXISTS `generatordb`.`personage_has_trigger_skill` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `trigger_skill_id` INT NOT NULL ,
   `personage_id` INT NOT NULL ,
-  `level` VARCHAR(45) NULL ,
+  `expert_cost` INT NULL ,
+  `master_cost` INT NULL ,
+  `post_master_cost` INT NULL ,
+  `talant` TINYINT(1) NULL ,
   PRIMARY KEY (`id`, `trigger_skill_id`, `personage_id`) ,
   INDEX `fk_personage_has_triggerskill_triggerskill1` (`trigger_skill_id` ASC) ,
   INDEX `fk_personage_has_triggerskill_personage1` (`personage_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_personage_has_triggerskill_personage1`
     FOREIGN KEY (`personage_id` )
     REFERENCES `generatordb`.`personage` (`id` )
@@ -366,11 +396,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `generatordb`.`personage_has_attachedskill`
+-- Table `generatordb`.`personage_has_attached_skill`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `generatordb`.`personage_has_attachedskill` ;
+DROP TABLE IF EXISTS `generatordb`.`personage_has_attached_skill` ;
 
-CREATE  TABLE IF NOT EXISTS `generatordb`.`personage_has_attachedskill` (
+CREATE  TABLE IF NOT EXISTS `generatordb`.`personage_has_attached_skill` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `attached_skill_id` INT NOT NULL ,
   `personage_id` INT NOT NULL ,
@@ -378,6 +408,7 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`personage_has_attachedskill` (
   PRIMARY KEY (`id`, `attached_skill_id`, `personage_id`) ,
   INDEX `fk_personage_has_attachedskill_attachedskill1` (`attached_skill_id` ASC) ,
   INDEX `fk_personage_has_attachedskill_personage1` (`personage_id` ASC) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   CONSTRAINT `fk_personage_has_attachedskill_attachedskill1`
     FOREIGN KEY (`attached_skill_id` )
     REFERENCES `generatordb`.`attached_skill` (`id` )

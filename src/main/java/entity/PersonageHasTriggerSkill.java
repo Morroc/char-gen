@@ -23,12 +23,56 @@ public class PersonageHasTriggerSkill {
     @JoinColumn(name = "personage_id")
     private Personage personageByTriggerSkill;
 
+    @Column(name = "expert_cost")
+    private int expertCost;
+
+    @Column(name = "master_cost")
+    private int masterCost;
+
+    @Column(name = "post_master_cost")
+    private int postMasterCost;
+
+    @Column(name = "talant")
+    private boolean talant;
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getExpertCost() {
+        return expertCost;
+    }
+
+    public void setExpertCost(int expertCost) {
+        this.expertCost = expertCost;
+    }
+
+    public int getMasterCost() {
+        return masterCost;
+    }
+
+    public void setMasterCost(int masterCost) {
+        this.masterCost = masterCost;
+    }
+
+    public int getPostMasterCost() {
+        return postMasterCost;
+    }
+
+    public void setPostMasterCost(int postMasterCost) {
+        this.postMasterCost = postMasterCost;
+    }
+
+    public boolean isTalant() {
+        return talant;
+    }
+
+    public void setTalant(boolean talant) {
+        this.talant = talant;
     }
 
     public TriggerSkill getTriggerSkillByPersonage() {

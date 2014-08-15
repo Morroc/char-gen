@@ -96,18 +96,4 @@ public class AttachedSkill {
     public void setAttachedSkillsByPersonage(List<PersonageHasAttachedSkill> attachedSkillsByPersonage) {
         this.attachedSkillsByPersonage = attachedSkillsByPersonage;
     }
-
-    //    private int getNonGeneratingRiseCost(int previousValue, int wantedValue) {
-//        int cost = 1;
-//        return cost;
-//    }
-
-//    private int getTheoreticalMax() {
-//        int cost = 1;
-//        return cost;
-//    }
-
-//    private boolean isGeneratingPrice() {
-//        return true;
-//    }
 }

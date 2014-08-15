@@ -23,8 +23,6 @@ public class TriggerSkill {
     private String name;
     @Column(name = "type")
     private SkillType type;
-    @Column(name = "non_generating_cost_coefficient")
-    private int nonGeneratingCostCoefficient;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "triggerSkillByPersonage")
     private List<PersonageHasTriggerSkill> triggerSkillsByPersonage;
 
@@ -53,14 +51,6 @@ public class TriggerSkill {
 
     public void setType(SkillType type) {
         this.type = type;
-    }
-
-    public int getNonGeneratingCostCoefficient() {
-        return nonGeneratingCostCoefficient;
-    }
-
-    public void setNonGeneratingCostCoefficient(int nonGeneratingCostCoefficient) {
-        this.nonGeneratingCostCoefficient = nonGeneratingCostCoefficient;
     }
 
     public List<PersonageHasTriggerSkill> getTriggerSkillsByPersonage() {
