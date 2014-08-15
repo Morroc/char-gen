@@ -14,9 +14,9 @@ public class Personage
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", unique = true)
     private int id;
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
     @Column(name = "age")
     private int age;

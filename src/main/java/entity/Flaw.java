@@ -13,9 +13,9 @@ import java.lang.*;
 public class Flaw {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", unique = true)
     private int id;
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
     @Column(name = "cost")
     private int cost;

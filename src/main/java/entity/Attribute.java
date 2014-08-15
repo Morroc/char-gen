@@ -12,9 +12,9 @@ import javax.persistence.*;
 public class Attribute {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", unique = true)
     private int id;
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private int name;
     @Column(name = "action_level_bonus")
     private String actionLevelBonus;

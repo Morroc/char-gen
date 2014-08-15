@@ -12,9 +12,9 @@ import javax.persistence.*;
 public class BirthMerit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id", unique = true)
     private int id;
-    @Column(name = "name")
+    @Column(name = "name", unique = true)
     private String name;
     @Column(name = "probability")
     private double probability;
