@@ -34,7 +34,6 @@ public class PersonageController {
         model.addAttribute("personageHasAttachedSkill", new PersonageHasAttachedSkill());
         model.addAttribute("personageHasAttachedSkillsByPersonage", personageHasAttachedSkillService.getPersonageHasAttachedSkillsByPersonageId(personageId));
         model.addAttribute("personage", personageService.getPersonageById(personageId));
-        model.addAttribute("attachedSkillsListByPersonage", attachedSkillService.getAttachedSkillsByPersonageId(personageId));
         model.addAttribute("allAttachedSkillsList", attachedSkillService.getAllAttachedSkills());
 
         return "personage";
@@ -49,10 +48,6 @@ public class PersonageController {
 
         return "redirect:/personage/" + personageId;
     }
-
-//    @RequestMapping(value = "/personage/unlinkAttachedSkill/{attachedSkillId}")
-//    public String unlinkAttachedSkill(@PathVariable("attachedSkillId") Integer attachedSkillId,
-//                                      @RequestParam("personageId") Integer personageId) {
 
     @RequestMapping(value = "/personage/unlinkAttachedSkill/{personageHasAttachedSkillId}")
     public String unlinkAttachedSkill(@PathVariable("personageHasAttachedSkillId") PersonageHasAttachedSkill personageHasAttachedSkill,
