@@ -29,7 +29,7 @@ public class PersonageController {
     private PersonageHasAttachedSkillService personageHasAttachedSkillService;
 
     @RequestMapping("/personage/{personageId}")
-    public String personage(@PathVariable("personageId") Integer personageId, Model model) {
+    public String pageModel(@PathVariable("personageId") Integer personageId, Model model) {
 
         model.addAttribute("personageHasAttachedSkill", new PersonageHasAttachedSkill());
         model.addAttribute("personageHasAttachedSkillsByPersonage", personageHasAttachedSkillService.getPersonageHasAttachedSkillsByPersonageId(personageId));

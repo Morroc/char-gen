@@ -15,7 +15,7 @@ public class Attribute {
     @Column(name = "id", unique = true)
     private int id;
     @Column(name = "name", unique = true)
-    private int name;
+    private String name;
     @Column(name = "action_level_bonus")
     private String actionLevelBonus;
 
@@ -30,11 +30,11 @@ public class Attribute {
         this.id = id;
     }
 
-    public int getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(int name) {
+    public void setName(String name) {
         this.name = name;
     }
 

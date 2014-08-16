@@ -15,6 +15,6 @@ public class StringToPersonageHasAttachedSkillConverter implements Converter<Str
     private PersonageHasAttachedSkillService personageHasAttachedSkillService;
 
     public PersonageHasAttachedSkill convert(String id) {
-        return personageHasAttachedSkillService.getPersonageHasAttachedSkillId(Integer.parseInt(id));
+        return personageHasAttachedSkillService.getPersonageHasAttachedSkillById(Integer.parseInt(id));
     }
 }

@@ -20,7 +20,7 @@ public class AttachedSkillManagerController {
     private AttachedSkillService attachedSkillService;
 
     @RequestMapping("/attachedSkillsManager")
-    public String listRaces(Model model) {
+    public String pageModel(Model model) {
 
         model.addAttribute("attachedSkill", new AttachedSkill());
         model.addAttribute("attachedSkillsList", attachedSkillService.getAllAttachedSkills());
@@ -38,7 +38,7 @@ public class AttachedSkillManagerController {
     }
 
     @RequestMapping("/deleteAttachedSkill/{attachedSkillId}")
-    public String deleteRace(@PathVariable("attachedSkillId") Integer attachedSkillId) {
+    public String deleteAttachedSkill(@PathVariable("attachedSkillId") Integer attachedSkillId) {
 
         attachedSkillService.deleteAttachedSkillById(attachedSkillId);
 

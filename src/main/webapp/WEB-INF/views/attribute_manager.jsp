@@ -7,21 +7,21 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
-    <title>Attached skills manager</title>
+    <title>Attributes manager</title>
 </head>
 <body>
 
 <h2><a href="/main.jsp">Home</a><h2>
 
-    <h2>Attached skills manager</h2>
+    <h2>Attributes manager</h2>
 
-    <form:form method="post" action="addAttachedSkill" commandName="attachedSkill">
+    <form:form method="post" action="addAttribute" commandName="attribute">
 
     <table>
         <tr>
             <td>
                 <form:label path="name">
-                    Название навыка
+                    Название атрибута
                 </form:label>
             </td>
             <td>
@@ -31,111 +31,35 @@
 
         <tr>
             <td>
-                <form:label path="baseCost">
-                    Базовая стоимость за единицу
+                <form:label path="actionLevelBonus">
+                    Бонус к действию
                 </form:label>
             </td>
             <td>
-                <form:input path="baseCost"/>
+                <form:input path="actionLevelBonus"/>
             </td>
         </tr>
 
-        <tr>
-            <td>
-                <form:label path="acquiringCost">
-                    Стоимость при покупке по игре
-                </form:label>
-            </td>
-            <td>
-                <form:input path="acquiringCost"/>
-            </td>
-        </tr>
-
-        <tr>
-            <td>
-                <form:label path="defaultSkill">
-                    По умолчанию
-                </form:label>
-            </td>
-            <td>
-                <form:checkbox path="defaultSkill"/>
-            </td>
-        </tr>
-
-        <tr>
-            <td>
-                <form:label path="difficult">
-                    Сложный
-                </form:label>
-            </td>
-            <td>
-                <form:checkbox path="difficult"/>
-            </td>
-        </tr>
-
-        <tr>
-            <td>
-                <form:label path="theoretical">
-                    Теоритический
-                </form:label>
-            </td>
-            <td>
-                <form:checkbox path="theoretical"/>
-            </td>
-        </tr>
         <tr>
             <td colspan="2"><input type="submit"
-                                   value="Создать прикрепленный навык"/></td>
+                                   value="Создать атрибут"/></td>
         </tr>
     </table>
     </form:form>
 
-    <h3>Все прикрепленные навыки</h3>
-    <c:if test="${!empty attachedSkillsList}">
+    <h3>Все атрибуты</h3>
+    <c:if test="${!empty attributesList}">
     <table class="data">
         <tr>
             <th>Название аттрибута</th>
             <th>Бонус на действия</th>
             <th>&nbsp;</th>
         </tr>
-        <c:forEach items="${attachedSkillsList}" var="attachedSkill">
+        <c:forEach items="${attributesList}" var="attribute">
             <tr>
-                <td>${attachedSkill.name}</td>
-                <td>${attachedSkill.baseCost}</td>
-                <td>${attachedSkill.acquiringCost}</td>
-                <c:if test = "${attachedSkill.defaultSkill == 'true'}">
-                    <td>
-                        <input type="checkbox" disabled="disabled" checked="checked">
-                    </td>
-                </c:if>
-                <c:if test = "${attachedSkill.defaultSkill == 'false'}">
-                    <td>
-                        <input type="checkbox" disabled="disabled">
-                    </td>
-                </c:if>
-
-                <c:if test = "${attachedSkill.difficult == 'true'}">
-                    <td>
-                        <input type="checkbox" disabled="disabled" checked="checked">
-                    </td>
-                </c:if>
-                <c:if test = "${attachedSkill.difficult == 'false'}">
-                    <td>
-                        <input type="checkbox" disabled="disabled">
-                    </td>
-                </c:if>
-
-                <c:if test = "${attachedSkill.theoretical == 'true'}">
-                    <td>
-                        <input type="checkbox" disabled="disabled" checked="checked">
-                    </td>
-                </c:if>
-                <c:if test = "${attachedSkill.theoretical == 'false'}">
-                    <td>
-                        <input type="checkbox" disabled="disabled">
-                    </td>
-                </c:if>
-                <td><a href="deleteAttachedSkill/${attachedSkill.id}">Удалить</a></td>
+                <td>${attribute.name}</td>
+                <td>${attribute.actionLevelBonus}</td>
+                <td><a href="deleteAttribute/${attribute.id}">Удалить</a></td>
             </tr>
         </c:forEach>
     </table>

@@ -25,7 +25,7 @@ public class PersonageManagerController {
     private RaceService raceService;
 
     @RequestMapping("/personageManager")
-    public String listPersonages(Model model) {
+    public String pageModel(Model model) {
 
         model.addAttribute("personage", new Personage());
         model.addAttribute("personagesList", personageService.getAllPersonages());

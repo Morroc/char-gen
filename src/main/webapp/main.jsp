@@ -23,5 +23,9 @@
     Attached skill manager
 </a><br/>
 
+<a href="<c:url value="/attributesManager" />">
+    Attributes manager
+</a><br/>
+
 </body>
 </html>
