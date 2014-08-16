@@ -25,7 +25,7 @@ public class AttachedSkillManagerController {
         model.addAttribute("attachedSkill", new AttachedSkill());
         model.addAttribute("attachedSkillsList", attachedSkillService.getAllAttachedSkills());
 
-        return "attached_skill";
+        return "attached_skill_manager";
     }
 
     @RequestMapping(value = "/addAttachedSkill", method = RequestMethod.POST)

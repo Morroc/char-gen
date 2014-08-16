@@ -31,7 +31,7 @@ public class PersonageManagerController {
         model.addAttribute("personagesList", personageService.getAllPersonages());
         model.addAttribute("racesList", raceService.getAllRaces());
 
-        return "personage_editor";
+        return "personage_manager";
     }
 
     @RequestMapping(value = "/addPersonage", method = RequestMethod.POST)

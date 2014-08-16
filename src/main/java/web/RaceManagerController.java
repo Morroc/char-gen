@@ -25,7 +25,7 @@ public class RaceManagerController {
         model.addAttribute("race", new Race());
         model.addAttribute("racesList", raceService.getAllRaces());
 
-        return "race_editor";
+        return "race_manager";
     }
 
     @RequestMapping(value = "/addRace", method = RequestMethod.POST)
