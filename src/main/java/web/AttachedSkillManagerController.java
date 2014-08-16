@@ -15,7 +15,7 @@ import services.AttachedSkillService;
  */
 @Controller
 @SessionAttributes
-public class AttachedSkillController {
+public class AttachedSkillManagerController {
     @Autowired
     private AttachedSkillService attachedSkillService;
 
