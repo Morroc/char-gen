@@ -8,8 +8,7 @@ package enums;
 public enum SkillLevel {
     EXPERT (10),
     MASTER (15),
-    MAGISTER (20),
-    GRAND_MAGISTER (30);
+    POST_MAGISTER (20);
 
     private int baseCost;
 
