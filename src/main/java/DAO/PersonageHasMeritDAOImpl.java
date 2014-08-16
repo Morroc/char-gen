@@ -30,7 +30,8 @@ public class PersonageHasMeritDAOImpl implements PersonageHasMeritDAO{
 
     @Override
     public PersonageHasMerit getPersonageHasMeritById(int personageHasMeritId) {
-        PersonageHasMerit personageHasMerit = (PersonageHasMerit) sessionFactory.getCurrentSession().load(PersonageHasMerit.class, personageHasMeritId);
+        PersonageHasMerit personageHasMerit = (PersonageHasMerit) sessionFactory.getCurrentSession().
+                load(PersonageHasMerit.class, personageHasMeritId);
         Hibernate.initialize(personageHasMerit);
         return personageHasMerit;
     }

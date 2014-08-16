@@ -23,8 +23,11 @@ public class PersonageHasTriggerSkill {
     @JoinColumn(name = "personage_id")
     private Personage personageByTriggerSkill;
 
-    @Column(name = "has_talant")
-    private boolean hasTalant;
+    @Column(name = "current_level")
+    private String currentLevel;
+
+    @Column(name = "has_talent")
+    private boolean hasTalent;
 
     @Column(name = "has_teacher")
     private boolean hasTeacher;
@@ -37,12 +40,20 @@ public class PersonageHasTriggerSkill {
         this.id = id;
     }
 
-    public boolean isHasTalant() {
-        return hasTalant;
+    public String getCurrentLevel() {
+        return currentLevel;
     }
 
-    public void setHasTalant(boolean talant) {
-        this.hasTalant = talant;
+    public void setCurrentLevel(String currentLevel) {
+        this.currentLevel = currentLevel;
+    }
+
+    public boolean isHasTalent() {
+        return hasTalent;
+    }
+
+    public void setHasTalent(boolean talant) {
+        this.hasTalent = talant;
     }
 
     public boolean isHasTeacher() {

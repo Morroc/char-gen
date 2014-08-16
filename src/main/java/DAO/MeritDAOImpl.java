@@ -41,7 +41,7 @@ public class MeritDAOImpl implements MeritDAO {
     public Merit getMeritByName(String meritName) {
         Session session = sessionFactory.getCurrentSession();
         List<Merit> merits = session.createSQLQuery("select * from merit where name= :name")
-                .addEntity(Personage.class)
+                .addEntity(Merit.class)
                 .setString("name", meritName)
                 .list();
         return merits.get(0);

@@ -31,7 +31,8 @@ public class PersonageHasAttachedSkillDAOImpl implements PersonageHasAttachedSki
 
     @Override
     public PersonageHasAttachedSkill getPersonageHasAttachedSkillById(int personageHasAttachedSkillId) {
-        PersonageHasAttachedSkill personageHasAttachedSkill = (PersonageHasAttachedSkill) sessionFactory.getCurrentSession().load(PersonageHasAttachedSkill.class, personageHasAttachedSkillId);
+        PersonageHasAttachedSkill personageHasAttachedSkill = (PersonageHasAttachedSkill) sessionFactory.getCurrentSession().
+                load(PersonageHasAttachedSkill.class, personageHasAttachedSkillId);
         Hibernate.initialize(personageHasAttachedSkill);
         return personageHasAttachedSkill;
     }
@@ -62,7 +63,9 @@ public class PersonageHasAttachedSkillDAOImpl implements PersonageHasAttachedSki
     @Override
     public List<PersonageHasAttachedSkill> getPersonageHasAttachedSkillByPersonageId(int personageId) {
         Session session = sessionFactory.getCurrentSession();
-        List<PersonageHasAttachedSkill> personageHasAttachedSkills = session.createSQLQuery("select * from personage_has_attached_skill where personage_id = :id")
+        List<PersonageHasAttachedSkill> personageHasAttachedSkills = session.createSQLQuery(
+                "select * from personage_has_attached_skill where personage_id = :id"
+        )
                 .addEntity(PersonageHasAttachedSkill.class)
                 .setInteger("id", personageId)
                 .list();
