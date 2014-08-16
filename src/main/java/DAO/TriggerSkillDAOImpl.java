@@ -62,7 +62,13 @@ public class TriggerSkillDAOImpl implements TriggerSkillDAO {
     public List<TriggerSkill> getTriggerSkillsByPersonage(Personage personage) {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createSQLQuery(
-                "select * from trigger_skill inner join personage on trigger_skill.personage_id = :id"
+                "select trsk.* \n" +
+                        "from trigger_skill trsk \n" +
+                        "\tinner join personage_has_trigger_skill phtr \n" +
+                        "\t  on phtr.trigger_skill_id = trsk.id \n" +
+                        "\tinner join personage p\n" +
+                        "\t  on p.id = phtr.personage_id\n" +
+                        "where p.id = :id"
         )
                 .addEntity(TriggerSkill.class)
                 .setInteger("id", personage.getId());

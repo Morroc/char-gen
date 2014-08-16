@@ -20,4 +20,8 @@ public interface RaceHasMeritDAO {
     public List<RaceHasMerit> getAllRaceHasMerits();
 
     public void deleteRaceHasMerit(RaceHasMerit raceHasMerit);
+
+    public RaceHasMerit getRaceHasMeritByMeritIdAndRaceId(int meritId, int raceId);
+
+    public List<RaceHasMerit> getRaceHasMeritByRaceId(int raceId);
 }
