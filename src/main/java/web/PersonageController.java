@@ -53,7 +53,7 @@ public class PersonageController {
     public String unlinkAttachedSkill(@PathVariable("personageHasAttachedSkillId") PersonageHasAttachedSkill personageHasAttachedSkill,
                                       @RequestParam("personageId") Integer personageId) {
 
-        personageHasAttachedSkillService.deleteLinkWithPersonage(personageHasAttachedSkill);
+        personageHasAttachedSkillService.deleteLinkAttachedSkillWithPersonage(personageHasAttachedSkill);
 
         return "redirect:/personage/" + personageId;
     }

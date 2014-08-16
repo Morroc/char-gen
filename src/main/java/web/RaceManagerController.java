@@ -15,7 +15,7 @@ import services.RaceService;
  */
 @Controller
 @SessionAttributes
-public class RaceController {
+public class RaceManagerController {
     @Autowired
     private RaceService raceService;
 
