@@ -1,7 +1,9 @@
 package DAO;
 
 import entity.Attribute;
+import entity.Personage;
 import org.hibernate.Hibernate;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +56,23 @@ public class AttributeDAOImpl implements AttributeDAO{
     @Override
     public void deleteAttribute(Attribute attribute) {
         sessionFactory.getCurrentSession().delete(attribute);
+    }
+
+    @Override
+    public List<Attribute> getAttributesByPersonage(Personage personage) {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createSQLQuery(
+                "select attrs.* \n" +
+                        "from attribute attrs \n" +
+                        "\tinner join personage_has_attribute phatttr \n" +
+                        "\t  on phatttr.attribute_id = attrs.id \n" +
+                        "\tinner join personage p\n" +
+                        "\t  on p.id = phatttr.personage_id\n" +
+                        "where p.id = :id"
+        )
+                .addEntity(Attribute.class)
+                .setInteger("id", personage.getId());
+
+        return (List<Attribute>) query.list();
     }
 }

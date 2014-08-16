@@ -29,7 +29,17 @@ public class PersonageHasAttachedSkillService {
     }
 
     @Transactional
-    public PersonageHasAttachedSkill getPersonageHasAttachedSkillId(int personageHasAttachedSkillId) {
+    public PersonageHasAttachedSkill getPersonageHasAttachedSkillById(int personageHasAttachedSkillId) {
         return personageHasAttachedSkillDAO.getPersonageHasAttachedSkillById(personageHasAttachedSkillId);
+    }
+
+    @Transactional
+    public void addLinkAttachedSkillWithPersonage(PersonageHasAttachedSkill personageHasAttachedSkill) {
+        personageHasAttachedSkillDAO.addPersonageHasAttachedSkill(personageHasAttachedSkill);
+    }
+
+    @Transactional
+    public void deleteLinkAttachedSkillWithPersonage(PersonageHasAttachedSkill personageHasAttachedSkill) {
+        personageHasAttachedSkillDAO.deletePersonageHasAttachedSkill(personageHasAttachedSkill);
     }
 }

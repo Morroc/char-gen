@@ -1,6 +1,7 @@
 package DAO;
 
 import entity.Attribute;
+import entity.Personage;
 
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface AttributeDAO {
     public List<Attribute> getAllAttributes();
 
     public void deleteAttribute(Attribute attribute);
+
+    public List<Attribute> getAttributesByPersonage(Personage personage);
 }

@@ -40,7 +40,7 @@ public class AttachedSkillController {
     @RequestMapping("/deleteAttachedSkill/{attachedSkillId}")
     public String deleteRace(@PathVariable("attachedSkillId") Integer attachedSkillId) {
 
-        attachedSkillService.deleteAttachedSkillId(attachedSkillId);
+        attachedSkillService.deleteAttachedSkillById(attachedSkillId);
 
         return "redirect:/attachedSkillsManager";
     }

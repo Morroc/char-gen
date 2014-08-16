@@ -22,9 +22,6 @@ public class AttachedSkillService {
     private AttachedSkillDAO attachedSkillDAO;
 
     @Autowired
-    private PersonageHasAttachedSkillDAO personageHasAttachedSkillDAO;
-
-    @Autowired
     private PersonageDAO personageDAO;
 
     @Transactional
@@ -38,18 +35,8 @@ public class AttachedSkillService {
     }
 
     @Transactional
-    public void deleteAttachedSkillId(int attachedSkillId) {
+    public void deleteAttachedSkillById(int attachedSkillId) {
         attachedSkillDAO.deleteAttachedSkill(attachedSkillDAO.getAttachedSkillById(attachedSkillId));
-    }
-
-    @Transactional
-    public void addLinkWithPersonage(PersonageHasAttachedSkill personageHasAttachedSkill) {
-        personageHasAttachedSkillDAO.addPersonageHasAttachedSkill(personageHasAttachedSkill);
-    }
-
-    @Transactional
-    public void deleteLinkWithPersonage(PersonageHasAttachedSkill personageHasAttachedSkill) {
-        personageHasAttachedSkillDAO.deletePersonageHasAttachedSkill(personageHasAttachedSkill);
     }
 
     @Transactional

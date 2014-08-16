@@ -43,7 +43,7 @@ public class PersonageController {
     public String addPersonageHasAttachedSkill(@Validated @ModelAttribute("personageHasAttachedSkill") PersonageHasAttachedSkill personageHasAttachedSkill,
                                                BindingResult result) {
 
-        attachedSkillService.addLinkWithPersonage(personageHasAttachedSkill);
+        personageHasAttachedSkillService.addLinkAttachedSkillWithPersonage(personageHasAttachedSkill);
         int personageId = personageHasAttachedSkill.getPersonageByAttachedSkill().getId();
 
         return "redirect:/personage/" + personageId;
@@ -53,7 +53,7 @@ public class PersonageController {
     public String unlinkAttachedSkill(@PathVariable("personageHasAttachedSkillId") PersonageHasAttachedSkill personageHasAttachedSkill,
                                       @RequestParam("personageId") Integer personageId) {
 
-        attachedSkillService.deleteLinkWithPersonage(personageHasAttachedSkill);
+        personageHasAttachedSkillService.deleteLinkWithPersonage(personageHasAttachedSkill);
 
         return "redirect:/personage/" + personageId;
     }
