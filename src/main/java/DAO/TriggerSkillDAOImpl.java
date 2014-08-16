@@ -2,6 +2,7 @@ package DAO;
 
 import entity.Personage;
 import entity.TriggerSkill;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -32,7 +33,9 @@ public class TriggerSkillDAOImpl implements TriggerSkillDAO {
 
     @Override
     public TriggerSkill getTriggerSkillById(int triggerSkillId) {
-        return (TriggerSkill) sessionFactory.getCurrentSession().load(TriggerSkill.class, triggerSkillId);
+        TriggerSkill triggerSkill = (TriggerSkill) sessionFactory.getCurrentSession().load(TriggerSkill.class, triggerSkillId);
+        Hibernate.initialize(triggerSkill);
+        return triggerSkill;
     }
 
     @Override

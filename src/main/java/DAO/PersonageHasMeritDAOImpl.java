@@ -1,6 +1,7 @@
 package DAO;
 
 import entity.PersonageHasMerit;
+import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -29,7 +30,9 @@ public class PersonageHasMeritDAOImpl implements PersonageHasMeritDAO{
 
     @Override
     public PersonageHasMerit getPersonageHasMeritById(int personageHasMeritId) {
-        return (PersonageHasMerit) sessionFactory.getCurrentSession().load(PersonageHasMerit.class, personageHasMeritId);
+        PersonageHasMerit personageHasMerit = (PersonageHasMerit) sessionFactory.getCurrentSession().load(PersonageHasMerit.class, personageHasMeritId);
+        Hibernate.initialize(personageHasMerit);
+        return personageHasMerit;
     }
 
     @Override

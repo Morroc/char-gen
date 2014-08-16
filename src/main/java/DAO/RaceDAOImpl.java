@@ -1,6 +1,7 @@
 package DAO;
 
 import entity.Race;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,9 @@ public class RaceDAOImpl implements RaceDAO {
 
     @Override
     public Race getRaceById(int raceId) {
-        return (Race) sessionFactory.getCurrentSession().load(Race.class, raceId);
+        Race race = (Race) sessionFactory.getCurrentSession().load(Race.class, raceId);
+        Hibernate.initialize(race);
+        return race;
     }
 
     @Override

@@ -2,6 +2,7 @@ package DAO;
 
 import entity.Merit;
 import entity.Personage;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,9 @@ public class MeritDAOImpl implements MeritDAO {
 
     @Override
     public Merit getMeritById(int meritId) {
-        return (Merit) sessionFactory.getCurrentSession().load(Merit.class, meritId);
+        Merit merit = (Merit) sessionFactory.getCurrentSession().load(Merit.class, meritId);
+        Hibernate.initialize(merit);
+        return merit;
     }
 
     @Override
