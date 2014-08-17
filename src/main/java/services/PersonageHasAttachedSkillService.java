@@ -42,4 +42,9 @@ public class PersonageHasAttachedSkillService {
     public void deleteLinkAttachedSkillWithPersonage(PersonageHasAttachedSkill personageHasAttachedSkill) {
         personageHasAttachedSkillDAO.deletePersonageHasAttachedSkill(personageHasAttachedSkill);
     }
+
+    @Transactional
+    public void updatePersonageHasAttachedSkill(PersonageHasAttachedSkill personageHasAttachedSkill) {
+        personageHasAttachedSkillDAO.updatePersonageHasAttachedSkill(personageHasAttachedSkill);
+    }
 }

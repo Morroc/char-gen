@@ -62,6 +62,24 @@ public class PersonageController {
         return "redirect:/personage/" + personageId;
     }
 
+    @RequestMapping(value = "/personage/updateAttachedSkill/{personageHasAttachedSkillId}")
+    public String updateAttachedSkill(@PathVariable("personageHasAttachedSkillId") Integer personageHasAttachedSkillId,
+                                  @RequestParam("addOrRemove") String addOrRemove) {
+
+        PersonageHasAttachedSkill personageHasAttachedSkill = personageHasAttachedSkillService
+                .getPersonageHasAttachedSkillById(personageHasAttachedSkillId);
+        if(addOrRemove.equals("add")) {
+            personageHasAttachedSkill.setCurrentValue(personageHasAttachedSkill.getCurrentValue() + 1);
+        }
+        if(addOrRemove.equals("remove")) {
+            personageHasAttachedSkill.setCurrentValue(personageHasAttachedSkill.getCurrentValue() - 1);
+        }
+        personageHasAttachedSkillService.updatePersonageHasAttachedSkill(personageHasAttachedSkill);
+        int personageId = personageHasAttachedSkill.getPersonageByAttachedSkill().getId();
+
+        return "redirect:/personage/" + personageId;
+    }
+
     @RequestMapping(value = "/personage/linkAttachedSkillToPersonage", method = RequestMethod.POST)
     public String addPersonageHasAttachedSkill(@Validated @ModelAttribute("personageHasAttachedSkill") PersonageHasAttachedSkill personageHasAttachedSkill,
                                                BindingResult result) {

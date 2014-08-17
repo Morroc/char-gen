@@ -42,54 +42,15 @@
         <tr>
             <th>Название навыка</th>
             <th>Текущее значение</th>
-            <th>Базовая стоимость за единицу</th>
-            <th>Стоимость покупке по игре</th>
-            <th>По умолчанию</th>
-            <th>Сложный</th>
-            <th>Теоритический</th>
             <th>&nbsp;</th>
         </tr>
         <c:forEach items="${personageHasAttachedSkillsByPersonage}" var="personageHasAttachedSkill">
             <tr>
                 <td>${personageHasAttachedSkill.attachedSkillByPersonage.name}</td>
                 <td>${personageHasAttachedSkill.currentValue}</td>
-                <td>${personageHasAttachedSkill.attachedSkillByPersonage.baseCost}</td>
-                <td>${personageHasAttachedSkill.attachedSkillByPersonage.acquiringCost}</td>
-                <c:if test="${personageHasAttachedSkill.attachedSkillByPersonage.defaultSkill == 'true'}">
-                    <td>
-                        <input type="checkbox" disabled="disabled" checked="checked">
-                    </td>
-                </c:if>
-                <c:if test="${personageHasAttachedSkill.attachedSkillByPersonage.defaultSkill == 'false'}">
-                    <td>
-                        <input type="checkbox" disabled="disabled">
-                    </td>
-                </c:if>
-
-                <c:if test="${personageHasAttachedSkill.attachedSkillByPersonage.difficult == 'true'}">
-                    <td>
-                        <input type="checkbox" disabled="disabled" checked="checked">
-                    </td>
-                </c:if>
-                <c:if test="${personageHasAttachedSkill.attachedSkillByPersonage.difficult == 'false'}">
-                    <td>
-                        <input type="checkbox" disabled="disabled">
-                    </td>
-                </c:if>
-
-                <c:if test="${personageHasAttachedSkill.attachedSkillByPersonage.theoretical == 'true'}">
-                    <td>
-                        <input type="checkbox" disabled="disabled" checked="checked">
-                    </td>
-                </c:if>
-                <c:if test="${personageHasAttachedSkill.attachedSkillByPersonage.theoretical == 'false'}">
-                    <td>
-                        <input type="checkbox" disabled="disabled">
-                    </td>
-                </c:if>
-                <td>
-                    <a href="unlinkAttachedSkillFromPersonage/${personageHasAttachedSkill.id}?personageId=${personage.id}">Отвязать</a>
-                </td>
+                <td><a href="updateAttachedSkill/${personageHasAttachedSkill.id}?addOrRemove=add">+1</a></td>
+                <td><a href="updateAttachedSkill/${personageHasAttachedSkill.id}?addOrRemove=remove">-1</a></td>
+                <td><a href="unlinkAttachedSkillFromPersonage/${personageHasAttachedSkill.id}?personageId=${personage.id}">Отвязать</a></td>
             </tr>
         </c:forEach>
     </table>
