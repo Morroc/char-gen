@@ -28,6 +28,8 @@
             <tr>
                 <td>${personageHasAttribute.attributeByPersonage.name}</td>
                 <td>${personageHasAttribute.currentValue}</td>
+                <td><a href="updateAttribute/${personageHasAttribute.id}?addOrRemove=add">+1</a></td>
+                <td><a href="updateAttribute/${personageHasAttribute.id}?addOrRemove=remove">-1</a></td>
             </tr>
         </c:forEach>
     </table>

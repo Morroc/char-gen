@@ -42,4 +42,9 @@ public class PersonageHasAttributeService {
     public void deleteLinkAttributeWithPersonage(PersonageHasAttribute personageHasAttribute) {
         personageHasAttributeDAO.deletePersonageHasAttribute(personageHasAttribute);
     }
+
+    @Transactional
+    public void updatePersonageHasAttribute(PersonageHasAttribute personageHasAttribute) {
+        personageHasAttributeDAO.updatePersonageHasAttribute(personageHasAttribute);
+    }
 }

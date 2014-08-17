@@ -1,6 +1,7 @@
 package web;
 
 import entity.PersonageHasAttachedSkill;
+import entity.PersonageHasAttribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,6 +43,23 @@ public class PersonageController {
         model.addAttribute("personageHasAttributesByPersonage", personageHasAttributeService.getPersonageHasAttributesByPersonageId(personageId));
 
         return "personage";
+    }
+
+    @RequestMapping(value = "/personage/updateAttribute/{personageHasAttributeId}")
+    public String updateAttribute(@PathVariable("personageHasAttributeId") Integer personageHasAttributeId,
+                                  @RequestParam("addOrRemove") String addOrRemove) {
+
+        PersonageHasAttribute personageHasAttribute = personageHasAttributeService.getPersonageHasAttributeById(personageHasAttributeId);
+        if(addOrRemove.equals("add")) {
+            personageHasAttribute.setCurrentValue(personageHasAttribute.getCurrentValue() + 1);
+        }
+        if(addOrRemove.equals("remove")) {
+            personageHasAttribute.setCurrentValue(personageHasAttribute.getCurrentValue() - 1);
+        }
+        personageHasAttributeService.updatePersonageHasAttribute(personageHasAttribute);
+        int personageId = personageHasAttribute.getPersonageByAttribute().getId();
+
+        return "redirect:/personage/" + personageId;
     }
 
     @RequestMapping(value = "/personage/linkAttachedSkillToPersonage", method = RequestMethod.POST)
