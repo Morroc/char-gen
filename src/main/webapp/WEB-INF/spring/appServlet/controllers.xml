@@ -18,6 +18,8 @@
                 <bean class="converters.StringToPersonageConverter"/>
                 <bean class="converters.StringToAttachedSkill"/>
                 <bean class="converters.StringToPersonageHasAttachedSkillConverter"/>
+                <bean class="converters.StringToRaceHasAttributeConverter"/>
+                <bean class="converters.StringToAttributeConverter"/>
             </set>
         </property>
     </bean>

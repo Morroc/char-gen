@@ -49,8 +49,8 @@ public class PersonageController {
         return "redirect:/personage/" + personageId;
     }
 
-    @RequestMapping(value = "/personage/unlinkAttachedSkill/{personageHasAttachedSkillId}")
-    public String unlinkAttachedSkill(@PathVariable("personageHasAttachedSkillId") PersonageHasAttachedSkill personageHasAttachedSkill,
+    @RequestMapping(value = "/personage/unlinkAttachedSkillFromPersonage/{personageHasAttachedSkillId}")
+    public String unlinkAttachedSkillFromPersonage(@PathVariable("personageHasAttachedSkillId") PersonageHasAttachedSkill personageHasAttachedSkill,
                                       @RequestParam("personageId") Integer personageId) {
 
         personageHasAttachedSkillService.deleteLinkAttachedSkillWithPersonage(personageHasAttachedSkill);

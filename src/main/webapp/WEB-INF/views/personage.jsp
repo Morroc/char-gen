@@ -13,11 +13,11 @@
 
 <h2><a href="/main.jsp">Home</a></h2>
 
-    <h2>Personage ${personage.name}</h2>
+<h2>Personage ${personage.name}</h2>
 
-    <h3>Прикрепленные навыки</h3>
+<h3>Прикрепленные навыки</h3>
 
-    <c:if test="${!empty personageHasAttachedSkillsByPersonage}">
+<c:if test="${!empty personageHasAttachedSkillsByPersonage}">
     <table class="data">
         <tr>
             <th>Название навыка</th>
@@ -68,14 +68,16 @@
                     </td>
                 </c:if>
                 <td>
-                    <a href="unlinkAttachedSkill/${personageHasAttachedSkill.id}?personageId=${personage.id}">Отвязать</a>
+                    <a href="unlinkAttachedSkillFromPersonage/${personageHasAttachedSkill.id}?personageId=${personage.id}">Отвязать</a>
                 </td>
             </tr>
         </c:forEach>
     </table>
-    </c:if>
+</c:if>
 
-    <form:form method="post" action="linkAttachedSkillToPersonage" commandName="personageHasAttachedSkill">
+<h3>Добавить прикрепленный навык</h3>
+
+<form:form method="post" action="linkAttachedSkillToPersonage" commandName="personageHasAttachedSkill">
 
     <table>
         <tr>
@@ -113,7 +115,7 @@
                                    value="Добавить навык"/></td>
         </tr>
     </table>
-    </form:form>
+</form:form>
 
 </body>
 </html>

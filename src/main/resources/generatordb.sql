@@ -266,7 +266,6 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`race_has_attribute` (
   `from_6_to_9_non_generating_cost` INT NULL ,
   `from_9_to_12_non_generating_cost` INT NULL ,
   `max_value` INT NULL ,
-  `rise_cost` INT NULL ,
   PRIMARY KEY (`id`, `attribute_id`, `race_id`) ,
   INDEX `fk_race_has_attribute_attribute1` (`attribute_id` ASC) ,
   INDEX `fk_race_has_attribute_race1` (`race_id` ASC) ,

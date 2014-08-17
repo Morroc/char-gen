@@ -41,9 +41,6 @@ public class RaceHasAttribute {
     @Column(name = "max_value")
     private int maxValue;
 
-    @Column(name = "rise_cost")
-    private int riseCost;
-
     public int getId() {
         return id;
     }
@@ -114,13 +111,5 @@ public class RaceHasAttribute {
 
     public void setMaxValue(int maxValue) {
         this.maxValue = maxValue;
-    }
-
-    public int getRiseCost() {
-        return riseCost;
-    }
-
-    public void setRiseCost(int riseCost) {
-        this.riseCost = riseCost;
     }
 }
