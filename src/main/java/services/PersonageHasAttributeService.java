@@ -14,7 +14,7 @@ import java.util.List;
  * Time: 7:32 PM
  */
 @Service
-public class PersonageHasAttributesService {
+public class PersonageHasAttributeService {
     @Autowired
     private PersonageHasAttributeDAO personageHasAttributeDAO;
 
@@ -24,7 +24,7 @@ public class PersonageHasAttributesService {
     }
 
     @Transactional
-    public List<PersonageHasAttribute> getPersonageHasAttributeSkillsByPersonageId(int personageId) {
+    public List<PersonageHasAttribute> getPersonageHasAttributesByPersonageId(int personageId) {
         return personageHasAttributeDAO.getPersonageHasAttributeByPersonageId(personageId);
     }
 

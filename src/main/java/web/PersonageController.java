@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import services.AttachedSkillService;
 import services.PersonageHasAttachedSkillService;
+import services.PersonageHasAttributeService;
 import services.PersonageService;
 
 /**
@@ -28,6 +29,9 @@ public class PersonageController {
     @Autowired
     private PersonageHasAttachedSkillService personageHasAttachedSkillService;
 
+    @Autowired
+    private PersonageHasAttributeService personageHasAttributeService;
+
     @RequestMapping("/personage/{personageId}")
     public String pageModel(@PathVariable("personageId") Integer personageId, Model model) {
 
@@ -35,6 +39,7 @@ public class PersonageController {
         model.addAttribute("personageHasAttachedSkillsByPersonage", personageHasAttachedSkillService.getPersonageHasAttachedSkillsByPersonageId(personageId));
         model.addAttribute("personage", personageService.getPersonageById(personageId));
         model.addAttribute("allAttachedSkillsList", attachedSkillService.getAllAttachedSkills());
+        model.addAttribute("personageHasAttributesByPersonage", personageHasAttributeService.getPersonageHasAttributesByPersonageId(personageId));
 
         return "personage";
     }
@@ -51,7 +56,7 @@ public class PersonageController {
 
     @RequestMapping(value = "/personage/unlinkAttachedSkillFromPersonage/{personageHasAttachedSkillId}")
     public String unlinkAttachedSkillFromPersonage(@PathVariable("personageHasAttachedSkillId") PersonageHasAttachedSkill personageHasAttachedSkill,
-                                      @RequestParam("personageId") Integer personageId) {
+                                                   @RequestParam("personageId") Integer personageId) {
 
         personageHasAttachedSkillService.deleteLinkAttachedSkillWithPersonage(personageHasAttachedSkill);
 

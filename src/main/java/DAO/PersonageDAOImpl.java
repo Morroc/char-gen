@@ -62,11 +62,21 @@ public class PersonageDAOImpl implements PersonageDAO {
     public List<Personage> getPersonagesByRace(Race race) {
         Session session = sessionFactory.getCurrentSession();
         Query query = session.createSQLQuery(
-                "select * from personage inner join race on personage.race_id = :id"
+                "select * from personage where race_id = :id"
         )
                 .addEntity(Personage.class)
                 .setInteger("id", race.getId());
 
         return (List<Personage>) query.list();
+    }
+
+
+    @Override
+    public Integer getRaceIdOfPersonage(Personage personage) {
+        Session session = sessionFactory.getCurrentSession();
+        List<Integer> racesIds = session.createSQLQuery("select race_id from personage where id= :id")
+                .setInteger("id", personage.getId())
+                .list();
+        return racesIds.get(0);
     }
 }

@@ -65,11 +65,7 @@
             </td>
         </tr>
 
-        <tr>
-            <td>
-                <form:input path="raceByAttribute" type="hidden" value="${race.id}"/>
-            </td>
-        </tr>
+        <form:input path="raceByAttribute" type="hidden" value="${race.id}"/>
 
         <tr>
             <td>

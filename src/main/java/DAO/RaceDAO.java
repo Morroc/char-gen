@@ -1,5 +1,6 @@
 package DAO;
 
+import entity.Personage;
 import entity.Race;
 
 import java.sql.SQLException;

@@ -1,7 +1,9 @@
 package services;
 
 import DAO.PersonageDAO;
+import DAO.RaceDAO;
 import entity.Personage;
+import entity.Race;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,9 @@ import java.util.List;
 public class PersonageService {
     @Autowired
     private PersonageDAO personageDAO;
+
+    @Autowired
+    private RaceDAO raceDAO;
 
     @Transactional
     public void addPersonage(Personage personage) {
@@ -36,5 +41,15 @@ public class PersonageService {
     @Transactional
     public Personage getPersonageById(int personageId) {
         return personageDAO.getPersonageById(personageId);
+    }
+
+    @Transactional
+    public List<Personage> getPersonagesByRaceId(int raceId) {
+        return personageDAO.getPersonagesByRace(raceDAO.getRaceById(raceId));
+    }
+
+    @Transactional
+    public Integer getRaceByPersonageId(int personageId) {
+        return personageDAO.getRaceIdOfPersonage(personageDAO.getPersonageById(personageId));
     }
 }

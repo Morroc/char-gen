@@ -1,5 +1,6 @@
 package DAO;
 
+import entity.Personage;
 import entity.Race;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;

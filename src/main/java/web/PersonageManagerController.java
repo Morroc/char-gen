@@ -1,14 +1,21 @@
 package web;
 
+import constants.Constants;
 import entity.Personage;
+import entity.PersonageHasAttribute;
+import entity.RaceHasAttribute;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import services.PersonageHasAttributeService;
 import services.PersonageService;
+import services.RaceHasAttributeService;
 import services.RaceService;
+
+import java.util.List;
 
 /**
  * User: artemk
@@ -23,6 +30,12 @@ public class PersonageManagerController {
 
     @Autowired
     private RaceService raceService;
+
+    @Autowired
+    private RaceHasAttributeService raceHasAttributeService;
+
+    @Autowired
+    private PersonageHasAttributeService personageHasAttributeService;
 
     @RequestMapping("/personageManager")
     public String pageModel(Model model) {
@@ -39,6 +52,15 @@ public class PersonageManagerController {
                                BindingResult result) {
 
         personageService.addPersonage(personage);
+        int raceIdOfPersonage = personageService.getRaceByPersonageId(personage.getId());
+        List<RaceHasAttribute> raceHasAttributes = raceHasAttributeService.getRaceHasAttributesByRaceId(raceIdOfPersonage);
+        for(RaceHasAttribute raceHasAttribute: raceHasAttributes) {
+            PersonageHasAttribute personageHasAttribute = new PersonageHasAttribute();
+            personageHasAttribute.setAttributeByPersonage(raceHasAttribute.getAttributeByRace());
+            personageHasAttribute.setPersonageByAttribute(personage);
+            personageHasAttribute.setCurrentValue(Constants.DEFAULT_VALUE_OF_ATTRIBUTE);
+            personageHasAttributeService.addLinkAttributeWithPersonage(personageHasAttribute);
+        }
 
         return "redirect:/personageManager";
     }
@@ -46,6 +68,10 @@ public class PersonageManagerController {
     @RequestMapping("/deletePersonage/{personageId}")
     public String deletePersonage(@PathVariable("personageId") Integer personageId) {
 
+        List<PersonageHasAttribute> personageHasAttributes = personageHasAttributeService.getPersonageHasAttributesByPersonageId(personageId);
+        for(PersonageHasAttribute personageHasAttribute: personageHasAttributes) {
+            personageHasAttributeService.deleteLinkAttributeWithPersonage(personageHasAttribute);
+        }
         personageService.deletePersonageById(personageId);
 
         return "redirect:/personageManager";

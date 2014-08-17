@@ -3,8 +3,6 @@ package DAO;
 import entity.*;
 import entity.Personage;
 
-import java.sql.SQLException;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -26,4 +24,6 @@ public interface PersonageDAO {
     public void deletePersonage(Personage personage);
 
     public List<Personage> getPersonagesByRace(Race race);
+
+    public Integer getRaceIdOfPersonage(Personage personage);
 }

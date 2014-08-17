@@ -15,6 +15,24 @@
 
 <h2>Personage ${personage.name}</h2>
 
+<h3>Атрибуты</h3>
+
+<c:if test="${!empty personageHasAttributesByPersonage}">
+    <table class="data">
+        <tr>
+            <th>Название атрибута</th>
+            <th>Текущее значение</th>
+            <th>&nbsp;</th>
+        </tr>
+        <c:forEach items="${personageHasAttributesByPersonage}" var="personageHasAttribute">
+            <tr>
+                <td>${personageHasAttribute.attributeByPersonage.name}</td>
+                <td>${personageHasAttribute.currentValue}</td>
+            </tr>
+        </c:forEach>
+    </table>
+</c:if>
+
 <h3>Прикрепленные навыки</h3>
 
 <c:if test="${!empty personageHasAttachedSkillsByPersonage}">
