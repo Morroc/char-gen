@@ -1,5 +1,7 @@
 package entity;
 
+import enums.SkillLevel;
+
 import javax.persistence.*;
 
 /**
@@ -24,7 +26,7 @@ public class PersonageHasTriggerSkill {
     private Personage personageByTriggerSkill;
 
     @Column(name = "current_level")
-    private String currentLevel;
+    private SkillLevel currentLevel;
 
     @Column(name = "has_talent")
     private boolean hasTalent;
@@ -40,11 +42,11 @@ public class PersonageHasTriggerSkill {
         this.id = id;
     }
 
-    public String getCurrentLevel() {
+    public SkillLevel getCurrentLevel() {
         return currentLevel;
     }
 
-    public void setCurrentLevel(String currentLevel) {
+    public void setCurrentLevel(SkillLevel currentLevel) {
         this.currentLevel = currentLevel;
     }
 

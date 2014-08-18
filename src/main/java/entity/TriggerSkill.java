@@ -23,6 +23,14 @@ public class TriggerSkill {
     private String name;
     @Column(name = "type")
     private SkillType type;
+    @Column(name = "base_cost")
+    private int baseCost;
+    @Column(name = "expert_cost")
+    private int expertCost;
+    @Column(name = "master_cost")
+    private int masterCost;
+    @Column(name = "post_master_cost")
+    private int postMasterCost;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "triggerSkillByPersonage")
     private List<PersonageHasTriggerSkill> triggerSkillsByPersonage;
 
@@ -51,6 +59,38 @@ public class TriggerSkill {
 
     public void setType(SkillType type) {
         this.type = type;
+    }
+
+    public int getBaseCost() {
+        return baseCost;
+    }
+
+    public void setBaseCost(int baseCost) {
+        this.baseCost = baseCost;
+    }
+
+    public int getExpertCost() {
+        return expertCost;
+    }
+
+    public void setExpertCost(int expertCost) {
+        this.expertCost = expertCost;
+    }
+
+    public int getMasterCost() {
+        return masterCost;
+    }
+
+    public void setMasterCost(int masterCost) {
+        this.masterCost = masterCost;
+    }
+
+    public int getPostMasterCost() {
+        return postMasterCost;
+    }
+
+    public void setPostMasterCost(int postMasterCost) {
+        this.postMasterCost = postMasterCost;
     }
 
     public List<PersonageHasTriggerSkill> getTriggerSkillsByPersonage() {

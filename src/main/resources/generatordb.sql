@@ -71,6 +71,10 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`trigger_skill` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL ,
   `type` VARCHAR(45) NULL ,
+  `base_cost` INT NULL ,
+  `expert_cost` INT NULL ,
+  `master_cost` INT NULL ,
+  `post_master_cost` INT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
