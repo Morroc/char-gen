@@ -23,21 +23,28 @@ public class MeritService {
     @Autowired
     private MeritDAO meritDAO;
 
-    @Autowired
-    private RaceHasMeritDAO raceHasMeritDAO;
-
-    @Autowired
-    private PersonageHasMeritDAO personageHasMeritDAO;
-
-    @Transactional
-    public void linkMeritToRace(Merit merit, Race race) {
-        meritDAO.addMerit(merit);
-        RaceHasMerit raceHasMerit = new RaceHasMerit(merit, race);
-        raceHasMeritDAO.addRaceHasMerit(raceHasMerit);
-    }
-
     @Transactional
     public List<Merit> getAllMerits() {
         return meritDAO.getAllMerits();
+    }
+
+    @Transactional
+    public void addMerit(Merit merit) {
+        meritDAO.addMerit(merit);
+    }
+
+    @Transactional
+    public void updateMerit(Merit merit) {
+        meritDAO.updateMerit(merit);
+    }
+
+    @Transactional
+    public void deleteMerit(Merit merit) {
+        meritDAO.deleteMerit(merit);
+    }
+
+    @Transactional
+    public void deleteMeritById(int meritId) {
+        meritDAO.deleteMerit(meritDAO.getMeritById(meritId));
     }
 }

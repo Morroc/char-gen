@@ -27,5 +27,10 @@
     Attributes manager
 </a><br/>
 
+
+<a href="<c:url value="/meritManager" />">
+    Merits manager
+</a><br/>
+
 </body>
 </html>
