@@ -39,11 +39,6 @@ public class MeritService {
     }
 
     @Transactional
-    public void deleteMerit(Merit merit) {
-        meritDAO.deleteMerit(merit);
-    }
-
-    @Transactional
     public void deleteMeritById(int meritId) {
         meritDAO.deleteMerit(meritDAO.getMeritById(meritId));
     }
