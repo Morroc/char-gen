@@ -25,7 +25,8 @@ public class PersonageHasTriggerSkill {
     @JoinColumn(name = "personage_id")
     private Personage personageByTriggerSkill;
 
-    @Column(name = "current_level")
+    @Column(name = "current_level", columnDefinition = "enum('BASIC','EXPERT','MASTER','POST_MASTER')")
+    @Enumerated(EnumType.STRING)
     private SkillLevel currentLevel;
 
     @Column(name = "has_talent")

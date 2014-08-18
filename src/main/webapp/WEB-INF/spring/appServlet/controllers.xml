@@ -20,6 +20,8 @@
                 <bean class="converters.StringToPersonageHasAttachedSkillConverter"/>
                 <bean class="converters.StringToRaceHasAttributeConverter"/>
                 <bean class="converters.StringToAttributeConverter"/>
+                <bean class="converters.StringToTriggerSkillConverter"/>
+                <bean class="converters.StringToPersonageHasTriggerSkillConverter"/>
             </set>
         </property>
     </bean>

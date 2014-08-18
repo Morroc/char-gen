@@ -2,16 +2,15 @@ package web;
 
 import entity.PersonageHasAttachedSkill;
 import entity.PersonageHasAttribute;
+import entity.PersonageHasTriggerSkill;
+import enums.SkillLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import services.AttachedSkillService;
-import services.PersonageHasAttachedSkillService;
-import services.PersonageHasAttributeService;
-import services.PersonageService;
+import services.*;
 
 /**
  * User: artemk
@@ -28,7 +27,13 @@ public class PersonageController {
     private AttachedSkillService attachedSkillService;
 
     @Autowired
+    private TriggerSkillService triggerSkillService;
+
+    @Autowired
     private PersonageHasAttachedSkillService personageHasAttachedSkillService;
+
+    @Autowired
+    private PersonageHasTriggerSkillService personageHasTriggerSkillService;
 
     @Autowired
     private PersonageHasAttributeService personageHasAttributeService;
@@ -36,11 +41,19 @@ public class PersonageController {
     @RequestMapping("/personage/{personageId}")
     public String pageModel(@PathVariable("personageId") Integer personageId, Model model) {
 
+        //personage
+        model.addAttribute("personage", personageService.getPersonageById(personageId));
+        //attributes
+        model.addAttribute("personageHasAttributesByPersonage", personageHasAttributeService.getPersonageHasAttributesByPersonageId(personageId));
+        //attached skills
+        model.addAttribute("allAttachedSkillsList", attachedSkillService.getAllAttachedSkills());
         model.addAttribute("personageHasAttachedSkill", new PersonageHasAttachedSkill());
         model.addAttribute("personageHasAttachedSkillsByPersonage", personageHasAttachedSkillService.getPersonageHasAttachedSkillsByPersonageId(personageId));
-        model.addAttribute("personage", personageService.getPersonageById(personageId));
-        model.addAttribute("allAttachedSkillsList", attachedSkillService.getAllAttachedSkills());
-        model.addAttribute("personageHasAttributesByPersonage", personageHasAttributeService.getPersonageHasAttributesByPersonageId(personageId));
+        //trigger skills
+        model.addAttribute("allTriggerSkillsList", triggerSkillService.getAllTriggerSkills());
+        model.addAttribute("personageHasTriggerSkill", new PersonageHasTriggerSkill());
+        model.addAttribute("personageHasTriggerSkillsByPersonage", personageHasTriggerSkillService.getPersonageHasTriggerSkillsByPersonageId(personageId));
+        model.addAttribute("skillLevels", SkillLevel.values());
 
         return "personage";
     }
@@ -95,6 +108,25 @@ public class PersonageController {
                                                    @RequestParam("personageId") Integer personageId) {
 
         personageHasAttachedSkillService.deleteLinkAttachedSkillWithPersonage(personageHasAttachedSkill);
+
+        return "redirect:/personage/" + personageId;
+    }
+
+    @RequestMapping(value = "/personage/linkTriggerSkillToPersonage", method = RequestMethod.POST)
+    public String addPersonageHasTriggerSkill(@Validated @ModelAttribute("personageHasTriggerSkill") PersonageHasTriggerSkill personageHasTriggerSkill,
+                                               BindingResult result) {
+
+        personageHasTriggerSkillService.addLinkTriggerSkillWithPersonage(personageHasTriggerSkill);
+        int personageId = personageHasTriggerSkill.getPersonageByTriggerSkill().getId();
+
+        return "redirect:/personage/" + personageId;
+    }
+
+    @RequestMapping(value = "/personage/unlinkTriggerSkillFromPersonage/{personageHasTriggerSkillId}")
+    public String unlinkTriggerSkillFromPersonage(@PathVariable("personageHasTriggerSkillId") PersonageHasTriggerSkill personageHasTriggerSkill,
+                                                   @RequestParam("personageId") Integer personageId) {
+
+        personageHasTriggerSkillService.deleteLinkTriggerSkillWithPersonage(personageHasTriggerSkill);
 
         return "redirect:/personage/" + personageId;
     }

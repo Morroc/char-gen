@@ -21,7 +21,8 @@ public class TriggerSkill {
     private int id;
     @Column(name = "name", unique = true)
     private String name;
-    @Column(name = "type")
+    @Column(name = "type", columnDefinition = "enum('SIMPLE','BASIC','DIFFICULT')")
+    @Enumerated(EnumType.STRING)
     private SkillType type;
     @Column(name = "base_cost")
     private int baseCost;

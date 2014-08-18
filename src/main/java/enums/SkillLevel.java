@@ -6,6 +6,7 @@ package enums;
  * Time: 7:29 PM
  */
 public enum SkillLevel {
+    BASIC,
     EXPERT,
     MASTER,
     POST_MASTER

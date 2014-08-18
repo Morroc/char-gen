@@ -50,7 +50,9 @@
                 <td>${personageHasAttachedSkill.currentValue}</td>
                 <td><a href="updateAttachedSkill/${personageHasAttachedSkill.id}?addOrRemove=add">+1</a></td>
                 <td><a href="updateAttachedSkill/${personageHasAttachedSkill.id}?addOrRemove=remove">-1</a></td>
-                <td><a href="unlinkAttachedSkillFromPersonage/${personageHasAttachedSkill.id}?personageId=${personage.id}">Отвязать</a></td>
+                <td>
+                    <a href="unlinkAttachedSkillFromPersonage/${personageHasAttachedSkill.id}?personageId=${personage.id}">Отвязать</a>
+                </td>
             </tr>
         </c:forEach>
     </table>
@@ -93,7 +95,113 @@
 
         <tr>
             <td colspan="2"><input type="submit"
-                                   value="Добавить навык"/></td>
+                                   value="Добавить прикрепленный навык"/></td>
+        </tr>
+    </table>
+</form:form>
+
+<h3>Тригерные навыки</h3>
+
+<c:if test="${!empty personageHasTriggerSkillsByPersonage}">
+    <table class="data">
+        <tr>
+            <th>Название навыка</th>
+            <th>Текущий уровень</th>
+            <th>Талант</th>
+            <th>Учитель</th>
+            <th>&nbsp;</th>
+        </tr>
+        <c:forEach items="${personageHasTriggerSkillsByPersonage}" var="personageHasTriggerSkill">
+            <tr>
+                <td>${personageHasTriggerSkill.triggerSkillByPersonage.name}</td>
+                <td>${personageHasTriggerSkill.currentLevel}</td>
+                <c:if test="${personageHasTriggerSkill.hasTalent == 'true'}">
+                    <td>
+                        <input type="checkbox" disabled="disabled" checked="checked">
+                    </td>
+                </c:if>
+                <c:if test="${personageHasTriggerSkill.hasTalent == 'false'}">
+                    <td>
+                        <input type="checkbox" disabled="disabled">
+                    </td>
+                </c:if>
+                <c:if test="${personageHasTriggerSkill.hasTeacher == 'true'}">
+                    <td>
+                        <input type="checkbox" disabled="disabled" checked="checked">
+                    </td>
+                </c:if>
+                <c:if test="${personageHasTriggerSkill.hasTeacher == 'false'}">
+                    <td>
+                        <input type="checkbox" disabled="disabled">
+                    </td>
+                </c:if>
+                <td>
+                    <a href="unlinkTriggerSkillFromPersonage/${personageHasTriggerSkill.id}?personageId=${personage.id}">Отвязать</a>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+</c:if>
+
+<h3>Добавить триггерный навык</h3>
+
+<form:form method="post" action="linkTriggerSkillToPersonage" commandName="personageHasTriggerSkill">
+
+    <table>
+        <tr>
+            <td>
+                <form:label path="triggerSkillByPersonage">
+                    Тригерный навык
+                </form:label>
+            </td>
+            <td>
+                <form:select path="triggerSkillByPersonage" items="${allTriggerSkillsList}" itemValue="id"
+                             itemLabel="name"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <form:input path="personageByTriggerSkill" type="hidden" value="${personage.id}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <form:label path="currentLevel">
+                    Уровень
+                </form:label>
+            </td>
+            <td>
+                <form:select path="currentLevel" items="${skillLevels}" id="name"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <form:label path="hasTalent">
+                    Талант
+                </form:label>
+            </td>
+            <td>
+                <form:checkbox path="hasTalent"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <form:label path="hasTeacher">
+                    Учитель
+                </form:label>
+            </td>
+            <td>
+                <form:checkbox path="hasTeacher"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2"><input type="submit"
+                                   value="Добавить тригерный навык"/></td>
         </tr>
     </table>
 </form:form>

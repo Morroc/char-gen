@@ -12,15 +12,15 @@
 <body>
 
 <a href="<c:url value="/raceManager" />">
-    Race manager
+    Races manager
 </a><br/>
 
 <a href="<c:url value="/personageManager" />">
-    Personage manager
+    Personages manager
 </a><br/>
 
 <a href="<c:url value="/attachedSkillsManager" />">
-    Attached skill manager
+    Attached skills manager
 </a><br/>
 
 <a href="<c:url value="/attributesManager" />">
@@ -33,6 +33,10 @@
 
 <a href="<c:url value="/flawManager" />">
     Flaws manager
+</a><br/>
+
+<a href="<c:url value="/triggerSkillsManager" />">
+    Trigger skills manager
 </a><br/>
 
 </body>
