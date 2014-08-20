@@ -7,13 +7,13 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
-    <title>Personage manager</title>
+    <title>Менеджер персонажей</title>
 </head>
 <body>
 
-<h2><a href="/main.jsp">Home</a><h2>
+<h2><a href="/main.jsp">Домой</a><h2>
 
-<h2>Personage manager</h2>
+<h2>Менеджер персонажей</h2>
 
 <form:form method="post" action="addPersonage" commandName="personage">
 

@@ -7,13 +7,13 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
-    <title>Personage ${personage.name}</title>
+    <title>Персонаж ${personage.name}</title>
 </head>
 <body>
 
-<h2><a href="/main.jsp">Home</a></h2>
+<h2><a href="/main.jsp">Главная</a></h2>
 
-<h2>Personage ${personage.name}</h2>
+<h2>Персонаж ${personage.name}</h2>
 
 <h3>Атрибуты</h3>
 

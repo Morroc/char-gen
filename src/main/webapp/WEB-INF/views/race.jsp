@@ -7,13 +7,13 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
-    <title>Race ${race.name}</title>
+    <title>Раса ${race.name}</title>
 </head>
 <body>
 
-<h2><a href="/main.jsp">Home</a></h2>
+<h2><a href="/main.jsp">Домой</a></h2>
 
-<h2>Race ${race.name}</h2>
+<h2>Раса ${race.name}</h2>
 
 <h3>Значение атрибутов для расы</h3>
 

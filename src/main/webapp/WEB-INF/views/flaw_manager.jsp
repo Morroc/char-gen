@@ -14,91 +14,89 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
-    <title>Flaws manager</title>
+    <title>Менеджер недостатков</title>
 </head>
 <body>
 
-<h2><a href="/main.jsp">Home</a>
+<h2><a href="/main.jsp">Домой</a></h2>
 
-    <h2>
+<h2>Менеджер недостатков</h2>
 
-        <h2>Flaws manager</h2>
+<form:form method="post" action="addFlaw" commandName="flaw">
 
-        <form:form method="post" action="addFlaw" commandName="flaw">
+    <table>
+        <tr>
+            <td>
+                <form:label path="name">
+                    Название недостатка
+                </form:label>
+            </td>
+            <td>
+                <form:input path="name"/>
+            </td>
+        </tr>
 
-        <table>
+        <tr>
+            <td>
+                <form:label path="cost">
+                    Стоимость
+                </form:label>
+            </td>
+            <td>
+                <form:input path="cost"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <form:label path="description">
+                    Описание недостатка
+                </form:label>
+            </td>
+            <td>
+                <form:input path="description"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <form:label path="turnOffPreconditions">
+                    Условия выключения
+                </form:label>
+            </td>
+            <td>
+                <form:input path="turnOffPreconditions"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2"><input type="submit"
+                                   value="Создать недостаток"/></td>
+        </tr>
+    </table>
+</form:form>
+
+<h3>Все недостатки</h3>
+<c:if test="${!empty flawsList}">
+    <table class="data">
+        <tr>
+            <th>Название</th>
+            <th>Стоимость</th>
+            <th>Описание</th>
+            <th>Условия</th>
+            <th>&nbsp;</th>
+        </tr>
+        <c:forEach items="${flawsList}" var="flaw">
             <tr>
-                <td>
-                    <form:label path="name">
-                        Название недостатка
-                    </form:label>
-                </td>
-                <td>
-                    <form:input path="name"/>
-                </td>
+                <td>${flaw.name}</td>
+                <td>${flaw.cost}</td>
+                <td>${flaw.description}</td>
+                <td>${flaw.turnOffPreconditions}</td>
+                <td><a href="deleteFlaw/${flaw.id}">Удалить</a></td>
             </tr>
-
-            <tr>
-                <td>
-                    <form:label path="cost">
-                        Стоимость
-                    </form:label>
-                </td>
-                <td>
-                    <form:input path="cost"/>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <form:label path="description">
-                        Описание недостатка
-                    </form:label>
-                </td>
-                <td>
-                    <form:input path="description"/>
-                </td>
-            </tr>
-
-            <tr>
-                <td>
-                    <form:label path="turnOffPreconditions">
-                        Условия выключения
-                    </form:label>
-                </td>
-                <td>
-                    <form:input path="turnOffPreconditions"/>
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="2"><input type="submit"
-                                       value="Создать недостаток"/></td>
-            </tr>
-        </table>
-        </form:form>
-
-        <h3>Все недостатки</h3>
-        <c:if test="${!empty flawsList}">
-        <table class="data">
-            <tr>
-                <th>Название</th>
-                <th>Стоимость</th>
-                <th>Описание</th>
-                <th>Условия</th>
-                <th>&nbsp;</th>
-            </tr>
-            <c:forEach items="${flawsList}" var="flaw">
-                <tr>
-                    <td>${flaw.name}</td>
-                    <td>${flaw.cost}</td>
-                    <td>${flaw.description}</td>
-                    <td>${flaw.turnOffPreconditions}</td>
-                    <td><a href="deleteFlaw/${flaw.id}">Удалить</a></td>
-                </tr>
-            </c:forEach>
-        </table>
-        </c:if>
+        </c:forEach>
+    </table>
+</c:if>
 
 </body>
 </html>

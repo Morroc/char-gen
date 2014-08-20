@@ -12,31 +12,31 @@
 <body>
 
 <a href="<c:url value="/raceManager" />">
-    Races manager
+    Менеджер рас
 </a><br/>
 
 <a href="<c:url value="/personageManager" />">
-    Personages manager
+    Менеджер персонажей
 </a><br/>
 
 <a href="<c:url value="/attachedSkillsManager" />">
-    Attached skills manager
+    Менеджер прикрепленных скилов
 </a><br/>
 
 <a href="<c:url value="/attributesManager" />">
-    Attributes manager
+    Менеджер атрибутов
 </a><br/>
 
 <a href="<c:url value="/meritManager" />">
-    Merits manager
+    Менеджер достоинств
 </a><br/>
 
 <a href="<c:url value="/flawManager" />">
-    Flaws manager
+    Менеджер недостатков
 </a><br/>
 
 <a href="<c:url value="/triggerSkillsManager" />">
-    Trigger skills manager
+    Менеджер тригерных скилов
 </a><br/>
 
 </body>
