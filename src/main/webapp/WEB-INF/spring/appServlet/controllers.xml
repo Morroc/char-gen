@@ -22,6 +22,9 @@
                 <bean class="converters.StringToAttributeConverter"/>
                 <bean class="converters.StringToTriggerSkillConverter"/>
                 <bean class="converters.StringToPersonageHasTriggerSkillConverter"/>
+                <bean class="converters.StringToMeritConverter"/>
+                <bean class="converters.StringToRaceHasMeritConverter"/>
+                <bean class="converters.StringToPersonageHasMeritConverter"/>
             </set>
         </property>
     </bean>

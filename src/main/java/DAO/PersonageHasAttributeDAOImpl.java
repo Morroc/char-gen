@@ -61,7 +61,7 @@ public class PersonageHasAttributeDAOImpl implements PersonageHasAttributeDAO{
     }
 
     @Override
-    public List<PersonageHasAttribute> getPersonageHasAttributeByPersonageId(int personageId) {
+    public List<PersonageHasAttribute> getPersonageHasAttributesByPersonageId(int personageId) {
         Session session = sessionFactory.getCurrentSession();
         List<PersonageHasAttribute> personageHasAttributes = session.createSQLQuery(
                 "select * from personage_has_attribute where personage_id = :id"

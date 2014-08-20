@@ -25,7 +25,7 @@ public class PersonageHasAttributeService {
 
     @Transactional
     public List<PersonageHasAttribute> getPersonageHasAttributesByPersonageId(int personageId) {
-        return personageHasAttributeDAO.getPersonageHasAttributeByPersonageId(personageId);
+        return personageHasAttributeDAO.getPersonageHasAttributesByPersonageId(personageId);
     }
 
     @Transactional

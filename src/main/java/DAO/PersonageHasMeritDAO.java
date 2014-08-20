@@ -20,4 +20,8 @@ public interface PersonageHasMeritDAO {
     public List<PersonageHasMerit> getAllPersonageHasMerits();
 
     public void deletePersonageHasMerit(PersonageHasMerit personageHasMerit);
+
+    public PersonageHasMerit getPersonageHasMeritByMeritIdAndPersonageId(int meritId, int personageId);
+
+    public List<PersonageHasMerit> getPersonageHasMeritsByPersonageId(int personageId);
 }

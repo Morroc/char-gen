@@ -1,9 +1,7 @@
 package web;
 
 import constants.Constants;
-import entity.Personage;
-import entity.PersonageHasAttribute;
-import entity.RaceHasAttribute;
+import entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +30,16 @@ public class RaceController {
     private RaceHasAttributeService raceHasAttributeService;
 
     @Autowired
+    private MeritService meritService;
+
+    @Autowired
+    private RaceHasMeritService raceHasMeritService;
+
+
+    @Autowired
+    private PersonageHasMeritService personageHasMeritService;
+
+    @Autowired
     private PersonageHasAttributeService personageHasAttributeService;
 
     @Autowired
@@ -40,10 +48,17 @@ public class RaceController {
     @RequestMapping("/race/{raceId}")
     public String pageModel(@PathVariable("raceId") Integer raceId, Model model) {
 
+
+        model.addAttribute("race", raceService.getRaceById(raceId));
+
+        model.addAttribute("allAttributesList", attributeService.getAllAttributes());
         model.addAttribute("raceHasAttribute", new RaceHasAttribute());
         model.addAttribute("raceHasAttributeByRace", raceHasAttributeService.getRaceHasAttributesByRaceId(raceId));
-        model.addAttribute("race", raceService.getRaceById(raceId));
-        model.addAttribute("allAttributesList", attributeService.getAllAttributes());
+
+        model.addAttribute("allMeritsList", meritService.getAllMerits());
+        model.addAttribute("raceHasMerit", new RaceHasMerit());
+        model.addAttribute("raceHasMeritByRace", raceHasMeritService.getRaceHasMeritsByRaceId(raceId));
+
 
         return "race";
     }
@@ -75,6 +90,41 @@ public class RaceController {
             PersonageHasAttribute personageHasAttribute = personageHasAttributeService.
                     getPersonageHasAttributeByAttributeIdAndPersonageId(raceHasAttribute.getAttributeByRace().getId(), personage.getId());
             personageHasAttributeService.deleteLinkAttributeWithPersonage(personageHasAttribute);
+        }
+
+        return "redirect:/race/" + raceId;
+    }
+
+    @RequestMapping(value = "/race/linkMeritToRace", method = RequestMethod.POST)
+    public String addRaceHasMerit(@Validated @ModelAttribute("raceHasMerit") RaceHasMerit raceHasMerit,
+                                  BindingResult result) {
+
+        raceHasMeritService.addLinkMeritWithRace(raceHasMerit);
+        int raceId = raceHasMerit.getRaceByMerit().getId();
+        if (raceHasMerit.isDefaultForRace()) {
+            List<Personage> personages = personageService.getPersonagesByRaceId(raceId);
+            for (Personage personage : personages) {
+                PersonageHasMerit personageHasMerit = new PersonageHasMerit();
+                personageHasMerit.setMeritByPersonage(raceHasMerit.getMeritByRace());
+                personageHasMerit.setPersonageByMerit(personage);
+                personageHasMeritService.addLinkMeritWithPersonage(personageHasMerit);
+            }
+        }
+        return "redirect:/race/" + raceId;
+    }
+
+    @RequestMapping(value = "/race/unlinkMeritFromRace/{raceHasMeritId}")
+    public String unlinkMeritFromRace(@PathVariable("raceHasMeritId") RaceHasMerit raceHasMerit,
+                                      @RequestParam("raceId") Integer raceId) {
+
+        raceHasMeritService.deleteLinkMeritWithRace(raceHasMerit);
+        if (raceHasMerit.isDefaultForRace()) {
+            List<Personage> personages = personageService.getPersonagesByRaceId(raceId);
+            for (Personage personage : personages) {
+                PersonageHasMerit personageHasMerit = personageHasMeritService.
+                        getPersonageHasMeritByMeritIdAndPersonageId(raceHasMerit.getMeritByRace().getId(), personage.getId());
+                personageHasMeritService.deleteLinkMeritWithPersonage(personageHasMerit);
+            }
         }
 
         return "redirect:/race/" + raceId;

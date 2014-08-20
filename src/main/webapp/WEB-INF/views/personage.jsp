@@ -35,6 +35,8 @@
     </table>
 </c:if>
 
+<h2>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</h2>
+
 <h3>Прикрепленные навыки</h3>
 
 <c:if test="${!empty personageHasAttachedSkillsByPersonage}">
@@ -99,6 +101,8 @@
         </tr>
     </table>
 </form:form>
+
+<h2>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</h2>
 
 <h3>Тригерные навыки</h3>
 
@@ -202,6 +206,96 @@
         <tr>
             <td colspan="2"><input type="submit"
                                    value="Добавить тригерный навык"/></td>
+        </tr>
+    </table>
+</form:form>
+
+<h2>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</h2>
+
+<h3>Достоинства</h3>
+
+<table class="data">
+    <tr>
+        <th>Название достоинства</th>
+        <th>Стоимость</th>
+        <th>Дефолтный для ${personage.race.name}</th>
+        <th>&nbsp;</th>
+    </tr>
+
+    <c:if test="${!empty defaultForRaceMerits}">
+        <c:forEach items="${defaultForRaceMerits}" var="raceHasMerit">
+            <tr>
+                <td>${raceHasMerit.meritByRace.name}</td>
+                <td>${raceHasMerit.raceCost}</td>
+                <td><input type="checkbox" disabled="disabled" checked="checked"></td>
+            </tr>
+        </c:forEach>
+    </c:if>
+
+    <c:if test="${!empty withDifferentCostForRaceMerits}">
+        <c:forEach items="${withDifferentCostForRaceMerits}" var="raceAndPersonageHasMerit">
+            <tr>
+                <td>${raceAndPersonageHasMerit.meritByRace.name}</td>
+                <td>${raceAndPersonageHasMerit.raceCost}</td>
+                <td><input type="checkbox" disabled="disabled"></td>
+
+                <td>
+                    <a href="unlinkMeritFromPersonageByRaceHasMerit/${raceAndPersonageHasMerit.id}?personageId=${personage.id}">Отвязать</a>
+                </td>
+            </tr>
+        </c:forEach>
+    </c:if>
+
+    <c:if test="${!empty onlyForPersonageMerits}">
+        <c:forEach items="${onlyForPersonageMerits}" var="personageHasMerit">
+            <tr>
+                <td>${personageHasMerit.meritByPersonage.name}</td>
+                <td>${personageHasMerit.meritByPersonage.cost}</td>
+                <td><input type="checkbox" disabled="disabled"></td>
+
+                <td>
+                    <a href="unlinkMeritFromPersonage/${personageHasMerit.id}?personageId=${personage.id}">Отвязать</a>
+                </td>
+            </tr>
+        </c:forEach>
+    </c:if>
+</table>
+
+<h3>Добавить достоинство</h3>
+
+<form:form method="post" action="linkMeritToPersonage" commandName="personageHasMerit">
+
+    <table>
+        <tr>
+            <td>
+                <form:label path="meritByPersonage">
+                    Достоинство
+                </form:label>
+            </td>
+            <td>
+                <form:select path="meritByPersonage">
+                    <c:if test="${!empty raceHasMeritsWithoutDefaults}">
+                        <c:forEach items="${raceHasMeritsWithoutDefaults}" var="raceHasMerit">
+                            <form:option
+                                    value="${raceHasMerit.meritByRace.id}"> ${raceHasMerit.meritByRace.name} (БC: ${raceHasMerit.meritByRace.cost} РС: ${raceHasMerit.raceCost})</form:option>
+                        </c:forEach>
+                    </c:if>
+                    <c:forEach items="${allMeritsWithoutRacesMerits}" var="merit">
+                        <form:option value="${merit.id}">${merit.name}</form:option>
+                    </c:forEach>
+                </form:select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <form:input path="personageByMerit" type="hidden" value="${personage.id}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2"><input type="submit"
+                                   value="Добавить достоинство"/></td>
         </tr>
     </table>
 </form:form>

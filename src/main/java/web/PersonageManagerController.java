@@ -1,19 +1,14 @@
 package web;
 
 import constants.Constants;
-import entity.Personage;
-import entity.PersonageHasAttribute;
-import entity.RaceHasAttribute;
+import entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import services.PersonageHasAttributeService;
-import services.PersonageService;
-import services.RaceHasAttributeService;
-import services.RaceService;
+import services.*;
 
 import java.util.List;
 
@@ -37,6 +32,12 @@ public class PersonageManagerController {
     @Autowired
     private PersonageHasAttributeService personageHasAttributeService;
 
+    @Autowired
+    private RaceHasMeritService raceHasMeritService;
+
+    @Autowired
+    private PersonageHasMeritService personageHasMeritService;
+
     @RequestMapping("/personageManager")
     public String pageModel(Model model) {
 
@@ -51,15 +52,29 @@ public class PersonageManagerController {
     public String addPersonage(@Validated @ModelAttribute("personage") Personage personage,
                                BindingResult result) {
 
+        //add personage
         personageService.addPersonage(personage);
+
+        //add attributes
         int raceIdOfPersonage = personageService.getRaceByPersonageId(personage.getId());
         List<RaceHasAttribute> raceHasAttributes = raceHasAttributeService.getRaceHasAttributesByRaceId(raceIdOfPersonage);
-        for(RaceHasAttribute raceHasAttribute: raceHasAttributes) {
+        for (RaceHasAttribute raceHasAttribute : raceHasAttributes) {
             PersonageHasAttribute personageHasAttribute = new PersonageHasAttribute();
             personageHasAttribute.setAttributeByPersonage(raceHasAttribute.getAttributeByRace());
             personageHasAttribute.setPersonageByAttribute(personage);
             personageHasAttribute.setCurrentValue(Constants.DEFAULT_VALUE_OF_ATTRIBUTE);
             personageHasAttributeService.addLinkAttributeWithPersonage(personageHasAttribute);
+        }
+
+        //add default race merits
+        List<RaceHasMerit> raceHasMerits = raceHasMeritService.getRaceHasMeritsByRaceId(raceIdOfPersonage);
+        for (RaceHasMerit raceHasMerit : raceHasMerits) {
+            if (raceHasMerit.isDefaultForRace()) {
+                PersonageHasMerit personageHasMerit = new PersonageHasMerit();
+                personageHasMerit.setMeritByPersonage(raceHasMerit.getMeritByRace());
+                personageHasMerit.setPersonageByMerit(personage);
+                personageHasMeritService.addLinkMeritWithPersonage(personageHasMerit);
+            }
         }
 
         return "redirect:/personageManager";
@@ -68,10 +83,19 @@ public class PersonageManagerController {
     @RequestMapping("/deletePersonage/{personageId}")
     public String deletePersonage(@PathVariable("personageId") Integer personageId) {
 
+        //delete attributes
         List<PersonageHasAttribute> personageHasAttributes = personageHasAttributeService.getPersonageHasAttributesByPersonageId(personageId);
-        for(PersonageHasAttribute personageHasAttribute: personageHasAttributes) {
+        for (PersonageHasAttribute personageHasAttribute : personageHasAttributes) {
             personageHasAttributeService.deleteLinkAttributeWithPersonage(personageHasAttribute);
         }
+
+        //delete default race merits
+        List<PersonageHasMerit> personageHasMerits = personageHasMeritService.getPersonageHasMeritsByPersonageId(personageId);
+        for (PersonageHasMerit personageHasMerit : personageHasMerits) {
+            personageHasMeritService.deleteLinkMeritWithPersonage(personageHasMerit);
+        }
+
+        //delete personage
         personageService.deletePersonageById(personageId);
 
         return "redirect:/personageManager";

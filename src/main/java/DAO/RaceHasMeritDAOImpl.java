@@ -56,11 +56,15 @@ public class RaceHasMeritDAOImpl implements RaceHasMeritDAO{
                 .setInteger("merit_id", meritId)
                 .setInteger("race_id", raceId)
                 .list();
-        return raceHasMerits.get(0);
+        if(raceHasMerits.isEmpty()) {
+            return null;
+        } else {
+            return raceHasMerits.get(0);
+        }
     }
 
     @Override
-    public List<RaceHasMerit> getRaceHasMeritByRaceId(int raceId) {
+    public List<RaceHasMerit> getRaceHasMeritsByRaceId(int raceId) {
         Session session = sessionFactory.getCurrentSession();
         List<RaceHasMerit> raceHasMerits = session.createSQLQuery(
                 "select * from race_has_merit where race_id = :id"

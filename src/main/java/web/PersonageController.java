@@ -1,8 +1,6 @@
 package web;
 
-import entity.PersonageHasAttachedSkill;
-import entity.PersonageHasAttribute;
-import entity.PersonageHasTriggerSkill;
+import entity.*;
 import enums.SkillLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +9,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import services.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User: artemk
@@ -38,11 +39,22 @@ public class PersonageController {
     @Autowired
     private PersonageHasAttributeService personageHasAttributeService;
 
+    @Autowired
+    private PersonageHasMeritService personageHasMeritService;
+
+    @Autowired
+    private RaceHasMeritService raceHasMeritService;
+
+
+    @Autowired
+    private MeritService meritService;
+
     @RequestMapping("/personage/{personageId}")
     public String pageModel(@PathVariable("personageId") Integer personageId, Model model) {
 
+        Personage personage = personageService.getPersonageById(personageId);
         //personage
-        model.addAttribute("personage", personageService.getPersonageById(personageId));
+        model.addAttribute("personage", personage);
         //attributes
         model.addAttribute("personageHasAttributesByPersonage", personageHasAttributeService.getPersonageHasAttributesByPersonageId(personageId));
         //attached skills
@@ -55,6 +67,66 @@ public class PersonageController {
         model.addAttribute("personageHasTriggerSkillsByPersonage", personageHasTriggerSkillService.getPersonageHasTriggerSkillsByPersonageId(personageId));
         model.addAttribute("skillLevels", SkillLevel.values());
 
+        //all races has merits
+        List<RaceHasMerit> raceHasMerits = raceHasMeritService.getRaceHasMeritsByRaceId(personage.getRace().getId());
+        List<Merit> allMerits = meritService.getAllMerits();
+        //merits
+        List<RaceHasMerit> defaultForRaceMerits = new ArrayList<RaceHasMerit>();
+        List<RaceHasMerit> withDifferentCostForRaceMerits = new ArrayList<RaceHasMerit>();
+        List<PersonageHasMerit> onlyForPersonageMerits = new ArrayList<PersonageHasMerit>();
+        List<Merit> allMeritsWithoutRacesMerits = new ArrayList<Merit>();
+        allMeritsWithoutRacesMerits.addAll(allMerits);
+        List<Merit> removeListForPersonageMerits = new ArrayList<Merit>();
+        for (RaceHasMerit raceHasMerit : raceHasMerits) {
+            if (raceHasMerit.isDefaultForRace()) {
+                defaultForRaceMerits.add(raceHasMerit);
+                for (Merit merit : allMeritsWithoutRacesMerits) {
+                    if (raceHasMerit.getMeritByRace().getId() == merit.getId()) {
+                        removeListForPersonageMerits.add(merit);
+                    }
+                }
+            } else if (raceHasMerit.getRaceCost() != 0) {
+                for (Merit merit : allMeritsWithoutRacesMerits) {
+                    if (raceHasMerit.getMeritByRace().getId() == merit.getId()) {
+                        removeListForPersonageMerits.add(merit);
+                    }
+                }
+                List<PersonageHasMerit> personageHasMerits = personageHasMeritService.getPersonageHasMeritsByPersonageId(personageId);
+                for (PersonageHasMerit personageHasMerit : personageHasMerits) {
+                    RaceHasMerit raceHasMeritForCurrentPersonageMerit = raceHasMeritService.
+                            getRaceHasMeritByMeritIdAndRaceId(personageHasMerit.getMeritByPersonage().getId(),
+                                    personage.getRace().getId());
+                    if (personageHasMerit.getMeritByPersonage().getId() == raceHasMerit.getMeritByRace().getId()) {
+                        withDifferentCostForRaceMerits.add(raceHasMerit);
+                    } else if (raceHasMeritForCurrentPersonageMerit == null) {
+                        onlyForPersonageMerits.add(personageHasMerit);
+                    } else if (!raceHasMeritForCurrentPersonageMerit.isDefaultForRace()){
+                        onlyForPersonageMerits.add(personageHasMerit);
+                    }
+                }
+            }
+        }
+        allMeritsWithoutRacesMerits.removeAll(removeListForPersonageMerits);
+
+        List<RaceHasMerit> raceHasMeritsWithoutDefaults = raceHasMerits;
+        raceHasMeritsWithoutDefaults.removeAll(defaultForRaceMerits);
+
+        //default for race
+        model.addAttribute("defaultForRaceMerits", defaultForRaceMerits);
+
+        //with different cost for race
+        model.addAttribute("withDifferentCostForRaceMerits", withDifferentCostForRaceMerits);
+
+        //only for personage
+        model.addAttribute("onlyForPersonageMerits", onlyForPersonageMerits);
+
+        //race merits
+        model.addAttribute("raceHasMeritsWithoutDefaults", raceHasMeritsWithoutDefaults);
+
+        //all merits
+        model.addAttribute("allMeritsWithoutRacesMerits", allMeritsWithoutRacesMerits);
+        model.addAttribute("personageHasMerit", new PersonageHasMerit());
+
         return "personage";
     }
 
@@ -63,10 +135,10 @@ public class PersonageController {
                                   @RequestParam("addOrRemove") String addOrRemove) {
 
         PersonageHasAttribute personageHasAttribute = personageHasAttributeService.getPersonageHasAttributeById(personageHasAttributeId);
-        if(addOrRemove.equals("add")) {
+        if (addOrRemove.equals("add")) {
             personageHasAttribute.setCurrentValue(personageHasAttribute.getCurrentValue() + 1);
         }
-        if(addOrRemove.equals("remove")) {
+        if (addOrRemove.equals("remove")) {
             personageHasAttribute.setCurrentValue(personageHasAttribute.getCurrentValue() - 1);
         }
         personageHasAttributeService.updatePersonageHasAttribute(personageHasAttribute);
@@ -77,14 +149,14 @@ public class PersonageController {
 
     @RequestMapping(value = "/personage/updateAttachedSkill/{personageHasAttachedSkillId}")
     public String updateAttachedSkill(@PathVariable("personageHasAttachedSkillId") Integer personageHasAttachedSkillId,
-                                  @RequestParam("addOrRemove") String addOrRemove) {
+                                      @RequestParam("addOrRemove") String addOrRemove) {
 
         PersonageHasAttachedSkill personageHasAttachedSkill = personageHasAttachedSkillService
                 .getPersonageHasAttachedSkillById(personageHasAttachedSkillId);
-        if(addOrRemove.equals("add")) {
+        if (addOrRemove.equals("add")) {
             personageHasAttachedSkill.setCurrentValue(personageHasAttachedSkill.getCurrentValue() + 1);
         }
-        if(addOrRemove.equals("remove")) {
+        if (addOrRemove.equals("remove")) {
             personageHasAttachedSkill.setCurrentValue(personageHasAttachedSkill.getCurrentValue() - 1);
         }
         personageHasAttachedSkillService.updatePersonageHasAttachedSkill(personageHasAttachedSkill);
@@ -114,7 +186,7 @@ public class PersonageController {
 
     @RequestMapping(value = "/personage/linkTriggerSkillToPersonage", method = RequestMethod.POST)
     public String addPersonageHasTriggerSkill(@Validated @ModelAttribute("personageHasTriggerSkill") PersonageHasTriggerSkill personageHasTriggerSkill,
-                                               BindingResult result) {
+                                              BindingResult result) {
 
         personageHasTriggerSkillService.addLinkTriggerSkillWithPersonage(personageHasTriggerSkill);
         int personageId = personageHasTriggerSkill.getPersonageByTriggerSkill().getId();
@@ -124,9 +196,39 @@ public class PersonageController {
 
     @RequestMapping(value = "/personage/unlinkTriggerSkillFromPersonage/{personageHasTriggerSkillId}")
     public String unlinkTriggerSkillFromPersonage(@PathVariable("personageHasTriggerSkillId") PersonageHasTriggerSkill personageHasTriggerSkill,
-                                                   @RequestParam("personageId") Integer personageId) {
+                                                  @RequestParam("personageId") Integer personageId) {
 
         personageHasTriggerSkillService.deleteLinkTriggerSkillWithPersonage(personageHasTriggerSkill);
+
+        return "redirect:/personage/" + personageId;
+    }
+
+    @RequestMapping(value = "/personage/linkMeritToPersonage", method = RequestMethod.POST)
+    public String addPersonageHasMerit(@Validated @ModelAttribute("personageHasMerit") PersonageHasMerit personageHasMerit,
+                                       BindingResult result) {
+
+        personageHasMeritService.addLinkMeritWithPersonage(personageHasMerit);
+        int personageId = personageHasMerit.getPersonageByMerit().getId();
+
+        return "redirect:/personage/" + personageId;
+    }
+
+    @RequestMapping(value = "/personage/unlinkMeritFromPersonage/{personageHasMeritId}")
+    public String unlinkMeritFromPersonage(@PathVariable("personageHasMeritId") PersonageHasMerit personageHasMerit,
+                                           @RequestParam("personageId") Integer personageId) {
+
+        personageHasMeritService.deleteLinkMeritWithPersonage(personageHasMerit);
+
+        return "redirect:/personage/" + personageId;
+    }
+
+    @RequestMapping(value = "/personage/unlinkMeritFromPersonageByRaceHasMerit/{raceHasMerit}")
+    public String unlinkMeritFromPersonageByRaceHasMerit(@PathVariable("raceHasMerit") RaceHasMerit raceHasMerit,
+                                           @RequestParam("personageId") Integer personageId) {
+
+        PersonageHasMerit personageHasMerit = personageHasMeritService.
+                getPersonageHasMeritByMeritIdAndPersonageId(raceHasMerit.getMeritByRace().getId(), personageId);
+        personageHasMeritService.deleteLinkMeritWithPersonage(personageHasMerit);
 
         return "redirect:/personage/" + personageId;
     }

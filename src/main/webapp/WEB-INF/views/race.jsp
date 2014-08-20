@@ -141,5 +141,86 @@
     </table>
 </form:form>
 
+<h3>Значение достоинств для расы</h3>
+
+<c:if test="${!empty raceHasMeritByRace}">
+    <table class="data">
+        <tr>
+            <th>Название атрибута</th>
+            <th>Расовая стоимость</th>
+            <th>По умолчанию для расы</th>
+            <th>&nbsp;</th>
+        </tr>
+        <c:forEach items="${raceHasMeritByRace}" var="raceHasMerit">
+            <tr>
+                <td>${raceHasMerit.meritByRace.name}</td>
+                <td>${raceHasMerit.raceCost}</td>
+                <c:if test="${raceHasMerit.defaultForRace == 'true'}">
+                    <td>
+                        <input type="checkbox" disabled="disabled" checked="checked">
+                    </td>
+                </c:if>
+                <c:if test="${raceHasMerit.defaultForRace == 'false'}">
+                    <td>
+                        <input type="checkbox" disabled="disabled">
+                    </td>
+                </c:if>
+                <td>
+                    <a href="/race/unlinkMeritFromRace/${raceHasMerit.id}?raceId=${race.id}">Отвязать</a>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+</c:if>
+
+<h3>Добавить достоинство к расе</h3>
+
+<form:form method="post" action="linkMeritToRace" commandName="raceHasMerit">
+
+    <table>
+        <tr>
+            <td>
+                <form:label path="meritByRace">
+                    Мерит
+                </form:label>
+            </td>
+            <td>
+                <form:select path="meritByRace" items="${allMeritsList}" itemValue="id"
+                             itemLabel="name"/>
+            </td>
+        </tr>
+
+        <form:input path="raceByMerit" type="hidden" value="${race.id}"/>
+
+        <tr>
+            <td>
+                <form:label path="raceCost">
+                    Расовая стоимость
+                </form:label>
+            </td>
+            <td>
+                <form:input path="raceCost"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <form:label path="defaultForRace">
+                    По умолчанию для расы
+                </form:label>
+            </td>
+            <td>
+                <form:checkbox path="defaultForRace"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2"><input type="submit"
+                                   value="Добавить достоинство"/></td>
+        </tr>
+    </table>
+</form:form>
+
 </body>
 </html>

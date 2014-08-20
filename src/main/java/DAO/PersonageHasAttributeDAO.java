@@ -22,5 +22,5 @@ public interface PersonageHasAttributeDAO {
 
     public PersonageHasAttribute getPersonageHasAttributeByAttributeIdAndPersonageId(int attributeId, int personageId);
 
-    public List<PersonageHasAttribute> getPersonageHasAttributeByPersonageId(int personageId);
+    public List<PersonageHasAttribute> getPersonageHasAttributesByPersonageId(int personageId);
 }

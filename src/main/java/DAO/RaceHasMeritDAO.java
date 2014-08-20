@@ -23,5 +23,5 @@ public interface RaceHasMeritDAO {
 
     public RaceHasMerit getRaceHasMeritByMeritIdAndRaceId(int meritId, int raceId);
 
-    public List<RaceHasMerit> getRaceHasMeritByRaceId(int raceId);
+    public List<RaceHasMerit> getRaceHasMeritsByRaceId(int raceId);
 }
