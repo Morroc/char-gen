@@ -256,7 +256,7 @@
     </table>
 </c:if>
 
-<h3>Добавить достоинство к расе</h3>
+<h3>Добавить недостаток к расе</h3>
 
 <form:form method="post" action="linkFlawToRace" commandName="raceHasFlaw">
 
