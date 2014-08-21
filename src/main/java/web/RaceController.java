@@ -45,6 +45,15 @@ public class RaceController {
     @Autowired
     private PersonageService personageService;
 
+    @Autowired
+    private RaceHasFlawService raceHasFlawService;
+
+    @Autowired
+    private PersonageHasFlawService personageHasFlawService;
+
+    @Autowired
+    private FlawService flawService;
+
     @RequestMapping("/race/{raceId}")
     public String pageModel(@PathVariable("raceId") Integer raceId, Model model) {
 
@@ -59,6 +68,9 @@ public class RaceController {
         model.addAttribute("raceHasMerit", new RaceHasMerit());
         model.addAttribute("raceHasMeritByRace", raceHasMeritService.getRaceHasMeritsByRaceId(raceId));
 
+        model.addAttribute("allFlawsList", flawService.getAllFlaws());
+        model.addAttribute("raceHasFlaw", new RaceHasFlaw());
+        model.addAttribute("raceHasFlawsByRace", raceHasFlawService.getRaceHasFlawsByRaceId(raceId));
 
         return "race";
     }
@@ -124,6 +136,41 @@ public class RaceController {
                 PersonageHasMerit personageHasMerit = personageHasMeritService.
                         getPersonageHasMeritByMeritIdAndPersonageId(raceHasMerit.getMeritByRace().getId(), personage.getId());
                 personageHasMeritService.deleteLinkMeritWithPersonage(personageHasMerit);
+            }
+        }
+
+        return "redirect:/race/" + raceId;
+    }
+
+    @RequestMapping(value = "/race/linkFlawToRace", method = RequestMethod.POST)
+    public String addRaceHasFlaw(@Validated @ModelAttribute("raceHasFlaw") RaceHasFlaw raceHasFlaw,
+                                 BindingResult result) {
+
+        raceHasFlawService.addLinkFlawWithRace(raceHasFlaw);
+        int raceId = raceHasFlaw.getRaceByFlaw().getId();
+        if (raceHasFlaw.isDefaultForRace()) {
+            List<Personage> personages = personageService.getPersonagesByRaceId(raceId);
+            for (Personage personage : personages) {
+                PersonageHasFlaw personageHasFlaw = new PersonageHasFlaw();
+                personageHasFlaw.setFlawByPersonage(raceHasFlaw.getFlawByRace());
+                personageHasFlaw.setPersonageByFlaw(personage);
+                personageHasFlawService.addLinkFlawWithPersonage(personageHasFlaw);
+            }
+        }
+        return "redirect:/race/" + raceId;
+    }
+
+    @RequestMapping(value = "/race/unlinkFlawFromRace/{raceHasFlawId}")
+    public String unlinkFlawFromRace(@PathVariable("raceHasFlawId") RaceHasFlaw raceHasFlaw,
+                                     @RequestParam("raceId") Integer raceId) {
+
+        raceHasFlawService.deleteLinkFlawWithRace(raceHasFlaw);
+        if (raceHasFlaw.isDefaultForRace()) {
+            List<Personage> personages = personageService.getPersonagesByRaceId(raceId);
+            for (Personage personage : personages) {
+                PersonageHasFlaw personageHasFlaw = personageHasFlawService.
+                        getPersonageHasFlawByFlawIdAndPersonageId(raceHasFlaw.getFlawByRace().getId(), personage.getId());
+                personageHasFlawService.deleteLinkFlawWithPersonage(personageHasFlaw);
             }
         }
 

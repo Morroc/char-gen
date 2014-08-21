@@ -141,12 +141,14 @@
     </table>
 </form:form>
 
+<h2>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</h2>
+
 <h3>Значение достоинств для расы</h3>
 
 <c:if test="${!empty raceHasMeritByRace}">
     <table class="data">
         <tr>
-            <th>Название атрибута</th>
+            <th>Название достоинства</th>
             <th>Расовая стоимость</th>
             <th>По умолчанию для расы</th>
             <th>&nbsp;</th>
@@ -181,7 +183,7 @@
         <tr>
             <td>
                 <form:label path="meritByRace">
-                    Мерит
+                    Достоинство
                 </form:label>
             </td>
             <td>
@@ -218,6 +220,75 @@
         <tr>
             <td colspan="2"><input type="submit"
                                    value="Добавить достоинство"/></td>
+        </tr>
+    </table>
+</form:form>
+
+<h2>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</h2>
+
+<h3>Расовые недостатки</h3>
+
+<c:if test="${!empty raceHasFlawsByRace}">
+    <table class="data">
+        <tr>
+            <th>Название недостатка</th>
+            <th>По умолчанию для расы</th>
+            <th>&nbsp;</th>
+        </tr>
+        <c:forEach items="${raceHasFlawsByRace}" var="raceHasFlaw">
+            <tr>
+                <td>${raceHasFlaw.flawByRace.name}</td>
+                <c:if test="${raceHasFlaw.defaultForRace == 'true'}">
+                    <td>
+                        <input type="checkbox" disabled="disabled" checked="checked">
+                    </td>
+                </c:if>
+                <c:if test="${raceHasFlaw.defaultForRace == 'false'}">
+                    <td>
+                        <input type="checkbox" disabled="disabled">
+                    </td>
+                </c:if>
+                <td>
+                    <a href="/race/unlinkFlawFromRace/${raceHasFlaw.id}?raceId=${race.id}">Отвязать</a>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+</c:if>
+
+<h3>Добавить достоинство к расе</h3>
+
+<form:form method="post" action="linkFlawToRace" commandName="raceHasFlaw">
+
+    <table>
+        <tr>
+            <td>
+                <form:label path="flawByRace">
+                    Недостаток
+                </form:label>
+            </td>
+            <td>
+                <form:select path="flawByRace" items="${allFlawsList}" itemValue="id"
+                             itemLabel="name"/>
+            </td>
+        </tr>
+
+        <form:input path="raceByFlaw" type="hidden" value="${race.id}"/>
+
+        <tr>
+            <td>
+                <form:label path="defaultForRace">
+                    По умолчанию для расы
+                </form:label>
+            </td>
+            <td>
+                <form:checkbox path="defaultForRace" disabled="disabled" checked="checked"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2"><input type="submit"
+                                   value="Добавить недостаток"/></td>
         </tr>
     </table>
 </form:form>

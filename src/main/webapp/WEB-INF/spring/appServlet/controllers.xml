@@ -25,6 +25,9 @@
                 <bean class="converters.StringToMeritConverter"/>
                 <bean class="converters.StringToRaceHasMeritConverter"/>
                 <bean class="converters.StringToPersonageHasMeritConverter"/>
+                <bean class="converters.StringToRaceHasFlawConverter"/>
+                <bean class="converters.StringToFlawConverter"/>
+                <bean class="converters.StringToPersonageHasFlawConverter"/>
             </set>
         </property>
     </bean>

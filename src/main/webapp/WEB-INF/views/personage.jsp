@@ -300,5 +300,72 @@
     </table>
 </form:form>
 
+<h2>@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</h2>
+
+<h3>Недостатки</h3>
+
+<table class="data">
+    <tr>
+        <th>Название недостатка</th>
+        <th>Стоимость</th>
+        <th>Дефолтный для ${personage.race.name}</th>
+        <th>&nbsp;</th>
+    </tr>
+
+    <c:if test="${!empty defaultForRaceFlaws}">
+        <c:forEach items="${defaultForRaceFlaws}" var="raceHasFlaw">
+            <tr>
+                <td>${raceHasFlaw.flawByRace.name}</td>
+                <td>${raceHasFlaw.flawByRace.cost}</td>
+                <td><input type="checkbox" disabled="disabled" checked="checked"></td>
+            </tr>
+        </c:forEach>
+    </c:if>
+
+    <c:if test="${!empty allPersonageHasFlawsWithoutDefaultForRace}">
+        <c:forEach items="${allPersonageHasFlawsWithoutDefaultForRace}" var="personageHasFlaw">
+            <tr>
+                <td>${personageHasFlaw.flawByPersonage.name}</td>
+                <td>${personageHasFlaw.flawByPersonage.cost}</td>
+                <td><input type="checkbox" disabled="disabled"></td>
+
+                <td>
+                    <a href="unlinkFlawFromPersonage/${personageHasFlaw.id}?personageId=${personage.id}">Отвязать</a>
+                </td>
+            </tr>
+        </c:forEach>
+    </c:if>
+</table>
+
+<h3>Добавить недостаток</h3>
+
+<form:form method="post" action="linkFlawToPersonage" commandName="personageHasFlaw">
+
+    <table>
+        <tr>
+            <td>
+                <form:label path="flawByPersonage">
+                    Недостаток
+                </form:label>
+            </td>
+            <td>
+                <form:select path="flawByPersonage" items="${allFlawsWithoutDefaultForRace}" itemValue="id"
+                             itemLabel="name"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <form:input path="personageByFlaw" type="hidden" value="${personage.id}"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2"><input type="submit"
+                                   value="Добавить недостаток"/></td>
+        </tr>
+    </table>
+</form:form>
+
 </body>
 </html>

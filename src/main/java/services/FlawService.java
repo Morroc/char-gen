@@ -29,6 +29,11 @@ public class FlawService {
     }
 
     @Transactional
+    public Flaw getFlawById(int flawId) {
+        return flawDAO.getFlawById(flawId);
+    }
+
+    @Transactional
     public void updateFlaw(Flaw flaw) {
         flawDAO.addFlaw(flaw);
     }

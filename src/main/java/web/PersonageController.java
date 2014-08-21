@@ -45,9 +45,17 @@ public class PersonageController {
     @Autowired
     private RaceHasMeritService raceHasMeritService;
 
-
     @Autowired
     private MeritService meritService;
+
+    @Autowired
+    private FlawService flawService;
+
+    @Autowired
+    private PersonageHasFlawService personageHasFlawService;
+
+    @Autowired
+    private RaceHasFlawService raceHasFlawService;
 
     @RequestMapping("/personage/{personageId}")
     public String pageModel(@PathVariable("personageId") Integer personageId, Model model) {
@@ -77,31 +85,35 @@ public class PersonageController {
         List<Merit> allMeritsWithoutRacesMerits = new ArrayList<Merit>();
         allMeritsWithoutRacesMerits.addAll(allMerits);
         List<Merit> removeListForPersonageMerits = new ArrayList<Merit>();
-        for (RaceHasMerit raceHasMerit : raceHasMerits) {
-            if (raceHasMerit.isDefaultForRace()) {
-                defaultForRaceMerits.add(raceHasMerit);
-                for (Merit merit : allMeritsWithoutRacesMerits) {
-                    if (raceHasMerit.getMeritByRace().getId() == merit.getId()) {
-                        removeListForPersonageMerits.add(merit);
+        if (raceHasMerits.isEmpty()) {
+            onlyForPersonageMerits.addAll(personageHasMeritService.getPersonageHasMeritsByPersonageId(personageId));
+        } else {
+            for (RaceHasMerit raceHasMerit : raceHasMerits) {
+                if (raceHasMerit.isDefaultForRace()) {
+                    defaultForRaceMerits.add(raceHasMerit);
+                    for (Merit merit : allMeritsWithoutRacesMerits) {
+                        if (raceHasMerit.getMeritByRace().getId() == merit.getId()) {
+                            removeListForPersonageMerits.add(merit);
+                        }
                     }
-                }
-            } else if (raceHasMerit.getRaceCost() != 0) {
-                for (Merit merit : allMeritsWithoutRacesMerits) {
-                    if (raceHasMerit.getMeritByRace().getId() == merit.getId()) {
-                        removeListForPersonageMerits.add(merit);
+                } else if (raceHasMerit.getRaceCost() != 0) {
+                    for (Merit merit : allMeritsWithoutRacesMerits) {
+                        if (raceHasMerit.getMeritByRace().getId() == merit.getId()) {
+                            removeListForPersonageMerits.add(merit);
+                        }
                     }
-                }
-                List<PersonageHasMerit> personageHasMerits = personageHasMeritService.getPersonageHasMeritsByPersonageId(personageId);
-                for (PersonageHasMerit personageHasMerit : personageHasMerits) {
-                    RaceHasMerit raceHasMeritForCurrentPersonageMerit = raceHasMeritService.
-                            getRaceHasMeritByMeritIdAndRaceId(personageHasMerit.getMeritByPersonage().getId(),
-                                    personage.getRace().getId());
-                    if (personageHasMerit.getMeritByPersonage().getId() == raceHasMerit.getMeritByRace().getId()) {
-                        withDifferentCostForRaceMerits.add(raceHasMerit);
-                    } else if (raceHasMeritForCurrentPersonageMerit == null) {
-                        onlyForPersonageMerits.add(personageHasMerit);
-                    } else if (!raceHasMeritForCurrentPersonageMerit.isDefaultForRace()){
-                        onlyForPersonageMerits.add(personageHasMerit);
+                    List<PersonageHasMerit> personageHasMerits = personageHasMeritService.getPersonageHasMeritsByPersonageId(personageId);
+                    for (PersonageHasMerit personageHasMerit : personageHasMerits) {
+                        RaceHasMerit raceHasMeritForCurrentPersonageMerit = raceHasMeritService.
+                                getRaceHasMeritByMeritIdAndRaceId(personageHasMerit.getMeritByPersonage().getId(),
+                                        personage.getRace().getId());
+                        if (personageHasMerit.getMeritByPersonage().getId() == raceHasMerit.getMeritByRace().getId()) {
+                            withDifferentCostForRaceMerits.add(raceHasMerit);
+                        } else if (raceHasMeritForCurrentPersonageMerit == null) {
+                            onlyForPersonageMerits.add(personageHasMerit);
+                        } else if (!raceHasMeritForCurrentPersonageMerit.isDefaultForRace()) {
+                            onlyForPersonageMerits.add(personageHasMerit);
+                        }
                     }
                 }
             }
@@ -126,6 +138,59 @@ public class PersonageController {
         //all merits
         model.addAttribute("allMeritsWithoutRacesMerits", allMeritsWithoutRacesMerits);
         model.addAttribute("personageHasMerit", new PersonageHasMerit());
+
+        //flaws
+        model.addAttribute("personageHasFlaw", new PersonageHasFlaw());
+        model.addAttribute("personageHasFlawsByPersonage", personageHasFlawService.getPersonageHasFlawsByPersonageId(personageId));
+
+        List<RaceHasFlaw> raceHasFlaws = raceHasFlawService.getRaceHasFlawsByRaceId(personage.getRace().getId());
+        List<PersonageHasFlaw> allPersonageHasFlaws = personageHasFlawService.getPersonageHasFlawsByPersonageId(personageId);
+
+        List<RaceHasFlaw> defaultForRaceFlaws = new ArrayList<RaceHasFlaw>();
+
+        if (!raceHasFlaws.isEmpty()) {
+            for (RaceHasFlaw raceHasFlaw : raceHasFlaws) {
+                if (raceHasFlaw.isDefaultForRace()) {
+                    defaultForRaceFlaws.add(raceHasFlaw);
+                }
+            }
+        }
+
+        List<PersonageHasFlaw> allPersonageHasFlawsWithoutDefaultForRace = new ArrayList<PersonageHasFlaw>();
+
+        if (!raceHasFlaws.isEmpty()) {
+            for (PersonageHasFlaw personageHasFlaw : allPersonageHasFlaws) {
+                for (RaceHasFlaw defaultRaceHasFlaw : defaultForRaceFlaws) {
+                    if (personageHasFlaw.getFlawByPersonage().getId() != defaultRaceHasFlaw.getFlawByRace().getId()) {
+                        allPersonageHasFlawsWithoutDefaultForRace.add(personageHasFlaw);
+                    }
+                }
+            }
+        } else {
+            allPersonageHasFlawsWithoutDefaultForRace.addAll(allPersonageHasFlaws);
+        }
+
+        model.addAttribute("defaultForRaceFlaws", defaultForRaceFlaws);
+
+        model.addAttribute("allPersonageHasFlawsWithoutDefaultForRace", allPersonageHasFlawsWithoutDefaultForRace);
+
+        List<Flaw> allFlawsWithoutDefaultForRace = flawService.getAllFlaws();
+        List<Flaw> removeFlawsWithoutDefaultForRace = new ArrayList<Flaw>();
+        if (!raceHasFlaws.isEmpty()) {
+            for (RaceHasFlaw raceHasFlaw : defaultForRaceFlaws) {
+                for (Flaw flaw : allFlawsWithoutDefaultForRace) {
+                    if (raceHasFlaw.isDefaultForRace()) {
+                        if (raceHasFlaw.getFlawByRace().getId() == flaw.getId()) {
+                            removeFlawsWithoutDefaultForRace.add(flaw);
+                        }
+                    }
+                }
+            }
+        }
+
+        allFlawsWithoutDefaultForRace.removeAll(removeFlawsWithoutDefaultForRace);
+
+        model.addAttribute("allFlawsWithoutDefaultForRace", allFlawsWithoutDefaultForRace);
 
         return "personage";
     }
@@ -224,11 +289,30 @@ public class PersonageController {
 
     @RequestMapping(value = "/personage/unlinkMeritFromPersonageByRaceHasMerit/{raceHasMerit}")
     public String unlinkMeritFromPersonageByRaceHasMerit(@PathVariable("raceHasMerit") RaceHasMerit raceHasMerit,
-                                           @RequestParam("personageId") Integer personageId) {
+                                                         @RequestParam("personageId") Integer personageId) {
 
         PersonageHasMerit personageHasMerit = personageHasMeritService.
                 getPersonageHasMeritByMeritIdAndPersonageId(raceHasMerit.getMeritByRace().getId(), personageId);
         personageHasMeritService.deleteLinkMeritWithPersonage(personageHasMerit);
+
+        return "redirect:/personage/" + personageId;
+    }
+
+    @RequestMapping(value = "/personage/linkFlawToPersonage", method = RequestMethod.POST)
+    public String addPersonageHasFlaw(@Validated @ModelAttribute("personageHasFlaw") PersonageHasFlaw personageHasFlaw,
+                                      BindingResult result) {
+
+        personageHasFlawService.addLinkFlawWithPersonage(personageHasFlaw);
+        int personageId = personageHasFlaw.getPersonageByFlaw().getId();
+
+        return "redirect:/personage/" + personageId;
+    }
+
+    @RequestMapping(value = "/personage/unlinkFlawFromPersonage/{personageHasFlawId}")
+    public String unlinkFlawFromPersonage(@PathVariable("personageHasFlawId") PersonageHasFlaw personageHasFlaw,
+                                          @RequestParam("personageId") Integer personageId) {
+
+        personageHasFlawService.deleteLinkFlawWithPersonage(personageHasFlaw);
 
         return "redirect:/personage/" + personageId;
     }

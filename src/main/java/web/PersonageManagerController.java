@@ -38,6 +38,12 @@ public class PersonageManagerController {
     @Autowired
     private PersonageHasMeritService personageHasMeritService;
 
+    @Autowired
+    private RaceHasFlawService raceHasFlawService;
+
+    @Autowired
+    private PersonageHasFlawService personageHasFlawService;
+
     @RequestMapping("/personageManager")
     public String pageModel(Model model) {
 
@@ -77,6 +83,17 @@ public class PersonageManagerController {
             }
         }
 
+        //add default race flaws
+        List<RaceHasFlaw> raceHasFlaws = raceHasFlawService.getRaceHasFlawsByRaceId(raceIdOfPersonage);
+        for (RaceHasFlaw raceHasFlaw : raceHasFlaws) {
+            if (raceHasFlaw.isDefaultForRace()) {
+                PersonageHasFlaw personageHasFlaw = new PersonageHasFlaw();
+                personageHasFlaw.setFlawByPersonage(raceHasFlaw.getFlawByRace());
+                personageHasFlaw.setPersonageByFlaw(personage);
+                personageHasFlawService.addLinkFlawWithPersonage(personageHasFlaw);
+            }
+        }
+
         return "redirect:/personageManager";
     }
 
@@ -93,6 +110,12 @@ public class PersonageManagerController {
         List<PersonageHasMerit> personageHasMerits = personageHasMeritService.getPersonageHasMeritsByPersonageId(personageId);
         for (PersonageHasMerit personageHasMerit : personageHasMerits) {
             personageHasMeritService.deleteLinkMeritWithPersonage(personageHasMerit);
+        }
+
+        //delete default race flaws
+        List<PersonageHasFlaw> personageHasFlaws = personageHasFlawService.getPersonageHasFlawsByPersonageId(personageId);
+        for (PersonageHasFlaw personageHasFlaw : personageHasFlaws) {
+            personageHasFlawService.deleteLinkFlawWithPersonage(personageHasFlaw);
         }
 
         //delete personage

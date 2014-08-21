@@ -22,5 +22,5 @@ public interface PersonageHasFlawDAO {
 
     public PersonageHasFlaw getPersonageHasFlawByFlawIdAndPersonageId(int flawId, int personageId);
 
-    public List<PersonageHasFlaw> getPersonageHasFlawByPersonageId(int personageId);
+    public List<PersonageHasFlaw> getPersonageHasFlawsByPersonageId(int personageId);
 }

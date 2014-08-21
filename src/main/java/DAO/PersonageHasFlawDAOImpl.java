@@ -61,7 +61,7 @@ public class PersonageHasFlawDAOImpl implements PersonageHasFlawDAO{
     }
 
     @Override
-    public List<PersonageHasFlaw> getPersonageHasFlawByPersonageId(int personageId) {
+    public List<PersonageHasFlaw> getPersonageHasFlawsByPersonageId(int personageId) {
         Session session = sessionFactory.getCurrentSession();
         List<PersonageHasFlaw> personageHasFlaws = session.createSQLQuery(
                 "select * from personage_has_flaw where personage_id = :id"
