@@ -15,6 +15,10 @@
     Менеджер рас
 </a><br/>
 
+<a href="<c:url value="/view/race_manager_ajax.html" />">
+    Менеджер рас (Ajax)
+</a><br/>
+
 <a href="<c:url value="/personageManager" />">
     Менеджер персонажей
 </a><br/>

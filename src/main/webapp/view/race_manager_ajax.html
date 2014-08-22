@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8">
+    <title>Менеджер рас</title>
+</head>
+<body>
+
+<h2><a href="/main.jsp">Домой</a></h2>
+
+<h2>Race manager</h2>
+
+<h3>Все расы</h3>
+
+<div>
+    <table class="data">
+        <thead>
+            <tr>
+                <th>Название расы</th>
+                <th>Максимально возможный возраст</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody id="raceList">
+
+        </tbody>
+    </table>
+</div>
+
+<script id="raceListTemplate" type="text/x-jQuery-tmpl">
+    <tr>
+        <td><a href="/race/${id}">${name}</a></td>
+        <td>${maxAge}</td>
+        <td>
+            <input type="hidden" name="id" value="${id}"/>
+            <a href="javascript:void(0)" class="deleteRace">Удалить</a>
+        </td>
+    </tr>
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="/javascript/jquery.tmpl.js"></script>
+<script src="/javascript/ajax.js"></script>
+<script src="/javascript/race.js"></script>
+
+</body>
+</html>
