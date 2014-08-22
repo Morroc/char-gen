@@ -37,4 +37,9 @@ public class RaceService {
     public Race getRaceById(int raceId) {
         return raceDAO.getRaceById(raceId);
     }
+
+    @Transactional
+    public Race getRaceByName(String name) {
+        return raceDAO.getRaceByName(name);
+    }
 }

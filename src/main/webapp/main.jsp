@@ -39,5 +39,10 @@
     Менеджер тригерных скилов
 </a><br/>
 
+
+<a href="<c:url value="/service/race/getRace/Dwarf" />">
+    Test JSON
+</a><br/>
+
 </body>
 </html>

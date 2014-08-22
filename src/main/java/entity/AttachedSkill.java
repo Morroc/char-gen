@@ -1,7 +1,10 @@
 package entity;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 /**
  * User: artemk
@@ -15,20 +18,28 @@ public class AttachedSkill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
     private int id;
+
     @Column(name = "name", unique = true)
     private String name;
+
     @Column(name = "base_cost")
     private int baseCost;
+
     @Column(name = "default_skill")
     private boolean defaultSkill;
+
     @Column(name = "difficult")
     private boolean difficult;
+
     @Column(name = "theoretical")
     private boolean theoretical;
+
     @Column(name = "acquiring_cost")
     private int acquiringCost;
+
+    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "attachedSkillByPersonage")
-    private List<PersonageHasAttachedSkill> attachedSkillsByPersonage;
+    private Set<PersonageHasAttachedSkill> attachedSkillsByPersonage;
 
     public AttachedSkill() {
     }
@@ -89,11 +100,11 @@ public class AttachedSkill {
         this.theoretical = theoretical;
     }
 
-    public List<PersonageHasAttachedSkill> getAttachedSkillsByPersonage() {
+    public Set<PersonageHasAttachedSkill> getAttachedSkillsByPersonage() {
         return attachedSkillsByPersonage;
     }
 
-    public void setAttachedSkillsByPersonage(List<PersonageHasAttachedSkill> attachedSkillsByPersonage) {
+    public void setAttachedSkillsByPersonage(Set<PersonageHasAttachedSkill> attachedSkillsByPersonage) {
         this.attachedSkillsByPersonage = attachedSkillsByPersonage;
     }
 }

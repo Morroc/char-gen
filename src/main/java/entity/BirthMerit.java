@@ -1,6 +1,10 @@
 package entity;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
+import java.util.Set;
 
 /**
  * User: artemk
@@ -14,16 +18,26 @@ public class BirthMerit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
     private int id;
+
     @Column(name = "name", unique = true)
     private String name;
-    @Column(name = "probability")
-    private double probability;
+
     @Column(name = "cost")
     private int cost;
+
     @Column(name = "description")
     private String description;
+
     @Column(name = "action_bonus")
     private String actionBonus;
+
+    //@LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "raceByBirthMerit")
+    private Set<RaceHasBirthMerit> raceHasBirthMerits;
+
+    //@LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByBirthMerit")
+    private Set<PersonageHasBirthMerit> personageHasBirthMerits;
 
     public BirthMerit() {
     }
@@ -42,14 +56,6 @@ public class BirthMerit {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public double getProbability() {
-        return probability;
-    }
-
-    public void setProbability(double probability) {
-        this.probability = probability;
     }
 
     public int getCost() {
@@ -74,5 +80,21 @@ public class BirthMerit {
 
     public void setActionBonus(String actionBonus) {
         this.actionBonus = actionBonus;
+    }
+
+    public Set<RaceHasBirthMerit> getRaceHasBirthMerits() {
+        return raceHasBirthMerits;
+    }
+
+    public void setRaceHasBirthMerits(Set<RaceHasBirthMerit> raceHasBirthMerits) {
+        this.raceHasBirthMerits = raceHasBirthMerits;
+    }
+
+    public Set<PersonageHasBirthMerit> getPersonageHasBirthMerits() {
+        return personageHasBirthMerits;
+    }
+
+    public void setPersonageHasBirthMerits(Set<PersonageHasBirthMerit> personageHasBirthMerits) {
+        this.personageHasBirthMerits = personageHasBirthMerits;
     }
 }

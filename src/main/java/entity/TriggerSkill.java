@@ -1,11 +1,11 @@
 package entity;
 
-import enums.SkillLevel;
 import enums.SkillType;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.lang.*;
-import java.util.List;
+import java.util.Set;
 
 /**
  * User: artemk
@@ -19,21 +19,29 @@ public class TriggerSkill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
     private int id;
+
     @Column(name = "name", unique = true)
     private String name;
+
     @Column(name = "type", columnDefinition = "enum('SIMPLE','BASIC','DIFFICULT')")
     @Enumerated(EnumType.STRING)
     private SkillType type;
+
     @Column(name = "base_cost")
     private int baseCost;
+
     @Column(name = "expert_cost")
     private int expertCost;
+
     @Column(name = "master_cost")
     private int masterCost;
+
     @Column(name = "post_master_cost")
     private int postMasterCost;
+
+    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "triggerSkillByPersonage")
-    private List<PersonageHasTriggerSkill> triggerSkillsByPersonage;
+    private Set<PersonageHasTriggerSkill> triggerSkillsByPersonage;
 
     public TriggerSkill() {
     }
@@ -94,11 +102,11 @@ public class TriggerSkill {
         this.postMasterCost = postMasterCost;
     }
 
-    public List<PersonageHasTriggerSkill> getTriggerSkillsByPersonage() {
+    public Set<PersonageHasTriggerSkill> getTriggerSkillsByPersonage() {
         return triggerSkillsByPersonage;
     }
 
-    public void setTriggerSkillsByPersonage(List<PersonageHasTriggerSkill> triggerSkillsByPersonage) {
+    public void setTriggerSkillsByPersonage(Set<PersonageHasTriggerSkill> triggerSkillsByPersonage) {
         this.triggerSkillsByPersonage = triggerSkillsByPersonage;
     }
 }

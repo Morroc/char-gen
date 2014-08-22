@@ -1,7 +1,10 @@
 package entity;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
-import java.lang.*;
+import java.util.Set;
 
 /**
  * User: artemk
@@ -15,14 +18,26 @@ public class Flaw {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
     private int id;
+
     @Column(name = "name", unique = true)
     private String name;
+
     @Column(name = "cost")
     private int cost;
+
     @Column(name = "description")
     private String description;
+
     @Column(name = "turn_off_preconditions")
     private String turnOffPreconditions;
+
+    //@LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "raceByFlaw")
+    private Set<RaceHasFlaw> raceHasFlaws;
+
+    //@LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByFlaw")
+    private Set<PersonageHasFlaw> personageHasFlaws;
 
     public Flaw() {
     }
@@ -65,5 +80,21 @@ public class Flaw {
 
     public void setTurnOffPreconditions(String turnOffPreconditions) {
         this.turnOffPreconditions = turnOffPreconditions;
+    }
+
+    public Set<RaceHasFlaw> getRaceHasFlaws() {
+        return raceHasFlaws;
+    }
+
+    public void setRaceHasFlaws(Set<RaceHasFlaw> raceHasFlaws) {
+        this.raceHasFlaws = raceHasFlaws;
+    }
+
+    public Set<PersonageHasFlaw> getPersonageHasFlaws() {
+        return personageHasFlaws;
+    }
+
+    public void setPersonageHasFlaws(Set<PersonageHasFlaw> personageHasFlaws) {
+        this.personageHasFlaws = personageHasFlaws;
     }
 }

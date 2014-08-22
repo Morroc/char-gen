@@ -1,7 +1,10 @@
 package entity;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 /**
  * User: artemk
@@ -15,14 +18,33 @@ public class Race {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
     private int id;
+
     @Column(name = "name", unique = true)
     private String name;
-    @Column(name = "maxage")
+
+    @Column(name = "max_age")
     private int maxAge;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "raceByMerit")
-    private List<RaceHasMerit> racesByMerit;
+
+    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "race")
-    private List<Personage> personages;
+    private Set<Personage> personages;
+
+    //@LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "raceByMerit")
+    private Set<RaceHasMerit> racesByMerit;
+
+    //@LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "raceByFlaw")
+    private Set<RaceHasFlaw> raceHasFlaw;
+
+    //@LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "raceByAttribute")
+    private Set<RaceHasAttribute> raceHasAttributes;
+
+    //@LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "raceByBirthMerit")
+    private Set<RaceHasBirthMerit> raceHasBirthMerits;
+
 
     public Race() {
     }
@@ -51,19 +73,43 @@ public class Race {
         this.maxAge = maxAge;
     }
 
-    public List<RaceHasMerit> getRacesByMerit() {
-        return racesByMerit;
-    }
-
-    public void setRacesByMerit(List<RaceHasMerit> racesByMerit) {
-        this.racesByMerit = racesByMerit;
-    }
-
-    public List<Personage> getPersonages() {
+    public Set<Personage> getPersonages() {
         return personages;
     }
 
-    public void setPersonages(List<Personage> personages) {
+    public void setPersonages(Set<Personage> personages) {
         this.personages = personages;
+    }
+
+    public Set<RaceHasMerit> getRacesByMerit() {
+        return racesByMerit;
+    }
+
+    public void setRacesByMerit(Set<RaceHasMerit> racesByMerit) {
+        this.racesByMerit = racesByMerit;
+    }
+
+    public Set<RaceHasFlaw> getRaceHasFlaw() {
+        return raceHasFlaw;
+    }
+
+    public void setRaceHasFlaw(Set<RaceHasFlaw> raceHasFlaw) {
+        this.raceHasFlaw = raceHasFlaw;
+    }
+
+    public Set<RaceHasAttribute> getRaceHasAttributes() {
+        return raceHasAttributes;
+    }
+
+    public void setRaceHasAttributes(Set<RaceHasAttribute> raceHasAttributes) {
+        this.raceHasAttributes = raceHasAttributes;
+    }
+
+    public Set<RaceHasBirthMerit> getRaceHasBirthMerits() {
+        return raceHasBirthMerits;
+    }
+
+    public void setRaceHasBirthMerits(Set<RaceHasBirthMerit> raceHasBirthMerits) {
+        this.raceHasBirthMerits = raceHasBirthMerits;
     }
 }

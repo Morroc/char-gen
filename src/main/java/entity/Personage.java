@@ -1,7 +1,10 @@
 package entity;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 /**
  * User: artemk
@@ -16,19 +19,40 @@ public class Personage
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
     private int id;
+
     @Column(name = "name", unique = true)
     private String name;
+
     @Column(name = "age")
     private int age;
+
     @ManyToOne
     @JoinColumn(name = "race_id")
     private Race race;
+
+    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByMerit")
-    private List<PersonageHasMerit> personagesByMerit;
+    private Set<PersonageHasMerit> personagesByMerit;
+
+    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByTriggerSkill")
-    private List<PersonageHasTriggerSkill> triggerSkills;
+    private Set<PersonageHasTriggerSkill> triggerSkills;
+
+    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByAttachedSkill")
-    private List<PersonageHasAttachedSkill> attachedSkills;
+    private Set<PersonageHasAttachedSkill> attachedSkills;
+
+    //@LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByAttribute")
+    private Set<PersonageHasAttribute> personageHasAttributes;
+
+    //@LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByBirthMerit")
+    private Set<PersonageHasBirthMerit> personageHasBirthMerits;
+
+    //@LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByFlaw")
+    private Set<PersonageHasFlaw> personageHasFlaws;
 
 
     public Personage() {
@@ -66,27 +90,51 @@ public class Personage
         this.race = race;
     }
 
-    public List<PersonageHasTriggerSkill> getTriggerSkills() {
-        return triggerSkills;
-    }
-
-    public void setTriggerSkills(List<PersonageHasTriggerSkill> triggerSkills) {
-        this.triggerSkills = triggerSkills;
-    }
-
-    public List<PersonageHasAttachedSkill> getAttachedSkills() {
-        return attachedSkills;
-    }
-
-    public void setAttachedSkills(List<PersonageHasAttachedSkill> attachedSkills) {
-        this.attachedSkills = attachedSkills;
-    }
-
-    public List<PersonageHasMerit> getPersonagesByMerit() {
+    public Set<PersonageHasMerit> getPersonagesByMerit() {
         return personagesByMerit;
     }
 
-    public void setPersonagesByMerit(List<PersonageHasMerit> personagesByMerit) {
+    public void setPersonagesByMerit(Set<PersonageHasMerit> personagesByMerit) {
         this.personagesByMerit = personagesByMerit;
+    }
+
+    public Set<PersonageHasTriggerSkill> getTriggerSkills() {
+        return triggerSkills;
+    }
+
+    public void setTriggerSkills(Set<PersonageHasTriggerSkill> triggerSkills) {
+        this.triggerSkills = triggerSkills;
+    }
+
+    public Set<PersonageHasAttachedSkill> getAttachedSkills() {
+        return attachedSkills;
+    }
+
+    public void setAttachedSkills(Set<PersonageHasAttachedSkill> attachedSkills) {
+        this.attachedSkills = attachedSkills;
+    }
+
+    public Set<PersonageHasAttribute> getPersonageHasAttributes() {
+        return personageHasAttributes;
+    }
+
+    public void setPersonageHasAttributes(Set<PersonageHasAttribute> personageHasAttributes) {
+        this.personageHasAttributes = personageHasAttributes;
+    }
+
+    public Set<PersonageHasBirthMerit> getPersonageHasBirthMerits() {
+        return personageHasBirthMerits;
+    }
+
+    public void setPersonageHasBirthMerits(Set<PersonageHasBirthMerit> personageHasBirthMerits) {
+        this.personageHasBirthMerits = personageHasBirthMerits;
+    }
+
+    public Set<PersonageHasFlaw> getPersonageHasFlaws() {
+        return personageHasFlaws;
+    }
+
+    public void setPersonageHasFlaws(Set<PersonageHasFlaw> personageHasFlaws) {
+        this.personageHasFlaws = personageHasFlaws;
     }
 }

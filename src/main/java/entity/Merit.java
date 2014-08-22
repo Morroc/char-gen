@@ -1,7 +1,10 @@
 package entity;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 /**
  * User: artemk
@@ -15,20 +18,29 @@ public class Merit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true)
     private int id;
+
     @Column(name = "name", unique = true)
     private String name;
+
     @Column(name = "cost")
     private int cost;
+
     @Column(name = "description")
     private String description;
+
     @Column(name = "preconditions")
     private String preconditions;
+
     @Column(name = "action_bonus")
     private String actionBonus;
+
+    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "meritByRace")
-    private List<RaceHasMerit> meritsByRace;
+    private Set<RaceHasMerit> meritsByRace;
+
+    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "meritByPersonage")
-    private List<PersonageHasMerit> meritsByPersonage;
+    private Set<PersonageHasMerit> meritsByPersonage;
 
     public Merit() {
     }
@@ -81,19 +93,19 @@ public class Merit {
         this.actionBonus = actionBonus;
     }
 
-    public List<RaceHasMerit> getMeritsByRace() {
+    public Set<RaceHasMerit> getMeritsByRace() {
         return meritsByRace;
     }
 
-    public void setMeritsByRace(List<RaceHasMerit> meritsByRace) {
+    public void setMeritsByRace(Set<RaceHasMerit> meritsByRace) {
         this.meritsByRace = meritsByRace;
     }
 
-    public List<PersonageHasMerit> getMeritsByPersonage() {
+    public Set<PersonageHasMerit> getMeritsByPersonage() {
         return meritsByPersonage;
     }
 
-    public void setMeritsByPersonage(List<PersonageHasMerit> meritsByPersonage) {
+    public void setMeritsByPersonage(Set<PersonageHasMerit> meritsByPersonage) {
         this.meritsByPersonage = meritsByPersonage;
     }
 }

@@ -44,7 +44,9 @@ public class RaceDAOImpl implements RaceDAO {
                 .addEntity(Race.class)
                 .setString("name", raceName)
                 .list();
-        return races.get(0);
+        Race race = races.get(0);
+        Hibernate.initialize(race);
+        return race;
     }
 
     @Override
