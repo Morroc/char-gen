@@ -25,11 +25,9 @@ public class Attribute {
     @Column(name = "action_level_bonus")
     private String actionLevelBonus;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "raceByAttribute")
     private Set<RaceHasAttribute> racesByAttributes;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByAttribute")
     private Set<PersonageHasAttribute> personageHasAttributes;
 

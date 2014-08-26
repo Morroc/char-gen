@@ -39,7 +39,6 @@ public class TriggerSkill {
     @Column(name = "post_master_cost")
     private int postMasterCost;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "triggerSkillByPersonage")
     private Set<PersonageHasTriggerSkill> triggerSkillsByPersonage;
 

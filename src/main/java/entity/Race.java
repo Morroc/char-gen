@@ -25,23 +25,18 @@ public class Race {
     @Column(name = "max_age")
     private int maxAge;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "race")
     private Set<Personage> personages;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "raceByMerit")
     private Set<RaceHasMerit> racesByMerit;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "raceByFlaw")
     private Set<RaceHasFlaw> raceHasFlaw;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "raceByAttribute")
     private Set<RaceHasAttribute> raceHasAttributes;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "raceByBirthMerit")
     private Set<RaceHasBirthMerit> raceHasBirthMerits;
 

@@ -31,11 +31,9 @@ public class Flaw {
     @Column(name = "turn_off_preconditions")
     private String turnOffPreconditions;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "raceByFlaw")
     private Set<RaceHasFlaw> raceHasFlaws;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByFlaw")
     private Set<PersonageHasFlaw> personageHasFlaws;
 

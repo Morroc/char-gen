@@ -37,7 +37,6 @@ public class AttachedSkill {
     @Column(name = "acquiring_cost")
     private int acquiringCost;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "attachedSkillByPersonage")
     private Set<PersonageHasAttachedSkill> attachedSkillsByPersonage;
 

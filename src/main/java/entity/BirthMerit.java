@@ -31,11 +31,9 @@ public class BirthMerit {
     @Column(name = "action_bonus")
     private String actionBonus;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "raceByBirthMerit")
     private Set<RaceHasBirthMerit> raceHasBirthMerits;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByBirthMerit")
     private Set<PersonageHasBirthMerit> personageHasBirthMerits;
 

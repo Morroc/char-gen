@@ -30,27 +30,21 @@ public class Personage
     @JoinColumn(name = "race_id")
     private Race race;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByMerit")
     private Set<PersonageHasMerit> personagesByMerit;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByTriggerSkill")
     private Set<PersonageHasTriggerSkill> triggerSkills;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByAttachedSkill")
     private Set<PersonageHasAttachedSkill> attachedSkills;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByAttribute")
     private Set<PersonageHasAttribute> personageHasAttributes;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByBirthMerit")
     private Set<PersonageHasBirthMerit> personageHasBirthMerits;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByFlaw")
     private Set<PersonageHasFlaw> personageHasFlaws;
 

@@ -34,11 +34,9 @@ public class Merit {
     @Column(name = "action_bonus")
     private String actionBonus;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "meritByRace")
     private Set<RaceHasMerit> meritsByRace;
 
-    //@LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "meritByPersonage")
     private Set<PersonageHasMerit> meritsByPersonage;
 
