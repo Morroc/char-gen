@@ -28,7 +28,11 @@
 </a><br/>
 
 <a href="<c:url value="/attachedSkillsManager" />">
-    Менеджер прикрепленных скилов
+    Менеджер прикрепленных навыков
+</a><br/>
+
+<a href="<c:url value="/view/attached_skill_manager_ajax.html" />">
+    Прикрепленные навыки (Ajax)
 </a><br/>
 
 <a href="<c:url value="/attributesManager" />">
@@ -44,7 +48,7 @@
 </a><br/>
 
 <a href="<c:url value="/triggerSkillsManager" />">
-    Менеджер тригерных скилов
+    Менеджер тригерных навыков
 </a><br/>
 
 </body>

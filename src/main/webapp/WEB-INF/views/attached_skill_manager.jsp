@@ -7,13 +7,13 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
-    <title>Менеджер прикрепленных скилов</title>
+    <title>Менеджер прикрепленных навыков</title>
 </head>
 <body>
 
 <h2><a href="/main.jsp">Главная</a></h2>
 
-<h2>Менеджер прикрепленных скилов</h2>
+<h2>Менеджер прикрепленных навыков</h2>
 
 <form:form method="post" action="addAttachedSkill" commandName="attachedSkill">
 

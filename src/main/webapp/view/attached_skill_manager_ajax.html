@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8">
+    <title>Прикрепленные навыки</title>
+</head>
+<body>
+
+<h2><a href="/main.jsp">Домой</a></h2>
+
+<h2>Прикрепленные навыки</h2>
+
+<h3>Все прикрепленные навыки</h3>
+
+<div>
+    <table class="data">
+        <thead>
+        <tr>
+            <th>Название навыка</th>
+            <th>Базовая стоимость за единицу</th>
+            <th>Стоимость покупке по игре</th>
+            <th>По умолчанию</th>
+            <th>Сложный</th>
+            <th>Теоритический</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody id="attachedSkillList">
+
+        </tbody>
+    </table>
+</div>
+
+<script id="attachedSkillListTemplate" type="text/x-jQuery-tmpl">
+    <tr>
+         <td>${name}</td>
+         <td>${baseCost}</td>
+         <td>${acquiringCost}</td>
+         <c:if test="${defaultSkill == 'true'}">
+            <td>
+                <input type="checkbox" disabled="disabled" checked="checked">
+            </td>
+         </c:if>
+         <c:if test="${defaultSkill == 'false'}">
+            <td>
+                <input type="checkbox" disabled="disabled">
+            </td>
+         </c:if>
+
+         <c:if test="${difficult == 'true'}">
+            <td>
+                <input type="checkbox" disabled="disabled" checked="checked">
+            </td>
+         </c:if>
+         <c:if test="${difficult == 'false'}">
+            <td>
+                <input type="checkbox" disabled="disabled">
+            </td>
+         </c:if>
+
+         <c:if test="${theoretical == 'true'}">
+            <td>
+                <input type="checkbox" disabled="disabled" checked="checked">
+            </td>
+         </c:if>
+         <c:if test="${theoretical == 'false'}">
+            <td>
+                <input type="checkbox" disabled="disabled">
+            </td>
+         </c:if>
+        <td>
+            <input type="hidden" name="id" value="${id}"/>
+            <a href="javascript:void(0)" class="deleteAttachedSkill">Удалить</a>
+        </td>
+    </tr>
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="/javascript/jquery.tmpl.js"></script>
+<script src="/javascript/ajax.js"></script>
+<script src="/javascript/attachedSkill.js"></script>
+
+</body>
+</html>
