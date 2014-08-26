@@ -4,7 +4,7 @@ package web.rest.dto;
  * @author abykovsky
  * @since 8/22/14
  */
-public class RaceDto {
+public class RaceDTO {
 
     private int id;
 
@@ -12,10 +12,10 @@ public class RaceDto {
 
     private int maxAge;
 
-    public RaceDto() {
+    public RaceDTO() {
     }
 
-    public RaceDto(int id, String name, int maxAge) {
+    public RaceDTO(int id, String name, int maxAge) {
         this.id = id;
         this.name = name;
         this.maxAge = maxAge;
