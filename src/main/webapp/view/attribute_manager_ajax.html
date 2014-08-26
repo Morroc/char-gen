@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8">
+    <title>Аттрибуты</title>
+</head>
+<body>
+
+<h2><a href="/main.jsp">Домой</a></h2>
+
+<h2>Аттрибуты</h2>
+
+<h3>Все атрибуты</h3>
+
+<div>
+    <table class="data">
+        <thead>
+        <tr>
+            <th>Название аттрибута</th>
+            <th>Бонус на действие</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody id="attributeList">
+
+        </tbody>
+    </table>
+</div>
+
+<script id="attributeListTemplate" type="text/x-jQuery-tmpl">
+    <tr>
+        <td>${name}</td>
+        <td>${actionLevelBonus}</td>
+        <td>
+            <input type="hidden" name="id" value="${id}"/>
+            <a href="javascript:void(0)" class="deleteAttribute">Удалить</a>
+        </td>
+    </tr>
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="/javascript/jquery.tmpl.js"></script>
+<script src="/javascript/ajax.js"></script>
+<script src="/javascript/attribute.js"></script>
+
+</body>
+</html>
