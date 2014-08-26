@@ -12,10 +12,16 @@ public class PersonageDTO {
 
     private int age;
 
-    public PersonageDTO(int id, String name, int age) {
+    private RaceDTO race;
+
+    public PersonageDTO() {
+    }
+
+    public PersonageDTO(int id, String name, int age, RaceDTO race) {
         this.id = id;
         this.name = name;
         this.age = age;
+        this.race = race;
     }
 
     public int getId() {
@@ -40,5 +46,13 @@ public class PersonageDTO {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public RaceDTO getRace() {
+        return race;
+    }
+
+    public void setRace(RaceDTO race) {
+        this.race = race;
     }
 }

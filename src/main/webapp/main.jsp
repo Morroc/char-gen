@@ -16,11 +16,15 @@
 </a><br/>
 
 <a href="<c:url value="/view/race_manager_ajax.html" />">
-    Менеджер рас (Ajax)
+    Расы (Ajax)
 </a><br/>
 
 <a href="<c:url value="/personageManager" />">
     Менеджер персонажей
+</a><br/>
+
+<a href="<c:url value="/view/personage_manager_ajax.html" />">
+    Персонажи (Ajax)
 </a><br/>
 
 <a href="<c:url value="/attachedSkillsManager" />">

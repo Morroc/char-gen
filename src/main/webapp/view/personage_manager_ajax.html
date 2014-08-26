@@ -2,38 +2,40 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
-    <title>Расы</title>
+    <title>Персонажи</title>
 </head>
 <body>
 
 <h2><a href="/main.jsp">Домой</a></h2>
 
-<h2>Расы</h2>
+<h2>Персонажи</h2>
 
-<h3>Все расы</h3>
+<h3>Все персонажи</h3>
 
 <div>
     <table class="data">
         <thead>
-            <tr>
-                <th>Название расы</th>
-                <th>Максимально возможный возраст</th>
-                <th>&nbsp;</th>
-            </tr>
+        <tr>
+            <th>Имя</th>
+            <th>Возраст</th>
+            <th>Раса</th>
+            <th>&nbsp;</th>
+        </tr>
         </thead>
-        <tbody id="raceList">
+        <tbody id="personageList">
 
         </tbody>
     </table>
 </div>
 
-<script id="raceListTemplate" type="text/x-jQuery-tmpl">
+<script id="personageListTemplate" type="text/x-jQuery-tmpl">
     <tr>
-        <td><a href="/race/${id}">${name}</a></td>
-        <td>${maxAge}</td>
+        <td><a href="/personage/${id}">${name}</a></td>
+        <td>${age}</td>
+        <td>${race.name}</td>
         <td>
             <input type="hidden" name="id" value="${id}"/>
-            <a href="javascript:void(0)" class="deleteRace">Удалить</a>
+            <a href="javascript:void(0)" class="deletePersonage">Удалить</a>
         </td>
     </tr>
 </script>
@@ -41,7 +43,7 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="/javascript/jquery.tmpl.js"></script>
 <script src="/javascript/ajax.js"></script>
-<script src="/javascript/race.js"></script>
+<script src="/javascript/personage.js"></script>
 
 </body>
 </html>
