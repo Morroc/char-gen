@@ -20,6 +20,9 @@ public class AttachedSkillDTO {
 
     private int acquiringCost;
 
+    public AttachedSkillDTO() {
+    }
+
     public AttachedSkillDTO(int id, String name, int baseCost, boolean defaultSkill,
                             boolean difficult, boolean theoretical, int acquiringCost) {
         this.id = id;

@@ -10,6 +10,9 @@ public class PersonageHasAttachedSkillDTO {
 
     private int currentValue;
 
+    public PersonageHasAttachedSkillDTO() {
+    }
+
     public PersonageHasAttachedSkillDTO(int id, int currentValue) {
         this.id = id;
         this.currentValue = currentValue;

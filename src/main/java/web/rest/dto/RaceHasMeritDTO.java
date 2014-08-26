@@ -12,6 +12,9 @@ public class RaceHasMeritDTO {
 
     private boolean defaultForRace;
 
+    public RaceHasMeritDTO() {
+    }
+
     public RaceHasMeritDTO(int id, int raceCost, boolean defaultForRace) {
         this.id = id;
         this.raceCost = raceCost;

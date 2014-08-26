@@ -12,6 +12,9 @@ public class AttributeDTO {
 
     private String actionLevelBonus;
 
+    public AttributeDTO() {
+    }
+
     public AttributeDTO(int id, String name, String actionLevelBonus) {
         this.id = id;
         this.name = name;

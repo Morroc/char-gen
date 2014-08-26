@@ -10,6 +10,9 @@ public class RaceHasFlawDTO {
 
     private boolean defaultForRace;
 
+    public RaceHasFlawDTO() {
+    }
+
     public RaceHasFlawDTO(int id, boolean defaultForRace) {
         this.id = id;
         this.defaultForRace = defaultForRace;

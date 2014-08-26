@@ -16,6 +16,9 @@ public class PersonageHasTriggerSkillDTO {
 
     private boolean hasTeacher;
 
+    public PersonageHasTriggerSkillDTO() {
+    }
+
     public PersonageHasTriggerSkillDTO(int id, SkillLevel currentLevel, boolean hasTalent, boolean hasTeacher) {
         this.id = id;
         this.currentLevel = currentLevel;

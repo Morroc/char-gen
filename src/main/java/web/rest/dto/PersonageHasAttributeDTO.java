@@ -10,6 +10,9 @@ public class PersonageHasAttributeDTO {
 
     private int currentValue;
 
+    public PersonageHasAttributeDTO() {
+    }
+
     public PersonageHasAttributeDTO(int id, int currentValue) {
         this.id = id;
         this.currentValue = currentValue;

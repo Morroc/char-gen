@@ -18,6 +18,9 @@ public class MeritDTO {
 
     private String actionBonus;
 
+    public MeritDTO() {
+    }
+
     public MeritDTO(int id, String name, int cost, String description, String preconditions, String actionBonus) {
         this.id = id;
         this.name = name;

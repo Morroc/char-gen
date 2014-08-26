@@ -22,6 +22,9 @@ public class TriggerSkillDTO {
 
     private int postMasterCost;
 
+    public TriggerSkillDTO() {
+    }
+
     public TriggerSkillDTO(int id, String name, SkillType type, int baseCost, int expertCost, int masterCost, int postMasterCost) {
         this.id = id;
         this.name = name;

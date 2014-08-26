@@ -16,6 +16,9 @@ public class FlawDTO {
 
     private String turnOffPreconditions;
 
+    public FlawDTO() {
+    }
+
     public FlawDTO(int id, String name, int cost, String description, String turnOffPreconditions) {
         this.id = id;
         this.name = name;

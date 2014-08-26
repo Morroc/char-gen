@@ -20,6 +20,9 @@ public class RaceHasAttributeDTO {
 
     private int maxValue;
 
+    public RaceHasAttributeDTO() {
+    }
+
     public RaceHasAttributeDTO(int id, int baseCost, int from1To3NonGeneratingCost,
                                int from3To6NonGeneratingCost, int from6To9NonGeneratingCost,
                                int from9To12NonGeneratingCost, int maxValue) {

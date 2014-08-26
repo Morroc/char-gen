@@ -10,6 +10,9 @@ public class RaceHasBirthMeritDTO {
 
     private double probability;
 
+    public RaceHasBirthMeritDTO() {
+    }
+
     public RaceHasBirthMeritDTO(int id, double probability) {
         this.id = id;
         this.probability = probability;

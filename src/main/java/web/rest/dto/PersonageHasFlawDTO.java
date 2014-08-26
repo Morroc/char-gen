@@ -8,6 +8,9 @@ package web.rest.dto;
 public class PersonageHasFlawDTO {
     private int id;
 
+    public PersonageHasFlawDTO() {
+    }
+
     public PersonageHasFlawDTO(int id) {
         this.id = id;
     }

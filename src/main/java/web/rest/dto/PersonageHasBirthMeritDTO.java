@@ -10,6 +10,9 @@ public class PersonageHasBirthMeritDTO {
 
     private int currentValue;
 
+    public PersonageHasBirthMeritDTO() {
+    }
+
     public PersonageHasBirthMeritDTO(int id, int currentValue) {
         this.id = id;
         this.currentValue = currentValue;

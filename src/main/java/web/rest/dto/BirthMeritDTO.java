@@ -16,6 +16,9 @@ public class BirthMeritDTO {
 
     private String actionBonus;
 
+    public BirthMeritDTO() {
+    }
+
     public BirthMeritDTO(int id, String name, int cost, String description, String actionBonus) {
         this.id = id;
         this.name = name;
