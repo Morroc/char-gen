@@ -15,16 +15,8 @@
     Расы (Ajax)
 </a><br/>
 
-<a href="<c:url value="/personageManager" />">
-    Менеджер персонажей
-</a><br/>
-
 <a href="<c:url value="/view/personage_manager_ajax.html" />">
     Персонажи (Ajax)
-</a><br/>
-
-<a href="<c:url value="/attachedSkillsManager" />">
-    Менеджер прикрепленных навыков
 </a><br/>
 
 <a href="<c:url value="/view/attached_skill_manager_ajax.html" />">

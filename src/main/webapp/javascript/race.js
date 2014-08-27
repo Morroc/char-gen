@@ -6,12 +6,15 @@ $(document).ready(function () {
 
     $("#addRaceForm").submit(function(event) {
         event.preventDefault();
-        var posting = ajax.post($(this), { name: $('#name').val(), maxAge: $('#maxAge').val()}, function( raceListJson ) {
+        var posting = ajax.post($(this), {
+            name: $('#name').val(),
+            maxAge: $('#maxAge').val()
+        }, function( raceListJson ) {
             ajax.getJsonData('/rest/race/all', function (raceListJson) {
                 render(raceListJson);
                 new PNotify({
-                    title: 'Info',
-                    text: 'Race has been added successfully.'
+                    title: 'Инфо',
+                    text: 'Раса создана успешно.'
                 });
             }, errorHandler);
         });

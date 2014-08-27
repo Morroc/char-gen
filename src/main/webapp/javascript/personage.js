@@ -14,12 +14,16 @@ $(document).ready(function(){
 
     $("#addPersonageForm").submit(function(event) {
         event.preventDefault();
-        var posting = ajax.post($(this), { name: $('#name').val(), age: $('#age').val(), race: $('#race').val()}, function( raceListJson ) {
+        var posting = ajax.post($(this), {
+            name: $('#name').val(),
+            age: $('#age').val(),
+            race: $('#race').val()
+        }, function( raceListJson ) {
             ajax.getJsonData('/rest/personage/all', function (personageListJson) {
                 renderPersonages(personageListJson);
                 new PNotify({
-                    title: 'Info',
-                    text: 'Personage has been added successfully.'
+                    title: 'Инфо',
+                    text: 'Персонаж создан успешно.'
                 });
             }, errorHandler);
         });

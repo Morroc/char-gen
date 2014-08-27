@@ -2,10 +2,7 @@ package web.rest;
 
 import entity.AttachedSkill;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import services.AttachedSkillService;
 import web.rest.dto.AttachedSkillDTO;
 
@@ -24,14 +21,14 @@ public class AttachedSkillManagerRestController {
     private AttachedSkillService attachedSkillService;
 
     @RequestMapping(value="/all", method= RequestMethod.GET, headers="Accept=application/json")
-    public List<AttachedSkillDTO> listRaces() {
+    public List<AttachedSkillDTO> listAttachedSkills() {
         return convert(attachedSkillService.getAllAttachedSkills());
     }
 
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE, headers="Accept=application/json")
     public List<AttachedSkillDTO> deleteAttachedSkill(@PathVariable Integer id) {
         attachedSkillService.deleteAttachedSkillById(id);
-        return listRaces();
+        return listAttachedSkills();
     }
 
     private List<AttachedSkillDTO> convert(List<AttachedSkill> allAttachedSkills) {
@@ -42,5 +39,11 @@ public class AttachedSkillManagerRestController {
                     attachedSkill.isTheoretical(), attachedSkill.getAcquiringCost()));
         }
         return result;
+    }
+
+    @RequestMapping(value="/addAttachedSkill", method=RequestMethod.POST, headers="Accept=application/json")
+    public List<AttachedSkillDTO> addAttachedSkill(@ModelAttribute("attachedSkill") AttachedSkill attachedSkill) {
+        attachedSkillService.addAttachedSkill(attachedSkill);
+        return listAttachedSkills();
     }
 }

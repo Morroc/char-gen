@@ -1,6 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="/css/pnotify.custom.min.css">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascript/jquery.tmpl.js"></script>
+    <script type="text/javascript" src="/javascript/ajax.js"></script>
+    <script type="text/javascript" src="/javascript/attachedSkill.js"></script>
+    <script type="text/javascript" src="/javascript/pnotify.custom.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
     <title>Прикрепленные навыки</title>
 </head>
@@ -36,38 +42,30 @@
          <td>${name}</td>
          <td>${baseCost}</td>
          <td>${acquiringCost}</td>
-         <c:if test="${defaultSkill == 'true'}">
-            <td>
-                <input type="checkbox" disabled="disabled" checked="checked">
-            </td>
-         </c:if>
-         <c:if test="${defaultSkill == 'false'}">
-            <td>
-                <input type="checkbox" disabled="disabled">
-            </td>
-         </c:if>
+         <td>
+            {%if defaultSkill%}
+                <input type="checkbox" disabled="disabled" checked="checked"/>
+            {%else%}
+                <input type="checkbox" disabled="disabled"/>
+            {%/if%}
+         </td>
 
-         <c:if test="${difficult == 'true'}">
-            <td>
-                <input type="checkbox" disabled="disabled" checked="checked">
-            </td>
-         </c:if>
-         <c:if test="${difficult == 'false'}">
-            <td>
-                <input type="checkbox" disabled="disabled">
-            </td>
-         </c:if>
+         <td>
+            {%if difficult%}
+                <input type="checkbox" disabled="disabled" checked="checked"/>
+            {%else%}
+                <input type="checkbox" disabled="disabled"/>
+            {%/if%}
+         </td>
 
-         <c:if test="${theoretical == 'true'}">
-            <td>
-                <input type="checkbox" disabled="disabled" checked="checked">
-            </td>
-         </c:if>
-         <c:if test="${theoretical == 'false'}">
-            <td>
-                <input type="checkbox" disabled="disabled">
-            </td>
-         </c:if>
+         <td>
+            {%if theoretical%}
+                <input type="checkbox" disabled="disabled" checked="checked"/>
+            {%else%}
+                <input type="checkbox" disabled="disabled"/>
+            {%/if%}
+         </td>
+
         <td>
             <input type="hidden" name="id" value="${id}"/>
             <a href="javascript:void(0)" class="deleteAttachedSkill">Удалить</a>
@@ -75,10 +73,80 @@
     </tr>
 </script>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="/javascript/jquery.tmpl.js"></script>
-<script src="/javascript/ajax.js"></script>
-<script src="/javascript/attachedSkill.js"></script>
+<form id="addAttachedSkillForm" method="post" action="/rest/attachedSkill/addAttachedSkill">
+
+    <table>
+        <tr>
+            <td>
+                <label for="name">
+                    Название навыка
+                </label>
+            </td>
+            <td>
+                <input type="text" id="name" name="name"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="baseCost">
+                    Базовая стоимость за единицу
+                </label>
+            </td>
+            <td>
+                <input type="text" id="baseCost" name="baseCost"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="acquiringCost">
+                    Стоимость при покупке по игре
+                </label>
+            </td>
+            <td>
+                <input type="text" id="acquiringCost" name="acquiringCost"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="defaultSkill">
+                    По умолчанию
+                </label>
+            </td>
+            <td>
+                <input type="checkbox" id="defaultSkill" name="defaultSkill"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="difficult">
+                    Сложный
+                </label>
+            </td>
+            <td>
+                <input type="checkbox" id="difficult" name="difficult"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="theoretical">
+                    Теоритический
+                </label>
+            </td>
+            <td>
+                <input type="checkbox" id="theoretical" name="theoretical"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" id="addAttachedSkillButton" name="addAttachedSkillButton"
+                                   value="Создать прикрепленный навык"/></td>
+        </tr>
+    </table>
+</form>
 
 </body>
 </html>
