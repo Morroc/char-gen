@@ -38,4 +38,10 @@ public class RaceManagerRestController {
         }
         return result;
     }
+
+    @RequestMapping(value="/addRace", method=RequestMethod.POST, headers="Accept=application/json")
+    public List<RaceDTO> addRace(@ModelAttribute("race") Race race) {
+        raceService.addRace(race);
+        return listRaces();
+    }
 }

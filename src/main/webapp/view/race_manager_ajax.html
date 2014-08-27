@@ -15,11 +15,11 @@
 <div>
     <table class="data">
         <thead>
-            <tr>
-                <th>Название расы</th>
-                <th>Максимально возможный возраст</th>
-                <th>&nbsp;</th>
-            </tr>
+        <tr>
+            <th>Название расы</th>
+            <th>Максимально возможный возраст</th>
+            <th>&nbsp;</th>
+        </tr>
         </thead>
         <tbody id="raceList">
 
@@ -37,6 +37,28 @@
         </td>
     </tr>
 </script>
+
+<form id="addRaceForm" action="/rest/race/addRace" method="post">
+
+    <table class="race">
+        <tr>
+            <td><label for="name">
+                Название расы
+            </label></td>
+            <td><input type="text" id="name" name="name"/></td>
+        </tr>
+        <tr>
+            <td><label for="maxAge">
+                Максимально возможный возраст
+            </label></td>
+            <td><input type="text" id="maxAge" name="maxAge"/></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" id="submitButton" name="submitButton"
+                                   value="Добавить расу"/></td>
+        </tr>
+    </table>
+</form>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="/javascript/jquery.tmpl.js"></script>

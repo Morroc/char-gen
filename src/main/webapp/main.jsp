@@ -11,10 +11,6 @@
 </head>
 <body>
 
-<a href="<c:url value="/raceManager" />">
-    Менеджер рас
-</a><br/>
-
 <a href="<c:url value="/view/race_manager_ajax.html" />">
     Расы (Ajax)
 </a><br/>
