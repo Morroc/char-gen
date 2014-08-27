@@ -44,6 +44,12 @@ public class Race {
     public Race() {
     }
 
+    public Race(int id, String name, int maxAge) {
+        this.id = id;
+        this.name = name;
+        this.maxAge = maxAge;
+    }
+
     public int getId() {
         return id;
     }

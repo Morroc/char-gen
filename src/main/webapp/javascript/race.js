@@ -1,45 +1,30 @@
 $(document).ready(function () {
 
-    ajax.getJsonData('/rest/race/all', function (data) {
-        render(data);
+    ajax.getJsonData('/rest/race/all', function (raceListJson) {
+        render(raceListJson);
     }, errorHandler);
 
-    /* Adding a handler to the submit event */
-
     $("#addRaceForm").submit(function(event) {
-
-        /*Stop the usual form submission event*/
-
         event.preventDefault();
-
-        /* get the elements required for the post method*/
-
-        var $form = $( this ),
-
-            url = $form.attr( 'action' );
-
-        /* post method */
-
-        var posting = ajax.post( url, { name: $('#name').val(), maxAge: $('#maxAge').val()}, function( data ) {
-
-            alert('Race has been added');
-
-            ajax.getJsonData('/rest/race/all', function (data) {
-                render(data);
+        var posting = ajax.post($(this), { name: $('#name').val(), maxAge: $('#maxAge').val()}, function( raceListJson ) {
+            ajax.getJsonData('/rest/race/all', function (raceListJson) {
+                render(raceListJson);
+                new PNotify({
+                    title: 'Info',
+                    text: 'Race has been added successfully.'
+                });
             }, errorHandler);
-
         });
-
     });
 });
 
-function render(data) {
-    $("#raceList").html($("#raceListTemplate").tmpl(data));
+function render(raceListJson) {
+    $("#raceList").html($("#raceListTemplate").tmpl(raceListJson));
 
     $('.deleteRace').click(function () {
         var id = $(this).parent().find("[name=id]").val();
         _this = $(this);
-        ajax.deleteJsonData('/rest/race', id, function (data) {
+        ajax.deleteJsonData('/rest/race', id, function (raceListJson) {
             $(_this).parent().parent().fadeToggle("slow", function () {
                 $(this).remove();
             });
@@ -47,6 +32,6 @@ function render(data) {
     });
 }
 
-function errorHandler(data) {
-    alert("Error: " + data);
+function errorHandler(raceListJson) {
+    alert("Error: " + raceListJson);
 }

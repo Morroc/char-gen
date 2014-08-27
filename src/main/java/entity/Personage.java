@@ -52,6 +52,13 @@ public class Personage
     public Personage() {
     }
 
+    public Personage(int id, String name, int age, Race race) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.race = race;
+    }
+
     public int getId() {
         return id;
     }

@@ -1,6 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="/css/pnotify.custom.min.css">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascript/jquery.tmpl.js"></script>
+    <script type="text/javascript" src="/javascript/ajax.js"></script>
+    <script type="text/javascript" src="/javascript/personage.js"></script>
+    <script type="text/javascript" src="/javascript/pnotify.custom.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
     <title>Персонажи</title>
 </head>
@@ -38,12 +44,45 @@
             <a href="javascript:void(0)" class="deletePersonage">Удалить</a>
         </td>
     </tr>
+
 </script>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="/javascript/jquery.tmpl.js"></script>
-<script src="/javascript/ajax.js"></script>
-<script src="/javascript/personage.js"></script>
+<form id="addPersonageForm" action="/rest/personage/addPersonage" method="post">
+
+    <table class="personage">
+        <tr>
+            <td><label for="name">
+                Имя персонажа
+            </label></td>
+            <td><input type="text" id="name" name="name"/></td>
+        </tr>
+        <tr>
+            <td><label for="age">
+                Возраст персонажа
+            </label></td>
+            <td><input type="text" id="age" name="age"/></td>
+        </tr>
+        <tr>
+            <td>
+                <label for="race">
+                    Раса
+                </label>
+            </td>
+            <td>
+                <select id="race" name="race"/>
+                <script id="raceSelectTemplate" type="text/x-jquery-tmpl">
+                    <option value="${id}">${name}</option>
+
+                </script>
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" id="addPersonageButton" name="addPersonageButton"
+                                   value="Добавить персонажа"/></td>
+        </tr>
+    </table>
+</form>
 
 </body>
 </html>

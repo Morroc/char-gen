@@ -4,18 +4,35 @@
 
 $(document).ready(function(){
 
-    ajax.getJsonData('/rest/personage/all', function(data) {
-        render(data);
+    ajax.getJsonData('/rest/personage/all', function(personageListJson) {
+        renderPersonages(personageListJson);
     }, errorHandler);
+
+    ajax.getJsonData('/rest/race/all', function(raceListJson) {
+        renderRaces(raceListJson);
+    }, errorHandler);
+
+    $("#addPersonageForm").submit(function(event) {
+        event.preventDefault();
+        var posting = ajax.post($(this), { name: $('#name').val(), age: $('#age').val(), race: $('#race').val()}, function( raceListJson ) {
+            ajax.getJsonData('/rest/personage/all', function (personageListJson) {
+                renderPersonages(personageListJson);
+                new PNotify({
+                    title: 'Info',
+                    text: 'Personage has been added successfully.'
+                });
+            }, errorHandler);
+        });
+    });
 });
 
-function render(data) {
-    $("#personageListTemplate").tmpl(data).appendTo("#personageList");
+function renderPersonages(personageListJson) {
+    $("#personageList").html($("#personageListTemplate").tmpl(personageListJson));
 
     $('.deletePersonage').click(function() {
         var id = $(this).parent().find("[name=id]").val();
         _this = $(this);
-        ajax.deleteJsonData('/rest/personage', id, function(data) {
+        ajax.deleteJsonData('/rest/personage', id, function(personageListJson) {
             $(_this).parent().parent().fadeToggle("slow", function() {
                 $(this).remove();
             });
@@ -23,6 +40,10 @@ function render(data) {
     });
 }
 
-function errorHandler(data) {
-    alert("Error: " + data);
+function renderRaces(raceListJson) {
+    $("#raceSelectTemplate").tmpl(raceListJson).appendTo("#race");
+}
+
+function errorHandler(personageListJson) {
+    alert("Error: " + personageListJson);
 }
