@@ -4,10 +4,6 @@ $(document).ready(function () {
         render(data);
     }, errorHandler);
 
-//    $("#addRaceForm").submit(function(){
-//        alert("Submitted");
-//    });
-
     /* Adding a handler to the submit event */
 
     $("#addRaceForm").submit(function(event) {
@@ -24,7 +20,7 @@ $(document).ready(function () {
 
         /* post method */
 
-        var posting = $.post( url, { name: $('#name').val(), maxAge: $('#maxAge').val()}, function( data ) {
+        var posting = ajax.post( url, { name: $('#name').val(), maxAge: $('#maxAge').val()}, function( data ) {
 
             alert('Race has been added');
 
