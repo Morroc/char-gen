@@ -23,10 +23,6 @@
     Прикрепленные навыки (Ajax)
 </a><br/>
 
-<a href="<c:url value="/attributesManager" />">
-    Менеджер атрибутов
-</a><br/>
-
 <a href="<c:url value="/view/attribute_manager_ajax.html" />">
     Аттрибуты (Ajax)
 </a><br/>

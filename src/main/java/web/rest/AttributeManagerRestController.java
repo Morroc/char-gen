@@ -2,10 +2,7 @@ package web.rest;
 
 import entity.Attribute;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import services.AttributeService;
 import web.rest.dto.AttributeDTO;
 
@@ -40,5 +37,11 @@ public class AttributeManagerRestController {
             result.add(new AttributeDTO(attribute.getId(), attribute.getName(), attribute.getActionLevelBonus()));
         }
         return result;
+    }
+
+    @RequestMapping(value="/addAttribute", method=RequestMethod.POST, headers="Accept=application/json")
+    public List<AttributeDTO> addAttribute(@ModelAttribute("attribute") Attribute attribute) {
+        attributeService.addAttribute(attribute);
+        return listAttributes();
     }
 }

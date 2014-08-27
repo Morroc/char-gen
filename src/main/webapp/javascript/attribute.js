@@ -3,18 +3,34 @@
  */
 $(document).ready(function () {
 
-    ajax.getJsonData('/rest/attribute/all', function (data) {
-        render(data);
+    ajax.getJsonData('/rest/attribute/all', function (attributeListJson) {
+        render(attributeListJson);
     }, errorHandler);
+
+    $("#addAttributeForm").submit(function(event) {
+        event.preventDefault();
+        var posting = ajax.post($(this), {
+            name: $('#name').val(),
+            actionLevelBonus: $('#actionLevelBonus').val()
+        }, function( attributeListJson ) {
+            ajax.getJsonData('/rest/attribute/all', function (attributeListJson) {
+                render(attributeListJson);
+                new PNotify({
+                    title: 'Инфо',
+                    text: 'Аттрибут создан успешно.'
+                });
+            }, errorHandler);
+        });
+    });
 });
 
-function render(data) {
-    $("#attributeListTemplate").tmpl(data).appendTo("#attributeList");
+function render(attributeListJson) {
+    $("#attributeList").html($("#attributeListTemplate").tmpl(attributeListJson));
 
     $('.deleteAttribute').click(function () {
         var id = $(this).parent().find("[name=id]").val();
         _this = $(this);
-        ajax.deleteJsonData('/rest/attribute', id, function (data) {
+        ajax.deleteJsonData('/rest/attribute', id, function (attributeListJson) {
             $(_this).parent().parent().fadeToggle("slow", function () {
                 $(this).remove();
             });
@@ -22,6 +38,6 @@ function render(data) {
     });
 }
 
-function errorHandler(data) {
-    alert("Error: " + data);
+function errorHandler(attributeListJson) {
+    alert("Error: " + attributeListJson);
 }
