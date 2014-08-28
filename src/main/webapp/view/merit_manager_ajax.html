@@ -5,18 +5,18 @@
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript" src="/javascript/jquery.tmpl.js"></script>
     <script type="text/javascript" src="/javascript/ajax.js"></script>
-    <script type="text/javascript" src="/javascript/flaw.js"></script>
+    <script type="text/javascript" src="/javascript/merit.js"></script>
     <script type="text/javascript" src="/javascript/pnotify.custom.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
-    <title>Недостатки</title>
+    <title>Достоинства</title>
 </head>
 <body>
 
 <h2><a href="/main.jsp">Домой</a></h2>
 
-<h2>Недостатки</h2>
+<h2>Достоинства</h2>
 
-<h3>Все недостатки</h3>
+<h3>Все достоинства</h3>
 
 <div>
     <table class="data">
@@ -25,35 +25,37 @@
             <th>Название</th>
             <th>Стоимость</th>
             <th>Описание</th>
+            <th>Бонус</th>
             <th>Условия</th>
             <th>&nbsp;</th>
         </tr>
         </thead>
-        <tbody id="flawList">
+        <tbody id="meritList">
 
         </tbody>
     </table>
 </div>
 
-<script id="flawListTemplate" type="text/x-jQuery-tmpl">
+<script id="meritListTemplate" type="text/x-jQuery-tmpl">
     <tr>
         <td>${name}</td>
         <td>${cost}</td>
         <td>${description}</td>
-        <td>${turnOffPreconditions}</td>
+        <td>${actionBonus}</td>
+        <td>${preconditions}</td>
         <td>
             <input type="hidden" name="id" value="${id}"/>
-            <a href="javascript:void(0)" class="deleteFlaw">Удалить</a>
+            <a href="javascript:void(0)" class="deleteMerit">Удалить</a>
         </td>
     </tr>
 </script>
 
-<form id="addFlawForm" action="/rest/flaw/addFlaw" method="post">
+<form id="addMeritForm" action="/rest/merit/addMerit" method="post">
 
     <table class="flaw">
         <tr>
             <td><label for="name">
-                Название расы
+                Название достоинства
             </label></td>
             <td><input type="text" id="name" name="name"/></td>
         </tr>
@@ -70,14 +72,20 @@
             <td><input type="text" id="description" name="description"/></td>
         </tr>
         <tr>
-            <td><label for="turnOffPreconditions">
-                Условия
+            <td><label for="actionBonus">
+                Бонус
             </label></td>
-            <td><input type="text" id="turnOffPreconditions" name="turnOffPreconditions"/></td>
+            <td><input type="text" id="actionBonus" name="actionBonus"/></td>
         </tr>
         <tr>
-            <td colspan="2"><input type="submit" id="addFlawButton" name="addFlawButton"
-                                   value="Добавить недостаток"/></td>
+            <td><label for="preconditions">
+                Условия
+            </label></td>
+            <td><input type="text" id="preconditions" name="preconditions"/></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" id="addMeritButton" name="addMeritButton"
+                                   value="Добавить достоинство"/></td>
         </tr>
     </table>
 </form>

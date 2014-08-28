@@ -12,31 +12,31 @@
 <body>
 
 <a href="<c:url value="/view/race_manager_ajax.html" />">
-    Расы (Ajax)
+    Расы
 </a><br/>
 
 <a href="<c:url value="/view/personage_manager_ajax.html" />">
-    Персонажи (Ajax)
+    Персонажи
 </a><br/>
 
 <a href="<c:url value="/view/attached_skill_manager_ajax.html" />">
-    Прикрепленные навыки (Ajax)
+    Прикрепленные навыки
 </a><br/>
 
 <a href="<c:url value="/view/attribute_manager_ajax.html" />">
-    Аттрибуты (Ajax)
+    Аттрибуты
 </a><br/>
 
-<a href="<c:url value="/meritManager" />">
-    Менеджер достоинств
+<a href="<c:url value="/view/merit_manager_ajax.html" />">
+    Достоинства
 </a><br/>
 
 <a href="<c:url value="/view/flaw_manager_ajax.html" />">
-    Недостатки (Ajax)
+    Недостатки
 </a><br/>
 
-<a href="<c:url value="/triggerSkillsManager" />">
-    Менеджер тригерных навыков
+<a href="<c:url value="/view/trigger_skill_manager_ajax.html" />">
+    Тригерные навыки
 </a><br/>
 
 </body>

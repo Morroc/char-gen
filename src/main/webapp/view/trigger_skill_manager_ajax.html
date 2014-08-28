@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/pnotify.custom.min.css">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascript/jquery.tmpl.js"></script>
+    <script type="text/javascript" src="/javascript/ajax.js"></script>
+    <script type="text/javascript" src="/javascript/triggerSkill.js"></script>
+    <script type="text/javascript" src="/javascript/pnotify.custom.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8">
+    <title>Тригерные навыки</title>
+</head>
+<body>
+
+<h2><a href="/main.jsp">Домой</a></h2>
+
+<h2>Тригерные навыки</h2>
+
+<h3>Все тригерные навыки</h3>
+
+<div>
+    <table class="data">
+        <thead>
+        <tr>
+            <th>Название навыка</th>
+            <th>Базовая стоимость</th>
+            <th>Тип навыка</th>
+            <th>Стоимость эксперта</th>
+            <th>Стоимость мастера</th>
+            <th>Стоимость магистра</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody id="triggerSkillList">
+
+        </tbody>
+    </table>
+</div>
+
+<script id="triggerSkillListTemplate" type="text/x-jQuery-tmpl">
+    <tr>
+        <td>${name}</td>
+        <td>${baseCost}</td>
+        <td>${type.name}</td>
+        <td>${expertCost}</td>
+        <td>${masterCost}</td>
+        <td>${postMasterCost}</td>
+        <td>
+            <input type="hidden" name="id" value="${id}"/>
+            <a href="javascript:void(0)" class="deleteTriggerSkill">Удалить</a>
+        </td>
+    </tr>
+</script>
+
+<form id="addTriggerSkillForm" action="/rest/triggerSkill/addTriggerSkill" method="post">
+
+    <table class="triggerSkill">
+        <tr>
+            <td><label for="name">
+                Название навыка
+            </label></td>
+            <td><input type="text" id="name" name="name"/></td>
+        </tr>
+        <tr>
+            <td><label for="baseCost">
+                Базовая стоимость
+            </label></td>
+            <td><input type="text" id="baseCost" name="baseCost"/></td>
+        </tr>
+        <tr>
+            <td><label for="type">
+                Тип навыка
+            </label></td>
+            <td>
+                <select id="type" name="type"/>
+                <script id="skillTypeTemplate" type="text/x-jquery-tmpl">
+                    <option value="${name}">${name}</option>
+                </script>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="expertCost">
+                Стоимость поднятия до эксперта
+            </label></td>
+            <td><input type="text" id="expertCost" name="expertCost"/></td>
+        </tr>
+        <tr>
+            <td><label for="masterCost">
+                Стоимость поднятия до мастера
+            </label></td>
+            <td><input type="text" id="masterCost" name="masterCost"/></td>
+        </tr>
+        <tr>
+            <td><label for="postMasterCost">
+                Стоимость поднятия до магистра
+            </label></td>
+            <td><input type="text" id="postMasterCost" name="postMasterCost"/></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" id="addTriggerSkillButton" name="addTriggerSkillButton"
+                                   value="Добавить навык"/></td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>

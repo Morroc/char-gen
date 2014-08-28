@@ -1,14 +1,11 @@
 package web;
 
 import constants.Constants;
-import entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import services.*;
 
 import java.util.List;
 
@@ -51,7 +48,7 @@ public class PersonageManagerController {
         model.addAttribute("personagesList", personageService.getAllPersonages());
         model.addAttribute("racesList", raceService.getAllRaces());
 
-        return "WEB-INF/views/personage_manager.jsp";
+        return "oldCode/personage_manager.jsp";
     }
 
     @RequestMapping(value = "/addPersonage", method = RequestMethod.POST)
