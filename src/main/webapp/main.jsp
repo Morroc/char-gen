@@ -31,8 +31,8 @@
     Менеджер достоинств
 </a><br/>
 
-<a href="<c:url value="/flawManager" />">
-    Менеджер недостатков
+<a href="<c:url value="/view/flaw_manager_ajax.html" />">
+    Недостатки (Ajax)
 </a><br/>
 
 <a href="<c:url value="/triggerSkillsManager" />">

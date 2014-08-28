@@ -49,6 +49,26 @@ public class PersonageManagerRestController {
 
     @RequestMapping(value="/{id}", method=RequestMethod.DELETE, headers="Accept=application/json")
     public List<PersonageDTO> deletePersonage(@PathVariable Integer id) {
+
+        //delete attributes
+        List<PersonageHasAttribute> personageHasAttributes = personageHasAttributeService.getPersonageHasAttributesByPersonageId(id);
+        for (PersonageHasAttribute personageHasAttribute : personageHasAttributes) {
+            personageHasAttributeService.deleteLinkAttributeWithPersonage(personageHasAttribute);
+        }
+
+        //delete default race merits
+        List<PersonageHasMerit> personageHasMerits = personageHasMeritService.getPersonageHasMeritsByPersonageId(id);
+        for (PersonageHasMerit personageHasMerit : personageHasMerits) {
+            personageHasMeritService.deleteLinkMeritWithPersonage(personageHasMerit);
+        }
+
+        //delete default race flaws
+        List<PersonageHasFlaw> personageHasFlaws = personageHasFlawService.getPersonageHasFlawsByPersonageId(id);
+        for (PersonageHasFlaw personageHasFlaw : personageHasFlaws) {
+            personageHasFlawService.deleteLinkFlawWithPersonage(personageHasFlaw);
+        }
+
+        //delete personage
         personageService.deletePersonageById(id);
         return listPersonages();
     }

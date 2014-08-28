@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/pnotify.custom.min.css">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascript/jquery.tmpl.js"></script>
+    <script type="text/javascript" src="/javascript/ajax.js"></script>
+    <script type="text/javascript" src="/javascript/flaw.js"></script>
+    <script type="text/javascript" src="/javascript/pnotify.custom.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8">
+    <title>Расы</title>
+</head>
+<body>
+
+<h2><a href="/main.jsp">Домой</a></h2>
+
+<h2>Недостатки</h2>
+
+<h3>Все недостатки</h3>
+
+<div>
+    <table class="data">
+        <thead>
+        <tr>
+            <th>Название</th>
+            <th>Стоимость</th>
+            <th>Описание</th>
+            <th>Условия</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody id="flawList">
+
+        </tbody>
+    </table>
+</div>
+
+<script id="flawListTemplate" type="text/x-jQuery-tmpl">
+    <tr>
+        <td>${name}</td>
+        <td>${cost}</td>
+        <td>${description}</td>
+        <td>${turnOffPreconditions}</td>
+        <td>
+            <input type="hidden" name="id" value="${id}"/>
+            <a href="javascript:void(0)" class="deleteFlaw">Удалить</a>
+        </td>
+    </tr>
+</script>
+
+<form id="addFlawForm" action="/rest/flaw/addFlaw" method="post">
+
+    <table class="flaw">
+        <tr>
+            <td><label for="name">
+                Название расы
+            </label></td>
+            <td><input type="text" id="name" name="name"/></td>
+        </tr>
+        <tr>
+            <td><label for="cost">
+                Стоимость
+            </label></td>
+            <td><input type="text" id="cost" name="cost"/></td>
+        </tr>
+        <tr>
+            <td><label for="description">
+                Описание
+            </label></td>
+            <td><input type="text" id="description" name="description"/></td>
+        </tr>
+        <tr>
+            <td><label for="turnOffPreconditions">
+                Условия
+            </label></td>
+            <td><input type="text" id="turnOffPreconditions" name="turnOffPreconditions"/></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" id="addFlawButton" name="addFlawButton"
+                                   value="Добавить недостаток"/></td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>
