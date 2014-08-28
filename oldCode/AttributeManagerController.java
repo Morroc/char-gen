@@ -27,7 +27,7 @@ public class AttributeManagerController {
         model.addAttribute("attribute", new Attribute());
         model.addAttribute("attributesList", attributeService.getAllAttributes());
 
-        return "attribute_manager";
+        return "WEB-INF/views/attribute_manager.jsp";
     }
 
     @RequestMapping(value = "/addAttribute", method = RequestMethod.POST)

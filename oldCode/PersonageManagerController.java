@@ -51,7 +51,7 @@ public class PersonageManagerController {
         model.addAttribute("personagesList", personageService.getAllPersonages());
         model.addAttribute("racesList", raceService.getAllRaces());
 
-        return "personage_manager";
+        return "WEB-INF/views/personage_manager.jsp";
     }
 
     @RequestMapping(value = "/addPersonage", method = RequestMethod.POST)
