@@ -25,7 +25,7 @@ public class AttachedSkillManagerRestController {
         return convert(attachedSkillService.getAllAttachedSkills());
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public List<AttachedSkillDTO> deleteAttachedSkill(@PathVariable Integer id) {
         attachedSkillService.deleteAttachedSkillById(id);
         return listAttachedSkills();

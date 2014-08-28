@@ -26,7 +26,7 @@ public class TriggerSkillManagerRestController {
         return convert(triggerSkillService.getAllTriggerSkills());
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public List<TriggerSkillDTO> deleteTriggerSkill(@PathVariable Integer id) {
         triggerSkillService.deleteTriggerSkillById(id);
         return listTriggerSkills();

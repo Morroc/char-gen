@@ -36,7 +36,7 @@ function renderPersonages(personageListJson) {
     $('.deletePersonage').click(function() {
         var id = $(this).parent().find("[name=id]").val();
         _this = $(this);
-        ajax.deleteJsonData('/rest/personage', id, function(personageListJson) {
+        ajax.deleteJsonData('/rest/personage/delete', id, function(personageListJson) {
             $(_this).parent().parent().fadeToggle("slow", function() {
                 $(this).remove();
             });

@@ -35,7 +35,7 @@ function renderTriggerSkills(triggerSkillListJson) {
     $('.deleteTriggerSkill').click(function () {
         var id = $(this).parent().find("[name=id]").val();
         _this = $(this);
-        ajax.deleteJsonData('/rest/triggerSkill', id, function (triggerSkillListJson) {
+        ajax.deleteJsonData('/rest/triggerSkill/delete', id, function (triggerSkillListJson) {
             $(_this).parent().parent().fadeToggle("slow", function () {
                 $(this).remove();
             });

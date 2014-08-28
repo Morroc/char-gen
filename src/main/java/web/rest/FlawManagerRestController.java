@@ -25,7 +25,7 @@ public class FlawManagerRestController {
         return convert(flawService.getAllFlaws());
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public List<FlawDTO> deleteFlaw(@PathVariable Integer id) {
         flawService.deleteFlawById(id);
         return listFlaws();

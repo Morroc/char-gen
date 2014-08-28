@@ -30,7 +30,7 @@ function render(attributeListJson) {
     $('.deleteAttribute').click(function () {
         var id = $(this).parent().find("[name=id]").val();
         _this = $(this);
-        ajax.deleteJsonData('/rest/attribute', id, function (attributeListJson) {
+        ajax.deleteJsonData('/rest/attribute/delete', id, function (attributeListJson) {
             $(_this).parent().parent().fadeToggle("slow", function () {
                 $(this).remove();
             });

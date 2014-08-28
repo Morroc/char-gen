@@ -27,7 +27,7 @@ function render(raceListJson) {
     $('.deleteRace').click(function () {
         var id = $(this).parent().find("[name=id]").val();
         _this = $(this);
-        ajax.deleteJsonData('/rest/race', id, function (raceListJson) {
+        ajax.deleteJsonData('/rest/race/delete', id, function (raceListJson) {
             $(_this).parent().parent().fadeToggle("slow", function () {
                 $(this).remove();
             });

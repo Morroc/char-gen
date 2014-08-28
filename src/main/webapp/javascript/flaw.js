@@ -29,7 +29,7 @@ function render(flawListJson) {
     $('.deleteFlaw').click(function () {
         var id = $(this).parent().find("[name=id]").val();
         _this = $(this);
-        ajax.deleteJsonData('/rest/flaw', id, function (flawListJson) {
+        ajax.deleteJsonData('/rest/flaw/delete', id, function (flawListJson) {
             $(_this).parent().parent().fadeToggle("slow", function () {
                 $(this).remove();
             });

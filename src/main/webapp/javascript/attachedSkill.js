@@ -35,7 +35,7 @@ function render(attachedSkillListJson) {
     $('.deleteAttachedSkill').click(function() {
         var id = $(this).parent().find("[name=id]").val();
         _this = $(this);
-        ajax.deleteJsonData('/rest/attachedSkill', id, function(attachedSkillListJson) {
+        ajax.deleteJsonData('/rest/attachedSkill/delete', id, function(attachedSkillListJson) {
             $(_this).parent().parent().fadeToggle("slow", function() {
                 $(this).remove();
             });

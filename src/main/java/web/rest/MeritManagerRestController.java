@@ -25,7 +25,7 @@ public class MeritManagerRestController {
         return convert(meritService.getAllMerits());
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public List<MeritDTO> deleteMerit(@PathVariable Integer id) {
         meritService.deleteMeritById(id);
         return listMerits();

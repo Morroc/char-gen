@@ -29,7 +29,7 @@ function render(meritListJson) {
     $('.deleteMerit').click(function () {
         var id = $(this).parent().find("[name=id]").val();
         _this = $(this);
-        ajax.deleteJsonData('/rest/merit', id, function (meritListJson) {
+        ajax.deleteJsonData('/rest/merit/delete', id, function (meritListJson) {
             $(_this).parent().parent().fadeToggle("slow", function () {
                 $(this).remove();
             });

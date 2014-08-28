@@ -47,7 +47,7 @@ public class PersonageManagerRestController {
         return convert(personageService.getAllPersonages());
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public List<PersonageDTO> deletePersonage(@PathVariable Integer id) {
 
         //delete attributes

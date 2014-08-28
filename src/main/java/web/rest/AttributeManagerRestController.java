@@ -25,7 +25,7 @@ public class AttributeManagerRestController {
         return convert(attributeService.getAllAttributes());
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public List<AttributeDTO> deleteAttribute(@PathVariable Integer id) {
         attributeService.deleteAttributeById(id);
         return listAttributes();

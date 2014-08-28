@@ -25,7 +25,7 @@ public class RaceManagerRestController {
         return convert(raceService.getAllRaces());
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public List<RaceDTO> deleteRace(@PathVariable Integer id) {
         raceService.deleteRaceById(id);
         return listRaces();
