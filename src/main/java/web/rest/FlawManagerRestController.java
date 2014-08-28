@@ -20,12 +20,12 @@ public class FlawManagerRestController {
     @Autowired
     private FlawService flawService;
 
-    @RequestMapping(value="/all", method= RequestMethod.GET, headers="Accept=application/json")
+    @RequestMapping(value = "/all", method = RequestMethod.GET, headers = "Accept=application/json")
     public List<FlawDTO> listFlaws() {
         return convert(flawService.getAllFlaws());
     }
 
-    @RequestMapping(value="/{id}", method=RequestMethod.DELETE, headers="Accept=application/json")
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public List<FlawDTO> deleteFlaw(@PathVariable Integer id) {
         flawService.deleteFlawById(id);
         return listFlaws();
@@ -39,7 +39,7 @@ public class FlawManagerRestController {
         return result;
     }
 
-    @RequestMapping(value="/addFlaw", method=RequestMethod.POST, headers="Accept=application/json")
+    @RequestMapping(value = "/addFlaw", method = RequestMethod.POST, headers = "Accept=application/json")
     public List<FlawDTO> addFlaw(@ModelAttribute("flaw") Flaw flaw) {
         flawService.addFlaw(flaw);
         return listFlaws();

@@ -20,12 +20,12 @@ public class RaceManagerRestController {
     @Autowired
     private RaceService raceService;
 
-    @RequestMapping(value="/all", method=RequestMethod.GET, headers="Accept=application/json")
+    @RequestMapping(value = "/all", method = RequestMethod.GET, headers = "Accept=application/json")
     public List<RaceDTO> listRaces() {
         return convert(raceService.getAllRaces());
     }
 
-    @RequestMapping(value="/{id}", method=RequestMethod.DELETE, headers="Accept=application/json")
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public List<RaceDTO> deleteRace(@PathVariable Integer id) {
         raceService.deleteRaceById(id);
         return listRaces();
@@ -39,7 +39,7 @@ public class RaceManagerRestController {
         return result;
     }
 
-    @RequestMapping(value="/addRace", method=RequestMethod.POST, headers="Accept=application/json")
+    @RequestMapping(value = "/addRace", method = RequestMethod.POST, headers = "Accept=application/json")
     public List<RaceDTO> addRace(@ModelAttribute("race") Race race) {
         raceService.addRace(race);
         return listRaces();

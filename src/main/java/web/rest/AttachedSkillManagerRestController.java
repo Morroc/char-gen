@@ -20,12 +20,12 @@ public class AttachedSkillManagerRestController {
     @Autowired
     private AttachedSkillService attachedSkillService;
 
-    @RequestMapping(value="/all", method= RequestMethod.GET, headers="Accept=application/json")
+    @RequestMapping(value = "/all", method = RequestMethod.GET, headers = "Accept=application/json")
     public List<AttachedSkillDTO> listAttachedSkills() {
         return convert(attachedSkillService.getAllAttachedSkills());
     }
 
-    @RequestMapping(value="/{id}", method=RequestMethod.DELETE, headers="Accept=application/json")
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public List<AttachedSkillDTO> deleteAttachedSkill(@PathVariable Integer id) {
         attachedSkillService.deleteAttachedSkillById(id);
         return listAttachedSkills();
@@ -41,7 +41,7 @@ public class AttachedSkillManagerRestController {
         return result;
     }
 
-    @RequestMapping(value="/addAttachedSkill", method=RequestMethod.POST, headers="Accept=application/json")
+    @RequestMapping(value = "/addAttachedSkill", method = RequestMethod.POST, headers = "Accept=application/json")
     public List<AttachedSkillDTO> addAttachedSkill(@ModelAttribute("attachedSkill") AttachedSkill attachedSkill) {
         attachedSkillService.addAttachedSkill(attachedSkill);
         return listAttachedSkills();

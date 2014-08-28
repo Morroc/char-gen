@@ -20,12 +20,12 @@ public class AttributeManagerRestController {
     @Autowired
     private AttributeService attributeService;
 
-    @RequestMapping(value="/all", method= RequestMethod.GET, headers="Accept=application/json")
+    @RequestMapping(value = "/all", method = RequestMethod.GET, headers = "Accept=application/json")
     public List<AttributeDTO> listAttributes() {
         return convert(attributeService.getAllAttributes());
     }
 
-    @RequestMapping(value="/{id}", method=RequestMethod.DELETE, headers="Accept=application/json")
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public List<AttributeDTO> deleteAttribute(@PathVariable Integer id) {
         attributeService.deleteAttributeById(id);
         return listAttributes();
@@ -39,7 +39,7 @@ public class AttributeManagerRestController {
         return result;
     }
 
-    @RequestMapping(value="/addAttribute", method=RequestMethod.POST, headers="Accept=application/json")
+    @RequestMapping(value = "/addAttribute", method = RequestMethod.POST, headers = "Accept=application/json")
     public List<AttributeDTO> addAttribute(@ModelAttribute("attribute") Attribute attribute) {
         attributeService.addAttribute(attribute);
         return listAttributes();

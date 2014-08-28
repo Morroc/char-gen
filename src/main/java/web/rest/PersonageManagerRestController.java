@@ -42,12 +42,12 @@ public class PersonageManagerRestController {
     @Autowired
     private PersonageHasFlawService personageHasFlawService;
 
-    @RequestMapping(value="/all", method= RequestMethod.GET, headers="Accept=application/json")
+    @RequestMapping(value = "/all", method = RequestMethod.GET, headers = "Accept=application/json")
     public List<PersonageDTO> listPersonages() {
         return convert(personageService.getAllPersonages());
     }
 
-    @RequestMapping(value="/{id}", method=RequestMethod.DELETE, headers="Accept=application/json")
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public List<PersonageDTO> deletePersonage(@PathVariable Integer id) {
 
         //delete attributes
@@ -85,7 +85,7 @@ public class PersonageManagerRestController {
         return new RaceDTO(race.getId(), race.getName(), race.getMaxAge());
     }
 
-    @RequestMapping(value="/addPersonage", method=RequestMethod.POST, headers="Accept=application/json")
+    @RequestMapping(value = "/addPersonage", method = RequestMethod.POST, headers = "Accept=application/json")
     public List<PersonageDTO> addPersonage(@ModelAttribute("personage") Personage personage) {
 
         //add personage
