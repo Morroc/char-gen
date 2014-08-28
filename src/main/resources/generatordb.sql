@@ -3,7 +3,7 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
 DROP SCHEMA IF EXISTS `generatordb` ;
-CREATE SCHEMA IF NOT EXISTS `generatordb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+CREATE SCHEMA IF NOT EXISTS `generatordb` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ;
 USE `generatordb` ;
 
 -- -----------------------------------------------------
@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS `generatordb`.`race` ;
 CREATE  TABLE IF NOT EXISTS `generatordb`.`race` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL ,
-  `maxage` INT NULL ,
+  `max_age` INT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
   UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
