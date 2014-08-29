@@ -1,5 +1,6 @@
 package web.rest;
 
+import converters.TriggerSkillConverter;
 import entity.TriggerSkill;
 import enums.SkillType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,22 +24,14 @@ public class TriggerSkillManagerRestController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET, headers = "Accept=application/json")
     public List<TriggerSkillDTO> listTriggerSkills() {
-        return convert(triggerSkillService.getAllTriggerSkills());
+        TriggerSkillConverter triggerSkillConverter = new TriggerSkillConverter();
+        return triggerSkillConverter.convert(triggerSkillService.getAllTriggerSkills());
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public List<TriggerSkillDTO> deleteTriggerSkill(@PathVariable Integer id) {
         triggerSkillService.deleteTriggerSkillById(id);
         return listTriggerSkills();
-    }
-
-    private List<TriggerSkillDTO> convert(List<TriggerSkill> allTriggerSkills) {
-        List<TriggerSkillDTO> result = new ArrayList<TriggerSkillDTO>(allTriggerSkills.size());
-        for (TriggerSkill triggerSkill : allTriggerSkills) {
-            result.add(new TriggerSkillDTO(triggerSkill.getId(), triggerSkill.getName(), triggerSkill.getType(),
-                    triggerSkill.getBaseCost(), triggerSkill.getExpertCost(), triggerSkill.getMasterCost(), triggerSkill.getPostMasterCost()));
-        }
-        return result;
     }
 
     @RequestMapping(value = "/addTriggerSkill", method = RequestMethod.POST, headers = "Accept=application/json")

@@ -1,12 +1,12 @@
 package web.rest;
 
+import converters.AttachedSkillConverter;
 import entity.AttachedSkill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import services.AttachedSkillService;
 import web.rest.dto.AttachedSkillDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,23 +22,14 @@ public class AttachedSkillManagerRestController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET, headers = "Accept=application/json")
     public List<AttachedSkillDTO> listAttachedSkills() {
-        return convert(attachedSkillService.getAllAttachedSkills());
+        AttachedSkillConverter attachedSkillConverter = new AttachedSkillConverter();
+        return attachedSkillConverter.convert(attachedSkillService.getAllAttachedSkills());
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public List<AttachedSkillDTO> deleteAttachedSkill(@PathVariable Integer id) {
         attachedSkillService.deleteAttachedSkillById(id);
         return listAttachedSkills();
-    }
-
-    private List<AttachedSkillDTO> convert(List<AttachedSkill> allAttachedSkills) {
-        List<AttachedSkillDTO> result = new ArrayList<AttachedSkillDTO>(allAttachedSkills.size());
-        for (AttachedSkill attachedSkill : allAttachedSkills) {
-            result.add(new AttachedSkillDTO(attachedSkill.getId(), attachedSkill.getName(), attachedSkill.getBaseCost(),
-                    attachedSkill.isDefaultSkill(), attachedSkill.isDifficult(),
-                    attachedSkill.isTheoretical(), attachedSkill.getAcquiringCost()));
-        }
-        return result;
     }
 
     @RequestMapping(value = "/addAttachedSkill", method = RequestMethod.POST, headers = "Accept=application/json")

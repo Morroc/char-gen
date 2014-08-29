@@ -1,16 +1,13 @@
 package web.rest;
 
-import DAO.RaceHasMeritDAO;
 import constants.Constants;
+import converters.PersonageConverter;
 import entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import services.*;
 import web.rest.dto.PersonageDTO;
-import web.rest.dto.RaceDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -44,7 +41,8 @@ public class PersonageManagerRestController {
 
     @RequestMapping(value = "/all", method = RequestMethod.GET, headers = "Accept=application/json")
     public List<PersonageDTO> listPersonages() {
-        return convert(personageService.getAllPersonages());
+        PersonageConverter personageConverter = new PersonageConverter();
+        return personageConverter.convert(personageService.getAllPersonages());
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
@@ -71,18 +69,6 @@ public class PersonageManagerRestController {
         //delete personage
         personageService.deletePersonageById(id);
         return listPersonages();
-    }
-
-    private List<PersonageDTO> convert(List<Personage> allPersonages) {
-        List<PersonageDTO> result = new ArrayList<PersonageDTO>(allPersonages.size());
-        for (Personage personage : allPersonages) {
-            result.add(new PersonageDTO(personage.getId(), personage.getName(), personage.getAge(), convert(personage.getRace())));
-        }
-        return result;
-    }
-
-    private RaceDTO convert(Race race) {
-        return new RaceDTO(race.getId(), race.getName(), race.getMaxAge());
     }
 
     @RequestMapping(value = "/addPersonage", method = RequestMethod.POST, headers = "Accept=application/json")
