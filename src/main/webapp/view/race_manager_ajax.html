@@ -5,7 +5,7 @@
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript" src="/javascript/jquery.tmpl.js"></script>
     <script type="text/javascript" src="/javascript/ajax.js"></script>
-    <script type="text/javascript" src="/javascript/race.js"></script>
+    <script type="text/javascript" src="/javascript/race_manager.js"></script>
     <script type="text/javascript" src="/javascript/pnotify.custom.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
     <title>Расы</title>
@@ -35,7 +35,7 @@
 
 <script id="raceListTemplate" type="text/x-jQuery-tmpl">
     <tr>
-        <td><a href="/race/${id}">${name}</a></td>
+        <td><a href="/view/race.html?id=${id}">${name}</a></td>
         <td>${maxAge}</td>
         <td>
             <input type="hidden" name="id" value="${id}"/>
