@@ -10,7 +10,8 @@ $(document).ready(function () {
             name: $('#name').val(),
             cost: $('#cost').val(),
             description: $('#description').val(),
-            turnOffPreconditions: $('#turnOffPreconditions').val()
+            actionBonus: $('#actionBonus').val(),
+            preconditions: $('#preconditions').val()
         }, function( meritListJson ) {
             ajax.getJsonData('/rest/merit/all', function (meritListJson) {
                 render(meritListJson);
