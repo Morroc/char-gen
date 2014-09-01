@@ -1,16 +1,14 @@
 package web.rest;
 
+import constants.Constants;
 import converters.*;
-import entity.Attribute;
-import entity.Flaw;
-import entity.Race;
+import entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import services.*;
-import web.rest.dto.AttributeDTO;
-import web.rest.dto.FlawDTO;
-import web.rest.dto.RaceDTO;
-import web.rest.dto.RaceWithAllRelatedEntitiesDTO;
+import web.rest.dto.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,5 +70,28 @@ public class RaceRestController {
         raceWithAllRelatedEntitiesDTO.setRaceFlaws(raceHasFlawConverter.convert(raceHasFlawService.getRaceHasFlawsByRaceId(id)));
 
         return raceWithAllRelatedEntitiesDTO;
+    }
+
+    @RequestMapping(value = "/linkAttributeToRace", method = RequestMethod.POST)
+    public RaceWithAllRelatedEntitiesDTO linkAttributeToRace(@Validated @ModelAttribute("raceHasAttribute") RaceHasAttribute raceHasAttribute) {
+
+        raceHasAttributeService.addLinkAttributeWithRace(raceHasAttribute);
+        int raceId = raceHasAttribute.getRaceByAttribute().getId();
+        List<Personage> personages = personageService.getPersonagesByRaceId(raceId);
+        for (Personage personage : personages) {
+            PersonageHasAttribute personageHasAttribute = new PersonageHasAttribute();
+            personageHasAttribute.setAttributeByPersonage(raceHasAttribute.getAttributeByRace());
+            personageHasAttribute.setPersonageByAttribute(personage);
+            personageHasAttribute.setCurrentValue(Constants.DEFAULT_VALUE_OF_ATTRIBUTE);
+            personageHasAttributeService.addLinkAttributeWithPersonage(personageHasAttribute);
+        }
+        return getRace(raceId);
+    }
+
+    @RequestMapping(value = "/unlink/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    public RaceWithAllRelatedEntitiesDTO deleteRaceHasAttribute(@PathVariable Integer id) {
+        Integer raceId = raceHasAttributeService.getRaceHasAttributeById(id).getRaceByAttribute().getId();
+        raceHasAttributeService.deleteLinkAttributeWithRaceById(id);
+        return getRace(raceId);
     }
 }

@@ -96,7 +96,7 @@ public class RaceController {
     public String unlinkAttributeFromRace(@PathVariable("raceHasAttributeId") RaceHasAttribute raceHasAttribute,
                                           @RequestParam("raceId") Integer raceId) {
 
-        raceHasAttributeService.deleteLinkAttributeWithRace(raceHasAttribute);
+        raceHasAttributeService.deleteLinkAttributeWithRaceById(raceHasAttribute.getId());
         List<Personage> personages = personageService.getPersonagesByRaceId(raceId);
         for (Personage personage : personages) {
             PersonageHasAttribute personageHasAttribute = personageHasAttributeService.

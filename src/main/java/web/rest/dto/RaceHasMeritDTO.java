@@ -8,6 +8,8 @@ package web.rest.dto;
 public class RaceHasMeritDTO {
     private int id;
 
+    private MeritDTO merit;
+
     private int raceCost;
 
     private boolean defaultForRace;
@@ -15,8 +17,9 @@ public class RaceHasMeritDTO {
     public RaceHasMeritDTO() {
     }
 
-    public RaceHasMeritDTO(int id, int raceCost, boolean defaultForRace) {
+    public RaceHasMeritDTO(int id, MeritDTO merit, int raceCost, boolean defaultForRace) {
         this.id = id;
+        this.merit = merit;
         this.raceCost = raceCost;
         this.defaultForRace = defaultForRace;
     }
@@ -27,6 +30,14 @@ public class RaceHasMeritDTO {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public MeritDTO getMerit() {
+        return merit;
+    }
+
+    public void setMerit(MeritDTO merit) {
+        this.merit = merit;
     }
 
     public int getRaceCost() {

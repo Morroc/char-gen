@@ -12,13 +12,16 @@ import java.util.List;
  * Time: 6:40 PM
  */
 public class RaceHasMeritConverter {
+    MeritConverter meritConverter = new MeritConverter();
+
     public RaceHasMeritDTO convert(RaceHasMerit raceHasMerit) {
-        return new RaceHasMeritDTO(raceHasMerit.getId(), raceHasMerit.getRaceCost(), raceHasMerit.isDefaultForRace());
+        return new RaceHasMeritDTO(raceHasMerit.getId(), meritConverter.convert(raceHasMerit.getMeritByRace()),
+                raceHasMerit.getRaceCost(), raceHasMerit.isDefaultForRace());
     }
 
     public List<RaceHasMeritDTO> convert(List<RaceHasMerit> allRaceHasMerits) {
         List<RaceHasMeritDTO> result = new ArrayList<RaceHasMeritDTO>(allRaceHasMerits.size());
-        for (RaceHasMerit raceHasMerit: allRaceHasMerits) {
+        for (RaceHasMerit raceHasMerit : allRaceHasMerits) {
             result.add(convert(raceHasMerit));
         }
         return result;

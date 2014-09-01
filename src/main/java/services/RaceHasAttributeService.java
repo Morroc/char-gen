@@ -39,7 +39,7 @@ public class RaceHasAttributeService {
     }
 
     @Transactional
-    public void deleteLinkAttributeWithRace(RaceHasAttribute raceHasAttribute) {
-        raceHasAttributeDAO.deleteRaceHasAttribute(raceHasAttribute);
+    public void deleteLinkAttributeWithRaceById(Integer id) {
+        raceHasAttributeDAO.deleteRaceHasAttribute(getRaceHasAttributeById(id));
     }
 }

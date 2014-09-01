@@ -8,13 +8,16 @@ package web.rest.dto;
 public class RaceHasFlawDTO {
     private int id;
 
+    private FlawDTO flaw;
+
     private boolean defaultForRace;
 
     public RaceHasFlawDTO() {
     }
 
-    public RaceHasFlawDTO(int id, boolean defaultForRace) {
+    public RaceHasFlawDTO(int id, FlawDTO flaw, boolean defaultForRace) {
         this.id = id;
+        this.flaw = flaw;
         this.defaultForRace = defaultForRace;
     }
 
@@ -24,6 +27,14 @@ public class RaceHasFlawDTO {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public FlawDTO getFlaw() {
+        return flaw;
+    }
+
+    public void setFlaw(FlawDTO flaw) {
+        this.flaw = flaw;
     }
 
     public boolean isDefaultForRace() {

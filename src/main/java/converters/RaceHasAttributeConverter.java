@@ -12,10 +12,12 @@ import java.util.List;
  * Time: 6:22 PM
  */
 public class RaceHasAttributeConverter {
+    AttributeConverter attributeConverter = new AttributeConverter();
+
     public RaceHasAttributeDTO convert(RaceHasAttribute raceHasAttribute) {
-        return new RaceHasAttributeDTO(raceHasAttribute.getId(), raceHasAttribute.getBaseCost(), raceHasAttribute.getFrom1To3NonGeneratingCost(),
+        return new RaceHasAttributeDTO(raceHasAttribute.getId(), attributeConverter.convert(raceHasAttribute.getAttributeByRace()), raceHasAttribute.getBaseCost(), raceHasAttribute.getFrom1To3NonGeneratingCost(),
                 raceHasAttribute.getFrom3To6NonGeneratingCost(), raceHasAttribute.getFrom6To9NonGeneratingCost(),
-                raceHasAttribute.getFrom9To12NonGeneratingCost(),raceHasAttribute.getMaxValue());
+                raceHasAttribute.getFrom9To12NonGeneratingCost(), raceHasAttribute.getMaxValue());
     }
 
     public List<RaceHasAttributeDTO> convert(List<RaceHasAttribute> allRaceHasAttributes) {

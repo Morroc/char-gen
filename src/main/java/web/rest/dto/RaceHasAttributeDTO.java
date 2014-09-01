@@ -8,6 +8,8 @@ package web.rest.dto;
 public class RaceHasAttributeDTO {
     private int id;
 
+    private AttributeDTO attribute;
+
     private int baseCost;
 
     private int from1To3NonGeneratingCost;
@@ -23,10 +25,11 @@ public class RaceHasAttributeDTO {
     public RaceHasAttributeDTO() {
     }
 
-    public RaceHasAttributeDTO(int id, int baseCost, int from1To3NonGeneratingCost,
+    public RaceHasAttributeDTO(int id, AttributeDTO attribute, int baseCost, int from1To3NonGeneratingCost,
                                int from3To6NonGeneratingCost, int from6To9NonGeneratingCost,
                                int from9To12NonGeneratingCost, int maxValue) {
         this.id = id;
+        this.attribute = attribute;
         this.baseCost = baseCost;
         this.from1To3NonGeneratingCost = from1To3NonGeneratingCost;
         this.from3To6NonGeneratingCost = from3To6NonGeneratingCost;
@@ -41,6 +44,14 @@ public class RaceHasAttributeDTO {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public AttributeDTO getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(AttributeDTO attribute) {
+        this.attribute = attribute;
     }
 
     public int getBaseCost() {

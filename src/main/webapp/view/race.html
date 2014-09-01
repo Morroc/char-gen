@@ -7,6 +7,11 @@
     <script type="text/javascript" src="/javascript/ajax.js"></script>
     <script type="text/javascript" src="/javascript/race.js"></script>
     <script type="text/javascript" src="/javascript/pnotify.custom.min.js"></script>
+
+    <script type="text/javascript" src="/javascript/jquery.mousewheel-3.0.4.pack.js"></script>
+    <script type="text/javascript" src="/javascript/jquery.fancybox-1.3.4.pack.js"></script>
+    <link rel="stylesheet" type="text/css" href="/javascript/jquery.fancybox-1.3.4.css" media="screen" />
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
     <title id="raceTitle"></title>
 </head>
@@ -17,6 +22,143 @@
 <h2 id="raceName"></h2>
 
 <script id="raceNameTemplate" type="text/x-jQuery-tmpl">Раса ${race.name}</script>
+
+<div id="raceHasAttributeTable">
+    <h2>Атрибуты</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Название атрибута</th>
+            <th>Базовая стоимость за единицу</th>
+            <th>Стоимость поднятия с 1 до 3 по игре</th>
+            <th>Стоимость поднятия с 3 до 6 по игре</th>
+            <th>Стоимость поднятия с 6 до 9 по игре</th>
+            <th>Стоимость поднятия с 9 до 12 по игре</th>
+            <th>Максимальное значение</th>
+            <th>Бонус на действия</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody id="raceHasAttributeList">
+
+        </tbody>
+    </table>
+</div>
+
+<script id="raceHasAttributeListTemplate" type="text/x-jQuery-tmpl">
+            <tr>
+                <td>${attribute.name}</td>
+                <td>${baseCost}</td>
+                <td>${from1To3NonGeneratingCost}</td>
+                <td>${from3To6NonGeneratingCost}</td>
+                <td>${from6To9NonGeneratingCost}</td>
+                <td>${from9To12NonGeneratingCost}</td>
+                <td>${maxValue}</td>
+                <td>${attribute.actionLevelBonus}</td>
+                <td>
+                    <input type="hidden" name="id" value="${id}"/>
+                    <a href="javascript:void(0)" class="unlinkAttributeFromRace">Убрать</a>
+                </td>
+            </tr>
+</script>
+
+<h3>Добавить атрибут к расе</h3>
+
+<form id="linkAttributeToRaceForm" method="post" action="/rest/race/linkAttributeToRace">
+
+    <table>
+        <tr>
+            <td>
+                <label for="attributeByRace">
+                    Атрибут
+                </label>
+            </td>
+            <td>
+                <select id="attributeByRace" name="attributeByRace"></select>
+                <script id="attributeByRaceSelectTemplate" type="text/x-jquery-tmpl">
+                    <option value="${id}">${name}</option>
+                </script>
+
+            </td>
+        </tr>
+
+        <script id="raceIdTemplate" type="text/x-jQuery-tmpl">
+            <input id="raceByAttribute" type="hidden" value="${race.id}"/>
+        </script>
+
+        <tr>
+            <td>
+                <label for="baseCost">
+                    Базовая стоимость за единицу
+                </label>
+            </td>
+            <td>
+                <input id="baseCost"/>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <label for="maxValue">
+                    Максимальное значение
+                </label>
+            </td>
+            <td>
+                <input id="maxValue"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="from1To3NonGeneratingCost">
+                    Стоимость поднятия с 1 до 3 по игре
+                </label>
+            </td>
+            <td>
+                <input id="from1To3NonGeneratingCost"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="from3To6NonGeneratingCost">
+                    Стоимость поднятия с 3 до 6 по игре
+                </label>
+            </td>
+            <td>
+                <input id="from3To6NonGeneratingCost"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="from6To9NonGeneratingCost">
+                    Стоимость поднятия с 6 до 9 по игре
+                </label>
+            </td>
+            <td>
+                <input id="from6To9NonGeneratingCost"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <label for="from9To12NonGeneratingCost">
+                    Стоимость поднятия с 9 до 12 по игре
+                </label>
+            </td>
+            <td>
+                <input id="from9To12NonGeneratingCost"/>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2"><input type="submit" id="linkAttributeToRaceButton" name="linkAttributeToRaceButton"
+                                   value="Добавить атрибут"/></td>
+        </tr>
+    </table>
+</form>
 
 </body>
 </html>
