@@ -9,6 +9,13 @@ $(document).ready(function () {
         renderAttributeListJson(attributeListJson);
     }, errorHandler);
 
+//    ajax.getJsonData('/rest/flaw/all', function (flawListJson) {
+//        renderFlawListJson(flawListJson);
+//    }, errorHandler);
+
+    ajax.getJsonData('/rest/merit/all', function (meritListJson) {
+        renderMeritListJson(meritListJson);
+    }, errorHandler);
 
     $(".modalbox").fancybox();
 
@@ -31,9 +38,25 @@ $(document).ready(function () {
                     title: 'Инфо',
                     text: 'Атрибут добавлен к расе успешно.'
                 });
-//                $("#linkAttributeToRaceForm").fadeOut("fast", function(){
-//                    setTimeout("$.fancybox.close()", 1000);
-//                });
+            }, errorHandler);
+        });
+    });
+
+    $("#linkMeritToRaceForm").submit(function (event) {
+        event.preventDefault();
+        var posting = ajax.post($(this), {
+            meritByRace: $('#meritByRace').val(),
+            raceByMerit: $('#raceByMerit').val(),
+            raceCost: $('#raceCost').val(),
+            defaultForRace: $('#defaultForRace').prop('checked')
+        }, function (raceWithAllRelatedEntitiesJson) {
+            ajax.getJsonData('/rest/race/'.concat(raceId), function (raceWithAllRelatedEntitiesJson) {
+                renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson);
+                $.fancybox.close();
+                new PNotify({
+                    title: 'Инфо',
+                    text: 'Достоинство добавлено к расе успешно.'
+                });
             }, errorHandler);
         });
     });
@@ -43,14 +66,27 @@ function renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson) {
     var selector = $("#raceNameTemplate");
     $("#raceTitle").html(selector.tmpl(raceWithAllRelatedEntitiesJson));
     $("#raceName").html(selector.tmpl(raceWithAllRelatedEntitiesJson));
-    $("#raceIdTemplate").tmpl(raceWithAllRelatedEntitiesJson).appendTo("#linkAttributeToRaceForm");
+    $("#raceByAttributeTemplate").tmpl(raceWithAllRelatedEntitiesJson).appendTo("#linkAttributeToRaceForm");
+    $("#raceByMeritTemplate").tmpl(raceWithAllRelatedEntitiesJson).appendTo("#linkMeritToRaceForm");
 
     $("#raceHasAttributeList").html($("#raceHasAttributeListTemplate").tmpl(raceWithAllRelatedEntitiesJson.valueOf()['raceAttributes']));
 
     $('.unlinkAttributeFromRace').click(function () {
         var id = $(this).parent().find("[name=id]").val();
         _this = $(this);
-        ajax.deleteJsonData('/rest/race/unlink', id, function (raceListJson) {
+        ajax.deleteJsonData('/rest/race/unlinkAttributeFromRace', id, function (raceListJson) {
+            $(_this).parent().parent().fadeToggle("slow", function () {
+                $(this).remove();
+            });
+        }, errorHandler);
+    });
+
+    $("#raceHasMeritList").html($("#raceHasMeritListTemplate").tmpl(raceWithAllRelatedEntitiesJson.valueOf()['raceMerits']));
+
+    $('.unlinkMeritFromRace').click(function () {
+        var id = $(this).parent().find("[name=id]").val();
+        _this = $(this);
+        ajax.deleteJsonData('/rest/race/unlinkMeritFromRace', id, function (raceListJson) {
             $(_this).parent().parent().fadeToggle("slow", function () {
                 $(this).remove();
             });
@@ -60,6 +96,14 @@ function renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson) {
 
 function renderAttributeListJson(attributeListJson) {
     $("#attributeByRaceSelectTemplate").tmpl(attributeListJson).appendTo("#attributeByRace");
+}
+
+//function renderFlawListJson(flawListJson) {
+//    $("#").tmpl(flawListJson).appendTo("#");
+//}
+
+function renderMeritListJson(meritListJson) {
+    $("#meritByRaceSelectTemplate").tmpl(meritListJson).appendTo("#meritByRace");
 }
 
 function errorHandler(raceWithAllRelatedEntitiesJson) {

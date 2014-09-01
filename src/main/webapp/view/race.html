@@ -60,19 +60,17 @@
                     <a href="javascript:void(0)" class="unlinkAttributeFromRace">Убрать</a>
                 </td>
             </tr>
-
-
 </script>
 
 <div id="linkAttributeToRaceButton">
-    <a class="modalbox" href="#modalWindow">
+    <a class="modalbox" href="#linkAttributeToRaceWindow">
         <div class="s_button">
             Добавить аттрибут
         </div>
     </a>
 </div>
 
-<div id="modalWindow" style="display:none">
+<div id="linkAttributeToRaceWindow" style="display:none">
     <form id="linkAttributeToRaceForm" method="post" action="/rest/race/linkAttributeToRace">
 
         <table>
@@ -85,18 +83,13 @@
                 <td>
                     <select id="attributeByRace" name="attributeByRace"></select>
                     <script id="attributeByRaceSelectTemplate" type="text/x-jquery-tmpl">
-                    <option value="${id}">${name}</option>
-
-
+                        <option value="${id}">${name}</option>
                     </script>
-
                 </td>
             </tr>
 
-            <script id="raceIdTemplate" type="text/x-jQuery-tmpl">
-            <input id="raceByAttribute" type="hidden" value="${race.id}"/>
-
-
+            <script id="raceByAttributeTemplate" type="text/x-jQuery-tmpl">
+                <input id="raceByAttribute" type="hidden" value="${race.id}"/>
             </script>
 
             <tr>
@@ -169,6 +162,106 @@
             <tr>
                 <td colspan="2"><input type="submit" id="linkAttributeToRaceSubmit" name="linkAttributeToRaceSubmit"
                                        value="Добавить атрибут"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="raceHasMeritTable">
+    <h2>Достоинства</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Название достоинства</th>
+            <th>Расовая стоимость</th>
+            <th>По умолчанию для расы</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody id="raceHasMeritList">
+
+        </tbody>
+    </table>
+</div>
+
+<script id="raceHasMeritListTemplate" type="text/x-jQuery-tmpl">
+            <tr>
+                <td>${merit.name}</td>
+                <td>${raceCost}</td>
+                <td>
+                    {%if defaultForRace%}
+                        <input type="checkbox" disabled="disabled" checked="checked"/>
+                    {%else%}
+                        <input type="checkbox" disabled="disabled"/>
+                    {%/if%}
+                </td>
+
+                <td>
+                    <input type="hidden" name="id" value="${id}"/>
+                    <a href="javascript:void(0)" class="unlinkMeritFromRace">Убрать</a>
+                </td>
+            </tr>
+</script>
+
+<div id="linkMeritToRaceButton">
+    <a class="modalbox" href="#linkMeritToRaceWindow">
+        <div class="s_button">
+            Добавить достоинство
+        </div>
+    </a>
+</div>
+
+
+<div id="linkMeritToRaceWindow" style="display:none">
+    <form id="linkMeritToRaceForm" method="post" action="/rest/race/linkMeritToRace">
+
+        <table>
+            <tr>
+                <td>
+                    <label for="meritByRace">
+                        Достоинство
+                    </label>
+                </td>
+                <td>
+                    <select id="meritByRace" name="meritByRace"></select>
+                    <script id="meritByRaceSelectTemplate" type="text/x-jquery-tmpl">
+                        <option value="${id}">${name}</option>
+
+                    </script>
+                </td>
+            </tr>
+
+            <script id="raceByMeritTemplate" type="text/x-jQuery-tmpl">
+                <input id="raceByMerit" type="hidden" value="${race.id}"/>
+
+            </script>
+
+            <tr>
+                <td>
+                    <label for="raceCost">
+                        Расовая стоимость
+                    </label>
+                </td>
+                <td>
+                    <input id="raceCost"/>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    <label for="defaultForRace">
+                        По умолчанию для расы
+                    </label>
+                </td>
+                <td>
+                    <input type="checkbox" id="defaultForRace" name="defaultForRace"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><input type="submit" id="linkMeritToRaceSubmit" name="linkMeritToRaceSubmit"
+                                       value="Добавить достоинство"/></td>
             </tr>
         </table>
     </form>

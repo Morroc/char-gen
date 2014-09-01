@@ -88,10 +88,45 @@ public class RaceRestController {
         return getRace(raceId);
     }
 
-    @RequestMapping(value = "/unlink/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    @RequestMapping(value = "/unlinkAttributeFromRace/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public RaceWithAllRelatedEntitiesDTO deleteRaceHasAttribute(@PathVariable Integer id) {
         Integer raceId = raceHasAttributeService.getRaceHasAttributeById(id).getRaceByAttribute().getId();
         raceHasAttributeService.deleteLinkAttributeWithRaceById(id);
+        return getRace(raceId);
+    }
+
+    @RequestMapping(value = "/linkMeritToRace", method = RequestMethod.POST)
+    public RaceWithAllRelatedEntitiesDTO linkMeritToRace(@Validated @ModelAttribute("raceHasMerit") RaceHasMerit raceHasMerit) {
+
+        raceHasMeritService.addLinkMeritWithRace(raceHasMerit);
+        int raceId = raceHasMerit.getRaceByMerit().getId();
+        if (raceHasMerit.isDefaultForRace()) {
+            List<Personage> personages = personageService.getPersonagesByRaceId(raceId);
+            for (Personage personage : personages) {
+                PersonageHasMerit personageHasMerit = new PersonageHasMerit();
+                personageHasMerit.setMeritByPersonage(raceHasMerit.getMeritByRace());
+                personageHasMerit.setPersonageByMerit(personage);
+                personageHasMeritService.addLinkMeritWithPersonage(personageHasMerit);
+            }
+        }
+        return getRace(raceId);
+    }
+
+    @RequestMapping(value = "/unlinkMeritFromRace/{id}")
+    public RaceWithAllRelatedEntitiesDTO unlinkMeritFromRace(@PathVariable("id") Integer id) {
+        Integer raceId = raceHasMeritService.getRaceHasMeritById(id).getRaceByMerit().getId();
+        RaceHasMerit raceHasMerit = raceHasMeritService.getRaceHasMeritById(id);
+
+        if (raceHasMerit.isDefaultForRace()) {
+            List<Personage> personages = personageService.getPersonagesByRaceId(raceId);
+            for (Personage personage : personages) {
+                PersonageHasMerit personageHasMerit = personageHasMeritService.
+                        getPersonageHasMeritByMeritIdAndPersonageId(raceHasMerit.getMeritByRace().getId(), personage.getId());
+                personageHasMeritService.deleteLinkMeritWithPersonage(personageHasMerit);
+            }
+        }
+
+        raceHasMeritService.deleteLinkMeritWithRace(raceHasMerit);
         return getRace(raceId);
     }
 }
