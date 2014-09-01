@@ -9,6 +9,9 @@ $(document).ready(function () {
         renderAttributeListJson(attributeListJson);
     }, errorHandler);
 
+
+    $(".modalbox").fancybox();
+
     $("#linkAttributeToRaceForm").submit(function (event) {
         event.preventDefault();
         var posting = ajax.post($(this), {
@@ -23,10 +26,14 @@ $(document).ready(function () {
         }, function (raceWithAllRelatedEntitiesJson) {
             ajax.getJsonData('/rest/race/'.concat(raceId), function (raceWithAllRelatedEntitiesJson) {
                 renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson);
+                $.fancybox.close();
                 new PNotify({
                     title: 'Инфо',
                     text: 'Атрибут добавлен к расе успешно.'
                 });
+//                $("#linkAttributeToRaceForm").fadeOut("fast", function(){
+//                    setTimeout("$.fancybox.close()", 1000);
+//                });
             }, errorHandler);
         });
     });
