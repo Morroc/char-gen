@@ -114,8 +114,8 @@ public class RaceRestController {
 
     @RequestMapping(value = "/unlinkMeritFromRace/{id}")
     public RaceWithAllRelatedEntitiesDTO unlinkMeritFromRace(@PathVariable("id") Integer id) {
-        Integer raceId = raceHasMeritService.getRaceHasMeritById(id).getRaceByMerit().getId();
         RaceHasMerit raceHasMerit = raceHasMeritService.getRaceHasMeritById(id);
+        Integer raceId = raceHasMerit.getRaceByMerit().getId();
 
         if (raceHasMerit.isDefaultForRace()) {
             List<Personage> personages = personageService.getPersonagesByRaceId(raceId);
@@ -127,6 +127,41 @@ public class RaceRestController {
         }
 
         raceHasMeritService.deleteLinkMeritWithRace(raceHasMerit);
+        return getRace(raceId);
+    }
+
+    @RequestMapping(value = "/linkFlawToRace", method = RequestMethod.POST)
+    public RaceWithAllRelatedEntitiesDTO linkFlawToRace(@Validated @ModelAttribute("raceHasFlaw") RaceHasFlaw raceHasFlaw) {
+
+        raceHasFlawService.addLinkFlawWithRace(raceHasFlaw);
+        int raceId = raceHasFlaw.getRaceByFlaw().getId();
+        if (raceHasFlaw.isDefaultForRace()) {
+            List<Personage> personages = personageService.getPersonagesByRaceId(raceId);
+            for (Personage personage : personages) {
+                PersonageHasFlaw personageHasFlaw = new PersonageHasFlaw();
+                personageHasFlaw.setFlawByPersonage(raceHasFlaw.getFlawByRace());
+                personageHasFlaw.setPersonageByFlaw(personage);
+                personageHasFlawService.addLinkFlawWithPersonage(personageHasFlaw);
+            }
+        }
+        return getRace(raceId);
+    }
+
+    @RequestMapping(value = "/unlinkFlawFromRace/{id}")
+    public RaceWithAllRelatedEntitiesDTO unlinkFlawFromRace(@PathVariable("id") Integer id) {
+        RaceHasFlaw raceHasFlaw = raceHasFlawService.getRaceHasFlawById(id);
+        Integer raceId = raceHasFlaw.getRaceByFlaw().getId();
+
+        if (raceHasFlaw.isDefaultForRace()) {
+            List<Personage> personages = personageService.getPersonagesByRaceId(raceId);
+            for (Personage personage : personages) {
+                PersonageHasFlaw personageHasFlaw = personageHasFlawService.
+                        getPersonageHasFlawByFlawIdAndPersonageId(raceHasFlaw.getFlawByRace().getId(), personage.getId());
+                personageHasFlawService.deleteLinkFlawWithPersonage(personageHasFlaw);
+            }
+        }
+
+        raceHasFlawService.deleteLinkFlawWithRace(raceHasFlaw);
         return getRace(raceId);
     }
 }

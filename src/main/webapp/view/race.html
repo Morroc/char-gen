@@ -250,18 +250,104 @@
 
             <tr>
                 <td>
-                    <label for="defaultForRace">
+                    <label for="defaultForRaceMerit">
                         По умолчанию для расы
                     </label>
                 </td>
                 <td>
-                    <input type="checkbox" id="defaultForRace" name="defaultForRace"/>
+                    <input type="checkbox" id="defaultForRaceMerit" name="defaultForRaceMerit"/>
                 </td>
             </tr>
 
             <tr>
                 <td colspan="2"><input type="submit" id="linkMeritToRaceSubmit" name="linkMeritToRaceSubmit"
                                        value="Добавить достоинство"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="raceHasFlawTable">
+    <h2>Недостатки</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Название недостатка</th>
+            <th>По умолчанию для расы</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody id="raceHasFlawList">
+
+        </tbody>
+    </table>
+</div>
+
+<script id="raceHasFlawListTemplate" type="text/x-jQuery-tmpl">
+            <tr>
+                <td>${flaw.name}</td>
+                <td>
+                    {%if defaultForRace%}
+                        <input type="checkbox" disabled="disabled" checked="checked"/>
+                    {%else%}
+                        <input type="checkbox" disabled="disabled"/>
+                    {%/if%}
+                </td>
+
+                <td>
+                    <input type="hidden" name="id" value="${id}"/>
+                    <a href="javascript:void(0)" class="unlinkFlawFromRace">Убрать</a>
+                </td>
+            </tr>
+</script>
+
+<div id="linkFlawToRaceButton">
+    <a class="modalbox" href="#linkFlawToRaceWindow">
+        <div class="s_button">
+            Добавить недостаток
+        </div>
+    </a>
+</div>
+
+
+<div id="linkFlawToRaceWindow" style="display:none">
+    <form id="linkFlawToRaceForm" method="post" action="/rest/race/linkFlawToRace">
+
+        <table>
+            <tr>
+                <td>
+                    <label for="flawByRace">
+                        Недостаток
+                    </label>
+                </td>
+                <td>
+                    <select id="flawByRace" name="flawByRace"></select>
+                    <script id="flawByRaceSelectTemplate" type="text/x-jquery-tmpl">
+                        <option value="${id}">${name}</option>
+
+                    </script>
+                </td>
+            </tr>
+
+            <script id="raceByFlawTemplate" type="text/x-jQuery-tmpl">
+                <input id="raceByFlaw" type="hidden" value="${race.id}"/>
+
+            </script>
+
+            <tr>
+                <td>
+                    <label for="defaultForRaceFlaw">
+                        По умолчанию для расы
+                    </label>
+                </td>
+                <td>
+                    <input type="checkbox" id="defaultForRaceFlaw" name="defaultForRaceFlaw" checked="checked" disabled="disabled"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><input type="submit" id="linkFlawToRaceSubmit" name="linkFlawToRaceSubmit"
+                                       value="Добавить недостаток"/></td>
             </tr>
         </table>
     </form>

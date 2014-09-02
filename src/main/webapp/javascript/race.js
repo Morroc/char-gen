@@ -9,9 +9,9 @@ $(document).ready(function () {
         renderAttributeListJson(attributeListJson);
     }, errorHandler);
 
-//    ajax.getJsonData('/rest/flaw/all', function (flawListJson) {
-//        renderFlawListJson(flawListJson);
-//    }, errorHandler);
+    ajax.getJsonData('/rest/flaw/all', function (flawListJson) {
+        renderFlawListJson(flawListJson);
+    }, errorHandler);
 
     ajax.getJsonData('/rest/merit/all', function (meritListJson) {
         renderMeritListJson(meritListJson);
@@ -48,7 +48,7 @@ $(document).ready(function () {
             meritByRace: $('#meritByRace').val(),
             raceByMerit: $('#raceByMerit').val(),
             raceCost: $('#raceCost').val(),
-            defaultForRace: $('#defaultForRace').prop('checked')
+            defaultForRace: $('#defaultForRaceMerit').prop('checked')
         }, function (raceWithAllRelatedEntitiesJson) {
             ajax.getJsonData('/rest/race/'.concat(raceId), function (raceWithAllRelatedEntitiesJson) {
                 renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson);
@@ -56,6 +56,24 @@ $(document).ready(function () {
                 new PNotify({
                     title: 'Инфо',
                     text: 'Достоинство добавлено к расе успешно.'
+                });
+            }, errorHandler);
+        });
+    });
+
+    $("#linkFlawToRaceForm").submit(function (event) {
+        event.preventDefault();
+        var posting = ajax.post($(this), {
+            flawByRace: $('#flawByRace').val(),
+            raceByFlaw: $('#raceByFlaw').val(),
+            defaultForRace: $('#defaultForRaceFlaw').prop('checked')
+        }, function (raceWithAllRelatedEntitiesJson) {
+            ajax.getJsonData('/rest/race/'.concat(raceId), function (raceWithAllRelatedEntitiesJson) {
+                renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson);
+                $.fancybox.close();
+                new PNotify({
+                    title: 'Инфо',
+                    text: 'Недостаток добавлен к расе успешно.'
                 });
             }, errorHandler);
         });
@@ -68,6 +86,7 @@ function renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson) {
     $("#raceName").html(selector.tmpl(raceWithAllRelatedEntitiesJson));
     $("#raceByAttributeTemplate").tmpl(raceWithAllRelatedEntitiesJson).appendTo("#linkAttributeToRaceForm");
     $("#raceByMeritTemplate").tmpl(raceWithAllRelatedEntitiesJson).appendTo("#linkMeritToRaceForm");
+    $("#raceByFlawTemplate").tmpl(raceWithAllRelatedEntitiesJson).appendTo("#linkFlawToRaceForm");
 
     $("#raceHasAttributeList").html($("#raceHasAttributeListTemplate").tmpl(raceWithAllRelatedEntitiesJson.valueOf()['raceAttributes']));
 
@@ -92,15 +111,27 @@ function renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson) {
             });
         }, errorHandler);
     });
+
+    $("#raceHasFlawList").html($("#raceHasFlawListTemplate").tmpl(raceWithAllRelatedEntitiesJson.valueOf()['raceFlaws']));
+
+    $('.unlinkFlawFromRace').click(function () {
+        var id = $(this).parent().find("[name=id]").val();
+        _this = $(this);
+        ajax.deleteJsonData('/rest/race/unlinkFlawFromRace', id, function (raceListJson) {
+            $(_this).parent().parent().fadeToggle("slow", function () {
+                $(this).remove();
+            });
+        }, errorHandler);
+    });
 }
 
 function renderAttributeListJson(attributeListJson) {
     $("#attributeByRaceSelectTemplate").tmpl(attributeListJson).appendTo("#attributeByRace");
 }
 
-//function renderFlawListJson(flawListJson) {
-//    $("#").tmpl(flawListJson).appendTo("#");
-//}
+function renderFlawListJson(flawListJson) {
+    $("#flawByRaceSelectTemplate").tmpl(flawListJson).appendTo("#flawByRace");
+}
 
 function renderMeritListJson(meritListJson) {
     $("#meritByRaceSelectTemplate").tmpl(meritListJson).appendTo("#meritByRace");
