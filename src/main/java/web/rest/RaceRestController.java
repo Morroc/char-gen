@@ -90,7 +90,16 @@ public class RaceRestController {
 
     @RequestMapping(value = "/unlinkAttributeFromRace/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
     public RaceWithAllRelatedEntitiesDTO deleteRaceHasAttribute(@PathVariable Integer id) {
-        Integer raceId = raceHasAttributeService.getRaceHasAttributeById(id).getRaceByAttribute().getId();
+        RaceHasAttribute raceHasAttribute = raceHasAttributeService.getRaceHasAttributeById(id);
+        Integer raceId = raceHasAttribute.getRaceByAttribute().getId();
+
+        List<Personage> personages = personageService.getPersonagesByRaceId(raceId);
+        for (Personage personage : personages) {
+            PersonageHasAttribute personageHasAttribute = personageHasAttributeService.
+                    getPersonageHasAttributeByAttributeIdAndPersonageId(raceHasAttribute.getAttributeByRace().getId(), personage.getId());
+            personageHasAttributeService.deleteLinkAttributeWithPersonage(personageHasAttribute);
+        }
+
         raceHasAttributeService.deleteLinkAttributeWithRaceById(id);
         return getRace(raceId);
     }
