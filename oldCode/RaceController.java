@@ -1,14 +1,11 @@
 package web;
 
 import constants.Constants;
-import entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-import services.*;
 
 import java.util.List;
 
@@ -72,7 +69,7 @@ public class RaceController {
         model.addAttribute("raceHasFlaw", new RaceHasFlaw());
         model.addAttribute("raceHasFlawsByRace", raceHasFlawService.getRaceHasFlawsByRaceId(raceId));
 
-        return "race";
+        return "oldCode/race.jsp";
     }
 
     @RequestMapping(value = "/race/linkAttributeToRace", method = RequestMethod.POST)
