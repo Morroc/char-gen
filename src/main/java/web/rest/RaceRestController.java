@@ -4,13 +4,11 @@ import constants.Constants;
 import converters.*;
 import entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import services.*;
 import web.rest.dto.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -97,7 +95,9 @@ public class RaceRestController {
         for (Personage personage : personages) {
             PersonageHasAttribute personageHasAttribute = personageHasAttributeService.
                     getPersonageHasAttributeByAttributeIdAndPersonageId(raceHasAttribute.getAttributeByRace().getId(), personage.getId());
-            personageHasAttributeService.deleteLinkAttributeWithPersonage(personageHasAttribute);
+            if (personageHasAttribute != null) {
+                personageHasAttributeService.deleteLinkAttributeWithPersonage(personageHasAttribute);
+            }
         }
 
         raceHasAttributeService.deleteLinkAttributeWithRaceById(id);
