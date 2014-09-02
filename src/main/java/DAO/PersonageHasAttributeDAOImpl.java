@@ -57,7 +57,11 @@ public class PersonageHasAttributeDAOImpl implements PersonageHasAttributeDAO{
                 .setInteger("attribute_id", attributeId)
                 .setInteger("personage_id", personageId)
                 .list();
-        return personageHasAttributes.get(0);
+        if(!personageHasAttributes.isEmpty()) {
+            return personageHasAttributes.get(0);
+        } else {
+            return null;
+        }
     }
 
     @Override
