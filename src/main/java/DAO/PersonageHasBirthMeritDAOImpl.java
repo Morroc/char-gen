@@ -61,7 +61,7 @@ public class PersonageHasBirthMeritDAOImpl implements PersonageHasBirthMeritDAO{
     }
 
     @Override
-    public List<PersonageHasBirthMerit> getPersonageHasBirthMeritByPersonageId(int personageId) {
+    public List<PersonageHasBirthMerit> getPersonageHasBirthMeritsByPersonageId(int personageId) {
         Session session = sessionFactory.getCurrentSession();
         List<PersonageHasBirthMerit> personageHasBirthMerits = session.createSQLQuery(
                 "select * from personage_has_birth_merit where personage_id = :id"

@@ -10,6 +10,8 @@ import enums.SkillLevel;
 public class PersonageHasTriggerSkillDTO {
     private int id;
 
+    private TriggerSkillDTO triggerSkill;
+
     private SkillLevel currentLevel;
 
     private boolean hasTalent;
@@ -19,8 +21,9 @@ public class PersonageHasTriggerSkillDTO {
     public PersonageHasTriggerSkillDTO() {
     }
 
-    public PersonageHasTriggerSkillDTO(int id, SkillLevel currentLevel, boolean hasTalent, boolean hasTeacher) {
+    public PersonageHasTriggerSkillDTO(int id, TriggerSkillDTO triggerSkill, SkillLevel currentLevel, boolean hasTalent, boolean hasTeacher) {
         this.id = id;
+        this.triggerSkill = triggerSkill;
         this.currentLevel = currentLevel;
         this.hasTalent = hasTalent;
         this.hasTeacher = hasTeacher;
@@ -32,6 +35,14 @@ public class PersonageHasTriggerSkillDTO {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public TriggerSkillDTO getTriggerSkill() {
+        return triggerSkill;
+    }
+
+    public void setTriggerSkill(TriggerSkillDTO triggerSkill) {
+        this.triggerSkill = triggerSkill;
     }
 
     public SkillLevel getCurrentLevel() {

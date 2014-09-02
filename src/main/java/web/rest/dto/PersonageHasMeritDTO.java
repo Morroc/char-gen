@@ -8,11 +8,14 @@ package web.rest.dto;
 public class PersonageHasMeritDTO {
     private int id;
 
+    private MeritDTO merit;
+
     public PersonageHasMeritDTO() {
     }
 
-    public PersonageHasMeritDTO(int id) {
+    public PersonageHasMeritDTO(int id, MeritDTO merit) {
         this.id = id;
+        this.merit = merit;
     }
 
     public int getId() {
@@ -21,5 +24,13 @@ public class PersonageHasMeritDTO {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public MeritDTO getMerit() {
+        return merit;
+    }
+
+    public void setMerit(MeritDTO merit) {
+        this.merit = merit;
     }
 }

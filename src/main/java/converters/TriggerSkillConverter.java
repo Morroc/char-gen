@@ -15,9 +15,14 @@ public class TriggerSkillConverter {
     public List<TriggerSkillDTO> convert(List<TriggerSkill> allTriggerSkills) {
         List<TriggerSkillDTO> result = new ArrayList<TriggerSkillDTO>(allTriggerSkills.size());
         for (TriggerSkill triggerSkill : allTriggerSkills) {
-            result.add(new TriggerSkillDTO(triggerSkill.getId(), triggerSkill.getName(), triggerSkill.getType(),
-                    triggerSkill.getBaseCost(), triggerSkill.getExpertCost(), triggerSkill.getMasterCost(), triggerSkill.getPostMasterCost()));
+            result.add(convert(triggerSkill));
         }
         return result;
+    }
+
+    public TriggerSkillDTO convert(TriggerSkill triggerSkill) {
+        return new TriggerSkillDTO(triggerSkill.getId(), triggerSkill.getName(), triggerSkill.getType(),
+                triggerSkill.getBaseCost(), triggerSkill.getExpertCost(),
+                triggerSkill.getMasterCost(), triggerSkill.getPostMasterCost());
     }
 }

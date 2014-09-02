@@ -8,13 +8,16 @@ package web.rest.dto;
 public class PersonageHasBirthMeritDTO {
     private int id;
 
+    private BirthMeritDTO birthMerit;
+
     private int currentValue;
 
     public PersonageHasBirthMeritDTO() {
     }
 
-    public PersonageHasBirthMeritDTO(int id, int currentValue) {
+    public PersonageHasBirthMeritDTO(int id, BirthMeritDTO birthMerit, int currentValue) {
         this.id = id;
+        this.birthMerit = birthMerit;
         this.currentValue = currentValue;
     }
 
@@ -24,6 +27,14 @@ public class PersonageHasBirthMeritDTO {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public BirthMeritDTO getBirthMerit() {
+        return birthMerit;
+    }
+
+    public void setBirthMerit(BirthMeritDTO birthMerit) {
+        this.birthMerit = birthMerit;
     }
 
     public int getCurrentValue() {

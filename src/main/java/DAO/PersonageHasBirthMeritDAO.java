@@ -22,5 +22,5 @@ public interface PersonageHasBirthMeritDAO {
 
     public PersonageHasBirthMerit getPersonageHasBirthMeritByBirthMeritIdAndPersonageId(int birthMeritId, int personageId);
 
-    public List<PersonageHasBirthMerit> getPersonageHasBirthMeritByPersonageId(int personageId);
+    public List<PersonageHasBirthMerit> getPersonageHasBirthMeritsByPersonageId(int personageId);
 }

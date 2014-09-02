@@ -8,11 +8,14 @@ package web.rest.dto;
 public class PersonageHasFlawDTO {
     private int id;
 
+    private FlawDTO flaw;
+
     public PersonageHasFlawDTO() {
     }
 
-    public PersonageHasFlawDTO(int id) {
+    public PersonageHasFlawDTO(int id, FlawDTO flaw) {
         this.id = id;
+        this.flaw = flaw;
     }
 
     public int getId() {
@@ -21,5 +24,13 @@ public class PersonageHasFlawDTO {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public FlawDTO getFlaw() {
+        return flaw;
+    }
+
+    public void setFlaw(FlawDTO flaw) {
+        this.flaw = flaw;
     }
 }
