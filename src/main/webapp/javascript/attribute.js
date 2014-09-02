@@ -2,6 +2,7 @@
  * Created by artemk on 8/26/14.
  */
 $(document).ready(function () {
+    $("#mainMenu").load("main_menu.html");
 
     ajax.getJsonData('/rest/attribute/all', function (attributeListJson) {
         render(attributeListJson);

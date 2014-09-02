@@ -1,0 +1,31 @@
+.solidblockmenu {
+    margin : 0;
+    padding : 0;
+    float : left;
+    font : bold 12px Arial;
+    width : 100%;
+    border : 1px solid #113523;
+    border-width : 1px 0;
+    background : black url(/images/blockdefault.jpg) repeat-x center center;
+}
+.solidblockmenu li {
+    display : inline;
+}
+.solidblockmenu li a {
+    float : left;
+    color : #C9EDDB;
+    padding : 9px 10px;
+    text-decoration : none;
+    border-right : 1px solid #24714A;
+}
+.solidblockmenu li a:visited {
+    color : #C9EDDB;
+}
+.solidblockmenu li a:hover, .solidblockmenu li .current {
+    color : #B5E6CD;
+    background : transparent url(blockactive.jpg) repeat-x center center;
+}
+
+.img01 {
+    padding:20px 0 0 10px;
+}

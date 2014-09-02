@@ -3,6 +3,7 @@
  */
 
 $(document).ready(function(){
+    $("#mainMenu").load("main_menu.html");
 
     ajax.getJsonData('/rest/attachedSkill/all', function(attachedSkillListJson) {
         render(attachedSkillListJson);

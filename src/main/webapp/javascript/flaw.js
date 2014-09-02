@@ -1,4 +1,5 @@
 $(document).ready(function () {
+    $("#mainMenu").load("main_menu.html");
 
     ajax.getJsonData('/rest/flaw/all', function (flawListJson) {
         render(flawListJson);

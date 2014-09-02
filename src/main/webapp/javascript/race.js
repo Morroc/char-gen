@@ -1,4 +1,6 @@
 $(document).ready(function () {
+    $("#mainMenu").load("main_menu.html");
+
     var raceId = ajax.getURLParameter('id');
 
     ajax.getJsonData('/rest/race/'.concat(raceId), function (raceWithAllRelatedEntitiesJson) {
