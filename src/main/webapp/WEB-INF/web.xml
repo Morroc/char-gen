@@ -33,7 +33,7 @@
     </servlet-mapping>
 
     <welcome-file-list>
-        <welcome-file>main.jsp</welcome-file>
+        <welcome-file>/view/personage_manager_ajax.html</welcome-file>
     </welcome-file-list>
 
     <filter>
