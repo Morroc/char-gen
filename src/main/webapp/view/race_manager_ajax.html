@@ -7,7 +7,12 @@
     <script type="text/javascript" src="/javascript/ajax.js"></script>
     <script type="text/javascript" src="/javascript/race_manager.js"></script>
     <script type="text/javascript" src="/javascript/pnotify.custom.min.js"></script>
+
+    <script type="text/javascript" src="/javascript/jquery.mousewheel-3.0.6.pack.js"></script>
+    <script type="text/javascript" src="/javascript/jquery.fancybox.pack.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="/css/main.css" media="screen"/>
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
     <title>Расы</title>
 </head>
@@ -40,13 +45,17 @@
         <td>${maxAge}</td>
         <td>
             <input type="hidden" name="id" value="${id}"/>
+            <a href="#linkUpdateRaceWindow" class="updateRace">Изменить</a>
+        </td>
+        <td>
+            <input type="hidden" name="id" value="${id}"/>
             <a href="javascript:void(0)" class="deleteRace">Удалить</a>
         </td>
     </tr>
 </script>
 
-<form id="addRaceForm" action="/rest/race/addRace" method="post">
-
+<form id="addRaceForm" action="/rest/race/" method="post">
+    <input type="hidden" name="id" value=""/>
     <table class="race">
         <tr>
             <td><label for="name">
@@ -66,6 +75,29 @@
         </tr>
     </table>
 </form>
+
+<div id="linkUpdateRaceWindow" style="display:none">
+    <form id="updateRaceForm" action="/rest/race/" method="post">
+        <table class="race">
+            <tr>
+                <td><label for="name">
+                    Название расы
+                </label></td>
+                <td><input type="text" id="updateName" name="name"/></td>
+            </tr>
+            <tr>
+                <td><label for="maxAge">
+                    Максимально возможный возраст
+                </label></td>
+                <td><input type="text" id="updateMaxAge" name="maxAge"/></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" id="updateRaceButton" name="updateRaceButton"
+                                       value="Сохранить"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
 
 </body>
 </html>

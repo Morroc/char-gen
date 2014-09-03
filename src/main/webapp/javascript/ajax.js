@@ -11,7 +11,8 @@
             url: $form.attr('action'),
             type: "POST",
             data: formData,
-            dataType: "application/json",
+            contentType: "application/json",
+            success: successCallback,
             error: function (data) {
                 if (data.status == 200) {
                     var responseJson = jQuery.parseJSON(data.responseText);
@@ -30,11 +31,37 @@
         }, errorCallback);
     };
 
+    ajax.put = function ($form, formData, successCallback, errorCallback) {
+        $.ajax({
+            url: $form.attr('action'),
+            type: "PUT",
+            data: formData,
+            contentType: "application/json",
+            success: successCallback,
+            error: function (data) {
+                if (data.status == 200) {
+                    var responseJson = jQuery.parseJSON(data.responseText);
+                    successCallback(responseJson);
+                } else {
+                    errorCallback(data);
+                }
+            }
+        });
+    };
+
+    ajax.putJsonData = function ($form, formData, successCallback, errorCallback) {
+        ajax.put($form, formData, function (data) {
+            jsonData = data;
+            successCallback(data);
+        }, errorCallback);
+    };
+
     ajax.delete = function (url, id, successCallback, errorCallback) {
         $.ajax({
             url: url + "/" + id,
             type: "DELETE",
-            dataType: "application/json",
+            contentType: "application/json",
+            success: successCallback,
             error: function (data) {
                 if (data.status == 200) {
                     var responseJson = jQuery.parseJSON(data.responseText);
@@ -69,7 +96,8 @@
             url: $url,
             type: "GET",
             data: params,
-            dataType: "application/json",
+            contentType: "application/json",
+            success: successCallback,
             error: function (data) {
                 if (data.status == 200) {
                     var responseJson = jQuery.parseJSON(data.responseText);
@@ -109,3 +137,20 @@
     };
 
 })();
+
+$.fn.serializeObject = function()
+{
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name]) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};

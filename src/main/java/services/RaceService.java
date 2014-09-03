@@ -5,6 +5,7 @@ import entity.Race;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import web.rest.dto.RaceDTO;
 
 import java.util.List;
 
@@ -41,5 +42,13 @@ public class RaceService {
     @Transactional
     public Race getRaceByName(String name) {
         return raceDAO.getRaceByName(name);
+    }
+
+    @Transactional
+    public void updateRace(RaceDTO race) {
+        Race exist = raceDAO.getRaceById(race.getId());
+        exist.setName(race.getName());
+        exist.setMaxAge(race.getMaxAge());
+        raceDAO.updateRace(exist);
     }
 }

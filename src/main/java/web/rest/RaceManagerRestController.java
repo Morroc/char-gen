@@ -16,25 +16,37 @@ import java.util.List;
  * Time: 4:45 PM
  */
 @RestController
-@RequestMapping("/rest/race")
+@RequestMapping(value = "/rest/race", consumes = "application/json", produces = "application/json")
 public class RaceManagerRestController {
     @Autowired
     private RaceService raceService;
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET, headers = "Accept=application/json")
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<RaceDTO> listRaces() {
         RaceConverter raceConverter = new RaceConverter();
         return raceConverter.convert(raceService.getAllRaces());
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public List<RaceDTO> deleteRace(@PathVariable Integer id) {
         raceService.deleteRaceById(id);
         return listRaces();
     }
 
-    @RequestMapping(value = "/addRace", method = RequestMethod.POST, headers = "Accept=application/json")
-    public List<RaceDTO> addRace(@ModelAttribute("race") Race race) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public List<RaceDTO> updateRace(@PathVariable Integer id, @RequestBody RaceDTO raceDTO) {
+        raceDTO.setId(id);
+        raceService.updateRace(raceDTO);
+        return listRaces();
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    public List<RaceDTO> addRace(@RequestBody RaceDTO raceDTO) {
+
+        Race race = new Race();
+        race.setMaxAge(raceDTO.getMaxAge());
+        race.setName(raceDTO.getName());
+
         raceService.addRace(race);
         return listRaces();
     }
