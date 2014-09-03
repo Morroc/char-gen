@@ -2,11 +2,10 @@ package web.rest;
 
 import converters.*;
 import entity.Personage;
+import entity.PersonageHasAttachedSkill;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 import services.*;
 import web.rest.dto.PersonageWithAllRelatedEntitiesDTO;
 
@@ -85,5 +84,14 @@ public class PersonageRestController {
                 personageHasTriggerSkillConverter.convert(personageHasTriggerSkillService.getPersonageHasTriggerSkillsByPersonageId(id)));
 
         return personageWithAllRelatedEntitiesDTO;
+    }
+
+    @RequestMapping(value = "/linkAttachedSkillToPersonage", method = RequestMethod.POST)
+    public PersonageWithAllRelatedEntitiesDTO linkAttachedSkillToPersonage(@Validated @ModelAttribute("personageHasAttachedSkill") PersonageHasAttachedSkill personageHasAttachedSkill) {
+
+        int personageId = personageHasAttachedSkill.getPersonageByAttachedSkill().getId();
+        personageHasAttachedSkillService.addLinkAttachedSkillWithPersonage(personageHasAttachedSkill);
+
+        return getPersonage(personageId);
     }
 }

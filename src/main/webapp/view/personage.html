@@ -33,8 +33,100 @@
 
 <script id="personageHasAttributeListTemplate" type="text/x-jQuery-tmpl">
             <tr>
-                <td class='personageAttributes'>${attribute.name}</td>
-                <td class='personageAttributes'>${currentValue}</td>
+                <td class='personageTables'>${attribute.name}</td>
+                <td class='personageTables'>${currentValue}</td>
+            </tr>
+</script>
+
+<div id="personageHasAttachedSkillTable">
+    <h2>Прикрепленные навыки</h2>
+    <table id="personageHasAttachedSkillList">
+
+    </table>
+    <div id="linkAttachedSkillToPersonageButton">
+        <a class="modalbox" href="#linkAttachedSkillToPersonageWindow">
+            <div class="s_button">
+                Добавить прикрепленный навык
+            </div>
+        </a>
+    </div>
+</div>
+
+<script id="personageHasAttachedSkillListTemplate" type="text/x-jQuery-tmpl">
+            <tr>
+                <td class='personageTables'>${attachedSkill.name}</td>
+                <td class='personageTables'>${currentValue}</td>
+            </tr>
+</script>
+
+<div id="linkAttachedSkillToPersonageWindow" style="display:none">
+    <form id="linkAttachedSkillToPersonageForm" method="post" action="/rest/personage/linkAttachedSkillToPersonage">
+
+        <table>
+            <tr>
+                <td>
+                    <label for="attachedSkillByPersonage">
+                        Прикрепленный навык
+                    </label>
+                </td>
+                <td>
+                    <select id="attachedSkillByPersonage" name="attachedSkillByPersonage"></select>
+                    <script id="attachedSkillByPersonageSelectTemplate" type="text/x-jquery-tmpl">
+                        <option value="${id}">${name}</option>
+                    </script>
+                </td>
+            </tr>
+
+            <script id="personageByAttachedSkillTemplate" type="text/x-jQuery-tmpl">
+                <input id="personageByAttachedSkill" type="hidden" value="${personage.id}"/>
+            </script>
+
+
+            <tr>
+                <td>
+                    <label for="currentValue">
+                        Значение
+                    </label>
+                </td>
+                <td>
+                    <input id="currentValue" name="currentValue"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><input type="submit" id="linkAttachedSkillToPersonageSubmitButton"
+                                       name="linkAttachedSkillToPersonageSubmitButton"
+                                       value="Добавить прикрепленный навык"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="personageHasTriggerSkillTable">
+    <h2>Триггерные навыки</h2>
+    <table id="personageHasTriggerSkillList">
+
+    </table>
+</div>
+
+<script id="personageHasTriggerSkillListTemplate" type="text/x-jQuery-tmpl">
+            <tr>
+                <td class='personageTables'>${triggerSkill.name}</td>
+                <td class='personageTables'>${currentLevel}</td>
+                <td>
+                    {%if hasTalent%}
+                        <input type="checkbox" disabled="disabled" checked="checked"/>
+                    {%else%}
+                        <input type="checkbox" disabled="disabled"/>
+                    {%/if%}
+                </td>
+                <td>
+                    {%if hasTeacher%}
+                        <input type="checkbox" disabled="disabled" checked="checked"/>
+                    {%else%}
+                        <input type="checkbox" disabled="disabled"/>
+                    {%/if%}
+                </td>
             </tr>
 </script>
 
