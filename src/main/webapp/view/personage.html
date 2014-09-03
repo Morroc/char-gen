@@ -24,5 +24,19 @@
 
 <script id="personageNameTemplate" type="text/x-jQuery-tmpl">Персонаж ${personage.name}</script>
 
+<div id="personageHasAttributeTable">
+    <h2>Атрибуты</h2>
+    <table id="personageHasAttributeList">
+
+    </table>
+</div>
+
+<script id="personageHasAttributeListTemplate" type="text/x-jQuery-tmpl">
+            <tr>
+                <td class='personageAttributes'>${attribute.name}</td>
+                <td class='personageAttributes'>${currentValue}</td>
+            </tr>
+</script>
+
 </body>
 </html>

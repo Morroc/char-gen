@@ -1,6 +1,11 @@
-body{
-    font-family:Arial, sans-serif;
-    font-size:14px;
-    line-height:1.4;
-    padding:10px;
+body {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+    padding: 10px;
+}
+
+.personageAttributes {
+    font-size: 16px;
+    padding: 0 20px;
 }

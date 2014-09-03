@@ -15,6 +15,10 @@ function renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntiti
     var selector = $("#personageNameTemplate");
     $("#personageTitle").html(selector.tmpl(personageWithAllRelatedEntitiesJson));
     $("#personageName").html(selector.tmpl(personageWithAllRelatedEntitiesJson));
+
+    $("#personageHasAttributeList").html($("#personageHasAttributeListTemplate").tmpl(personageWithAllRelatedEntitiesJson.valueOf()['personageAttributes']));
+
+
 }
 
 function errorHandler(personageWithAllRelatedEntitiesJson) {
