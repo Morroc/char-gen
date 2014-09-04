@@ -88,7 +88,7 @@
                     </label>
                 </td>
                 <td>
-                    <select id="race" name="race"/>
+                    <select id="race" name="race"></select>
                     <script id="raceSelectTemplate" type="text/x-jquery-tmpl">
                         <option value="${id}">${name}</option>
                     </script>
@@ -126,7 +126,10 @@
                     </label>
                 </td>
                 <td>
-                    <select id="updateRace" name="race" disabled="disabled"></select>
+                    <select id="updateRace" name="race"></select>
+                    <script id="updateRaceSelectTemplate" type="text/x-jquery-tmpl">
+                        <option value="${race.id}">${race.name}</option>
+                    </script>
                 </td>
             </tr>
             <tr>

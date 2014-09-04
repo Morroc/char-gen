@@ -34,7 +34,9 @@ $(document).ready(function(){
     $("#updatePersonageForm").submit(function(event) {
         event.preventDefault();
         $.fancybox.showLoading();
-        ajax.postJsonData($(this), JSON.stringify($(this).serializeObject()), function (personageListJson) {
+        var person = $(this).serializeObject();
+        person.race = {id: person.race};
+        ajax.postJsonData($(this), JSON.stringify(person), function (personageListJson) {
             renderPersonages(personageListJson);
             new PNotify({
                 title: 'Инфо',
@@ -65,6 +67,7 @@ function renderPersonages(personageListJson) {
             var id = $(obj.element).parent().find("[name=id]").val();
             for(var i = 0; i < window.personageListJson.length; i++) {
                 if(window.personageListJson[i].id == id) {
+                    var personageRace = window.personageListJson[i];
                     $('#updatePersonageForm').attr('action', '/rest/personage/' + window.personageListJson[i].id);
                     $('#updateName').val(window.personageListJson[i].name);
                     $('#updateAge').val(window.personageListJson[i].age);
@@ -72,16 +75,16 @@ function renderPersonages(personageListJson) {
                     break;
                 }
             }
+            $("#updateRace").html($("#updateRaceSelectTemplate").tmpl(personageRace));
         }
     });
 }
 
 function renderRaces(raceListJson) {
-    var raceNameTemplate = $("#raceSelectTemplate");
-    raceNameTemplate.tmpl(raceListJson).appendTo("#race");
-    raceNameTemplate.tmpl(raceListJson).appendTo("#updateRace");
+    $("#raceSelectTemplate").tmpl(raceListJson).appendTo("#race");
 }
 
 function errorHandler(personageListJson) {
+    $.fancybox.hideLoading();
     alert("Error: " + personageListJson);
 }
