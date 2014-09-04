@@ -18,7 +18,9 @@ $(document).ready(function(){
     $("#addPersonageForm").submit(function(event) {
         event.preventDefault();
         $.fancybox.showLoading();
-        ajax.putJsonData($(this), JSON.stringify($(this).serializeObject()), function(personageListJson) {
+        var person = $(this).serializeObject();
+        person.race = {id: person.race};
+        ajax.putJsonData($(this), JSON.stringify(person), function(personageListJson) {
             renderPersonages(personageListJson);
             new PNotify({
                 title: 'Инфо',
