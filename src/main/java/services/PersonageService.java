@@ -52,4 +52,9 @@ public class PersonageService {
     public Integer getRaceByPersonageId(int personageId) {
         return personageDAO.getRaceIdOfPersonage(personageDAO.getPersonageById(personageId));
     }
+
+    @Transactional
+    public void updatePersonage(Personage personage) {
+        personageDAO.updatePersonage(personage);
+    }
 }

@@ -21,9 +21,10 @@ public class RaceManagerRestController {
     @Autowired
     private RaceService raceService;
 
+    RaceConverter raceConverter = new RaceConverter();
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<RaceDTO> listRaces() {
-        RaceConverter raceConverter = new RaceConverter();
         return raceConverter.convert(raceService.getAllRaces());
     }
 
@@ -36,16 +37,15 @@ public class RaceManagerRestController {
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     public List<RaceDTO> updateRace(@PathVariable Integer id, @RequestBody RaceDTO raceDTO) {
         raceDTO.setId(id);
-        raceService.updateRace(raceDTO);
+        Race race = raceConverter.convert(raceDTO);
+        raceService.updateRace(race);
         return listRaces();
     }
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)
     public List<RaceDTO> addRace(@RequestBody RaceDTO raceDTO) {
 
-        Race race = new Race();
-        race.setMaxAge(raceDTO.getMaxAge());
-        race.setName(raceDTO.getName());
+        Race race = raceConverter.convert(raceDTO);
 
         raceService.addRace(race);
         return listRaces();

@@ -35,7 +35,7 @@ public class FlawService {
 
     @Transactional
     public void updateFlaw(Flaw flaw) {
-        flawDAO.addFlaw(flaw);
+        flawDAO.updateFlaw(flaw);
     }
 
     @Transactional

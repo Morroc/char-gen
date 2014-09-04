@@ -3,17 +3,21 @@ $(document).ready(function () {
 
     ajax.getJsonData('/rest/race/', function (raceListJson) {
         render(raceListJson);
-        firstLoad();
     }, errorHandler);
+
+    $('.modalbox').fancybox();
 
     $("#addRaceForm").submit(function(event) {
         event.preventDefault();
+        $.fancybox.showLoading();
         ajax.putJsonData($(this), JSON.stringify($(this).serializeObject()), function(raceListJson) {
             render(raceListJson);
             new PNotify({
                 title: 'Инфо',
                 text: 'Раса создана успешно.'
             });
+            $.fancybox.close();
+            $.fancybox.hideLoading();
         }, errorHandler);
     });
 
@@ -27,6 +31,7 @@ $(document).ready(function () {
                 text: 'Раса сохранена успешно.'
             });
             $.fancybox.close();
+            $.fancybox.hideLoading();
         }, errorHandler);
     });
 });

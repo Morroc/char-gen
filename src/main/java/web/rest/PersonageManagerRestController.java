@@ -16,7 +16,7 @@ import java.util.List;
  * Time: 5:15 PM
  */
 @RestController
-@RequestMapping("/rest/personage")
+@RequestMapping(value = "/rest/personage", consumes = "application/json", produces = "application/json")
 public class PersonageManagerRestController {
     @Autowired
     private PersonageService personageService;
@@ -38,14 +38,14 @@ public class PersonageManagerRestController {
 
     @Autowired
     private PersonageHasFlawService personageHasFlawService;
+    PersonageConverter personageConverter = new PersonageConverter();
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET, headers = "Accept=application/json")
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<PersonageDTO> listPersonages() {
-        PersonageConverter personageConverter = new PersonageConverter();
         return personageConverter.convert(personageService.getAllPersonages());
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public List<PersonageDTO> deletePersonage(@PathVariable Integer id) {
 
         //delete attributes
@@ -71,8 +71,9 @@ public class PersonageManagerRestController {
         return listPersonages();
     }
 
-    @RequestMapping(value = "/addPersonage", method = RequestMethod.POST, headers = "Accept=application/json")
-    public List<PersonageDTO> addPersonage(@ModelAttribute("personage") Personage personage) {
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    public List<PersonageDTO> addPersonage(@RequestBody PersonageDTO personageDTO) {
+        Personage personage = personageConverter.convert(personageDTO);
 
         //add personage
         personageService.addPersonage(personage);
@@ -109,6 +110,14 @@ public class PersonageManagerRestController {
                 personageHasFlawService.addLinkFlawWithPersonage(personageHasFlaw);
             }
         }
+        return listPersonages();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public List<PersonageDTO> updatePersonage(@PathVariable Integer id, @RequestBody PersonageDTO personageDTO) {
+        personageDTO.setId(id);
+        Personage personage = personageConverter.convert(personageDTO);
+        personageService.updatePersonage(personage);
         return listPersonages();
     }
 }

@@ -7,6 +7,10 @@
     <script type="text/javascript" src="/javascript/ajax.js"></script>
     <script type="text/javascript" src="/javascript/personage_manager.js"></script>
     <script type="text/javascript" src="/javascript/pnotify.custom.min.js"></script>
+
+    <script type="text/javascript" src="/javascript/jquery.mousewheel-3.0.6.pack.js"></script>
+    <script type="text/javascript" src="/javascript/jquery.fancybox.pack.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="/css/main.css" media="screen"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
     <title>Персонажи</title>
@@ -42,48 +46,96 @@
         <td>${race.name}</td>
         <td>
             <input type="hidden" name="id" value="${id}"/>
+            <a href="#updatePersonageWindow" class="updatePersonage">Изменить</a>
+        </td>
+        <td>
+            <input type="hidden" name="id" value="${id}"/>
             <a href="javascript:void(0)" class="deletePersonage">Удалить</a>
         </td>
     </tr>
-
 </script>
 
-<form id="addPersonageForm" action="/rest/personage/addPersonage" method="post">
+<div id="addPersonageButton">
+    <a class="modalbox" href="#addPersonageWindow">
+        <button>
+            <div class="s_button">
+                Добавить персонажа
+            </div>
+        </button>
+    </a>
+</div>
 
-    <table class="personage">
-        <tr>
-            <td><label for="name">
-                Имя персонажа
-            </label></td>
-            <td><input type="text" id="name" name="name"/></td>
-        </tr>
-        <tr>
-            <td><label for="age">
-                Возраст персонажа
-            </label></td>
-            <td><input type="text" id="age" name="age"/></td>
-        </tr>
-        <tr>
-            <td>
-                <label for="race">
-                    Раса
-                </label>
-            </td>
-            <td>
-                <select id="race" name="race"/>
-                <script id="raceSelectTemplate" type="text/x-jquery-tmpl">
-                    <option value="${id}">${name}</option>
+<div id="addPersonageWindow" style="display:none">
+    <form id="addPersonageForm" action="/rest/personage/" method="post">
 
-                </script>
+        <table class="personage">
+            <tr>
+                <td><label for="name">
+                    Имя персонажа
+                </label></td>
+                <td><input type="text" id="name" name="name"/></td>
+            </tr>
+            <tr>
+                <td><label for="age">
+                    Возраст персонажа
+                </label></td>
+                <td><input type="text" id="age" name="age"/></td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="race">
+                        Раса
+                    </label>
+                </td>
+                <td>
+                    <select id="race" name="race"/>
+                    <script id="raceSelectTemplate" type="text/x-jquery-tmpl">
+                        <option value="${id}">${name}</option>
+                    </script>
 
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2"><input type="submit" id="addPersonageButton" name="addPersonageButton"
-                                   value="Добавить персонажа"/></td>
-        </tr>
-    </table>
-</form>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" id="addPersonageSubmitButton" name="addPersonageSubmitButton"
+                                       value="Добавить персонажа"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="updatePersonageWindow" style="display:none">
+    <form id="updatePersonageForm" action="/rest/personage/" method="post">
+
+        <table class="personage">
+            <tr>
+                <td><label for="updateName">
+                    Имя персонажа
+                </label></td>
+                <td><input type="text" id="updateName" name="name"/></td>
+            </tr>
+            <tr>
+                <td><label for="updateAge">
+                    Возраст персонажа
+                </label></td>
+                <td><input type="text" id="updateAge" name="age"/></td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="updateRace">
+                        Раса
+                    </label>
+                </td>
+                <td>
+                    <select id="updateRace" name="race" disabled="disabled"></select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" id="updatePersonageSubmitButton" name="updatePersonageSubmitButton"
+                                       value="Сохранить"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
 
 </body>
 </html>

@@ -83,9 +83,9 @@ $(document).ready(function () {
 });
 
 function renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson) {
-    var selector = $("#raceNameTemplate");
-    $("#raceTitle").html(selector.tmpl(raceWithAllRelatedEntitiesJson));
-    $("#raceName").html(selector.tmpl(raceWithAllRelatedEntitiesJson));
+    var raceNameTemplate = $("#raceNameTemplate");
+    $("#raceTitle").html(raceNameTemplate.tmpl(raceWithAllRelatedEntitiesJson));
+    $("#raceName").html(raceNameTemplate.tmpl(raceWithAllRelatedEntitiesJson));
     $("#raceByAttributeTemplate").tmpl(raceWithAllRelatedEntitiesJson).appendTo("#linkAttributeToRaceForm");
     $("#raceByMeritTemplate").tmpl(raceWithAllRelatedEntitiesJson).appendTo("#linkMeritToRaceForm");
     $("#raceByFlawTemplate").tmpl(raceWithAllRelatedEntitiesJson).appendTo("#linkFlawToRaceForm");

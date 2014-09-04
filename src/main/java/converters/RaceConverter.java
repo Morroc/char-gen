@@ -16,6 +16,10 @@ public class RaceConverter {
         return new RaceDTO(race.getId(), race.getName(), race.getMaxAge());
     }
 
+    public Race convert(RaceDTO raceDTO) {
+        return new Race(raceDTO.getId(), raceDTO.getName(), raceDTO.getMaxAge());
+    }
+
     public List<RaceDTO> convert(List<Race> allRaces) {
         List<RaceDTO> result = new ArrayList<RaceDTO>(allRaces.size());
         for (Race race : allRaces) {

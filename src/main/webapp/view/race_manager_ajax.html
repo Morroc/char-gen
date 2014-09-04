@@ -54,27 +54,39 @@
     </tr>
 </script>
 
-<form id="addRaceForm" action="/rest/race/" method="post">
-    <input type="hidden" name="id" value=""/>
-    <table class="race">
-        <tr>
-            <td><label for="name">
-                Название расы
-            </label></td>
-            <td><input type="text" id="name" name="name"/></td>
-        </tr>
-        <tr>
-            <td><label for="maxAge">
-                Максимально возможный возраст
-            </label></td>
-            <td><input type="text" id="maxAge" name="maxAge"/></td>
-        </tr>
-        <tr>
-            <td colspan="2"><input type="submit" id="addRaceButton" name="addRaceButton"
-                                   value="Добавить расу"/></td>
-        </tr>
-    </table>
-</form>
+<div id="addRaceButton">
+    <a class="modalbox" href="#addRaceWindow">
+        <button>
+            <div class="s_button">
+                Добавить расу
+            </div>
+        </button>
+    </a>
+</div>
+
+<div id="addRaceWindow" style="display:none">
+    <form id="addRaceForm" action="/rest/race/" method="post">
+        <input type="hidden" name="id" value=""/>
+        <table class="race">
+            <tr>
+                <td><label for="name">
+                    Название расы
+                </label></td>
+                <td><input type="text" id="name" name="name"/></td>
+            </tr>
+            <tr>
+                <td><label for="maxAge">
+                    Максимально возможный возраст
+                </label></td>
+                <td><input type="text" id="maxAge" name="maxAge"/></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" id="addRaceSubmitButton" name="addRaceSubmitButton"
+                                       value="Добавить расу"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
 
 <div id="linkUpdateRaceWindow" style="display:none">
     <form id="updateRaceForm" action="/rest/race/" method="post">

@@ -45,10 +45,7 @@ public class RaceService {
     }
 
     @Transactional
-    public void updateRace(RaceDTO race) {
-        Race exist = raceDAO.getRaceById(race.getId());
-        exist.setName(race.getName());
-        exist.setMaxAge(race.getMaxAge());
-        raceDAO.updateRace(exist);
+    public void updateRace(Race race) {
+        raceDAO.updateRace(race);
     }
 }
