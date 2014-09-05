@@ -15,7 +15,7 @@ import java.util.List;
  * Time: 6:28 PM
  */
 @RestController
-@RequestMapping("/rest/attachedSkill")
+@RequestMapping(value = "/rest/attachedSkill", consumes = "application/json", produces = "application/json")
 public class AttachedSkillManagerRestController {
     @Autowired
     private AttachedSkillService attachedSkillService;
