@@ -79,7 +79,7 @@ public class PersonageManagerRestController {
         personageService.addPersonage(personage);
 
         //add attributes
-        int raceIdOfPersonage = personageService.getRaceByPersonageId(personage.getId());
+        int raceIdOfPersonage = personageService.getRaceIdByPersonageId(personage.getId());
         List<RaceHasAttribute> raceHasAttributes = raceHasAttributeService.getRaceHasAttributesByRaceId(raceIdOfPersonage);
         for (RaceHasAttribute raceHasAttribute : raceHasAttributes) {
             PersonageHasAttribute personageHasAttribute = new PersonageHasAttribute();
@@ -117,6 +117,7 @@ public class PersonageManagerRestController {
     public List<PersonageDTO> updatePersonage(@PathVariable Integer id, @RequestBody PersonageDTO personageDTO) {
         personageDTO.setId(id);
         Personage personage = personageConverter.convert(personageDTO);
+        personage.setRace(personageService.getPersonageById(id).getRace());
         personageService.updatePersonage(personage);
         return listPersonages();
     }

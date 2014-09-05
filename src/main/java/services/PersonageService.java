@@ -49,7 +49,7 @@ public class PersonageService {
     }
 
     @Transactional
-    public Integer getRaceByPersonageId(int personageId) {
+    public Integer getRaceIdByPersonageId(int personageId) {
         return personageDAO.getRaceIdOfPersonage(personageDAO.getPersonageById(personageId));
     }
 
