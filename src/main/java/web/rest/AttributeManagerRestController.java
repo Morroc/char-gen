@@ -15,26 +15,37 @@ import java.util.List;
  * Time: 6:38 PM
  */
 @RestController
-@RequestMapping("/rest/attribute")
+@RequestMapping(value = "/rest/attribute", consumes = "application/json", produces = "application/json")
 public class AttributeManagerRestController {
     @Autowired
     private AttributeService attributeService;
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET, headers = "Accept=application/json")
+    AttributeConverter attributeConverter = new AttributeConverter();
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<AttributeDTO> listAttributes() {
-        AttributeConverter attributeConverter = new AttributeConverter();
         return attributeConverter.convert(attributeService.getAllAttributes());
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public List<AttributeDTO> deleteAttribute(@PathVariable Integer id) {
         attributeService.deleteAttributeById(id);
         return listAttributes();
     }
 
-    @RequestMapping(value = "/addAttribute", method = RequestMethod.POST, headers = "Accept=application/json")
-    public List<AttributeDTO> addAttribute(@ModelAttribute("attribute") Attribute attribute) {
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    public List<AttributeDTO> addAttribute(@RequestBody AttributeDTO attributeDTO) {
+        Attribute attribute = attributeConverter.convert(attributeDTO);
+
         attributeService.addAttribute(attribute);
+        return listAttributes();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public List<AttributeDTO> updateAttribute(@PathVariable Integer id, @RequestBody AttributeDTO attributeDTO) {
+        attributeDTO.setId(id);
+        Attribute attribute = attributeConverter.convert(attributeDTO);
+        attributeService.updateAttribute(attribute);
         return listAttributes();
     }
 }

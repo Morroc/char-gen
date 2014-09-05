@@ -7,7 +7,12 @@
     <script type="text/javascript" src="/javascript/ajax.js"></script>
     <script type="text/javascript" src="/javascript/attribute.js"></script>
     <script type="text/javascript" src="/javascript/pnotify.custom.min.js"></script>
+
+    <script type="text/javascript" src="/javascript/jquery.mousewheel-3.0.6.pack.js"></script>
+    <script type="text/javascript" src="/javascript/jquery.fancybox.pack.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="/css/main.css" media="screen"/>
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
     <title>Аттрибуты</title>
 </head>
@@ -40,32 +45,72 @@
         <td>${actionLevelBonus}</td>
         <td>
             <input type="hidden" name="id" value="${id}"/>
+            <a href="#linkUpdateAttributeWindow" class="updateAttribute">Изменить</a>
+        </td>
+        <td>
+            <input type="hidden" name="id" value="${id}"/>
             <a href="javascript:void(0)" class="deleteAttribute">Удалить</a>
         </td>
     </tr>
 </script>
 
-<form id="addAttributeForm" action="/rest/attribute/addAttribute" method="post">
+<div id="addAttributeButton">
+    <a class="modalbox" href="#addAttributeWindow">
+        <button>
+            <div class="s_button">
+                Добавить прикрепленный навык
+            </div>
+        </button>
+    </a>
+</div>
 
-    <table class="attribute">
-        <tr>
-            <td><label for="name">
-                Название аттрибута
-            </label></td>
-            <td><input type="text" id="name" name="name"/></td>
-        </tr>
-        <tr>
-            <td><label for="actionLevelBonus">
-                Бонус на действие
-            </label></td>
-            <td><input type="text" id="actionLevelBonus" name="actionLevelBonus"/></td>
-        </tr>
-        <tr>
-            <td colspan="2"><input type="submit" id="addAttributeButton" name="addAttributeButton"
-                                   value="Добавить аттрибут"/></td>
-        </tr>
-    </table>
-</form>
+<div id="addAttributeWindow" style="display:none">
+    <form id="addAttributeForm" action="/rest/attribute/" method="post">
+
+        <table class="attribute">
+            <tr>
+                <td><label for="name">
+                    Название аттрибута
+                </label></td>
+                <td><input type="text" id="name" name="name"/></td>
+            </tr>
+            <tr>
+                <td><label for="actionLevelBonus">
+                    Бонус на действие
+                </label></td>
+                <td><input type="text" id="actionLevelBonus" name="actionLevelBonus"/></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" id="addAttributeSubmitButton" name="addAttributeSubmitButton"
+                                       value="Добавить аттрибут"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="linkUpdateAttributeWindow" style="display:none">
+    <form id="updateAttributeForm" action="/rest/attribute/" method="post">
+
+        <table class="attribute">
+            <tr>
+                <td><label for="updateName">
+                    Название аттрибута
+                </label></td>
+                <td><input type="text" id="updateName" name="name"/></td>
+            </tr>
+            <tr>
+                <td><label for="updateActionLevelBonus">
+                    Бонус на действие
+                </label></td>
+                <td><input type="text" id="updateActionLevelBonus" name="actionLevelBonus"/></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" id="updateAttributeSubmitButton" name="updateAttributeSubmitButton"
+                                       value="Сохранить"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
 
 </body>
 </html>

@@ -34,6 +34,12 @@ public class Attribute {
     public Attribute() {
     }
 
+    public Attribute(int id, String name, String actionLevelBonus) {
+        this.id = id;
+        this.name = name;
+        this.actionLevelBonus = actionLevelBonus;
+    }
+
     public int getId() {
         return id;
     }

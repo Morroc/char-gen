@@ -31,6 +31,11 @@ public class AttributeService {
     }
 
     @Transactional
+    public void updateAttribute(Attribute attribute) {
+        attributeDAO.updateAttribute(attribute);
+    }
+
+    @Transactional
     public List<Attribute> getAllAttributes() {
         return attributeDAO.getAllAttributes();
     }

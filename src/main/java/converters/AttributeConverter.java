@@ -23,4 +23,8 @@ public class AttributeConverter {
     public AttributeDTO convert(Attribute attribute) {
         return new AttributeDTO(attribute.getId(), attribute.getName(), attribute.getActionLevelBonus());
     }
+
+    public Attribute convert(AttributeDTO attributeDTO) {
+        return new Attribute(attributeDTO.getId(), attributeDTO.getName(), attributeDTO.getActionLevelBonus());
+    }
 }
