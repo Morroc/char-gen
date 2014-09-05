@@ -15,26 +15,37 @@ import java.util.List;
  * Time: 12:51 PM
  */
 @RestController
-@RequestMapping("/rest/merit")
+@RequestMapping(value = "/rest/merit", consumes = "application/json", produces = "application/json")
 public class MeritManagerRestController {
     @Autowired
     private MeritService meritService;
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET, headers = "Accept=application/json")
+    MeritConverter meritConverter = new MeritConverter();
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<MeritDTO> listMerits() {
-        MeritConverter meritConverter = new MeritConverter();
         return meritConverter.convert(meritService.getAllMerits());
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public List<MeritDTO> deleteMerit(@PathVariable Integer id) {
         meritService.deleteMeritById(id);
         return listMerits();
     }
 
-    @RequestMapping(value = "/addMerit", method = RequestMethod.POST, headers = "Accept=application/json")
-    public List<MeritDTO> addMerit(@ModelAttribute("merit") Merit merit) {
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    public List<MeritDTO> addMerit(@RequestBody MeritDTO meritDTO) {
+        Merit merit = meritConverter.convert(meritDTO);
+
         meritService.addMerit(merit);
+        return listMerits();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public List<MeritDTO> updateMerit(@PathVariable Integer id, @RequestBody MeritDTO meritDTO) {
+        meritDTO.setId(id);
+        Merit merit = meritConverter.convert(meritDTO);
+        meritService.updateMerit(merit);
         return listMerits();
     }
 }

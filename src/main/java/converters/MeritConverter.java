@@ -24,4 +24,9 @@ public class MeritConverter {
         return new MeritDTO(merit.getId(), merit.getName(), merit.getCost(),
                 merit.getDescription(), merit.getPreconditions(), merit.getActionBonus());
     }
+
+    public Merit convert(MeritDTO meritDTO) {
+        return new Merit(meritDTO.getId(), meritDTO.getName(), meritDTO.getCost(),
+                meritDTO.getDescription(), meritDTO.getPreconditions(), meritDTO.getActionBonus());
+    }
 }

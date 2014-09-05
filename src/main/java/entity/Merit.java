@@ -43,6 +43,15 @@ public class Merit {
     public Merit() {
     }
 
+    public Merit(int id, String name, int cost, String description, String preconditions, String actionBonus) {
+        this.id = id;
+        this.name = name;
+        this.cost = cost;
+        this.description = description;
+        this.preconditions = preconditions;
+        this.actionBonus = actionBonus;
+    }
+
     public int getId() {
         return id;
     }
