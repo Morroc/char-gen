@@ -19,9 +19,9 @@ $(document).ready(function () {
                 title: 'Инфо',
                 text: 'Недостаток создан успешно.'
             });
+            $.fancybox.close();
+            $.fancybox.hideLoading();
         }, errorHandler);
-        $.fancybox.close();
-        $.fancybox.hideLoading();
     });
 
     $("#updateFlawForm").submit(function (event) {
