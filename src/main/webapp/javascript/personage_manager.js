@@ -67,7 +67,7 @@ function renderPersonages(personageListJson) {
             var id = $(obj.element).parent().find("[name=id]").val();
             for(var i = 0; i < window.personageListJson.length; i++) {
                 if(window.personageListJson[i].id == id) {
-                    var personageRace = window.personageListJson[i];
+                    var personageRace = window.personageListJson[i].race;
                     $('#updatePersonageForm').attr('action', '/rest/personage/' + window.personageListJson[i].id);
                     $('#updateName').val(window.personageListJson[i].name);
                     $('#updateAge').val(window.personageListJson[i].age);
