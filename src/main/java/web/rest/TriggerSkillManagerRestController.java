@@ -17,30 +17,41 @@ import java.util.List;
  * Time: 2:04 PM
  */
 @RestController
-@RequestMapping("/rest/triggerSkill")
+@RequestMapping(value = "/rest/triggerSkill", consumes = "application/json", produces = "application/json")
 public class TriggerSkillManagerRestController {
     @Autowired
     private TriggerSkillService triggerSkillService;
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET, headers = "Accept=application/json")
+    TriggerSkillConverter triggerSkillConverter = new TriggerSkillConverter();
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<TriggerSkillDTO> listTriggerSkills() {
-        TriggerSkillConverter triggerSkillConverter = new TriggerSkillConverter();
         return triggerSkillConverter.convert(triggerSkillService.getAllTriggerSkills());
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public List<TriggerSkillDTO> deleteTriggerSkill(@PathVariable Integer id) {
         triggerSkillService.deleteTriggerSkillById(id);
         return listTriggerSkills();
     }
 
-    @RequestMapping(value = "/addTriggerSkill", method = RequestMethod.POST, headers = "Accept=application/json")
-    public List<TriggerSkillDTO> addTriggerSkill(@ModelAttribute("triggerSkill") TriggerSkill triggerSkill) {
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    public List<TriggerSkillDTO> addTriggerSkill(@RequestBody TriggerSkillDTO triggerSkillDTO) {
+        TriggerSkill triggerSkill = triggerSkillConverter.convert(triggerSkillDTO);
+
         triggerSkillService.addTriggerSkill(triggerSkill);
         return listTriggerSkills();
     }
 
-    @RequestMapping(value = "/skillTypes", method = RequestMethod.GET, headers = "Accept=application/json")
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public List<TriggerSkillDTO> updateTriggerSkill(@PathVariable Integer id, @RequestBody TriggerSkillDTO triggerSkillDTO) {
+        triggerSkillDTO.setId(id);
+        TriggerSkill triggerSkill = triggerSkillConverter.convert(triggerSkillDTO);
+        triggerSkillService.updateTriggerSkill(triggerSkill);
+        return listTriggerSkills();
+    }
+
+    @RequestMapping(value = "/skillTypes", method = RequestMethod.GET)
     public List<SkillType> skillTypes() {
         List<SkillType> skillTypes = new ArrayList<SkillType>();
         for (SkillType skillType : SkillType.values()) {

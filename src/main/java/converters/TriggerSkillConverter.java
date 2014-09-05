@@ -25,4 +25,10 @@ public class TriggerSkillConverter {
                 triggerSkill.getBaseCost(), triggerSkill.getExpertCost(),
                 triggerSkill.getMasterCost(), triggerSkill.getPostMasterCost());
     }
+
+    public TriggerSkill convert(TriggerSkillDTO triggerSkillDTO) {
+        return new TriggerSkill(triggerSkillDTO.getId(), triggerSkillDTO.getName(), triggerSkillDTO.getType(),
+                triggerSkillDTO.getBaseCost(), triggerSkillDTO.getExpertCost(),
+                triggerSkillDTO.getMasterCost(), triggerSkillDTO.getPostMasterCost());
+    }
 }

@@ -45,6 +45,16 @@ public class TriggerSkill {
     public TriggerSkill() {
     }
 
+    public TriggerSkill(int id, String name, SkillType type, int baseCost, int expertCost, int masterCost, int postMasterCost) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.baseCost = baseCost;
+        this.expertCost = expertCost;
+        this.masterCost = masterCost;
+        this.postMasterCost = postMasterCost;
+    }
+
     public int getId() {
         return id;
     }

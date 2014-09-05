@@ -29,6 +29,11 @@ public class TriggerSkillService {
     }
 
     @Transactional
+    public void updateTriggerSkill(TriggerSkill triggerSkill) {
+        triggerSkillDAO.updateTriggerSkill(triggerSkill);
+    }
+
+    @Transactional
     public List<TriggerSkill> getAllTriggerSkills() {
         return triggerSkillDAO.getAllTriggerSkills();
     }
