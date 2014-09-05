@@ -7,7 +7,12 @@
     <script type="text/javascript" src="/javascript/ajax.js"></script>
     <script type="text/javascript" src="/javascript/attachedSkill.js"></script>
     <script type="text/javascript" src="/javascript/pnotify.custom.min.js"></script>
+
+    <script type="text/javascript" src="/javascript/jquery.mousewheel-3.0.6.pack.js"></script>
+    <script type="text/javascript" src="/javascript/jquery.fancybox.pack.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="/css/main.css" media="screen"/>
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
     <title>Прикрепленные навыки</title>
 </head>
@@ -66,7 +71,10 @@
                 <input type="checkbox" disabled="disabled"/>
             {%/if%}
          </td>
-
+        <td>
+            <input type="hidden" name="id" value="${id}"/>
+            <a href="#linkUpdateAttachedSkillWindow" class="updateAttachedSkill">Изменить</a>
+        </td>
         <td>
             <input type="hidden" name="id" value="${id}"/>
             <a href="javascript:void(0)" class="deleteAttachedSkill">Удалить</a>
@@ -74,80 +82,171 @@
     </tr>
 </script>
 
-<form id="addAttachedSkillForm" method="post" action="/rest/attachedSkill/addAttachedSkill">
+<div id="addAttachedSkillButton">
+    <a class="modalbox" href="#addAttachedSkillWindow">
+        <button>
+            <div class="s_button">
+                Добавить прикрепленный навык
+            </div>
+        </button>
+    </a>
+</div>
 
-    <table class="attachedSkill">
-        <tr>
-            <td>
-                <label for="name">
-                    Название навыка
-                </label>
-            </td>
-            <td>
-                <input type="text" id="name" name="name"/>
-            </td>
-        </tr>
+<div id="addAttachedSkillWindow" style="display:none">
+    <form id="addAttachedSkillForm" method="post" action="/rest/attachedSkill/">
 
-        <tr>
-            <td>
-                <label for="baseCost">
-                    Базовая стоимость за единицу
-                </label>
-            </td>
-            <td>
-                <input type="text" id="baseCost" name="baseCost"/>
-            </td>
-        </tr>
+        <table class="attachedSkill">
+            <tr>
+                <td>
+                    <label for="name">
+                        Название навыка
+                    </label>
+                </td>
+                <td>
+                    <input type="text" id="name" name="name"/>
+                </td>
+            </tr>
 
-        <tr>
-            <td>
-                <label for="acquiringCost">
-                    Стоимость при покупке по игре
-                </label>
-            </td>
-            <td>
-                <input type="text" id="acquiringCost" name="acquiringCost"/>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    <label for="baseCost">
+                        Базовая стоимость за единицу
+                    </label>
+                </td>
+                <td>
+                    <input type="text" id="baseCost" name="baseCost"/>
+                </td>
+            </tr>
 
-        <tr>
-            <td>
-                <label for="defaultSkill">
-                    По умолчанию
-                </label>
-            </td>
-            <td>
-                <input type="checkbox" id="defaultSkill" name="defaultSkill"/>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    <label for="acquiringCost">
+                        Стоимость при покупке по игре
+                    </label>
+                </td>
+                <td>
+                    <input type="text" id="acquiringCost" name="acquiringCost"/>
+                </td>
+            </tr>
 
-        <tr>
-            <td>
-                <label for="difficult">
-                    Сложный
-                </label>
-            </td>
-            <td>
-                <input type="checkbox" id="difficult" name="difficult"/>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    <label for="defaultSkill">
+                        По умолчанию
+                    </label>
+                </td>
+                <td>
+                    <input type="checkbox" id="defaultSkill" name="defaultSkill"/>
+                </td>
+            </tr>
 
-        <tr>
-            <td>
-                <label for="theoretical">
-                    Теоритический
-                </label>
-            </td>
-            <td>
-                <input type="checkbox" id="theoretical" name="theoretical"/>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2"><input type="submit" id="addAttachedSkillButton" name="addAttachedSkillButton"
-                                   value="Создать прикрепленный навык"/></td>
-        </tr>
-    </table>
-</form>
+            <tr>
+                <td>
+                    <label for="difficult">
+                        Сложный
+                    </label>
+                </td>
+                <td>
+                    <input type="checkbox" id="difficult" name="difficult"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="theoretical">
+                        Теоритический
+                    </label>
+                </td>
+                <td>
+                    <input type="checkbox" id="theoretical" name="theoretical"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" id="addAttachedSkillSubmitButton"
+                                       name="addAttachedSkillSubmitButton"
+                                       value="Создать прикрепленный навык"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="linkUpdateAttachedSkillWindow" style="display:none">
+    <form id="updateAttachedSkillForm" method="post" action="/rest/attachedSkill/">
+
+        <table class="attachedSkill">
+            <tr>
+                <td>
+                    <label for="updateName">
+                        Название навыка
+                    </label>
+                </td>
+                <td>
+                    <input type="text" id="updateName" name="name"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="updateBaseCost">
+                        Базовая стоимость за единицу
+                    </label>
+                </td>
+                <td>
+                    <input type="text" id="updateBaseCost" name="baseCost"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="updateAcquiringCost">
+                        Стоимость при покупке по игре
+                    </label>
+                </td>
+                <td>
+                    <input type="text" id="updateAcquiringCost" name="acquiringCost"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="updateDefaultSkill">
+                        По умолчанию
+                    </label>
+                </td>
+                <td>
+                    <input type="checkbox" id="updateDefaultSkill" name="defaultSkill"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="updateDifficult">
+                        Сложный
+                    </label>
+                </td>
+                <td>
+                    <input type="checkbox" id="updateDifficult" name="difficult"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="updateTheoretical">
+                        Теоритический
+                    </label>
+                </td>
+                <td>
+                    <input type="checkbox" id="updateTheoretical" name="theoretical"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" id="updateAttachedSkillSubmitButton"
+                                       name="updateAttachedSkillSubmitButton"
+                                       value="Сохранить"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
 
 </body>
 </html>

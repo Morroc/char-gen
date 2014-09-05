@@ -30,6 +30,11 @@ public class AttachedSkillService {
     }
 
     @Transactional
+    public void updateAttachedSkill(AttachedSkill attachedSkill) {
+        attachedSkillDAO.updateAttachedSkill(attachedSkill);
+    }
+
+    @Transactional
     public List<AttachedSkill> getAllAttachedSkills() {
         return attachedSkillDAO.getAllAttachedSkills();
     }

@@ -20,20 +20,31 @@ public class AttachedSkillManagerRestController {
     @Autowired
     private AttachedSkillService attachedSkillService;
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET, headers = "Accept=application/json")
+    AttachedSkillConverter attachedSkillConverter = new AttachedSkillConverter();
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<AttachedSkillDTO> listAttachedSkills() {
-        AttachedSkillConverter attachedSkillConverter = new AttachedSkillConverter();
         return attachedSkillConverter.convert(attachedSkillService.getAllAttachedSkills());
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public List<AttachedSkillDTO> deleteAttachedSkill(@PathVariable Integer id) {
         attachedSkillService.deleteAttachedSkillById(id);
         return listAttachedSkills();
     }
 
-    @RequestMapping(value = "/addAttachedSkill", method = RequestMethod.POST, headers = "Accept=application/json")
-    public List<AttachedSkillDTO> addAttachedSkill(@ModelAttribute("attachedSkill") AttachedSkill attachedSkill) {
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public List<AttachedSkillDTO> updateAttachedSkill(@PathVariable Integer id, @RequestBody AttachedSkillDTO attachedSkillDTO) {
+        attachedSkillDTO.setId(id);
+        AttachedSkill attachedSkill = attachedSkillConverter.convert(attachedSkillDTO);
+        attachedSkillService.updateAttachedSkill(attachedSkill);
+        return listAttachedSkills();
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    public List<AttachedSkillDTO> addAttachedSkill(@RequestBody AttachedSkillDTO attachedSkillDTO) {
+
+        AttachedSkill attachedSkill = attachedSkillConverter.convert(attachedSkillDTO);
         attachedSkillService.addAttachedSkill(attachedSkill);
         return listAttachedSkills();
     }

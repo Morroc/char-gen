@@ -43,6 +43,16 @@ public class AttachedSkill {
     public AttachedSkill() {
     }
 
+    public AttachedSkill(int id, String name, int baseCost, boolean defaultSkill, boolean difficult, boolean theoretical, int acquiringCost) {
+        this.id = id;
+        this.name = name;
+        this.baseCost = baseCost;
+        this.defaultSkill = defaultSkill;
+        this.difficult = difficult;
+        this.theoretical = theoretical;
+        this.acquiringCost = acquiringCost;
+    }
+
     public int getId() {
         return id;
     }

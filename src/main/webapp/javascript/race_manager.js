@@ -7,10 +7,10 @@ $(document).ready(function () {
 
     $('.modalbox').fancybox();
 
-    $("#addRaceForm").submit(function(event) {
+    $("#addRaceForm").submit(function (event) {
         event.preventDefault();
         $.fancybox.showLoading();
-        ajax.putJsonData($(this), JSON.stringify($(this).serializeObject()), function(raceListJson) {
+        ajax.putJsonData($(this), JSON.stringify($(this).serializeObject()), function (raceListJson) {
             render(raceListJson);
             new PNotify({
                 title: 'Инфо',
@@ -21,7 +21,7 @@ $(document).ready(function () {
         }, errorHandler);
     });
 
-    $("#updateRaceForm").submit(function(event) {
+    $("#updateRaceForm").submit(function (event) {
         event.preventDefault();
         $.fancybox.showLoading();
         ajax.postJsonData($(this), JSON.stringify($(this).serializeObject()), function (raceListJson) {
@@ -51,10 +51,10 @@ function render(raceListJson) {
     });
 
     $(".updateRace").fancybox({
-        'afterLoad' : function(obj){
+        'afterLoad': function (obj) {
             var id = $(obj.element).parent().find("[name=id]").val();
-            for(var i = 0; i < window.raceListJson.length; i++) {
-                if(window.raceListJson[i].id == id) {
+            for (var i = 0; i < window.raceListJson.length; i++) {
+                if (window.raceListJson[i].id == id) {
                     $('#updateRaceForm').attr('action', '/rest/race/' + window.raceListJson[i].id);
                     $('#updateName').val(window.raceListJson[i].name);
                     $('#updateMaxAge').val(window.raceListJson[i].maxAge);

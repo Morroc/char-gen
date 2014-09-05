@@ -25,4 +25,10 @@ public class AttachedSkillConverter {
                 attachedSkill.isDefaultSkill(), attachedSkill.isDifficult(),
                 attachedSkill.isTheoretical(), attachedSkill.getAcquiringCost());
     }
+
+    public AttachedSkill convert(AttachedSkillDTO attachedSkillDTO) {
+        return new AttachedSkill(attachedSkillDTO.getId(), attachedSkillDTO.getName(), attachedSkillDTO.getBaseCost(),
+                attachedSkillDTO.isDefaultSkill(), attachedSkillDTO.isDifficult(),
+                attachedSkillDTO.isTheoretical(), attachedSkillDTO.getAcquiringCost());
+    }
 }
