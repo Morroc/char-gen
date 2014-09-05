@@ -23,4 +23,9 @@ public class FlawConverter {
     public FlawDTO convert(Flaw flaw) {
         return new FlawDTO(flaw.getId(), flaw.getName(), flaw.getCost(), flaw.getDescription(), flaw.getTurnOffPreconditions());
     }
+
+    public Flaw convert(FlawDTO flawDTO) {
+        return new Flaw(flawDTO.getId(), flawDTO.getName(), flawDTO.getCost(),
+                flawDTO.getDescription(), flawDTO.getTurnOffPreconditions());
+    }
 }

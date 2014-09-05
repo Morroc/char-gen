@@ -40,6 +40,14 @@ public class Flaw {
     public Flaw() {
     }
 
+    public Flaw(int id, String name, int cost, String description, String turnOffPreconditions) {
+        this.id = id;
+        this.name = name;
+        this.cost = cost;
+        this.description = description;
+        this.turnOffPreconditions = turnOffPreconditions;
+    }
+
     public int getId() {
         return id;
     }

@@ -15,26 +15,37 @@ import java.util.List;
  * Time: 12:02 PM
  */
 @RestController
-@RequestMapping("/rest/flaw")
+@RequestMapping(value = "/rest/flaw", consumes = "application/json", produces = "application/json")
 public class FlawManagerRestController {
     @Autowired
     private FlawService flawService;
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET, headers = "Accept=application/json")
+    FlawConverter flawConverter = new FlawConverter();
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public List<FlawDTO> listFlaws() {
-        FlawConverter flawConverter = new FlawConverter();
         return flawConverter.convert(flawService.getAllFlaws());
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public List<FlawDTO> deleteFlaw(@PathVariable Integer id) {
         flawService.deleteFlawById(id);
         return listFlaws();
     }
 
-    @RequestMapping(value = "/addFlaw", method = RequestMethod.POST, headers = "Accept=application/json")
-    public List<FlawDTO> addFlaw(@ModelAttribute("flaw") Flaw flaw) {
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    public List<FlawDTO> addFlaw(@RequestBody FlawDTO flawDTO) {
+        Flaw flaw = flawConverter.convert(flawDTO);
+
         flawService.addFlaw(flaw);
+        return listFlaws();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public List<FlawDTO> updateFlaw(@PathVariable Integer id, @RequestBody FlawDTO flawDTO) {
+        flawDTO.setId(id);
+        Flaw flaw = flawConverter.convert(flawDTO);
+        flawService.updateFlaw(flaw);
         return listFlaws();
     }
 }

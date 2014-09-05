@@ -7,7 +7,12 @@
     <script type="text/javascript" src="/javascript/ajax.js"></script>
     <script type="text/javascript" src="/javascript/flaw.js"></script>
     <script type="text/javascript" src="/javascript/pnotify.custom.min.js"></script>
+
+    <script type="text/javascript" src="/javascript/jquery.mousewheel-3.0.6.pack.js"></script>
+    <script type="text/javascript" src="/javascript/jquery.fancybox.pack.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css" media="screen"/>
     <link rel="stylesheet" type="text/css" href="/css/main.css" media="screen"/>
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf8">
     <title>Недостатки</title>
 </head>
@@ -44,44 +49,96 @@
         <td>${turnOffPreconditions}</td>
         <td>
             <input type="hidden" name="id" value="${id}"/>
+            <a href="#linkUpdateFlawWindow" class="updateFlaw">Изменить</a>
+        </td>
+        <td>
+            <input type="hidden" name="id" value="${id}"/>
             <a href="javascript:void(0)" class="deleteFlaw">Удалить</a>
         </td>
     </tr>
 </script>
 
-<form id="addFlawForm" action="/rest/flaw/addFlaw" method="post">
+<div id="addFlawButton">
+    <a class="modalbox" href="#addFlawWindow">
+        <button>
+            <div class="s_button">
+                Добавить недостаток
+            </div>
+        </button>
+    </a>
+</div>
 
-    <table class="flaw">
-        <tr>
-            <td><label for="name">
-                Название недостатка
-            </label></td>
-            <td><input type="text" id="name" name="name"/></td>
-        </tr>
-        <tr>
-            <td><label for="cost">
-                Стоимость
-            </label></td>
-            <td><input type="text" id="cost" name="cost"/></td>
-        </tr>
-        <tr>
-            <td><label for="description">
-                Описание
-            </label></td>
-            <td><textarea id="description" name="description" cols="50" rows="10"></textarea></td>
-        </tr>
-        <tr>
-            <td><label for="turnOffPreconditions">
-                Условия
-            </label></td>
-            <td><input type="text" id="turnOffPreconditions" name="turnOffPreconditions"/></td>
-        </tr>
-        <tr>
-            <td colspan="2"><input type="submit" id="addFlawButton" name="addFlawButton"
-                                   value="Добавить недостаток"/></td>
-        </tr>
-    </table>
-</form>
+<div id="addFlawWindow" style="display:none">
+    <form id="addFlawForm" action="/rest/flaw/" method="post">
+
+        <table class="flaw">
+            <tr>
+                <td><label for="name">
+                    Название недостатка
+                </label></td>
+                <td><input type="text" id="name" name="name"/></td>
+            </tr>
+            <tr>
+                <td><label for="cost">
+                    Стоимость
+                </label></td>
+                <td><input type="text" id="cost" name="cost"/></td>
+            </tr>
+            <tr>
+                <td><label for="description">
+                    Описание
+                </label></td>
+                <td><textarea id="description" name="description" cols="50" rows="10"></textarea></td>
+            </tr>
+            <tr>
+                <td><label for="turnOffPreconditions">
+                    Условия
+                </label></td>
+                <td><input type="text" id="turnOffPreconditions" name="turnOffPreconditions"/></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" id="addFlawSubmitButton" name="addFlawSubmitButton"
+                                       value="Добавить недостаток"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="linkUpdateFlawWindow" style="display:none">
+    <form id="updateFlawForm" action="/rest/flaw/" method="post">
+
+        <table class="flaw">
+            <tr>
+                <td><label for="updateName">
+                    Название недостатка
+                </label></td>
+                <td><input type="text" id="updateName" name="name"/></td>
+            </tr>
+            <tr>
+                <td><label for="updateCost">
+                    Стоимость
+                </label></td>
+                <td><input type="text" id="updateCost" name="cost"/></td>
+            </tr>
+            <tr>
+                <td><label for="updateDescription">
+                    Описание
+                </label></td>
+                <td><textarea id="updateDescription" name="description" cols="50" rows="10"></textarea></td>
+            </tr>
+            <tr>
+                <td><label for="updateTurnOffPreconditions">
+                    Условия
+                </label></td>
+                <td><input type="text" id="updateTurnOffPreconditions" name="turnOffPreconditions"/></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" id="updateFlawSubmitButton" name="updateFlawSubmitButton"
+                                       value="Сохранить"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
 
 </body>
 </html>
