@@ -71,7 +71,7 @@ function renderPersonages(personageListJson) {
                     $('#updatePersonageForm').attr('action', '/rest/personage/' + window.personageListJson[i].id);
                     $('#updateName').val(window.personageListJson[i].name);
                     $('#updateAge').val(window.personageListJson[i].age);
-                    $('#updateRace').val(window.personageListJson[i].race.id);
+                    $('#updateRace').val(window.personageListJson[i].race);
                     break;
                 }
             }
