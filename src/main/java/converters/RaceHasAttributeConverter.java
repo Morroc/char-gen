@@ -13,11 +13,24 @@ import java.util.List;
  */
 public class RaceHasAttributeConverter {
     AttributeConverter attributeConverter = new AttributeConverter();
+    RaceConverter raceConverter = new RaceConverter();
 
     public RaceHasAttributeDTO convert(RaceHasAttribute raceHasAttribute) {
-        return new RaceHasAttributeDTO(raceHasAttribute.getId(), attributeConverter.convert(raceHasAttribute.getAttributeByRace()), raceHasAttribute.getBaseCost(), raceHasAttribute.getFrom1To3NonGeneratingCost(),
+        return new RaceHasAttributeDTO(raceHasAttribute.getId(),
+                attributeConverter.convert(raceHasAttribute.getAttributeByRace()),
+                raceConverter.convert(raceHasAttribute.getRaceByAttribute()),
+                raceHasAttribute.getBaseCost(), raceHasAttribute.getFrom1To3NonGeneratingCost(),
                 raceHasAttribute.getFrom3To6NonGeneratingCost(), raceHasAttribute.getFrom6To9NonGeneratingCost(),
                 raceHasAttribute.getFrom9To12NonGeneratingCost(), raceHasAttribute.getMaxValue());
+    }
+
+    public RaceHasAttribute convert(RaceHasAttributeDTO raceHasAttributeDTO) {
+        return new RaceHasAttribute(raceHasAttributeDTO.getId(),
+                attributeConverter.convert(raceHasAttributeDTO.getAttribute()),
+                raceConverter.convert(raceHasAttributeDTO.getRace()),
+                raceHasAttributeDTO.getBaseCost(), raceHasAttributeDTO.getFrom1To3NonGeneratingCost(),
+                raceHasAttributeDTO.getFrom3To6NonGeneratingCost(), raceHasAttributeDTO.getFrom6To9NonGeneratingCost(),
+                raceHasAttributeDTO.getFrom9To12NonGeneratingCost(), raceHasAttributeDTO.getMaxValue());
     }
 
     public List<RaceHasAttributeDTO> convert(List<RaceHasAttribute> allRaceHasAttributes) {

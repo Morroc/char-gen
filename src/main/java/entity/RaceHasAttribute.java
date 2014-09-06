@@ -41,6 +41,23 @@ public class RaceHasAttribute {
     @Column(name = "max_value")
     private int maxValue;
 
+    public RaceHasAttribute() {
+    }
+
+    public RaceHasAttribute(int id, Attribute attributeByRace, Race raceByAttribute, int baseCost,
+                            int from1To3NonGeneratingCost, int from3To6NonGeneratingCost,
+                            int from6To9NonGeneratingCost, int from9To12NonGeneratingCost, int maxValue) {
+        this.id = id;
+        this.attributeByRace = attributeByRace;
+        this.raceByAttribute = raceByAttribute;
+        this.baseCost = baseCost;
+        this.from1To3NonGeneratingCost = from1To3NonGeneratingCost;
+        this.from3To6NonGeneratingCost = from3To6NonGeneratingCost;
+        this.from6To9NonGeneratingCost = from6To9NonGeneratingCost;
+        this.from9To12NonGeneratingCost = from9To12NonGeneratingCost;
+        this.maxValue = maxValue;
+    }
+
     public int getId() {
         return id;
     }

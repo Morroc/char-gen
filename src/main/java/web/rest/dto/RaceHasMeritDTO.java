@@ -10,6 +10,8 @@ public class RaceHasMeritDTO {
 
     private MeritDTO merit;
 
+    private RaceDTO race;
+
     private int raceCost;
 
     private boolean defaultForRace;
@@ -17,9 +19,10 @@ public class RaceHasMeritDTO {
     public RaceHasMeritDTO() {
     }
 
-    public RaceHasMeritDTO(int id, MeritDTO merit, int raceCost, boolean defaultForRace) {
+    public RaceHasMeritDTO(int id, MeritDTO merit, RaceDTO race, int raceCost, boolean defaultForRace) {
         this.id = id;
         this.merit = merit;
+        this.race = race;
         this.raceCost = raceCost;
         this.defaultForRace = defaultForRace;
     }
@@ -54,5 +57,13 @@ public class RaceHasMeritDTO {
 
     public void setDefaultForRace(boolean defaultForRace) {
         this.defaultForRace = defaultForRace;
+    }
+
+    public RaceDTO getRace() {
+        return race;
+    }
+
+    public void setRace(RaceDTO race) {
+        this.race = race;
     }
 }

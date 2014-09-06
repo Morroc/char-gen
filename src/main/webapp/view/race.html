@@ -31,10 +31,10 @@
         <tr>
             <th>Название атрибута</th>
             <th>Базовая стоимость за единицу</th>
-            <th>Стоимость поднятия с 1 до 3 по игре</th>
-            <th>Стоимость поднятия с 3 до 6 по игре</th>
-            <th>Стоимость поднятия с 6 до 9 по игре</th>
-            <th>Стоимость поднятия с 9 до 12 по игре</th>
+            <th>с 1 до 3 по игре</th>
+            <th>с 3 до 6 по игре</th>
+            <th>с 6 до 9 по игре</th>
+            <th>с 9 до 12 по игре</th>
             <th>Максимальное значение</th>
             <th>Бонус на действия</th>
             <th>&nbsp;</th>
@@ -72,17 +72,17 @@
 </div>
 
 <div id="linkAttributeToRaceWindow" style="display:none">
-    <form id="linkAttributeToRaceForm" method="post" action="/rest/race/linkAttributeToRace">
+    <form id="linkAttributeToRaceForm" method="post" action="/rest/race/raceAttribute">
 
         <table>
             <tr>
                 <td>
-                    <label for="attributeByRace">
+                    <label for="attribute">
                         Атрибут
                     </label>
                 </td>
                 <td>
-                    <select id="attributeByRace" name="attributeByRace"></select>
+                    <select id="attribute" name="attribute"></select>
                     <script id="attributeByRaceSelectTemplate" type="text/x-jquery-tmpl">
                         <option value="${id}">${name}</option>
                     </script>
@@ -90,7 +90,7 @@
             </tr>
 
             <script id="raceByAttributeTemplate" type="text/x-jQuery-tmpl">
-                <input id="raceByAttribute" type="hidden" value="${race.id}"/>
+                <input id="raceByAttribute" name="race" type="hidden" value="${race.id}"/>
             </script>
 
             <tr>
@@ -100,7 +100,7 @@
                     </label>
                 </td>
                 <td>
-                    <input id="baseCost"/>
+                    <input id="baseCost" name="baseCost"/>
                 </td>
             </tr>
 
@@ -112,51 +112,51 @@
                     </label>
                 </td>
                 <td>
-                    <input id="maxValue"/>
+                    <input id="maxValue" name="maxValue"/>
                 </td>
             </tr>
 
             <tr>
                 <td>
                     <label for="from1To3NonGeneratingCost">
-                        Стоимость поднятия с 1 до 3 по игре
+                        с 1 до 3 по игре
                     </label>
                 </td>
                 <td>
-                    <input id="from1To3NonGeneratingCost"/>
+                    <input id="from1To3NonGeneratingCost" name="from1To3NonGeneratingCost"/>
                 </td>
             </tr>
 
             <tr>
                 <td>
                     <label for="from3To6NonGeneratingCost">
-                        Стоимость поднятия с 3 до 6 по игре
+                        с 3 до 6 по игре
                     </label>
                 </td>
                 <td>
-                    <input id="from3To6NonGeneratingCost"/>
+                    <input id="from3To6NonGeneratingCost" name="from3To6NonGeneratingCost"/>
                 </td>
             </tr>
 
             <tr>
                 <td>
                     <label for="from6To9NonGeneratingCost">
-                        Стоимость поднятия с 6 до 9 по игре
+                        с 6 до 9 по игре
                     </label>
                 </td>
                 <td>
-                    <input id="from6To9NonGeneratingCost"/>
+                    <input id="from6To9NonGeneratingCost" name="from6To9NonGeneratingCost"/>
                 </td>
             </tr>
 
             <tr>
                 <td>
                     <label for="from9To12NonGeneratingCost">
-                        Стоимость поднятия с 9 до 12 по игре
+                        с 9 до 12 по игре
                     </label>
                 </td>
                 <td>
-                    <input id="from9To12NonGeneratingCost"/>
+                    <input id="from9To12NonGeneratingCost" name="from9To12NonGeneratingCost"/>
                 </td>
             </tr>
 
@@ -196,7 +196,6 @@
                         <input type="checkbox" disabled="disabled"/>
                     {%/if%}
                 </td>
-
                 <td>
                     <input type="hidden" name="id" value="${id}"/>
                     <a href="javascript:void(0)" class="unlinkMeritFromRace">Убрать</a>
@@ -214,27 +213,25 @@
 
 
 <div id="linkMeritToRaceWindow" style="display:none">
-    <form id="linkMeritToRaceForm" method="post" action="/rest/race/linkMeritToRace">
+    <form id="linkMeritToRaceForm" method="post" action="/rest/race/raceMerit">
 
         <table>
             <tr>
                 <td>
-                    <label for="meritByRace">
+                    <label for="merit">
                         Достоинство
                     </label>
                 </td>
                 <td>
-                    <select id="meritByRace" name="meritByRace"></select>
+                    <select id="merit" name="merit"></select>
                     <script id="meritByRaceSelectTemplate" type="text/x-jquery-tmpl">
                         <option value="${id}">${name}</option>
-
                     </script>
                 </td>
             </tr>
 
             <script id="raceByMeritTemplate" type="text/x-jQuery-tmpl">
-                <input id="raceByMerit" type="hidden" value="${race.id}"/>
-
+                <input id="raceByMerit" name="race" type="hidden" value="${race.id}"/>
             </script>
 
             <tr>
@@ -244,7 +241,7 @@
                     </label>
                 </td>
                 <td>
-                    <input id="raceCost"/>
+                    <input id="raceCost" name="raceCost"/>
                 </td>
             </tr>
 
@@ -256,7 +253,7 @@
                     </label>
                 </td>
                 <td>
-                    <input type="checkbox" id="defaultForRaceMerit" name="defaultForRaceMerit"/>
+                    <input type="checkbox" id="defaultForRaceMerit" name="defaultForRace"/>
                 </td>
             </tr>
 
@@ -312,17 +309,17 @@
 
 
 <div id="linkFlawToRaceWindow" style="display:none">
-    <form id="linkFlawToRaceForm" method="post" action="/rest/race/linkFlawToRace">
+    <form id="linkFlawToRaceForm" method="post" action="/rest/race/raceFlaw">
 
         <table>
             <tr>
                 <td>
-                    <label for="flawByRace">
+                    <label for="flaw">
                         Недостаток
                     </label>
                 </td>
                 <td>
-                    <select id="flawByRace" name="flawByRace"></select>
+                    <select id="flaw" name="flaw"></select>
                     <script id="flawByRaceSelectTemplate" type="text/x-jquery-tmpl">
                         <option value="${id}">${name}</option>
 
@@ -331,7 +328,7 @@
             </tr>
 
             <script id="raceByFlawTemplate" type="text/x-jQuery-tmpl">
-                <input id="raceByFlaw" type="hidden" value="${race.id}"/>
+                <input id="raceByFlaw" name="race" type="hidden" value="${race.id}"/>
 
             </script>
 
@@ -342,7 +339,7 @@
                     </label>
                 </td>
                 <td>
-                    <input type="checkbox" id="defaultForRaceFlaw" name="defaultForRaceFlaw" checked="checked" disabled="disabled"/>
+                    <input type="checkbox" id="defaultForRaceFlaw" name="defaultForRace" checked="checked" disabled="disabled"/>
                 </td>
             </tr>
 

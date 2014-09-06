@@ -17,19 +17,13 @@ import java.util.List;
  * Time: 6:37 PM
  */
 @RestController
-@RequestMapping("/rest/race")
+@RequestMapping(value = "/rest/race", consumes = "application/json", produces = "application/json")
 public class RaceRestController {
     @Autowired
     private RaceService raceService;
 
     @Autowired
-    private AttributeService attributeService;
-
-    @Autowired
     private RaceHasAttributeService raceHasAttributeService;
-
-    @Autowired
-    private MeritService meritService;
 
     @Autowired
     private RaceHasMeritService raceHasMeritService;
@@ -49,15 +43,12 @@ public class RaceRestController {
     @Autowired
     private PersonageHasFlawService personageHasFlawService;
 
-    @Autowired
-    private FlawService flawService;
-
     RaceConverter raceConverter = new RaceConverter();
     RaceHasAttributeConverter raceHasAttributeConverter = new RaceHasAttributeConverter();
     RaceHasMeritConverter raceHasMeritConverter = new RaceHasMeritConverter();
     RaceHasFlawConverter raceHasFlawConverter = new RaceHasFlawConverter();
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public RaceWithAllRelatedEntitiesDTO getRace(@PathVariable Integer id) {
         Race race = raceService.getRaceById(id);
         RaceWithAllRelatedEntitiesDTO raceWithAllRelatedEntitiesDTO = new RaceWithAllRelatedEntitiesDTO();
@@ -70,8 +61,9 @@ public class RaceRestController {
         return raceWithAllRelatedEntitiesDTO;
     }
 
-    @RequestMapping(value = "/linkAttributeToRace", method = RequestMethod.POST)
-    public RaceWithAllRelatedEntitiesDTO linkAttributeToRace(@Validated @ModelAttribute("raceHasAttribute") RaceHasAttribute raceHasAttribute) {
+    @RequestMapping(value = "/raceAttribute", method = RequestMethod.PUT)
+    public RaceWithAllRelatedEntitiesDTO addRaceHasAttribute(@RequestBody RaceHasAttributeDTO raceHasAttributeDTO) {
+        RaceHasAttribute raceHasAttribute = raceHasAttributeConverter.convert(raceHasAttributeDTO);
 
         raceHasAttributeService.addLinkAttributeWithRace(raceHasAttribute);
         int raceId = raceHasAttribute.getRaceByAttribute().getId();
@@ -86,7 +78,7 @@ public class RaceRestController {
         return getRace(raceId);
     }
 
-    @RequestMapping(value = "/unlinkAttributeFromRace/{id}", method = RequestMethod.DELETE, headers = "Accept=application/json")
+    @RequestMapping(value = "/raceAttribute/{id}", method = RequestMethod.DELETE)
     public RaceWithAllRelatedEntitiesDTO deleteRaceHasAttribute(@PathVariable Integer id) {
         RaceHasAttribute raceHasAttribute = raceHasAttributeService.getRaceHasAttributeById(id);
         Integer raceId = raceHasAttribute.getRaceByAttribute().getId();
@@ -104,8 +96,9 @@ public class RaceRestController {
         return getRace(raceId);
     }
 
-    @RequestMapping(value = "/linkMeritToRace", method = RequestMethod.POST)
-    public RaceWithAllRelatedEntitiesDTO linkMeritToRace(@Validated @ModelAttribute("raceHasMerit") RaceHasMerit raceHasMerit) {
+    @RequestMapping(value = "/raceMerit", method = RequestMethod.PUT)
+    public RaceWithAllRelatedEntitiesDTO addRaceHasMerit(@RequestBody RaceHasMeritDTO raceHasMeritDTO) {
+        RaceHasMerit raceHasMerit = raceHasMeritConverter.convert(raceHasMeritDTO);
 
         raceHasMeritService.addLinkMeritWithRace(raceHasMerit);
         int raceId = raceHasMerit.getRaceByMerit().getId();
@@ -121,8 +114,8 @@ public class RaceRestController {
         return getRace(raceId);
     }
 
-    @RequestMapping(value = "/unlinkMeritFromRace/{id}")
-    public RaceWithAllRelatedEntitiesDTO unlinkMeritFromRace(@PathVariable("id") Integer id) {
+    @RequestMapping(value = "/raceMerit/{id}", method = RequestMethod.DELETE)
+    public RaceWithAllRelatedEntitiesDTO deleteRaceHasMerit(@PathVariable("id") Integer id) {
         RaceHasMerit raceHasMerit = raceHasMeritService.getRaceHasMeritById(id);
         Integer raceId = raceHasMerit.getRaceByMerit().getId();
 
@@ -139,9 +132,11 @@ public class RaceRestController {
         return getRace(raceId);
     }
 
-    @RequestMapping(value = "/linkFlawToRace", method = RequestMethod.POST)
-    public RaceWithAllRelatedEntitiesDTO linkFlawToRace(@Validated @ModelAttribute("raceHasFlaw") RaceHasFlaw raceHasFlaw) {
+    @RequestMapping(value = "/raceFlaw", method = RequestMethod.PUT)
+    public RaceWithAllRelatedEntitiesDTO addRaceHasFlaw(@RequestBody RaceHasFlawDTO raceHasFlawDTO) {
+        RaceHasFlaw raceHasFlaw = raceHasFlawConverter.convert(raceHasFlawDTO);
 
+        raceHasFlaw.setDefaultForRace(true);
         raceHasFlawService.addLinkFlawWithRace(raceHasFlaw);
         int raceId = raceHasFlaw.getRaceByFlaw().getId();
         if (raceHasFlaw.isDefaultForRace()) {
@@ -156,8 +151,8 @@ public class RaceRestController {
         return getRace(raceId);
     }
 
-    @RequestMapping(value = "/unlinkFlawFromRace/{id}")
-    public RaceWithAllRelatedEntitiesDTO unlinkFlawFromRace(@PathVariable("id") Integer id) {
+    @RequestMapping(value = "/raceFlaw/{id}", method = RequestMethod.DELETE)
+    public RaceWithAllRelatedEntitiesDTO deleteRAceHasFlaw(@PathVariable("id") Integer id) {
         RaceHasFlaw raceHasFlaw = raceHasFlawService.getRaceHasFlawById(id);
         Integer raceId = raceHasFlaw.getRaceByFlaw().getId();
 

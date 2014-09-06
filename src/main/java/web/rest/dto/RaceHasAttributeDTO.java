@@ -10,6 +10,8 @@ public class RaceHasAttributeDTO {
 
     private AttributeDTO attribute;
 
+    private RaceDTO race;
+
     private int baseCost;
 
     private int from1To3NonGeneratingCost;
@@ -25,11 +27,12 @@ public class RaceHasAttributeDTO {
     public RaceHasAttributeDTO() {
     }
 
-    public RaceHasAttributeDTO(int id, AttributeDTO attribute, int baseCost, int from1To3NonGeneratingCost,
-                               int from3To6NonGeneratingCost, int from6To9NonGeneratingCost,
-                               int from9To12NonGeneratingCost, int maxValue) {
+    public RaceHasAttributeDTO(int id, AttributeDTO attribute, RaceDTO race, int baseCost,
+                               int from1To3NonGeneratingCost, int from3To6NonGeneratingCost,
+                               int from6To9NonGeneratingCost, int from9To12NonGeneratingCost, int maxValue) {
         this.id = id;
         this.attribute = attribute;
+        this.race = race;
         this.baseCost = baseCost;
         this.from1To3NonGeneratingCost = from1To3NonGeneratingCost;
         this.from3To6NonGeneratingCost = from3To6NonGeneratingCost;
@@ -52,6 +55,14 @@ public class RaceHasAttributeDTO {
 
     public void setAttribute(AttributeDTO attribute) {
         this.attribute = attribute;
+    }
+
+    public RaceDTO getRace() {
+        return race;
+    }
+
+    public void setRace(RaceDTO race) {
+        this.race = race;
     }
 
     public int getBaseCost() {

@@ -26,6 +26,16 @@ public class RaceHasFlaw {
     @Column(name = "default_for_race")
     private boolean defaultForRace;
 
+    public RaceHasFlaw() {
+    }
+
+    public RaceHasFlaw(int id, Flaw flawByRace, Race raceByFlaw, boolean defaultForRace) {
+        this.id = id;
+        this.flawByRace = flawByRace;
+        this.raceByFlaw = raceByFlaw;
+        this.defaultForRace = defaultForRace;
+    }
+
     public int getId() {
         return id;
     }

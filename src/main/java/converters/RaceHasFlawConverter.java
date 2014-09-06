@@ -13,9 +13,16 @@ import java.util.List;
  */
 public class RaceHasFlawConverter {
     FlawConverter flawConverter = new FlawConverter();
+    RaceConverter raceConverter = new RaceConverter();
+
+    public RaceHasFlaw convert(RaceHasFlawDTO raceHasFlawDTO) {
+        return new RaceHasFlaw(raceHasFlawDTO.getId(), flawConverter.convert(raceHasFlawDTO.getFlaw()),
+                raceConverter.convert(raceHasFlawDTO.getRace()), raceHasFlawDTO.isDefaultForRace());
+    }
 
     public RaceHasFlawDTO convert(RaceHasFlaw raceHasFlaw) {
-        return new RaceHasFlawDTO(raceHasFlaw.getId(), flawConverter.convert(raceHasFlaw.getFlawByRace()), raceHasFlaw.isDefaultForRace());
+        return new RaceHasFlawDTO(raceHasFlaw.getId(), flawConverter.convert(raceHasFlaw.getFlawByRace()),
+                raceConverter.convert(raceHasFlaw.getRaceByFlaw()), raceHasFlaw.isDefaultForRace());
     }
 
     public List<RaceHasFlawDTO> convert(List<RaceHasFlaw> allRaceHasFlaws) {

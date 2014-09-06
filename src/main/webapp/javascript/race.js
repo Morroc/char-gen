@@ -7,15 +7,15 @@ $(document).ready(function () {
         renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson);
     }, errorHandler);
 
-    ajax.getJsonData('/rest/attribute/all', function (attributeListJson) {
+    ajax.getJsonData('/rest/attribute/', function (attributeListJson) {
         renderAttributeListJson(attributeListJson);
     }, errorHandler);
 
-    ajax.getJsonData('/rest/flaw/all', function (flawListJson) {
+    ajax.getJsonData('/rest/flaw/', function (flawListJson) {
         renderFlawListJson(flawListJson);
     }, errorHandler);
 
-    ajax.getJsonData('/rest/merit/all', function (meritListJson) {
+    ajax.getJsonData('/rest/merit/', function (meritListJson) {
         renderMeritListJson(meritListJson);
     }, errorHandler);
 
@@ -23,62 +23,57 @@ $(document).ready(function () {
 
     $("#linkAttributeToRaceForm").submit(function (event) {
         event.preventDefault();
-        var posting = ajax.post($(this), {
-            attributeByRace: $('#attributeByRace').val(),
-            raceByAttribute: $('#raceByAttribute').val(),
-            baseCost: $('#baseCost').val(),
-            maxValue: $('#maxValue').val(),
-            from1To3NonGeneratingCost: $('#from1To3NonGeneratingCost').val(),
-            from3To6NonGeneratingCost: $('#from3To6NonGeneratingCost').val(),
-            from6To9NonGeneratingCost: $('#from6To9NonGeneratingCost').val(),
-            from9To12NonGeneratingCost: $('#from9To12NonGeneratingCost').val()
-        }, function (raceWithAllRelatedEntitiesJson) {
-            ajax.getJsonData('/rest/race/'.concat(raceId), function (raceWithAllRelatedEntitiesJson) {
-                renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson);
-                $.fancybox.close();
-                new PNotify({
-                    title: 'Инфо',
-                    text: 'Атрибут добавлен к расе успешно.'
-                });
-            }, errorHandler);
-        });
+        $.fancybox.showLoading();
+        var raceHasAttribute = $(this).serializeObject();
+        raceHasAttribute.attribute = {id: raceHasAttribute.attribute};
+        raceHasAttribute.race = {id: raceHasAttribute.race};
+        ajax.putJsonData($(this), JSON.stringify(raceHasAttribute), function (raceWithAllRelatedEntitiesJson) {
+            renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson);
+            $.fancybox.close();
+            new PNotify({
+                title: 'Инфо',
+                text: 'Атрибут добавлен к расе успешно.'
+            });
+            $.fancybox.close();
+            $.fancybox.hideLoading();
+        }, errorHandler);
     });
 
     $("#linkMeritToRaceForm").submit(function (event) {
         event.preventDefault();
-        var posting = ajax.post($(this), {
-            meritByRace: $('#meritByRace').val(),
-            raceByMerit: $('#raceByMerit').val(),
-            raceCost: $('#raceCost').val(),
-            defaultForRace: $('#defaultForRaceMerit').prop('checked')
-        }, function (raceWithAllRelatedEntitiesJson) {
-            ajax.getJsonData('/rest/race/'.concat(raceId), function (raceWithAllRelatedEntitiesJson) {
-                renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson);
-                $.fancybox.close();
-                new PNotify({
-                    title: 'Инфо',
-                    text: 'Достоинство добавлено к расе успешно.'
-                });
-            }, errorHandler);
-        });
+        $.fancybox.showLoading();
+        var raceHasMerit = $(this).serializeObject();
+        raceHasMerit.merit = {id: raceHasMerit.merit};
+        raceHasMerit.race = {id: raceHasMerit.race};
+        raceHasMerit.defaultForRace = $("#defaultForRaceMerit").prop('checked');
+        ajax.putJsonData($(this), JSON.stringify(raceHasMerit), function (raceWithAllRelatedEntitiesJson) {
+            renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson);
+            $.fancybox.close();
+            new PNotify({
+                title: 'Инфо',
+                text: 'Достоинство добавлено к расе успешно.'
+            });
+            $.fancybox.close();
+            $.fancybox.hideLoading();
+        }, errorHandler);
     });
 
     $("#linkFlawToRaceForm").submit(function (event) {
         event.preventDefault();
-        var posting = ajax.post($(this), {
-            flawByRace: $('#flawByRace').val(),
-            raceByFlaw: $('#raceByFlaw').val(),
-            defaultForRace: $('#defaultForRaceFlaw').prop('checked')
-        }, function (raceWithAllRelatedEntitiesJson) {
-            ajax.getJsonData('/rest/race/'.concat(raceId), function (raceWithAllRelatedEntitiesJson) {
-                renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson);
-                $.fancybox.close();
-                new PNotify({
-                    title: 'Инфо',
-                    text: 'Недостаток добавлен к расе успешно.'
-                });
-            }, errorHandler);
-        });
+        $.fancybox.showLoading();
+        var raceHasFlaw = $(this).serializeObject();
+        raceHasFlaw.flaw = {id: raceHasFlaw.flaw};
+        raceHasFlaw.race = {id: raceHasFlaw.race};
+        ajax.putJsonData($(this), JSON.stringify(raceHasFlaw), function (raceWithAllRelatedEntitiesJson) {
+            renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson);
+            $.fancybox.close();
+            new PNotify({
+                title: 'Инфо',
+                text: 'Недостаток добавлен к расе успешно.'
+            });
+            $.fancybox.close();
+            $.fancybox.hideLoading();
+        }, errorHandler);
     });
 });
 
@@ -95,7 +90,7 @@ function renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson) {
     $('.unlinkAttributeFromRace').click(function () {
         var id = $(this).parent().find("[name=id]").val();
         _this = $(this);
-        ajax.deleteJsonData('/rest/race/unlinkAttributeFromRace', id, function (raceListJson) {
+        ajax.deleteJsonData('/rest/race/raceAttribute', id, function (raceListJson) {
             $(_this).parent().parent().fadeToggle("slow", function () {
                 $(this).remove();
             });
@@ -107,7 +102,7 @@ function renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson) {
     $('.unlinkMeritFromRace').click(function () {
         var id = $(this).parent().find("[name=id]").val();
         _this = $(this);
-        ajax.deleteJsonData('/rest/race/unlinkMeritFromRace', id, function (raceListJson) {
+        ajax.deleteJsonData('/rest/race/raceMerit', id, function (raceListJson) {
             $(_this).parent().parent().fadeToggle("slow", function () {
                 $(this).remove();
             });
@@ -119,7 +114,7 @@ function renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson) {
     $('.unlinkFlawFromRace').click(function () {
         var id = $(this).parent().find("[name=id]").val();
         _this = $(this);
-        ajax.deleteJsonData('/rest/race/unlinkFlawFromRace', id, function (raceListJson) {
+        ajax.deleteJsonData('/rest/race/raceFlaw', id, function (raceListJson) {
             $(_this).parent().parent().fadeToggle("slow", function () {
                 $(this).remove();
             });
@@ -128,15 +123,15 @@ function renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson) {
 }
 
 function renderAttributeListJson(attributeListJson) {
-    $("#attributeByRaceSelectTemplate").tmpl(attributeListJson).appendTo("#attributeByRace");
+    $("#attributeByRaceSelectTemplate").tmpl(attributeListJson).appendTo("#attribute");
 }
 
 function renderFlawListJson(flawListJson) {
-    $("#flawByRaceSelectTemplate").tmpl(flawListJson).appendTo("#flawByRace");
+    $("#flawByRaceSelectTemplate").tmpl(flawListJson).appendTo("#flaw");
 }
 
 function renderMeritListJson(meritListJson) {
-    $("#meritByRaceSelectTemplate").tmpl(meritListJson).appendTo("#meritByRace");
+    $("#meritByRaceSelectTemplate").tmpl(meritListJson).appendTo("#merit");
 }
 
 function errorHandler(raceWithAllRelatedEntitiesJson) {

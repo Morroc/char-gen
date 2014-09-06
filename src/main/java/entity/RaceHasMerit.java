@@ -32,9 +32,12 @@ public class RaceHasMerit {
     public RaceHasMerit() {
     }
 
-    public RaceHasMerit(Merit meritByRace, Race raceByMerit) {
+    public RaceHasMerit(int id, Merit meritByRace, Race raceByMerit, int raceCost, boolean defaultForRace) {
+        this.id = id;
         this.meritByRace = meritByRace;
         this.raceByMerit = raceByMerit;
+        this.raceCost = raceCost;
+        this.defaultForRace = defaultForRace;
     }
 
     public int getId() {

@@ -10,14 +10,17 @@ public class RaceHasFlawDTO {
 
     private FlawDTO flaw;
 
+    private RaceDTO race;
+
     private boolean defaultForRace;
 
     public RaceHasFlawDTO() {
     }
 
-    public RaceHasFlawDTO(int id, FlawDTO flaw, boolean defaultForRace) {
+    public RaceHasFlawDTO(int id, FlawDTO flaw, RaceDTO race, boolean defaultForRace) {
         this.id = id;
         this.flaw = flaw;
+        this.race = race;
         this.defaultForRace = defaultForRace;
     }
 
@@ -35,6 +38,14 @@ public class RaceHasFlawDTO {
 
     public void setFlaw(FlawDTO flaw) {
         this.flaw = flaw;
+    }
+
+    public RaceDTO getRace() {
+        return race;
+    }
+
+    public void setRace(RaceDTO race) {
+        this.race = race;
     }
 
     public boolean isDefaultForRace() {
