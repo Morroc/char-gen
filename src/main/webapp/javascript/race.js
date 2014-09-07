@@ -90,7 +90,7 @@ function renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson) {
     $('.unlinkAttributeFromRace').click(function () {
         var id = $(this).parent().find("[name=id]").val();
         _this = $(this);
-        ajax.deleteJsonData('/rest/race/raceAttribute', id, function (raceListJson) {
+        ajax.deleteJsonData('/rest/race/raceAttribute', id, function (raceAttribute) {
             $(_this).parent().parent().fadeToggle("slow", function () {
                 $(this).remove();
             });
@@ -102,7 +102,7 @@ function renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson) {
     $('.unlinkMeritFromRace').click(function () {
         var id = $(this).parent().find("[name=id]").val();
         _this = $(this);
-        ajax.deleteJsonData('/rest/race/raceMerit', id, function (raceListJson) {
+        ajax.deleteJsonData('/rest/race/raceMerit', id, function (raceMerit) {
             $(_this).parent().parent().fadeToggle("slow", function () {
                 $(this).remove();
             });
@@ -114,7 +114,7 @@ function renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson) {
     $('.unlinkFlawFromRace').click(function () {
         var id = $(this).parent().find("[name=id]").val();
         _this = $(this);
-        ajax.deleteJsonData('/rest/race/raceFlaw', id, function (raceListJson) {
+        ajax.deleteJsonData('/rest/race/raceFlaw', id, function (raceFlaw) {
             $(_this).parent().parent().fadeToggle("slow", function () {
                 $(this).remove();
             });

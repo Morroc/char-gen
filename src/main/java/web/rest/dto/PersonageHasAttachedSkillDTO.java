@@ -1,6 +1,7 @@
 package web.rest.dto;
 
 import entity.AttachedSkill;
+import entity.Personage;
 
 /**
  * User: artemk
@@ -12,14 +13,17 @@ public class PersonageHasAttachedSkillDTO {
 
     private AttachedSkillDTO attachedSkill;
 
+    private PersonageDTO personage;
+
     private int currentValue;
 
     public PersonageHasAttachedSkillDTO() {
     }
 
-    public PersonageHasAttachedSkillDTO(int id, AttachedSkillDTO attachedSkill, int currentValue) {
+    public PersonageHasAttachedSkillDTO(int id, AttachedSkillDTO attachedSkill, PersonageDTO personage, int currentValue) {
         this.id = id;
         this.attachedSkill = attachedSkill;
+        this.personage = personage;
         this.currentValue = currentValue;
     }
 
@@ -37,6 +41,14 @@ public class PersonageHasAttachedSkillDTO {
 
     public void setAttachedSkill(AttachedSkillDTO attachedSkill) {
         this.attachedSkill = attachedSkill;
+    }
+
+    public PersonageDTO getPersonage() {
+        return personage;
+    }
+
+    public void setPersonage(PersonageDTO personage) {
+        this.personage = personage;
     }
 
     public int getCurrentValue() {

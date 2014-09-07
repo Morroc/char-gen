@@ -13,10 +13,20 @@ import java.util.List;
  */
 public class PersonageHasAttachedSkillConverter {
     AttachedSkillConverter attachedSkillConverter = new AttachedSkillConverter();
+    PersonageConverter personageConverter = new PersonageConverter();
+
+    public PersonageHasAttachedSkill convert(PersonageHasAttachedSkillDTO personageHasAttachedSkillDTO) {
+        return new PersonageHasAttachedSkill(personageHasAttachedSkillDTO.getId(),
+                attachedSkillConverter.convert(personageHasAttachedSkillDTO.getAttachedSkill()),
+                personageConverter.convert(personageHasAttachedSkillDTO.getPersonage()),
+                personageHasAttachedSkillDTO.getCurrentValue());
+    }
 
     public PersonageHasAttachedSkillDTO convert(PersonageHasAttachedSkill personageHasAttachedSkill) {
         return new PersonageHasAttachedSkillDTO(personageHasAttachedSkill.getId(),
-                attachedSkillConverter.convert(personageHasAttachedSkill.getAttachedSkillByPersonage()), personageHasAttachedSkill.getCurrentValue());
+                attachedSkillConverter.convert(personageHasAttachedSkill.getAttachedSkillByPersonage()),
+                personageConverter.convert(personageHasAttachedSkill.getPersonageByAttachedSkill()),
+                personageHasAttachedSkill.getCurrentValue());
     }
 
     public List<PersonageHasAttachedSkillDTO> convert(List<PersonageHasAttachedSkill> allPersonageHasAttachedSkills) {

@@ -35,6 +35,19 @@ public class PersonageHasTriggerSkill {
     @Column(name = "has_teacher")
     private boolean hasTeacher;
 
+    public PersonageHasTriggerSkill() {
+    }
+
+    public PersonageHasTriggerSkill(int id, TriggerSkill triggerSkillByPersonage,
+                                    Personage personageByTriggerSkill, SkillLevel currentLevel, boolean hasTalent, boolean hasTeacher) {
+        this.id = id;
+        this.triggerSkillByPersonage = triggerSkillByPersonage;
+        this.personageByTriggerSkill = personageByTriggerSkill;
+        this.currentLevel = currentLevel;
+        this.hasTalent = hasTalent;
+        this.hasTeacher = hasTeacher;
+    }
+
     public int getId() {
         return id;
     }

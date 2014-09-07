@@ -4,9 +4,9 @@ import converters.*;
 import entity.Personage;
 import entity.PersonageHasAttachedSkill;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import services.*;
+import web.rest.dto.PersonageHasAttachedSkillDTO;
 import web.rest.dto.PersonageWithAllRelatedEntitiesDTO;
 
 /**
@@ -86,12 +86,37 @@ public class PersonageRestController {
         return personageWithAllRelatedEntitiesDTO;
     }
 
-    @RequestMapping(value = "/linkAttachedSkillToPersonage", method = RequestMethod.POST)
-    public PersonageWithAllRelatedEntitiesDTO linkAttachedSkillToPersonage(@Validated @ModelAttribute("personageHasAttachedSkill") PersonageHasAttachedSkill personageHasAttachedSkill) {
-
+    @RequestMapping(value = "/personageAttachedSkill", method = RequestMethod.PUT)
+    public PersonageWithAllRelatedEntitiesDTO addPersonageHasAttachedSkill(@RequestBody PersonageHasAttachedSkillDTO personageHasAttachedSkillDTO) {
+        PersonageHasAttachedSkill personageHasAttachedSkill = personageHasAttachedSkillConverter.convert(personageHasAttachedSkillDTO);
         int personageId = personageHasAttachedSkill.getPersonageByAttachedSkill().getId();
+
         personageHasAttachedSkillService.addLinkAttachedSkillWithPersonage(personageHasAttachedSkill);
 
+        return getPersonage(personageId);
+    }
+
+    @RequestMapping(value = "/personageAttachedSkill/{id}", method = RequestMethod.POST)
+    public PersonageWithAllRelatedEntitiesDTO updatePersonageHasAttachedSkill(@PathVariable Integer id,
+                                                                              @RequestBody PersonageHasAttachedSkillDTO personageHasAttachedSkillDTO) {
+        personageHasAttachedSkillDTO.setId(id);
+        PersonageHasAttachedSkill personageHasAttachedSkill = personageHasAttachedSkillConverter.convert(personageHasAttachedSkillDTO);
+
+        personageHasAttachedSkill.setAttachedSkillByPersonage(
+                personageHasAttachedSkillService.getPersonageHasAttachedSkillById(id).getAttachedSkillByPersonage());
+        personageHasAttachedSkill.setPersonageByAttachedSkill(
+                personageHasAttachedSkillService.getPersonageHasAttachedSkillById(id).getPersonageByAttachedSkill());
+
+        personageHasAttachedSkillService.updatePersonageHasAttachedSkill(personageHasAttachedSkill);
+        return getPersonage(personageHasAttachedSkill.getPersonageByAttachedSkill().getId());
+    }
+
+    @RequestMapping(value = "/personageAttachedSkill/{id}", method = RequestMethod.DELETE)
+    public PersonageWithAllRelatedEntitiesDTO deletePersonageHasAttachedSkill(@PathVariable Integer id) {
+        PersonageHasAttachedSkill personageHasAttachedSkill = personageHasAttachedSkillService.getPersonageHasAttachedSkillById(id);
+        int personageId = personageHasAttachedSkill.getPersonageByAttachedSkill().getId();
+
+        personageHasAttachedSkillService.updatePersonageHasAttachedSkill(personageHasAttachedSkill);
         return getPersonage(personageId);
     }
 }

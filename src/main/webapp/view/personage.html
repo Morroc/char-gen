@@ -56,21 +56,25 @@
             <tr>
                 <td class='personageTables'>${attachedSkill.name}</td>
                 <td class='personageTables'>${currentValue}</td>
+                <td>
+                    <input type="hidden" name="id" value="${id}"/>
+                    <a href="javascript:void(0)" class="unlinkAttachedSkillFromPersonage">Убрать</a>
+                </td>
             </tr>
 </script>
 
 <div id="linkAttachedSkillToPersonageWindow" style="display:none">
-    <form id="linkAttachedSkillToPersonageForm" method="post" action="/rest/personage/linkAttachedSkillToPersonage">
+    <form id="linkAttachedSkillToPersonageForm" method="post" action="/rest/personage/personageAttachedSkill">
 
         <table>
             <tr>
                 <td>
-                    <label for="attachedSkillByPersonage">
+                    <label for="attachedSkill">
                         Прикрепленный навык
                     </label>
                 </td>
                 <td>
-                    <select id="attachedSkillByPersonage" name="attachedSkillByPersonage"></select>
+                    <select id="attachedSkill" name="attachedSkill"></select>
                     <script id="attachedSkillByPersonageSelectTemplate" type="text/x-jquery-tmpl">
                         <option value="${id}">${name}</option>
                     </script>
@@ -78,7 +82,7 @@
             </tr>
 
             <script id="personageByAttachedSkillTemplate" type="text/x-jQuery-tmpl">
-                <input id="personageByAttachedSkill" type="hidden" value="${personage.id}"/>
+                <input id="personageByAttachedSkill" name="personage" type="hidden" value="${personage.id}"/>
             </script>
 
 

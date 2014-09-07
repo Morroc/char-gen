@@ -26,6 +26,16 @@ public class PersonageHasAttachedSkill {
     @Column(name = "current_value")
     private int currentValue;
 
+    public PersonageHasAttachedSkill() {
+    }
+
+    public PersonageHasAttachedSkill(int id, AttachedSkill attachedSkillByPersonage, Personage personageByAttachedSkill, int currentValue) {
+        this.id = id;
+        this.attachedSkillByPersonage = attachedSkillByPersonage;
+        this.personageByAttachedSkill = personageByAttachedSkill;
+        this.currentValue = currentValue;
+    }
+
     public int getId() {
         return id;
     }

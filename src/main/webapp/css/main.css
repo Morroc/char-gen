@@ -12,7 +12,7 @@ body {
 
 #personageHasAttributeTable, #personageHasAttachedSkillTable, #personageHasTriggerSkillTable {
     height: 300px;
-    width: 150px;
+    width: 300px;
 }
 #personageHasAttachedSkillTable {
     position: relative;
