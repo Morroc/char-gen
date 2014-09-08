@@ -212,5 +212,46 @@
     </form>
 </div>
 
+<div id="personageHasMeritTable">
+    <h2>Достоинства</h2>
+    <table id="personageHasMeritList">
+
+    </table>
+</div>
+
+<script id="personageHasMeritDefaultForRaceListTemplate" type="text/x-jQuery-tmpl">
+            <tr>
+                <td class='personageTables'>
+                    ${merit.name}
+                </td>
+                <td class='personageTables'>
+                    Дефолтный для ${race.name}
+                </td>
+
+            </tr>
+</script>
+
+<script id="personageHasMeritWithDifferentCostForRaceListTemplate" type="text/x-jQuery-tmpl">
+            <tr>
+                <td class='personageTables'>
+                    ${merit.name}
+                </td>
+                <td class='personageTables'>
+                    ${raceCost}
+                </td>
+            </tr>
+</script>
+
+<script id="personageHasMeritOnlyForPersonageListTemplate" type="text/x-jQuery-tmpl">
+            <tr>
+                <td class='personageTables'>
+                    ${merit.name}
+                </td>
+                <td class='personageTables'>
+                    ${cost}
+                </td>
+            </tr>
+</script>
+
 </body>
 </html>

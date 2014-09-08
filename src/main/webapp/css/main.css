@@ -10,17 +10,25 @@ body {
     padding: 0 20px;
 }
 
-#personageHasAttributeTable, #personageHasAttachedSkillTable, #personageHasTriggerSkillTable {
+#personageHasAttributeTable, #personageHasAttachedSkillTable, #personageHasTriggerSkillTable,
+#personageHasMeritTable {
     height: 300px;
     width: 300px;
 }
+
 #personageHasAttachedSkillTable {
     position: relative;
     left: 350px;
     top: -320px;
 }
+
 #personageHasTriggerSkillTable {
     position: relative;
     left: 700px;
     top: -640px;
+}
+
+#personageHasMeritTable {
+    position: relative;
+    top: -600px;
 }

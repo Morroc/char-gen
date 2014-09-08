@@ -1,16 +1,12 @@
 package web.rest;
 
 import converters.*;
-import entity.Personage;
-import entity.PersonageHasAttachedSkill;
-import entity.PersonageHasTriggerSkill;
+import entity.*;
 import enums.SkillLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import services.*;
-import web.rest.dto.PersonageHasAttachedSkillDTO;
-import web.rest.dto.PersonageHasTriggerSkillDTO;
-import web.rest.dto.PersonageWithAllRelatedEntitiesDTO;
+import web.rest.dto.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +65,8 @@ public class PersonageRestController {
     PersonageHasFlawConverter personageHasFlawConverter = new PersonageHasFlawConverter();
     PersonageHasAttachedSkillConverter personageHasAttachedSkillConverter = new PersonageHasAttachedSkillConverter();
     PersonageHasTriggerSkillConverter personageHasTriggerSkillConverter = new PersonageHasTriggerSkillConverter();
+    RaceHasMeritConverter raceHasMeritConverter = new RaceHasMeritConverter();
+    MeritConverter meritConverter = new MeritConverter();
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
     public PersonageWithAllRelatedEntitiesDTO getPersonage(@PathVariable Integer id) {
@@ -90,6 +88,66 @@ public class PersonageRestController {
                 personageHasTriggerSkillConverter.convert(personageHasTriggerSkillService.getPersonageHasTriggerSkillsByPersonageId(id)));
 
         return personageWithAllRelatedEntitiesDTO;
+    }
+
+    @RequestMapping(value = "/{id}/differentTypesOfMeritsForPersonage", method = RequestMethod.GET, headers = "Accept=application/json")
+    public DifferentTypesOfMeritsForPersonageDTO differentTypesOfMeritsForPersonage(@PathVariable Integer id) {
+        Personage personage = personageService.getPersonageById(id);
+
+        DifferentTypesOfMeritsForPersonageDTO differentTypesOfMeritsForPersonageDTO = new DifferentTypesOfMeritsForPersonageDTO();
+        List<RaceHasMeritDTO> raceHasMerits = raceHasMeritConverter.convert(raceHasMeritService.getRaceHasMeritsByRaceId(personage.getRace().getId()));
+        List<MeritDTO> allMerits = meritConverter.convert(meritService.getAllMerits());
+        //merits
+        List<RaceHasMeritDTO> defaultForRaceMerits = new ArrayList<RaceHasMeritDTO>();
+        List<RaceHasMeritDTO> withDifferentCostForRaceMerits = new ArrayList<RaceHasMeritDTO>();
+        List<PersonageHasMeritDTO> onlyForPersonageMerits = new ArrayList<PersonageHasMeritDTO>();
+        List<MeritDTO> allMeritsWithoutRacesMerits = new ArrayList<MeritDTO>();
+        allMeritsWithoutRacesMerits.addAll(allMerits);
+        List<MeritDTO> removeListForPersonageMerits = new ArrayList<MeritDTO>();
+        if (raceHasMerits.isEmpty()) {
+            onlyForPersonageMerits.addAll(personageHasMeritConverter.convert(personageHasMeritService.getPersonageHasMeritsByPersonageId(id)));
+        } else {
+            for (RaceHasMeritDTO raceHasMeritDTO : raceHasMerits) {
+                if (raceHasMeritDTO.isDefaultForRace()) {
+                    defaultForRaceMerits.add(raceHasMeritDTO);
+                    for (MeritDTO meritDTO : allMeritsWithoutRacesMerits) {
+                        if (raceHasMeritDTO.getMerit().getId() == meritDTO.getId()) {
+                            removeListForPersonageMerits.add(meritDTO);
+                        }
+                    }
+                } else if (raceHasMeritDTO.getRaceCost() != 0) {
+                    for (MeritDTO meritDTO : allMeritsWithoutRacesMerits) {
+                        if (raceHasMeritDTO.getMerit().getId() == meritDTO.getId()) {
+                            removeListForPersonageMerits.add(meritDTO);
+                        }
+                    }
+                    List<PersonageHasMeritDTO> personageHasMerits = personageHasMeritConverter.convert(
+                            personageHasMeritService.getPersonageHasMeritsByPersonageId(id));
+                    for (PersonageHasMeritDTO personageHasMeritDTO : personageHasMerits) {
+                        RaceHasMerit raceHasMeritForCurrentPersonageMerit = raceHasMeritService.
+                                getRaceHasMeritByMeritIdAndRaceId(personageHasMeritDTO.getMerit().getId(),
+                                        personage.getRace().getId());
+                        if (personageHasMeritDTO.getMerit().getId() == raceHasMeritDTO.getMerit().getId()) {
+                            withDifferentCostForRaceMerits.add(raceHasMeritDTO);
+                        } else if (raceHasMeritForCurrentPersonageMerit == null) {
+                            onlyForPersonageMerits.add(personageHasMeritDTO);
+                        } else if (!raceHasMeritForCurrentPersonageMerit.isDefaultForRace()) {
+                            onlyForPersonageMerits.add(personageHasMeritDTO);
+                        }
+                    }
+                }
+            }
+        }
+        allMeritsWithoutRacesMerits.removeAll(removeListForPersonageMerits);
+
+        List<RaceHasMeritDTO> raceHasMeritsWithoutDefaults = raceHasMerits;
+        raceHasMeritsWithoutDefaults.removeAll(defaultForRaceMerits);
+
+        differentTypesOfMeritsForPersonageDTO.setDefaultForRaceMerits(defaultForRaceMerits);
+        differentTypesOfMeritsForPersonageDTO.setWithDifferentCostForRaceMerits(withDifferentCostForRaceMerits);
+        differentTypesOfMeritsForPersonageDTO.setOnlyForPersonageMerits(onlyForPersonageMerits);
+
+        return differentTypesOfMeritsForPersonageDTO;
     }
 
     @RequestMapping(value = "/personageAttachedSkill", method = RequestMethod.PUT)

@@ -10,6 +10,10 @@ $(document).ready(function () {
         renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntitiesJson);
     }, errorHandler);
 
+    ajax.getJsonData('/rest/personage/'.concat(personageId).concat('/differentTypesOfMeritsForPersonage'), function (differentTypesOfMeritsForPersonageJson) {
+        renderDifferentTypesOfMeritsForPersonageJson(differentTypesOfMeritsForPersonageJson);
+    }, errorHandler);
+
     ajax.getJsonData('/rest/attachedSkill/', function (attachedSkillListJson) {
         renderAttachedSkillListJson(attachedSkillListJson);
     }, errorHandler);
@@ -105,6 +109,8 @@ function renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntiti
             });
         }, errorHandler);
     });
+
+
 }
 
 function renderAttachedSkillListJson(attachedSkillListJson) {
@@ -121,5 +127,12 @@ function errorHandler(personageWithAllRelatedEntitiesJson) {
 
 function renderSkillLevels(skillLevelList) {
     $("#skillLevelTemplate").tmpl(skillLevelList).appendTo("#currentLevel");
+}
+
+function renderDifferentTypesOfMeritsForPersonageJson(differentTypesOfMeritsForPersonageJson) {
+    var personageHasMeritList = $("#personageHasMeritList");
+    $("#personageHasMeritDefaultForRaceListTemplate").tmpl(differentTypesOfMeritsForPersonageJson.valueOf()['defaultForRaceMerits']).appendTo(personageHasMeritList);
+    $("#personageHasMeritWithDifferentCostForRaceListTemplate").tmpl(differentTypesOfMeritsForPersonageJson.valueOf()['withDifferentCostForRaceMerits']).appendTo(personageHasMeritList);
+    $("#personageHasMeritOnlyForPersonageListTemplate").tmpl(differentTypesOfMeritsForPersonageJson.valueOf()['onlyForPersonageMerits']).appendTo(personageHasMeritList);
 }
 
