@@ -12,6 +12,8 @@ public class PersonageHasTriggerSkillDTO {
 
     private TriggerSkillDTO triggerSkill;
 
+    private PersonageDTO personage;
+
     private SkillLevel currentLevel;
 
     private boolean hasTalent;
@@ -21,9 +23,11 @@ public class PersonageHasTriggerSkillDTO {
     public PersonageHasTriggerSkillDTO() {
     }
 
-    public PersonageHasTriggerSkillDTO(int id, TriggerSkillDTO triggerSkill, SkillLevel currentLevel, boolean hasTalent, boolean hasTeacher) {
+    public PersonageHasTriggerSkillDTO(int id, TriggerSkillDTO triggerSkill, PersonageDTO personage,
+                                       SkillLevel currentLevel, boolean hasTalent, boolean hasTeacher) {
         this.id = id;
         this.triggerSkill = triggerSkill;
+        this.personage = personage;
         this.currentLevel = currentLevel;
         this.hasTalent = hasTalent;
         this.hasTeacher = hasTeacher;
@@ -43,6 +47,14 @@ public class PersonageHasTriggerSkillDTO {
 
     public void setTriggerSkill(TriggerSkillDTO triggerSkill) {
         this.triggerSkill = triggerSkill;
+    }
+
+    public PersonageDTO getPersonage() {
+        return personage;
+    }
+
+    public void setPersonage(PersonageDTO personage) {
+        this.personage = personage;
     }
 
     public SkillLevel getCurrentLevel() {

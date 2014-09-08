@@ -111,12 +111,19 @@
     <table id="personageHasTriggerSkillList">
 
     </table>
+    <div id="linkTriggerSkillToPersonageButton">
+        <a class="modalbox" href="#linkTriggerSkillToPersonageWindow">
+            <div class="s_button">
+                Добавить тригерный навык
+            </div>
+        </a>
+    </div>
 </div>
 
 <script id="personageHasTriggerSkillListTemplate" type="text/x-jQuery-tmpl">
             <tr>
                 <td class='personageTables'>${triggerSkill.name}</td>
-                <td class='personageTables'>${currentLevel}</td>
+                <td class='personageTables'>${currentLevel.name}</td>
                 <td>
                     {%if hasTalent%}
                         <input type="checkbox" disabled="disabled" checked="checked"/>
@@ -131,8 +138,79 @@
                         <input type="checkbox" disabled="disabled"/>
                     {%/if%}
                 </td>
+                <td>
+                    <input type="hidden" name="id" value="${id}"/>
+                    <a href="javascript:void(0)" class="unlinkTriggerSkillFromPersonage">Убрать</a>
+                </td>
             </tr>
 </script>
+
+<div id="linkTriggerSkillToPersonageWindow" style="display:none">
+    <form id="linkTriggerSkillToPersonageForm" method="post" action="/rest/personage/personageTriggerSkill">
+
+        <table>
+            <tr>
+                <td>
+                    <label for="triggerSkill">
+                        Тригерный навык
+                    </label>
+                </td>
+                <td>
+                    <select id="triggerSkill" name="triggerSkill"></select>
+                    <script id="triggerSkillByPersonageSelectTemplate" type="text/x-jquery-tmpl">
+                        <option value="${id}">${name}</option>
+                    </script>
+                </td>
+            </tr>
+
+            <script id="personageByTriggerSkillTemplate" type="text/x-jQuery-tmpl">
+                <input id="personageByTriggerSkill" name="personage" type="hidden" value="${personage.id}"/>
+            </script>
+
+            <tr>
+                <td>
+                    <label for="currentLevel">
+                        Уровень
+                    </label>
+                </td>
+                <td>
+                    <select id="currentLevel" name="currentLevel"></select>
+                    <script id="skillLevelTemplate" type="text/x-jquery-tmpl">
+                        <option value="${name}">${name}</option>
+                    </script>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="hasTalent">
+                        Талант
+                    </label>
+                </td>
+                <td>
+                    <input type="checkbox" id="hasTalent" name="hasTalent"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="hasTeacher">
+                        Учитель
+                    </label>
+                </td>
+                <td>
+                    <input type="checkbox" id="hasTeacher" name="hasTeacher"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><input type="submit" id="linkTriggerSkillToPersonageSubmitButton"
+                                       name="linkTriggerSkillToPersonageSubmitButton"
+                                       value="Добавить тригерный навык"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
 
 </body>
 </html>

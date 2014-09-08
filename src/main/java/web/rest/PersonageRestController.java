@@ -3,11 +3,17 @@ package web.rest;
 import converters.*;
 import entity.Personage;
 import entity.PersonageHasAttachedSkill;
+import entity.PersonageHasTriggerSkill;
+import enums.SkillLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import services.*;
 import web.rest.dto.PersonageHasAttachedSkillDTO;
+import web.rest.dto.PersonageHasTriggerSkillDTO;
 import web.rest.dto.PersonageWithAllRelatedEntitiesDTO;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User: artemk
@@ -116,7 +122,52 @@ public class PersonageRestController {
         PersonageHasAttachedSkill personageHasAttachedSkill = personageHasAttachedSkillService.getPersonageHasAttachedSkillById(id);
         int personageId = personageHasAttachedSkill.getPersonageByAttachedSkill().getId();
 
-        personageHasAttachedSkillService.updatePersonageHasAttachedSkill(personageHasAttachedSkill);
+        personageHasAttachedSkillService.deleteLinkAttachedSkillWithPersonage(personageHasAttachedSkill);
         return getPersonage(personageId);
     }
+
+    @RequestMapping(value = "/personageTriggerSkill", method = RequestMethod.PUT)
+    public PersonageWithAllRelatedEntitiesDTO addPersonageHasTriggerSkill(@RequestBody PersonageHasTriggerSkillDTO personageHasTriggerSkillDTO) {
+        PersonageHasTriggerSkill personageHasTriggerSkill = personageHasTriggerSkillConverter.convert(personageHasTriggerSkillDTO);
+
+        int personageId = personageHasTriggerSkill.getPersonageByTriggerSkill().getId();
+
+        personageHasTriggerSkillService.addLinkTriggerSkillWithPersonage(personageHasTriggerSkill);
+
+        return getPersonage(personageId);
+    }
+
+    @RequestMapping(value = "/personageTriggerSkill/{id}", method = RequestMethod.POST)
+    public PersonageWithAllRelatedEntitiesDTO updatePersonageHasTriggerSkill(@PathVariable Integer id,
+                                                                             @RequestBody PersonageHasTriggerSkillDTO personageHasTriggerSkillDTO) {
+        personageHasTriggerSkillDTO.setId(id);
+        PersonageHasTriggerSkill personageHasTriggerSkill = personageHasTriggerSkillConverter.convert(personageHasTriggerSkillDTO);
+
+        personageHasTriggerSkill.setTriggerSkillByPersonage(
+                personageHasTriggerSkillService.getPersonageHasTriggerSkillById(id).getTriggerSkillByPersonage());
+        personageHasTriggerSkill.setPersonageByTriggerSkill(
+                personageHasTriggerSkillService.getPersonageHasTriggerSkillById(id).getPersonageByTriggerSkill());
+
+        personageHasTriggerSkillService.updatePersonageHasTriggerSkill(personageHasTriggerSkill);
+        return getPersonage(personageHasTriggerSkill.getPersonageByTriggerSkill().getId());
+    }
+
+    @RequestMapping(value = "/personageTriggerSkill/{id}", method = RequestMethod.DELETE)
+    public PersonageWithAllRelatedEntitiesDTO deletePersonageHasTriggerSkill(@PathVariable Integer id) {
+        PersonageHasTriggerSkill personageHasTriggerSkill = personageHasTriggerSkillService.getPersonageHasTriggerSkillById(id);
+        int personageId = personageHasTriggerSkill.getPersonageByTriggerSkill().getId();
+
+        personageHasTriggerSkillService.deleteLinkTriggerSkillWithPersonage(personageHasTriggerSkill);
+        return getPersonage(personageId);
+    }
+
+    @RequestMapping(value = "/personageTriggerSkill/skillLevels", method = RequestMethod.GET)
+    public List<SkillLevel> skillLevels() {
+        List<SkillLevel> skillLevels = new ArrayList<SkillLevel>();
+        for (SkillLevel skillLevel : SkillLevel.values()) {
+            skillLevels.add(skillLevel);
+        }
+        return skillLevels;
+    }
+
 }

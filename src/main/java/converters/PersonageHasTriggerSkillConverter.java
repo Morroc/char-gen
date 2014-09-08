@@ -14,10 +14,20 @@ import java.util.List;
  */
 public class PersonageHasTriggerSkillConverter {
     TriggerSkillConverter triggerSkillConverter = new TriggerSkillConverter();
+    PersonageConverter personageConverter = new PersonageConverter();
+
+    public PersonageHasTriggerSkill convert(PersonageHasTriggerSkillDTO personageHasTriggerSkillDTO) {
+        return new PersonageHasTriggerSkill(personageHasTriggerSkillDTO.getId(),
+                triggerSkillConverter.convert(personageHasTriggerSkillDTO.getTriggerSkill()),
+                personageConverter.convert(personageHasTriggerSkillDTO.getPersonage()),
+                personageHasTriggerSkillDTO.getCurrentLevel(), personageHasTriggerSkillDTO.isHasTalent(),
+                personageHasTriggerSkillDTO.isHasTeacher());
+    }
 
     public PersonageHasTriggerSkillDTO convert(PersonageHasTriggerSkill personageHasTriggerSkill) {
         return new PersonageHasTriggerSkillDTO(personageHasTriggerSkill.getId(),
                 triggerSkillConverter.convert(personageHasTriggerSkill.getTriggerSkillByPersonage()),
+                personageConverter.convert(personageHasTriggerSkill.getPersonageByTriggerSkill()),
                 personageHasTriggerSkill.getCurrentLevel(), personageHasTriggerSkill.isHasTalent(),
                 personageHasTriggerSkill.isHasTeacher());
     }
