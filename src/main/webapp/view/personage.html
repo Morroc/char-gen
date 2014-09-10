@@ -217,9 +217,17 @@
     <table id="personageHasMeritList">
 
     </table>
+    <div id="linkMeritToPersonageButton">
+        <a class="modalbox" href="#linkMeritToPersonageWindow">
+            <div class="s_button">
+                Добавить достоинство
+            </div>
+        </a>
+    </div>
 </div>
 
-<script id="personageHasMeritDefaultForRaceListTemplate" type="text/x-jQuery-tmpl">
+<script id="personageHasMeritListTemplate" type="text/x-jQuery-tmpl">
+        {%each defaultForRaceMerits%}
             <tr>
                 <td class='personageTables'>
                     ${merit.name}
@@ -227,31 +235,74 @@
                 <td class='personageTables'>
                     Дефолтный для ${race.name}
                 </td>
-
             </tr>
-</script>
+        {%/each%}
 
-<script id="personageHasMeritWithDifferentCostForRaceListTemplate" type="text/x-jQuery-tmpl">
+        {%each withDifferentCostForRaceMerits%}
             <tr>
                 <td class='personageTables'>
                     ${merit.name}
                 </td>
                 <td class='personageTables'>
-                    ${raceCost}
+                    РС: ${raceCost} БС: ${merit.cost}
+                </td>
+                <td>
+                    <input type="hidden" name="id" value="${id}"/>
+                    <a href="javascript:void(0)" class="unlinkMeritFromPersonageByRaceHasMeritId">Убрать</a>
                 </td>
             </tr>
-</script>
+        {%/each%}
 
-<script id="personageHasMeritOnlyForPersonageListTemplate" type="text/x-jQuery-tmpl">
+        {%each onlyForPersonageMerits%}
             <tr>
                 <td class='personageTables'>
                     ${merit.name}
                 </td>
                 <td class='personageTables'>
-                    ${cost}
+                    ${merit.cost}
+                </td>
+                 <td>
+                    <input type="hidden" name="id" value="${id}"/>
+                    <a href="javascript:void(0)" class="unlinkMeritFromPersonage">Убрать</a>
                 </td>
             </tr>
+        {%/each%}
 </script>
+
+<div id="linkMeritToPersonageWindow" style="display:none">
+    <form id="linkMeritToPersonageForm" method="post" action="/rest/personage/personageMerit">
+
+        <table>
+            <tr>
+                <td>
+                    <label for="merit">
+                        Достоинство
+                    </label>
+                </td>
+                <td>
+                    <select id="merit" name="merit">
+                        <script id="raceHasMeritsWithoutDefaultsTemplate" type="text/x-jQuery-tmpl">
+                            <option value="${merit.id}">${merit.name} (БC: ${merit.cost} РС: ${raceCost})</option>
+                        </script>
+                        <script id="allMeritsWithoutRacesMeritsTemplate" type="text/x-jQuery-tmpl">
+                            <option value="${id}">${name}</option>
+                        </script>
+                    </select>
+                </td>
+            </tr>
+
+            <script id="personageByMeritTemplate" type="text/x-jQuery-tmpl">
+                <input id="personageByMerit" name="personage" type="hidden" value="${personage.id}"/>
+            </script>
+
+            <tr>
+                <td colspan="2"><input type="submit" id="linkMeritToPersonageSubmitButton"
+                                       name="linkMeritToPersonageSubmitButton"
+                                       value="Добавить достоинство"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
 
 </body>
 </html>

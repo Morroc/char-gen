@@ -68,8 +68,11 @@ public class PersonageRestController {
     RaceHasMeritConverter raceHasMeritConverter = new RaceHasMeritConverter();
     MeritConverter meritConverter = new MeritConverter();
 
+    private int personageId;
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
     public PersonageWithAllRelatedEntitiesDTO getPersonage(@PathVariable Integer id) {
+        this.personageId = id;
         Personage personage = personageService.getPersonageById(id);
         PersonageWithAllRelatedEntitiesDTO personageWithAllRelatedEntitiesDTO = new PersonageWithAllRelatedEntitiesDTO();
 
@@ -147,13 +150,15 @@ public class PersonageRestController {
         differentTypesOfMeritsForPersonageDTO.setWithDifferentCostForRaceMerits(withDifferentCostForRaceMerits);
         differentTypesOfMeritsForPersonageDTO.setOnlyForPersonageMerits(onlyForPersonageMerits);
 
+        differentTypesOfMeritsForPersonageDTO.setRaceHasMeritsWithoutDefaults(raceHasMeritsWithoutDefaults);
+        differentTypesOfMeritsForPersonageDTO.setAllMeritsWithoutRacesMerits(allMeritsWithoutRacesMerits);
+
         return differentTypesOfMeritsForPersonageDTO;
     }
 
     @RequestMapping(value = "/personageAttachedSkill", method = RequestMethod.PUT)
     public PersonageWithAllRelatedEntitiesDTO addPersonageHasAttachedSkill(@RequestBody PersonageHasAttachedSkillDTO personageHasAttachedSkillDTO) {
         PersonageHasAttachedSkill personageHasAttachedSkill = personageHasAttachedSkillConverter.convert(personageHasAttachedSkillDTO);
-        int personageId = personageHasAttachedSkill.getPersonageByAttachedSkill().getId();
 
         personageHasAttachedSkillService.addLinkAttachedSkillWithPersonage(personageHasAttachedSkill);
 
@@ -172,13 +177,12 @@ public class PersonageRestController {
                 personageHasAttachedSkillService.getPersonageHasAttachedSkillById(id).getPersonageByAttachedSkill());
 
         personageHasAttachedSkillService.updatePersonageHasAttachedSkill(personageHasAttachedSkill);
-        return getPersonage(personageHasAttachedSkill.getPersonageByAttachedSkill().getId());
+        return getPersonage(personageId);
     }
 
     @RequestMapping(value = "/personageAttachedSkill/{id}", method = RequestMethod.DELETE)
     public PersonageWithAllRelatedEntitiesDTO deletePersonageHasAttachedSkill(@PathVariable Integer id) {
         PersonageHasAttachedSkill personageHasAttachedSkill = personageHasAttachedSkillService.getPersonageHasAttachedSkillById(id);
-        int personageId = personageHasAttachedSkill.getPersonageByAttachedSkill().getId();
 
         personageHasAttachedSkillService.deleteLinkAttachedSkillWithPersonage(personageHasAttachedSkill);
         return getPersonage(personageId);
@@ -187,8 +191,6 @@ public class PersonageRestController {
     @RequestMapping(value = "/personageTriggerSkill", method = RequestMethod.PUT)
     public PersonageWithAllRelatedEntitiesDTO addPersonageHasTriggerSkill(@RequestBody PersonageHasTriggerSkillDTO personageHasTriggerSkillDTO) {
         PersonageHasTriggerSkill personageHasTriggerSkill = personageHasTriggerSkillConverter.convert(personageHasTriggerSkillDTO);
-
-        int personageId = personageHasTriggerSkill.getPersonageByTriggerSkill().getId();
 
         personageHasTriggerSkillService.addLinkTriggerSkillWithPersonage(personageHasTriggerSkill);
 
@@ -207,13 +209,12 @@ public class PersonageRestController {
                 personageHasTriggerSkillService.getPersonageHasTriggerSkillById(id).getPersonageByTriggerSkill());
 
         personageHasTriggerSkillService.updatePersonageHasTriggerSkill(personageHasTriggerSkill);
-        return getPersonage(personageHasTriggerSkill.getPersonageByTriggerSkill().getId());
+        return getPersonage(personageId);
     }
 
     @RequestMapping(value = "/personageTriggerSkill/{id}", method = RequestMethod.DELETE)
     public PersonageWithAllRelatedEntitiesDTO deletePersonageHasTriggerSkill(@PathVariable Integer id) {
         PersonageHasTriggerSkill personageHasTriggerSkill = personageHasTriggerSkillService.getPersonageHasTriggerSkillById(id);
-        int personageId = personageHasTriggerSkill.getPersonageByTriggerSkill().getId();
 
         personageHasTriggerSkillService.deleteLinkTriggerSkillWithPersonage(personageHasTriggerSkill);
         return getPersonage(personageId);
@@ -226,6 +227,48 @@ public class PersonageRestController {
             skillLevels.add(skillLevel);
         }
         return skillLevels;
+    }
+
+    @RequestMapping(value = "/personageMerit", method = RequestMethod.PUT)
+    public PersonageWithAllRelatedEntitiesDTO addPersonageHasMerit(@RequestBody PersonageHasMeritDTO personageHasMeritDTO) {
+        PersonageHasMerit personageHasMerit = personageHasMeritConverter.convert(personageHasMeritDTO);
+
+        personageHasMeritService.addLinkMeritWithPersonage(personageHasMerit);
+        return getPersonage(personageId);
+    }
+
+    @RequestMapping(value = "/personageMerit/{id}", method = RequestMethod.POST)
+    public PersonageWithAllRelatedEntitiesDTO updatePersonageHasMerit(@PathVariable Integer id,
+                                                                      @RequestBody PersonageHasMeritDTO personageHasMeritDTO) {
+        personageHasMeritDTO.setId(id);
+        PersonageHasMerit personageHasMerit = personageHasMeritConverter.convert(personageHasMeritDTO);
+
+        personageHasMerit.setMeritByPersonage(
+                personageHasMeritService.getPersonageHasMeritById(id).getMeritByPersonage());
+        personageHasMerit.setPersonageByMerit(
+                personageHasMeritService.getPersonageHasMeritById(id).getPersonageByMerit());
+
+        personageHasMeritService.updatePersonageHasMerit(personageHasMerit);
+        return getPersonage(personageId);
+    }
+
+    @RequestMapping(value = "/personageMerit/{id}", method = RequestMethod.DELETE)
+    public PersonageWithAllRelatedEntitiesDTO deletePersonageHasMerit(@PathVariable Integer id) {
+        PersonageHasMerit personageHasMerit = personageHasMeritService.getPersonageHasMeritById(id);
+
+        personageHasMeritService.deleteLinkMeritWithPersonage(personageHasMerit);
+        return getPersonage(personageId);
+    }
+
+    @RequestMapping(value = "/personageMerit/byRaceHasMeritId/{id}", method = RequestMethod.DELETE)
+    public PersonageWithAllRelatedEntitiesDTO deletePersonageHasMeritByRaceHasMeritId(@PathVariable Integer id) {
+        RaceHasMerit raceHasMerit = raceHasMeritService.getRaceHasMeritById(id);
+        int meritId = raceHasMerit.getMeritByRace().getId();
+
+        PersonageHasMerit personageHasMerit = personageHasMeritService.getPersonageHasMeritByMeritIdAndPersonageId(meritId, personageId);
+        personageHasMeritService.deleteLinkMeritWithPersonage(personageHasMerit);
+
+        return getPersonage(personageId);
     }
 
 }

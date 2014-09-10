@@ -10,12 +10,15 @@ public class PersonageHasMeritDTO {
 
     private MeritDTO merit;
 
+    private PersonageDTO personage;
+
     public PersonageHasMeritDTO() {
     }
 
-    public PersonageHasMeritDTO(int id, MeritDTO merit) {
+    public PersonageHasMeritDTO(int id, MeritDTO merit, PersonageDTO personage) {
         this.id = id;
         this.merit = merit;
+        this.personage = personage;
     }
 
     public int getId() {
@@ -32,5 +35,13 @@ public class PersonageHasMeritDTO {
 
     public void setMerit(MeritDTO merit) {
         this.merit = merit;
+    }
+
+    public PersonageDTO getPersonage() {
+        return personage;
+    }
+
+    public void setPersonage(PersonageDTO personage) {
+        this.personage = personage;
     }
 }

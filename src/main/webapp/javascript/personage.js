@@ -41,7 +41,6 @@ $(document).ready(function () {
         personageHasAttachedSkill.personage.race = {id: personageHasAttachedSkill.personage.race};
         ajax.putJsonData($(this), JSON.stringify(personageHasAttachedSkill), function (personageWithAllRelatedEntitiesJson) {
             renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntitiesJson);
-            $.fancybox.close();
             new PNotify({
                 title: 'Инфо',
                 text: 'Прикрепленный навык добавлен успешно.'
@@ -66,13 +65,37 @@ $(document).ready(function () {
         personageHasTriggerSkill.personage.race = {id: personageHasTriggerSkill.personage.race};
         ajax.putJsonData($(this), JSON.stringify(personageHasTriggerSkill), function (personageWithAllRelatedEntitiesJson) {
             renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntitiesJson);
-            $.fancybox.close();
             new PNotify({
                 title: 'Инфо',
                 text: 'Тригерный навык добавлен успешно.'
             });
             $.fancybox.close();
             $.fancybox.hideLoading();
+        }, errorHandler);
+    });
+
+    $("#linkMeritToPersonageForm").submit(function (event) {
+        event.preventDefault();
+        $.fancybox.showLoading();
+        var personageHasMerit = $(this).serializeObject();
+        personageHasMerit.merit = {id: personageHasMerit.merit};
+        if(!(personageHasMerit.personage instanceof Array)) {
+            personageHasMerit.personage = {id: personageHasMerit.personage};
+        } else {
+            personageHasMerit.personage = {id: personageHasMerit.personage[0]};
+        }
+        personageHasMerit.personage.race = {id: personageHasMerit.personage.race};
+        ajax.putJsonData($(this), JSON.stringify(personageHasMerit), function (personageWithAllRelatedEntitiesJson) {
+            renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntitiesJson);
+            new PNotify({
+                title: 'Инфо',
+                text: 'Достоинство добавлено успешно.'
+            });
+            $.fancybox.close();
+            $.fancybox.hideLoading();
+            ajax.getJsonData('/rest/personage/'.concat(personageId).concat('/differentTypesOfMeritsForPersonage'), function (differentTypesOfMeritsForPersonageJson) {
+                renderDifferentTypesOfMeritsForPersonageJson(differentTypesOfMeritsForPersonageJson);
+            }, errorHandler);
         }, errorHandler);
     });
 });
@@ -83,6 +106,7 @@ function renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntiti
     $("#personageName").html(selector.tmpl(personageWithAllRelatedEntitiesJson));
     $("#personageByAttachedSkillTemplate").tmpl(personageWithAllRelatedEntitiesJson).appendTo("#linkAttachedSkillToPersonageForm");
     $("#personageByTriggerSkillTemplate").tmpl(personageWithAllRelatedEntitiesJson).appendTo("#linkTriggerSkillToPersonageForm");
+    $("#personageByMeritTemplate").tmpl(personageWithAllRelatedEntitiesJson).appendTo("#linkMeritToPersonageForm");
 
     $("#personageHasAttributeList").html($("#personageHasAttributeListTemplate").tmpl(personageWithAllRelatedEntitiesJson.valueOf()['personageAttributes']));
 
@@ -109,8 +133,6 @@ function renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntiti
             });
         }, errorHandler);
     });
-
-
 }
 
 function renderAttachedSkillListJson(attachedSkillListJson) {
@@ -131,8 +153,29 @@ function renderSkillLevels(skillLevelList) {
 
 function renderDifferentTypesOfMeritsForPersonageJson(differentTypesOfMeritsForPersonageJson) {
     var personageHasMeritList = $("#personageHasMeritList");
-    $("#personageHasMeritDefaultForRaceListTemplate").tmpl(differentTypesOfMeritsForPersonageJson.valueOf()['defaultForRaceMerits']).appendTo(personageHasMeritList);
-    $("#personageHasMeritWithDifferentCostForRaceListTemplate").tmpl(differentTypesOfMeritsForPersonageJson.valueOf()['withDifferentCostForRaceMerits']).appendTo(personageHasMeritList);
-    $("#personageHasMeritOnlyForPersonageListTemplate").tmpl(differentTypesOfMeritsForPersonageJson.valueOf()['onlyForPersonageMerits']).appendTo(personageHasMeritList);
+    $(personageHasMeritList).html($("#personageHasMeritListTemplate").tmpl(differentTypesOfMeritsForPersonageJson));
+
+    $("#raceHasMeritsWithoutDefaultsTemplate").tmpl(differentTypesOfMeritsForPersonageJson.valueOf()['raceHasMeritsWithoutDefaults']).appendTo("#merit");
+    $("#allMeritsWithoutRacesMeritsTemplate").tmpl(differentTypesOfMeritsForPersonageJson.valueOf()['allMeritsWithoutRacesMerits']).appendTo("#merit");
+
+    $('.unlinkMeritFromPersonage').click(function () {
+        var id = $(this).parent().find("[name=id]").val();
+        _this = $(this);
+        ajax.deleteJsonData('/rest/personage/personageMerit', id, function (personageMerit) {
+            $(_this).parent().parent().fadeToggle("slow", function () {
+                $(this).remove();
+            });
+        }, errorHandler);
+    });
+
+    $('.unlinkMeritFromPersonageByRaceHasMeritId').click(function () {
+        var id = $(this).parent().find("[name=id]").val();
+        _this = $(this);
+        ajax.deleteJsonData('/rest/personage/personageMerit/byRaceHasMeritId', id, function (raceMerit) {
+            $(_this).parent().parent().fadeToggle("slow", function () {
+                $(this).remove();
+            });
+        }, errorHandler);
+    });
 }
 

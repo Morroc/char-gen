@@ -12,15 +12,23 @@ public class DifferentTypesOfMeritsForPersonageDTO {
 
     List<PersonageHasMeritDTO> onlyForPersonageMerits;
 
+    List<MeritDTO> allMeritsWithoutRacesMerits;
+
+    List<RaceHasMeritDTO> raceHasMeritsWithoutDefaults;
+
     public DifferentTypesOfMeritsForPersonageDTO() {
     }
 
     public DifferentTypesOfMeritsForPersonageDTO(List<RaceHasMeritDTO> defaultForRaceMerits,
                                                  List<RaceHasMeritDTO> withDifferentCostForRaceMerits,
-                                                 List<PersonageHasMeritDTO> onlyForPersonageMerits) {
+                                                 List<PersonageHasMeritDTO> onlyForPersonageMerits,
+                                                 List<MeritDTO> allMeritsWithoutRacesMerits,
+                                                 List<RaceHasMeritDTO> raceHasMeritsWithoutDefaults) {
         this.defaultForRaceMerits = defaultForRaceMerits;
         this.withDifferentCostForRaceMerits = withDifferentCostForRaceMerits;
         this.onlyForPersonageMerits = onlyForPersonageMerits;
+        this.allMeritsWithoutRacesMerits = allMeritsWithoutRacesMerits;
+        this.raceHasMeritsWithoutDefaults = raceHasMeritsWithoutDefaults;
     }
 
     public List<RaceHasMeritDTO> getDefaultForRaceMerits() {
@@ -45,5 +53,21 @@ public class DifferentTypesOfMeritsForPersonageDTO {
 
     public void setOnlyForPersonageMerits(List<PersonageHasMeritDTO> onlyForPersonageMerits) {
         this.onlyForPersonageMerits = onlyForPersonageMerits;
+    }
+
+    public List<MeritDTO> getAllMeritsWithoutRacesMerits() {
+        return allMeritsWithoutRacesMerits;
+    }
+
+    public void setAllMeritsWithoutRacesMerits(List<MeritDTO> allMeritsWithoutRacesMerits) {
+        this.allMeritsWithoutRacesMerits = allMeritsWithoutRacesMerits;
+    }
+
+    public List<RaceHasMeritDTO> getRaceHasMeritsWithoutDefaults() {
+        return raceHasMeritsWithoutDefaults;
+    }
+
+    public void setRaceHasMeritsWithoutDefaults(List<RaceHasMeritDTO> raceHasMeritsWithoutDefaults) {
+        this.raceHasMeritsWithoutDefaults = raceHasMeritsWithoutDefaults;
     }
 }

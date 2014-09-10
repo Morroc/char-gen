@@ -26,6 +26,12 @@ public class PersonageHasMerit {
     public PersonageHasMerit() {
     }
 
+    public PersonageHasMerit(int id, Merit meritByPersonage, Personage personageByMerit) {
+        this.id = id;
+        this.meritByPersonage = meritByPersonage;
+        this.personageByMerit = personageByMerit;
+    }
+
     public int getId() {
         return id;
     }
