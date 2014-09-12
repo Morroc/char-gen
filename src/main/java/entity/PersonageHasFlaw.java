@@ -23,6 +23,15 @@ public class PersonageHasFlaw {
     @JoinColumn(name = "personage_id")
     private Personage personageByFlaw;
 
+    public PersonageHasFlaw() {
+    }
+
+    public PersonageHasFlaw(int id, Flaw flawByPersonage, Personage personageByFlaw) {
+        this.id = id;
+        this.flawByPersonage = flawByPersonage;
+        this.personageByFlaw = personageByFlaw;
+    }
+
     public int getId() {
         return id;
     }

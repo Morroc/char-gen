@@ -10,12 +10,15 @@ public class PersonageHasFlawDTO {
 
     private FlawDTO flaw;
 
+    private PersonageDTO personage;
+
     public PersonageHasFlawDTO() {
     }
 
-    public PersonageHasFlawDTO(int id, FlawDTO flaw) {
+    public PersonageHasFlawDTO(int id, FlawDTO flaw, PersonageDTO personage) {
         this.id = id;
         this.flaw = flaw;
+        this.personage = personage;
     }
 
     public int getId() {
@@ -32,5 +35,13 @@ public class PersonageHasFlawDTO {
 
     public void setFlaw(FlawDTO flaw) {
         this.flaw = flaw;
+    }
+
+    public PersonageDTO getPersonage() {
+        return personage;
+    }
+
+    public void setPersonage(PersonageDTO personage) {
+        this.personage = personage;
     }
 }

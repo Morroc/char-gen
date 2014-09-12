@@ -67,6 +67,8 @@ public class PersonageRestController {
     PersonageHasTriggerSkillConverter personageHasTriggerSkillConverter = new PersonageHasTriggerSkillConverter();
     RaceHasMeritConverter raceHasMeritConverter = new RaceHasMeritConverter();
     MeritConverter meritConverter = new MeritConverter();
+    RaceHasFlawConverter raceHasFlawConverter = new RaceHasFlawConverter();
+    FlawConverter flawConverter = new FlawConverter();
 
     private int personageId;
 
@@ -154,6 +156,63 @@ public class PersonageRestController {
         differentTypesOfMeritsForPersonageDTO.setAllMeritsWithoutRacesMerits(allMeritsWithoutRacesMerits);
 
         return differentTypesOfMeritsForPersonageDTO;
+    }
+
+    @RequestMapping(value = "/{id}/differentTypesOfFlawsForPersonage", method = RequestMethod.GET, headers = "Accept=application/json")
+    public DifferentTypesOfFlawsForPersonageDTO differentTypesOfFlawsForPersonage(@PathVariable Integer id) {
+        Personage personage = personageService.getPersonageById(id);
+
+        DifferentTypesOfFlawsForPersonageDTO differentTypesOfFlawsForPersonageDTO = new DifferentTypesOfFlawsForPersonageDTO();
+        List<RaceHasFlawDTO> raceHasFlaws = raceHasFlawConverter.convert(raceHasFlawService.getRaceHasFlawsByRaceId(personage.getRace().getId()));
+        List<PersonageHasFlawDTO> allPersonageHasFlaws = personageHasFlawConverter.convert(personageHasFlawService.getPersonageHasFlawsByPersonageId(personageId));
+
+        List<RaceHasFlawDTO> defaultForRaceFlaws = new ArrayList<RaceHasFlawDTO>();
+
+        if (!raceHasFlaws.isEmpty()) {
+            for (RaceHasFlawDTO raceHasFlaw : raceHasFlaws) {
+                if (raceHasFlaw.isDefaultForRace()) {
+                    defaultForRaceFlaws.add(raceHasFlaw);
+                }
+            }
+        }
+
+        List<PersonageHasFlawDTO> allPersonageHasFlawsWithoutDefaultForRace = new ArrayList<PersonageHasFlawDTO>();
+
+        if (!raceHasFlaws.isEmpty()) {
+            for (PersonageHasFlawDTO personageHasFlaw : allPersonageHasFlaws) {
+                for (RaceHasFlawDTO defaultRaceHasFlaw : defaultForRaceFlaws) {
+                    if (personageHasFlaw.getFlaw().getId() != defaultRaceHasFlaw.getFlaw().getId()) {
+                        allPersonageHasFlawsWithoutDefaultForRace.add(personageHasFlaw);
+                    }
+                }
+            }
+        } else {
+            allPersonageHasFlawsWithoutDefaultForRace.addAll(allPersonageHasFlaws);
+        }
+
+        differentTypesOfFlawsForPersonageDTO.setDefaultForRaceFlaws(defaultForRaceFlaws);
+
+        differentTypesOfFlawsForPersonageDTO.setAllPersonageHasFlawsWithoutDefaultForRace(allPersonageHasFlawsWithoutDefaultForRace);
+
+        List<FlawDTO> allFlawsWithoutDefaultForRace = flawConverter.convert(flawService.getAllFlaws());
+        List<FlawDTO> removeFlawsWithoutDefaultForRace = new ArrayList<FlawDTO>();
+        if (!raceHasFlaws.isEmpty()) {
+            for (RaceHasFlawDTO raceHasFlaw : defaultForRaceFlaws) {
+                for (FlawDTO flaw : allFlawsWithoutDefaultForRace) {
+                    if (raceHasFlaw.isDefaultForRace()) {
+                        if (raceHasFlaw.getFlaw().getId() == flaw.getId()) {
+                            removeFlawsWithoutDefaultForRace.add(flaw);
+                        }
+                    }
+                }
+            }
+        }
+
+        allFlawsWithoutDefaultForRace.removeAll(removeFlawsWithoutDefaultForRace);
+
+        differentTypesOfFlawsForPersonageDTO.setAllFlawsWithoutDefaultForRace(allFlawsWithoutDefaultForRace);
+
+        return differentTypesOfFlawsForPersonageDTO;
     }
 
     @RequestMapping(value = "/personageAttachedSkill", method = RequestMethod.PUT)
@@ -268,6 +327,38 @@ public class PersonageRestController {
         PersonageHasMerit personageHasMerit = personageHasMeritService.getPersonageHasMeritByMeritIdAndPersonageId(meritId, personageId);
         personageHasMeritService.deleteLinkMeritWithPersonage(personageHasMerit);
 
+        return getPersonage(personageId);
+    }
+
+
+    @RequestMapping(value = "/personageFlaw", method = RequestMethod.PUT)
+    public PersonageWithAllRelatedEntitiesDTO addPersonageHasFlaw(@RequestBody PersonageHasFlawDTO personageHasFlawDTO) {
+        PersonageHasFlaw personageHasFlaw = personageHasFlawConverter.convert(personageHasFlawDTO);
+
+        personageHasFlawService.addLinkFlawWithPersonage(personageHasFlaw);
+        return getPersonage(personageId);
+    }
+
+    @RequestMapping(value = "/personageFlaw/{id}", method = RequestMethod.POST)
+    public PersonageWithAllRelatedEntitiesDTO updatePersonageHasFlaw(@PathVariable Integer id,
+                                                                      @RequestBody PersonageHasFlawDTO personageHasFlawDTO) {
+        personageHasFlawDTO.setId(id);
+        PersonageHasFlaw personageHasFlaw = personageHasFlawConverter.convert(personageHasFlawDTO);
+
+        personageHasFlaw.setFlawByPersonage(
+                personageHasFlawService.getPersonageHasFlawById(id).getFlawByPersonage());
+        personageHasFlaw.setPersonageByFlaw(
+                personageHasFlawService.getPersonageHasFlawById(id).getPersonageByFlaw());
+
+        personageHasFlawService.updatePPersonageHasFlaw(personageHasFlaw);
+        return getPersonage(personageId);
+    }
+
+    @RequestMapping(value = "/personageFlaw/{id}", method = RequestMethod.DELETE)
+    public PersonageWithAllRelatedEntitiesDTO deletePersonageHasFlaw(@PathVariable Integer id) {
+        PersonageHasFlaw personageHasFlaw = personageHasFlawService.getPersonageHasFlawById(id);
+
+        personageHasFlawService.deleteLinkFlawWithPersonage(personageHasFlaw);
         return getPersonage(personageId);
     }
 

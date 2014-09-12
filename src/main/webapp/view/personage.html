@@ -81,10 +81,13 @@
                 </td>
             </tr>
 
+            <tr id="attachedSkillPersonageId">
+
+            </tr>
+
             <script id="personageByAttachedSkillTemplate" type="text/x-jQuery-tmpl">
                 <input id="personageByAttachedSkill" name="personage" type="hidden" value="${personage.id}"/>
             </script>
-
 
             <tr>
                 <td>
@@ -161,6 +164,10 @@
                         <option value="${id}">${name}</option>
                     </script>
                 </td>
+            </tr>
+
+            <tr id="triggerSkillPersonageId">
+
             </tr>
 
             <script id="personageByTriggerSkillTemplate" type="text/x-jQuery-tmpl">
@@ -281,14 +288,23 @@
                 </td>
                 <td>
                     <select id="merit" name="merit">
-                        <script id="raceHasMeritsWithoutDefaultsTemplate" type="text/x-jQuery-tmpl">
-                            <option value="${merit.id}">${merit.name} (БC: ${merit.cost} РС: ${raceCost})</option>
-                        </script>
-                        <script id="allMeritsWithoutRacesMeritsTemplate" type="text/x-jQuery-tmpl">
-                            <option value="${id}">${name}</option>
-                        </script>
+
                     </select>
+
+                    <script id="meritsSelectTemplate" type="text/x-jQuery-tmpl">
+                        {%each raceHasMeritsWithoutDefaults%}
+                                <option value="${merit.id}">${merit.name} (БC: ${merit.cost} РС: ${raceCost})</option>
+                        {%/each%}
+
+                        {%each allMeritsWithoutRacesMerits%}
+                            <option value="${id}">${name}</option>
+                        {%/each%}
+                    </script>
                 </td>
+            </tr>
+
+            <tr id="meritPersonageId">
+
             </tr>
 
             <script id="personageByMeritTemplate" type="text/x-jQuery-tmpl">
@@ -299,6 +315,85 @@
                 <td colspan="2"><input type="submit" id="linkMeritToPersonageSubmitButton"
                                        name="linkMeritToPersonageSubmitButton"
                                        value="Добавить достоинство"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="personageHasFlawTable">
+    <h2>Недостатки</h2>
+    <table id="personageHasFlawList">
+
+    </table>
+    <div id="linkFlawToPersonageButton">
+        <a class="modalbox" href="#linkFlawToPersonageWindow">
+            <div class="s_button">
+                Добавить недостаток
+            </div>
+        </a>
+    </div>
+</div>
+
+<script id="personageHasFlawListTemplate" type="text/x-jQuery-tmpl">
+        {%each defaultForRaceFlaws%}
+            <tr>
+                <td class='personageTables'>
+                    ${flaw.name}
+                </td>
+                <td class='personageTables'>
+                    Дефолтный для ${race.name}
+                </td>
+            </tr>
+        {%/each%}
+
+        {%each allPersonageHasFlawsWithoutDefaultForRace%}
+            <tr>
+                <td class='personageTables'>
+                    ${flaw.name}
+                </td>
+                <td class='personageTables'>
+                    ${flaw.cost}
+                </td>
+                 <td>
+                    <input type="hidden" name="id" value="${id}"/>
+                    <a href="javascript:void(0)" class="unlinkFlawFromPersonage">Убрать</a>
+                </td>
+            </tr>
+        {%/each%}
+</script>
+
+<div id="linkFlawToPersonageWindow" style="display:none">
+    <form id="linkFlawToPersonageForm" method="post" action="/rest/personage/personageFlaw">
+
+        <table>
+            <tr>
+                <td>
+                    <label for="flaw">
+                        Недостаток
+                    </label>
+                </td>
+                <td>
+                    <select id="flaw" name="flaw">
+                    </select>
+
+                    <script id="flawsSelectTemplate" type="text/x-jQuery-tmpl">
+                            <option value="${id}">${name}</option>
+                    </script>
+                </td>
+            </tr>
+
+            <tr id="flawPersonageId">
+
+            </tr>
+
+            <script id="personageByFlawTemplate" type="text/x-jQuery-tmpl">
+                <input id="personageByFlaw" name="personage" type="hidden" value="${personage.id}"/>
+            </script>
+
+            <tr>
+                <td colspan="2"><input type="submit" id="linkFlawToPersonageSubmitButton"
+                                       name="linkFlawToPersonageSubmitButton"
+                                       value="Добавить недостаток"/></td>
             </tr>
         </table>
     </form>

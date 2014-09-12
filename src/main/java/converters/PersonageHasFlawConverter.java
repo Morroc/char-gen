@@ -13,9 +13,16 @@ import java.util.List;
  */
 public class PersonageHasFlawConverter {
     FlawConverter flawConverter = new FlawConverter();
+    PersonageConverter personageConverter = new PersonageConverter();
 
     public PersonageHasFlawDTO convert(PersonageHasFlaw personageHasFlaw) {
-        return new PersonageHasFlawDTO(personageHasFlaw.getId(), flawConverter.convert(personageHasFlaw.getFlawByPersonage()));
+        return new PersonageHasFlawDTO(personageHasFlaw.getId(), flawConverter.convert(personageHasFlaw.getFlawByPersonage()),
+                personageConverter.convert(personageHasFlaw.getPersonageByFlaw()));
+    }
+
+    public PersonageHasFlaw convert(PersonageHasFlawDTO personageHasFlawDTO) {
+        return new PersonageHasFlaw(personageHasFlawDTO.getId(), flawConverter.convert(personageHasFlawDTO.getFlaw()),
+                personageConverter.convert(personageHasFlawDTO.getPersonage()));
     }
 
     public List<PersonageHasFlawDTO> convert(List<PersonageHasFlaw> allPersonageHasFlaws) {
