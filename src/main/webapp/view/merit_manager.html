@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="/css/pnotify.custom.min.css">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="/javascript/jquery.tmpl.js"></script>
+    <script type="text/javascript" src="/javascript/ajax.js"></script>
+    <script type="text/javascript" src="/javascript/merit.js"></script>
+    <script type="text/javascript" src="/javascript/pnotify.custom.min.js"></script>
+
+    <script type="text/javascript" src="/javascript/jquery.mousewheel-3.0.6.pack.js"></script>
+    <script type="text/javascript" src="/javascript/jquery.fancybox.pack.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css" media="screen"/>
+    <link rel="stylesheet" type="text/css" href="/css/main.css" media="screen"/>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8">
+    <title>Достоинства</title>
+</head>
+<body>
+
+<div id="mainMenu"></div>
+
+<h2>Достоинства</h2>
+
+<h3>Все достоинства</h3>
+
+<div>
+    <table class="data">
+        <thead>
+        <tr>
+            <th>Название</th>
+            <th>Стоимость</th>
+            <th>Описание</th>
+            <th>Бонус</th>
+            <th>Условия</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody id="meritList">
+
+        </tbody>
+    </table>
+</div>
+
+<script id="meritListTemplate" type="text/x-jQuery-tmpl">
+    <tr>
+        <td>${name}</td>
+        <td>${cost}</td>
+        <td>${description}</td>
+        <td>${actionBonus}</td>
+        <td>${preconditions}</td>
+        <td>
+            <input type="hidden" name="id" value="${id}"/>
+            <a href="#linkUpdateMeritWindow" class="updateMerit">Изменить</a>
+        </td>
+        <td>
+            <input type="hidden" name="id" value="${id}"/>
+            <a href="javascript:void(0)" class="deleteMerit">Удалить</a>
+        </td>
+    </tr>
+</script>
+
+<div id="addMeritButton">
+    <a class="modalbox" href="#addMeritWindow">
+        <button>
+            <div class="s_button">
+                Добавить достоинство
+            </div>
+        </button>
+    </a>
+</div>
+
+<div id="addMeritWindow" style="display:none">
+    <form id="addMeritForm" action="/rest/merit/" method="post">
+
+        <table class="merit">
+            <tr>
+                <td><label for="name">
+                    Название достоинства
+                </label></td>
+                <td><input type="text" id="name" name="name"/></td>
+            </tr>
+            <tr>
+                <td><label for="cost">
+                    Стоимость
+                </label></td>
+                <td><input type="text" id="cost" name="cost"/></td>
+            </tr>
+            <tr>
+                <td><label for="description">
+                    Описание
+                </label></td>
+                <td><textarea id="description" name="description" cols="50" rows="10"></textarea></td>
+            </tr>
+            <tr>
+                <td><label for="actionBonus">
+                    Бонус
+                </label></td>
+                <td><input type="text" id="actionBonus" name="actionBonus"/></td>
+            </tr>
+            <tr>
+                <td><label for="preconditions">
+                    Условия
+                </label></td>
+                <td><input type="text" id="preconditions" name="preconditions"/></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" id="addMeritSubmitButton" name="addMeritSubmitButton"
+                                       value="Добавить достоинство"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="linkUpdateMeritWindow" style="display:none">
+    <form id="updateMeritForm" action="/rest/merit/" method="post">
+
+        <table class="merit">
+            <tr>
+                <td><label for="updateName">
+                    Название достоинства
+                </label></td>
+                <td><input type="text" id="updateName" name="name"/></td>
+            </tr>
+            <tr>
+                <td><label for="updateCost">
+                    Стоимость
+                </label></td>
+                <td><input type="text" id="updateCost" name="cost"/></td>
+            </tr>
+            <tr>
+                <td><label for="updateDescription">
+                    Описание
+                </label></td>
+                <td><textarea id="updateDescription" name="description" cols="50" rows="10"></textarea></td>
+            </tr>
+            <tr>
+                <td><label for="updateActionBonus">
+                    Бонус
+                </label></td>
+                <td><input type="text" id="updateActionBonus" name="actionBonus"/></td>
+            </tr>
+            <tr>
+                <td><label for="updatePreconditions">
+                    Условия
+                </label></td>
+                <td><input type="text" id="updatePreconditions" name="preconditions"/></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" id="updateMeritSubmitButton" name="updateMeritSubmitButton"
+                                       value="Сохранить"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+</body>
+</html>

@@ -5,7 +5,7 @@
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script type="text/javascript" src="/javascript/jquery.tmpl.js"></script>
     <script type="text/javascript" src="/javascript/ajax.js"></script>
-    <script type="text/javascript" src="/javascript/merit.js"></script>
+    <script type="text/javascript" src="/javascript/birthMerit.js"></script>
     <script type="text/javascript" src="/javascript/pnotify.custom.min.js"></script>
 
     <script type="text/javascript" src="/javascript/jquery.mousewheel-3.0.6.pack.js"></script>
@@ -20,9 +20,9 @@
 
 <div id="mainMenu"></div>
 
-<h2>Достоинства</h2>
+<h2>Врожденные достоинства</h2>
 
-<h3>Все достоинства</h3>
+<h3>Все врожденные достоинства</h3>
 
 <div>
     <table class="data">
@@ -32,48 +32,46 @@
             <th>Стоимость</th>
             <th>Описание</th>
             <th>Бонус</th>
-            <th>Условия</th>
             <th>&nbsp;</th>
         </tr>
         </thead>
-        <tbody id="meritList">
+        <tbody id="birthMeritList">
 
         </tbody>
     </table>
 </div>
 
-<script id="meritListTemplate" type="text/x-jQuery-tmpl">
+<script id="birthMeritListTemplate" type="text/x-jQuery-tmpl">
     <tr>
         <td>${name}</td>
         <td>${cost}</td>
         <td>${description}</td>
         <td>${actionBonus}</td>
-        <td>${preconditions}</td>
         <td>
             <input type="hidden" name="id" value="${id}"/>
-            <a href="#linkUpdateMeritWindow" class="updateMerit">Изменить</a>
+            <a href="#linkUpdateBirthMeritWindow" class="updateBirthMerit">Изменить</a>
         </td>
         <td>
             <input type="hidden" name="id" value="${id}"/>
-            <a href="javascript:void(0)" class="deleteMerit">Удалить</a>
+            <a href="javascript:void(0)" class="deleteBirthMerit">Удалить</a>
         </td>
     </tr>
 </script>
 
-<div id="addMeritButton">
-    <a class="modalbox" href="#addMeritWindow">
+<div id="addBirthMeritButton">
+    <a class="modalbox" href="#addBirthMeritWindow">
         <button>
             <div class="s_button">
-                Добавить достоинство
+                Добавить врожденное достоинство
             </div>
         </button>
     </a>
 </div>
 
-<div id="addMeritWindow" style="display:none">
-    <form id="addMeritForm" action="/rest/merit/" method="post">
+<div id="addBirthMeritWindow" style="display:none">
+    <form id="addBirthMeritForm" action="/rest/birthMerit/" method="post">
 
-        <table class="flaw">
+        <table class="birthMerit">
             <tr>
                 <td><label for="name">
                     Название достоинства
@@ -99,23 +97,17 @@
                 <td><input type="text" id="actionBonus" name="actionBonus"/></td>
             </tr>
             <tr>
-                <td><label for="preconditions">
-                    Условия
-                </label></td>
-                <td><input type="text" id="preconditions" name="preconditions"/></td>
-            </tr>
-            <tr>
-                <td colspan="2"><input type="submit" id="addMeritSubmitButton" name="addMeritSubmitButton"
+                <td colspan="2"><input type="submit" id="addBirthMeritSubmitButton" name="addBirthMeritSubmitButton"
                                        value="Добавить достоинство"/></td>
             </tr>
         </table>
     </form>
 </div>
 
-<div id="linkUpdateMeritWindow" style="display:none">
-    <form id="updateMeritForm" action="/rest/merit/" method="post">
+<div id="linkUpdateBirthMeritWindow" style="display:none">
+    <form id="updateBirthMeritForm" action="/rest/birthMerit/" method="post">
 
-        <table class="flaw">
+        <table class="birthMerit">
             <tr>
                 <td><label for="updateName">
                     Название достоинства
@@ -141,13 +133,7 @@
                 <td><input type="text" id="updateActionBonus" name="actionBonus"/></td>
             </tr>
             <tr>
-                <td><label for="updatePreconditions">
-                    Условия
-                </label></td>
-                <td><input type="text" id="updatePreconditions" name="preconditions"/></td>
-            </tr>
-            <tr>
-                <td colspan="2"><input type="submit" id="updateMeritSubmitButton" name="updateMeritSubmitButton"
+                <td colspan="2"><input type="submit" id="updateBirthMeritSubmitButton" name="updateBirthMeritSubmitButton"
                                        value="Сохранить"/></td>
             </tr>
         </table>

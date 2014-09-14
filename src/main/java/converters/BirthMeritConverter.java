@@ -21,6 +21,12 @@ public class BirthMeritConverter {
     }
 
     public BirthMeritDTO convert(BirthMerit birthMerit) {
-        return new BirthMeritDTO();
+        return new BirthMeritDTO(birthMerit.getId(), birthMerit.getName(), birthMerit.getCost(),
+                birthMerit.getDescription(), birthMerit.getActionBonus());
+    }
+
+    public BirthMerit convert(BirthMeritDTO birthMeritDTO) {
+        return new BirthMerit(birthMeritDTO.getId(), birthMeritDTO.getName(), birthMeritDTO.getCost(),
+                birthMeritDTO.getDescription(), birthMeritDTO.getActionBonus());
     }
 }

@@ -40,6 +40,14 @@ public class BirthMerit {
     public BirthMerit() {
     }
 
+    public BirthMerit(int id, String name, int cost, String description, String actionBonus) {
+        this.id = id;
+        this.name = name;
+        this.cost = cost;
+        this.description = description;
+        this.actionBonus = actionBonus;
+    }
+
     public int getId() {
         return id;
     }
