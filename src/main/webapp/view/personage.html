@@ -36,11 +36,11 @@
                 <td class='personageTables'>${attribute.name}</td>
                 <input name="id" type="hidden" value="${id}"/>
                 <td>
-                    <a href="javascript:void(0)" class="minus"><button>-</button></a>
+                    <a href="javascript:void(0)" class="minusAttribute"><button>-</button></a>
                 </td>
                 <td class='personageTables' name="currentValue">${currentValue}</td>
                 <td>
-                    <a href="javascript:void(0)" class="plus"><button>+</button></a>
+                    <a href="javascript:void(0)" class="plusAttribute"><button>+</button></a>
                 </td>
             </tr>
 </script>
@@ -81,7 +81,14 @@
 <script id="personageHasAttachedSkillListTemplate" type="text/x-jQuery-tmpl">
             <tr>
                 <td class='personageTables'>${attachedSkill.name}</td>
+                <input name="id" type="hidden" value="${id}"/>
+                <td>
+                    <a href="javascript:void(0)" class="minusAttachedSkill"><button>-</button></a>
+                </td>
                 <td class='personageTables'>${currentValue}</td>
+                <td>
+                    <a href="javascript:void(0)" class="plusAttachedSkill"><button>+</button></a>
+                </td>
                 <td>
                     <input type="hidden" name="id" value="${id}"/>
                     <a href="javascript:void(0)" class="unlinkAttachedSkillFromPersonage">Убрать</a>
@@ -131,6 +138,25 @@
                                        name="linkAttachedSkillToPersonageSubmitButton"
                                        value="Добавить прикрепленный навык"/></td>
             </tr>
+        </table>
+    </form>
+</div>
+
+<div id="updatePersonageAttachedSkillFormContainer" style="display:none">
+    <form id="updatePersonageAttachedSkillForm" action="/rest/personage/personageAttachedSkill" method="post">
+        <table>
+            <tr id="attachedSkillByPersonageId"></tr>
+            <script id="attachedSkillByPersonageTemplate" type="text/x-jQuery-tmpl">
+                <input id="updateAttachedSkill" name="attachedSkill" type="hidden" value="${id}"/>
+            </script>
+            <tr id="personageByAttachedSkillId"></tr>
+            <script id="personageByAttachedSkilTemplate" type="text/x-jQuery-tmpl">
+                <input id="updatePersonageByAttachedSkill" name="personage" type="hidden" value="${personage.id}"/>
+            </script>
+            <tr id="attachedSkillValue"></tr>
+            <script id="attachedSkillValueTemplate" type="text/x-jQuery-tmpl">
+                <input id="updateCurrentValue" name="currentValue" type="hidden" value="${currentValue}"/>
+            </script>
         </table>
     </form>
 </div>

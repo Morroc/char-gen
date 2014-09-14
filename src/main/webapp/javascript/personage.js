@@ -114,11 +114,22 @@ $(document).ready(function () {
 
     $("#updatePersonageAttributeForm").submit(function (event) {
         event.preventDefault();
-        var personageHasAttr = $(this).serializeObject();
-        personageHasAttr.attribute = {id: personageHasAttr.attribute};
-        personageHasAttr.personage = {id: personageHasAttr.personage};
-        personageHasAttr.personage.race = {id: personageHasAttr.personage.race};
-        ajax.postJsonData($(this), JSON.stringify(personageHasAttr), function (personageWithAllRelatedEntitiesJson) {
+        var personageHasAttribute = $(this).serializeObject();
+        personageHasAttribute.attribute = {id: personageHasAttribute.attribute};
+        personageHasAttribute.personage = {id: personageHasAttribute.personage};
+        personageHasAttribute.personage.race = {id: personageHasAttribute.personage.race};
+        ajax.postJsonData($(this), JSON.stringify(personageHasAttribute), function (personageWithAllRelatedEntitiesJson) {
+            renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntitiesJson);
+        }, errorHandler);
+    });
+
+    $("#updatePersonageAttachedSkillForm").submit(function (event) {
+        event.preventDefault();
+        var personageHasAttachedSkill = $(this).serializeObject();
+        personageHasAttachedSkill.attachedSkill = {id: personageHasAttachedSkill.attachedSkill};
+        personageHasAttachedSkill.personage = {id: personageHasAttachedSkill.personage};
+        personageHasAttachedSkill.personage.race = {id: personageHasAttachedSkill.personage.race};
+        ajax.postJsonData($(this), JSON.stringify(personageHasAttachedSkill), function (personageWithAllRelatedEntitiesJson) {
             renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntitiesJson);
         }, errorHandler);
     });
@@ -133,6 +144,7 @@ function renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntiti
     $("#meritPersonageId").html($("#personageByMeritTemplate").tmpl(personageWithAllRelatedEntitiesJson));
     $("#flawPersonageId").html($("#personageByFlawTemplate").tmpl(personageWithAllRelatedEntitiesJson));
     $("#personageByAttributeId").html($("#personageByAttributeTemplate").tmpl(personageWithAllRelatedEntitiesJson));
+    $("#personageByAttachedSkillId").html($("#personageByAttachedSkilTemplate").tmpl(personageWithAllRelatedEntitiesJson));
 
     $("#personageHasAttributeList").html($("#personageHasAttributeListTemplate").tmpl(personageWithAllRelatedEntitiesJson.valueOf()['personageAttributes']));
 
@@ -160,7 +172,7 @@ function renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntiti
         }, errorHandler);
     });
 
-    $('.plus').click(function () {
+    $('.plusAttribute').click(function () {
         var id = $(this).parent().parent().find("[name=id]").val();
         var raceId = personageWithAllRelatedEntitiesJson.personage.race.id;
 
@@ -169,13 +181,25 @@ function renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntiti
         }, errorHandler);
     });
 
-    $('.minus').click(function () {
+    $('.minusAttribute').click(function () {
         var id = $(this).parent().parent().find("[name=id]").val();
         var raceId = personageWithAllRelatedEntitiesJson.personage.race.id;
 
         ajax.getJsonData('/rest/race/'.concat(raceId), function (raceWithAllRelatedEntitiesJson) {
             updateAttributeValue(raceWithAllRelatedEntitiesJson, personageWithAllRelatedEntitiesJson, id, '-');
         }, errorHandler);
+    });
+
+    $('.plusAttachedSkill').click(function () {
+        var id = $(this).parent().parent().find("[name=id]").val();
+
+        updateAttachedSkillValue(personageWithAllRelatedEntitiesJson, id, '+');
+    });
+
+    $('.minusAttachedSkill').click(function () {
+        var id = $(this).parent().parent().find("[name=id]").val();
+
+        updateAttachedSkillValue(personageWithAllRelatedEntitiesJson, id, '-');
     });
 }
 
@@ -270,5 +294,28 @@ function updateAttributeValue(raceWithAllRelatedEntitiesJson, personageWithAllRe
     $("#attributeCurrentValue").html($("#currentValueTemplate").tmpl(personageHasAttribute));
     $('#updatePersonageAttributeForm').attr('action', '/rest/personage/personageAttribute/' + personageHasAttribute.id);
     $("#updatePersonageAttributeForm").submit();
+}
+
+function updateAttachedSkillValue(personageWithAllRelatedEntitiesJson, personageAttachedSkillId, plusOrMinusOne) {
+    var personageHasAttachedSkill;
+    for (var i = 0; i < personageWithAllRelatedEntitiesJson.personageAttachedSkills.length; i++) {
+        if (personageWithAllRelatedEntitiesJson.personageAttachedSkills[i].id == personageAttachedSkillId) {
+            personageHasAttachedSkill = personageWithAllRelatedEntitiesJson.personageAttachedSkills[i];
+        }
+    }
+
+    if(plusOrMinusOne == '+') {
+        personageHasAttachedSkill.currentValue = personageHasAttachedSkill.currentValue + 1;
+    } else {
+        if(personageHasAttachedSkill.currentValue == 1) {
+            alert("Навык не может быть меньше 1");
+            return;
+        }
+        personageHasAttachedSkill.currentValue = personageHasAttachedSkill.currentValue - 1;
+    }
+    $("#attachedSkillByPersonageId").html($("#attachedSkillByPersonageTemplate").tmpl(personageHasAttachedSkill.attachedSkill));
+    $("#attachedSkillValue").html($("#attachedSkillValueTemplate").tmpl(personageHasAttachedSkill));
+    $('#updatePersonageAttachedSkillForm').attr('action', '/rest/personage/personageAttachedSkill/' + personageHasAttachedSkill.id);
+    $("#updatePersonageAttachedSkillForm").submit();
 }
 

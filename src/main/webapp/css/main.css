@@ -39,5 +39,8 @@ body {
     left: 350px;
 }
 
-input.plus { width:25px; height:25px;}
-input.minus { width:25px; height:25px;}
+input.plusAttribute { width:25px; height:25px;}
+input.minusAttribute { width:25px; height:25px;}
+
+input.plusAttachedSkill { width:25px; height:25px;}
+input.minusAttachedSkill { width:25px; height:25px;}

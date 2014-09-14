@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<h2><a href="/main.jsp">Главная</a></h2>
+<h2><a href="/oldCode/main.jsp">Главная</a></h2>
 
 <h2>Персонаж ${personage.name}</h2>
 

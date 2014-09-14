@@ -233,11 +233,6 @@ public class PersonageRestController {
         personageHasAttachedSkillDTO.setId(id);
         PersonageHasAttachedSkill personageHasAttachedSkill = personageHasAttachedSkillConverter.convert(personageHasAttachedSkillDTO);
 
-        personageHasAttachedSkill.setAttachedSkillByPersonage(
-                personageHasAttachedSkillService.getPersonageHasAttachedSkillById(id).getAttachedSkillByPersonage());
-        personageHasAttachedSkill.setPersonageByAttachedSkill(
-                personageHasAttachedSkillService.getPersonageHasAttachedSkillById(id).getPersonageByAttachedSkill());
-
         personageHasAttachedSkillService.updatePersonageHasAttachedSkill(personageHasAttachedSkill);
         return getPersonage(personageId);
     }
