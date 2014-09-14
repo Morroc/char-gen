@@ -11,7 +11,7 @@ body {
 }
 
 #personageHasAttributeTable, #personageHasAttachedSkillTable, #personageHasTriggerSkillTable,
-#personageHasMeritTable, #personageHasFlawTable {
+#personageHasMeritTable, #personageHasFlawTable, #personageHasBirthMeritTable {
     height: 320px;
     width: 300px;
 }
@@ -37,6 +37,12 @@ body {
     position: relative;
     top: -940px;
     left: 350px;
+}
+
+#personageHasBirthMeritTable {
+    position: relative;
+    top: -1280px;
+    left: 700px;
 }
 
 input.plusAttribute { width:25px; height:25px;}

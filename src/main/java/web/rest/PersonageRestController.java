@@ -94,6 +94,8 @@ public class PersonageRestController {
                 personageHasAttachedSkillConverter.convert(personageHasAttachedSkillService.getPersonageHasAttachedSkillsByPersonageId(id)));
         personageWithAllRelatedEntitiesDTO.setPersonageTriggerSkills(
                 personageHasTriggerSkillConverter.convert(personageHasTriggerSkillService.getPersonageHasTriggerSkillsByPersonageId(id)));
+        personageWithAllRelatedEntitiesDTO.setPersonageBirthMerits(
+                personageHasBirthMeritConverter.convert(personageHasBirthMeritService.getPersonageHasBirthMeritsByPersonageId(id)));
 
         return personageWithAllRelatedEntitiesDTO;
     }

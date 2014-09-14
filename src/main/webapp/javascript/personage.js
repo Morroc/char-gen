@@ -172,6 +172,8 @@ function renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntiti
         }, errorHandler);
     });
 
+    $("#personageHasBirthMeritList").html($("#personageHasBirthMeritListTemplate").tmpl(personageWithAllRelatedEntitiesJson.valueOf()['personageBirthMerits']));
+
     $('.plusAttribute').click(function () {
         var id = $(this).parent().parent().find("[name=id]").val();
         var raceId = personageWithAllRelatedEntitiesJson.personage.race.id;

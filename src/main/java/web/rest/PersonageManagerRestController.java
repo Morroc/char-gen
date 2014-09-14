@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import services.*;
 import web.rest.dto.PersonageDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,6 +39,13 @@ public class PersonageManagerRestController {
 
     @Autowired
     private PersonageHasFlawService personageHasFlawService;
+
+    @Autowired
+    private RaceHasBirthMeritService raceHasBirthMeritService;
+
+    @Autowired
+    private PersonageHasBirthMeritService personageHasBirthMeritService;
+
     PersonageConverter personageConverter = new PersonageConverter();
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -64,6 +72,12 @@ public class PersonageManagerRestController {
         List<PersonageHasFlaw> personageHasFlaws = personageHasFlawService.getPersonageHasFlawsByPersonageId(id);
         for (PersonageHasFlaw personageHasFlaw : personageHasFlaws) {
             personageHasFlawService.deleteLinkFlawWithPersonage(personageHasFlaw);
+        }
+
+        //delete birth merits
+        List<PersonageHasBirthMerit> personageHasBirthMerits = personageHasBirthMeritService.getPersonageHasBirthMeritsByPersonageId(id);
+        for (PersonageHasBirthMerit personageHasBirthMerit : personageHasBirthMerits) {
+            personageHasBirthMeritService.deleteLinkBirthMeritWithPersonage(personageHasBirthMerit);
         }
 
         //delete personage
@@ -110,6 +124,19 @@ public class PersonageManagerRestController {
                 personageHasFlawService.addLinkFlawWithPersonage(personageHasFlaw);
             }
         }
+
+        //role birth merits and add they
+        List<RaceHasBirthMerit> raceHasBirthMerits = raceHasBirthMeritService.getRaceHasBirthMeritsByRaceId(raceIdOfPersonage);
+        for (RaceHasBirthMerit raceHasBirthMerit : raceHasBirthMerits) {
+            if (raceHasBirthMeritService.roleBirthMerit(raceHasBirthMerit.getProbability())) {
+                PersonageHasBirthMerit personageHasBirthMerit = new PersonageHasBirthMerit();
+                personageHasBirthMerit.setBirthMeritByPersonage(raceHasBirthMerit.getBirthMeritByRace());
+                personageHasBirthMerit.setPersonageByBirthMerit(personage);
+                personageHasBirthMerit.setCurrentValue(0);
+                personageHasBirthMeritService.addLinkBirthMeritWithPersonage(personageHasBirthMerit);
+            }
+        }
+
         return listPersonages();
     }
 
