@@ -26,6 +26,16 @@ public class PersonageHasAttribute {
     @Column(name = "current_value")
     private int currentValue;
 
+    public PersonageHasAttribute() {
+    }
+
+    public PersonageHasAttribute(int id, Attribute attributeByPersonage, Personage personageByAttribute, int currentValue) {
+        this.id = id;
+        this.attributeByPersonage = attributeByPersonage;
+        this.personageByAttribute = personageByAttribute;
+        this.currentValue = currentValue;
+    }
+
     public int getId() {
         return id;
     }

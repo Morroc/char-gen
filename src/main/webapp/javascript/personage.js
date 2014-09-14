@@ -111,6 +111,17 @@ $(document).ready(function () {
             }, errorHandler);
         }, errorHandler);
     });
+
+    $("#updatePersonageAttributeForm").submit(function (event) {
+        event.preventDefault();
+        var personageHasAttr = $(this).serializeObject();
+        personageHasAttr.attribute = {id: personageHasAttr.attribute};
+        personageHasAttr.personage = {id: personageHasAttr.personage};
+        personageHasAttr.personage.race = {id: personageHasAttr.personage.race};
+        ajax.postJsonData($(this), JSON.stringify(personageHasAttr), function (personageWithAllRelatedEntitiesJson) {
+            renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntitiesJson);
+        }, errorHandler);
+    });
 });
 
 function renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntitiesJson) {
@@ -121,6 +132,7 @@ function renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntiti
     $("#triggerSkillPersonageId").html($("#personageByTriggerSkillTemplate").tmpl(personageWithAllRelatedEntitiesJson));
     $("#meritPersonageId").html($("#personageByMeritTemplate").tmpl(personageWithAllRelatedEntitiesJson));
     $("#flawPersonageId").html($("#personageByFlawTemplate").tmpl(personageWithAllRelatedEntitiesJson));
+    $("#personageByAttributeId").html($("#personageByAttributeTemplate").tmpl(personageWithAllRelatedEntitiesJson));
 
     $("#personageHasAttributeList").html($("#personageHasAttributeListTemplate").tmpl(personageWithAllRelatedEntitiesJson.valueOf()['personageAttributes']));
 
@@ -145,6 +157,24 @@ function renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntiti
             $(_this).parent().parent().fadeToggle("slow", function () {
                 $(this).remove();
             });
+        }, errorHandler);
+    });
+
+    $('.plus').click(function () {
+        var id = $(this).parent().parent().find("[name=id]").val();
+        var raceId = personageWithAllRelatedEntitiesJson.personage.race.id;
+
+        ajax.getJsonData('/rest/race/'.concat(raceId), function (raceWithAllRelatedEntitiesJson) {
+            updateAttributeValue(raceWithAllRelatedEntitiesJson, personageWithAllRelatedEntitiesJson, id, '+');
+        }, errorHandler);
+    });
+
+    $('.minus').click(function () {
+        var id = $(this).parent().parent().find("[name=id]").val();
+        var raceId = personageWithAllRelatedEntitiesJson.personage.race.id;
+
+        ajax.getJsonData('/rest/race/'.concat(raceId), function (raceWithAllRelatedEntitiesJson) {
+            updateAttributeValue(raceWithAllRelatedEntitiesJson, personageWithAllRelatedEntitiesJson, id, '-');
         }, errorHandler);
     });
 }
@@ -205,5 +235,40 @@ function renderDifferentTypesOfFlawsForPersonageJson(differentTypesOfFlawsForPer
             });
         }, errorHandler);
     });
+}
+
+function updateAttributeValue(raceWithAllRelatedEntitiesJson, personageWithAllRelatedEntitiesJson, personageAttributeId, plusOrMinusOne) {
+    var personageHasAttribute;
+    for (var i = 0; i < personageWithAllRelatedEntitiesJson.personageAttributes.length; i++) {
+        if (personageWithAllRelatedEntitiesJson.personageAttributes[i].id == personageAttributeId) {
+            personageHasAttribute = personageWithAllRelatedEntitiesJson.personageAttributes[i];
+        }
+    }
+
+    var raceHasAttributeByPersonage;
+    for(var a = 0; a < raceWithAllRelatedEntitiesJson.raceAttributes.length; a++){
+        if(raceWithAllRelatedEntitiesJson.raceAttributes[a].attribute.id == personageHasAttribute.attribute.id) {
+            raceHasAttributeByPersonage = raceWithAllRelatedEntitiesJson.raceAttributes[a];
+        }
+    }
+
+    if(plusOrMinusOne == '+') {
+        if(personageHasAttribute.currentValue == raceHasAttributeByPersonage.maxValue) {
+            alert("Для данной расы атрибут " + raceHasAttributeByPersonage.attribute.name
+                + " не может быть больше " + raceHasAttributeByPersonage.maxValue);
+            return;
+        }
+        personageHasAttribute.currentValue = personageHasAttribute.currentValue + 1;
+    } else {
+        if(personageHasAttribute.currentValue == 1) {
+            alert("Атрибут не может быть меньше 1");
+            return;
+        }
+        personageHasAttribute.currentValue = personageHasAttribute.currentValue - 1;
+    }
+    $("#attributeByPersonageId").html($("#attributeByPersonageTemplate").tmpl(personageHasAttribute));
+    $("#attributeCurrentValue").html($("#currentValueTemplate").tmpl(personageHasAttribute));
+    $('#updatePersonageAttributeForm').attr('action', '/rest/personage/personageAttribute/' + personageHasAttribute.id);
+    $("#updatePersonageAttributeForm").submit();
 }
 

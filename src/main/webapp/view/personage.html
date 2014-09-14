@@ -34,9 +34,35 @@
 <script id="personageHasAttributeListTemplate" type="text/x-jQuery-tmpl">
             <tr>
                 <td class='personageTables'>${attribute.name}</td>
-                <td class='personageTables'>${currentValue}</td>
+                <input name="id" type="hidden" value="${id}"/>
+                <td>
+                    <a href="javascript:void(0)" class="minus"><button>-</button></a>
+                </td>
+                <td class='personageTables' name="currentValue">${currentValue}</td>
+                <td>
+                    <a href="javascript:void(0)" class="plus"><button>+</button></a>
+                </td>
             </tr>
 </script>
+
+<div id="updatePersonageAttributeFormContainer" style="display:none">
+    <form id="updatePersonageAttributeForm" action="/rest/personage/personageAttribute/" method="post">
+        <table>
+            <tr id="attributeByPersonageId"></tr>
+            <script id="attributeByPersonageTemplate" type="text/x-jQuery-tmpl">
+                <input id="attribute" name="attribute" type="hidden" value="${attribute.id}"/>
+            </script>
+            <tr id="personageByAttributeId"></tr>
+            <script id="personageByAttributeTemplate" type="text/x-jQuery-tmpl">
+                <input id="personageByAttribute" name="personage" type="hidden" value="${personage.id}"/>
+            </script>
+            <tr id="attributeCurrentValue"></tr>
+            <script id="currentValueTemplate" type="text/x-jQuery-tmpl">
+                <input id="currentValue" name="currentValue" type="hidden" value="${currentValue}"/>
+            </script>
+        </table>
+    </form>
+</div>
 
 <div id="personageHasAttachedSkillTable">
     <h2>Прикрепленные навыки</h2>

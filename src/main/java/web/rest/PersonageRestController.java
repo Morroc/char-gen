@@ -58,6 +58,9 @@ public class PersonageRestController {
     @Autowired
     private PersonageHasBirthMeritService personageHasBirthMeritService;
 
+    @Autowired
+    private RaceHasAttributeService raceHasAttributeService;
+
     PersonageConverter personageConverter = new PersonageConverter();
     PersonageHasAttributeConverter personageHasAttributeConverter = new PersonageHasAttributeConverter();
     PersonageHasBirthMeritConverter personageHasBirthMeritConverter = new PersonageHasBirthMeritConverter();
@@ -341,7 +344,7 @@ public class PersonageRestController {
 
     @RequestMapping(value = "/personageFlaw/{id}", method = RequestMethod.POST)
     public PersonageWithAllRelatedEntitiesDTO updatePersonageHasFlaw(@PathVariable Integer id,
-                                                                      @RequestBody PersonageHasFlawDTO personageHasFlawDTO) {
+                                                                     @RequestBody PersonageHasFlawDTO personageHasFlawDTO) {
         personageHasFlawDTO.setId(id);
         PersonageHasFlaw personageHasFlaw = personageHasFlawConverter.convert(personageHasFlawDTO);
 
@@ -359,6 +362,18 @@ public class PersonageRestController {
         PersonageHasFlaw personageHasFlaw = personageHasFlawService.getPersonageHasFlawById(id);
 
         personageHasFlawService.deleteLinkFlawWithPersonage(personageHasFlaw);
+        return getPersonage(personageId);
+    }
+
+    @RequestMapping(value = "/personageAttribute/{id}", method = RequestMethod.POST)
+    public PersonageWithAllRelatedEntitiesDTO updatePersonageHasAttribute(@PathVariable Integer id,
+                                                                          @RequestBody PersonageHasAttributeDTO personageHasAttributeDTO) {
+        personageHasAttributeDTO.setId(id);
+
+        PersonageHasAttribute personageHasAttribute = personageHasAttributeConverter.convert(personageHasAttributeDTO);
+
+        personageHasAttributeService.updatePersonageHasAttribute(personageHasAttribute);
+
         return getPersonage(personageId);
     }
 

@@ -10,14 +10,17 @@ public class PersonageHasAttributeDTO {
 
     private AttributeDTO attribute;
 
+    private PersonageDTO personage;
+
     private int currentValue;
 
     public PersonageHasAttributeDTO() {
     }
 
-    public PersonageHasAttributeDTO(int id, AttributeDTO attribute, int currentValue) {
+    public PersonageHasAttributeDTO(int id, AttributeDTO attribute, PersonageDTO personage, int currentValue) {
         this.id = id;
         this.attribute = attribute;
+        this.personage = personage;
         this.currentValue = currentValue;
     }
 
@@ -35,6 +38,14 @@ public class PersonageHasAttributeDTO {
 
     public void setAttribute(AttributeDTO attribute) {
         this.attribute = attribute;
+    }
+
+    public PersonageDTO getPersonage() {
+        return personage;
+    }
+
+    public void setPersonage(PersonageDTO personage) {
+        this.personage = personage;
     }
 
     public int getCurrentValue() {
