@@ -8,13 +8,19 @@ package web.rest.dto;
 public class RaceHasBirthMeritDTO {
     private int id;
 
-    private double probability;
+    private BirthMeritDTO birthMerit;
+
+    private RaceDTO race;
+
+    private int probability;
 
     public RaceHasBirthMeritDTO() {
     }
 
-    public RaceHasBirthMeritDTO(int id, double probability) {
+    public RaceHasBirthMeritDTO(int id, BirthMeritDTO birthMerit, RaceDTO race, int probability) {
         this.id = id;
+        this.birthMerit = birthMerit;
+        this.race = race;
         this.probability = probability;
     }
 
@@ -26,11 +32,27 @@ public class RaceHasBirthMeritDTO {
         this.id = id;
     }
 
-    public double getProbability() {
+    public BirthMeritDTO getBirthMerit() {
+        return birthMerit;
+    }
+
+    public void setBirthMerit(BirthMeritDTO birthMerit) {
+        this.birthMerit = birthMerit;
+    }
+
+    public RaceDTO getRace() {
+        return race;
+    }
+
+    public void setRace(RaceDTO race) {
+        this.race = race;
+    }
+
+    public int getProbability() {
         return probability;
     }
 
-    public void setProbability(double probability) {
+    public void setProbability(int probability) {
         this.probability = probability;
     }
 }

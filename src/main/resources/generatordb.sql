@@ -323,7 +323,7 @@ CREATE  TABLE IF NOT EXISTS `generatordb`.`race_has_birth_merit` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `birth_merit_id` INT NOT NULL ,
   `race_id` INT NOT NULL ,
-  `probability` DOUBLE NULL ,
+  `probability` INT NULL ,
   PRIMARY KEY (`id`, `birth_merit_id`, `race_id`) ,
   INDEX `fk_race_has_birthmerit_birthmerit1` (`birth_merit_id` ASC) ,
   INDEX `fk_race_has_birthmerit_race1` (`race_id` ASC) ,

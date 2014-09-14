@@ -24,7 +24,17 @@ public class RaceHasBirthMerit {
     private Race raceByBirthMerit;
 
     @Column(name = "probability")
-    private double probability;
+    private int probability;
+
+    public RaceHasBirthMerit() {
+    }
+
+    public RaceHasBirthMerit(int id, BirthMerit birthMeritByRace, Race raceByBirthMerit, int probability) {
+        this.id = id;
+        this.birthMeritByRace = birthMeritByRace;
+        this.raceByBirthMerit = raceByBirthMerit;
+        this.probability = probability;
+    }
 
     public int getId() {
         return id;
@@ -50,11 +60,11 @@ public class RaceHasBirthMerit {
         this.raceByBirthMerit = raceByBirthMerit;
     }
 
-    public double getProbability() {
+    public int getProbability() {
         return probability;
     }
 
-    public void setProbability(double probability) {
+    public void setProbability(int probability) {
         this.probability = probability;
     }
 }

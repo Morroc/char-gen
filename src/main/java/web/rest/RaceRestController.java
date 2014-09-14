@@ -43,10 +43,17 @@ public class RaceRestController {
     @Autowired
     private PersonageHasFlawService personageHasFlawService;
 
+    @Autowired
+    private RaceHasBirthMeritService raceHasBirthMeritService;
+
+    @Autowired
+    private PersonageHasBirthMeritService personageHasBirthMeritService;
+
     RaceConverter raceConverter = new RaceConverter();
     RaceHasAttributeConverter raceHasAttributeConverter = new RaceHasAttributeConverter();
     RaceHasMeritConverter raceHasMeritConverter = new RaceHasMeritConverter();
     RaceHasFlawConverter raceHasFlawConverter = new RaceHasFlawConverter();
+    RaceHasBirthMeritConverter raceHasBirthMeritConverter = new RaceHasBirthMeritConverter();
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public RaceWithAllRelatedEntitiesDTO getRace(@PathVariable Integer id) {
@@ -57,6 +64,7 @@ public class RaceRestController {
         raceWithAllRelatedEntitiesDTO.setRaceAttributes(raceHasAttributeConverter.convert(raceHasAttributeService.getRaceHasAttributesByRaceId(id)));
         raceWithAllRelatedEntitiesDTO.setRaceMerits(raceHasMeritConverter.convert(raceHasMeritService.getRaceHasMeritsByRaceId(id)));
         raceWithAllRelatedEntitiesDTO.setRaceFlaws(raceHasFlawConverter.convert(raceHasFlawService.getRaceHasFlawsByRaceId(id)));
+        raceWithAllRelatedEntitiesDTO.setRaceBirthMerits(raceHasBirthMeritConverter.convert(raceHasBirthMeritService.getRaceHasBirthMeritsByRaceId(id)));
 
         return raceWithAllRelatedEntitiesDTO;
     }
@@ -152,7 +160,7 @@ public class RaceRestController {
     }
 
     @RequestMapping(value = "/raceFlaw/{id}", method = RequestMethod.DELETE)
-    public RaceWithAllRelatedEntitiesDTO deleteRAceHasFlaw(@PathVariable("id") Integer id) {
+    public RaceWithAllRelatedEntitiesDTO deleteRaceHasFlaw(@PathVariable("id") Integer id) {
         RaceHasFlaw raceHasFlaw = raceHasFlawService.getRaceHasFlawById(id);
         Integer raceId = raceHasFlaw.getRaceByFlaw().getId();
 
@@ -166,6 +174,45 @@ public class RaceRestController {
         }
 
         raceHasFlawService.deleteLinkFlawWithRace(raceHasFlaw);
+        return getRace(raceId);
+    }
+
+    @RequestMapping(value = "/raceBirthMerit", method = RequestMethod.PUT)
+    public RaceWithAllRelatedEntitiesDTO addRaceHasBirthMerit(@RequestBody RaceHasBirthMeritDTO raceHasBirthMeritDTO) {
+        RaceHasBirthMerit raceHasBirthMerit = raceHasBirthMeritConverter.convert(raceHasBirthMeritDTO);
+
+        int raceId = raceHasBirthMerit.getRaceByBirthMerit().getId();
+        raceHasBirthMeritService.addLinkBirthMeritWithRace(raceHasBirthMerit);
+
+        List<Personage> personages = personageService.getPersonagesByRaceId(raceId);
+        for (Personage personage : personages) {
+            if(raceHasBirthMeritService.roleBirthMerit(raceHasBirthMerit.getProbability())) {
+                PersonageHasBirthMerit personageHasBirthMerit = new PersonageHasBirthMerit();
+                personageHasBirthMerit.setBirthMeritByPersonage(raceHasBirthMerit.getBirthMeritByRace());
+                personageHasBirthMerit.setPersonageByBirthMerit(personage);
+                personageHasBirthMerit.setCurrentValue(0);
+                personageHasBirthMeritService.addLinkBirthMeritWithPersonage(personageHasBirthMerit);
+            }
+        }
+
+        return getRace(raceId);
+    }
+
+    @RequestMapping(value = "/raceBirthMerit/{id}", method = RequestMethod.DELETE)
+    public RaceWithAllRelatedEntitiesDTO deleteRaceBirthMerit(@PathVariable("id") Integer id) {
+        RaceHasBirthMerit raceHasBirthMerit = raceHasBirthMeritService.getRaceHasBirthMeritById(id);
+        Integer raceId = raceHasBirthMerit.getRaceByBirthMerit().getId();
+
+        List<Personage> personages = personageService.getPersonagesByRaceId(raceId);
+        for (Personage personage : personages) {
+            PersonageHasBirthMerit personageHasBirthMerit = personageHasBirthMeritService.
+                    getPersonageHasBirthMeritByBirthMeritIdAndPersonageId(raceHasBirthMerit.getBirthMeritByRace().getId(), personage.getId());
+            if(personageHasBirthMerit != null) {
+                personageHasBirthMeritService.deleteLinkBirthMeritWithPersonage(personageHasBirthMerit);
+            }
+        }
+
+        raceHasBirthMeritService.deleteLinkBirthMeritWithRace(raceHasBirthMerit);
         return getRace(raceId);
     }
 }

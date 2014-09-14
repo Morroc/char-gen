@@ -61,7 +61,7 @@ public class RaceHasBirthMeritDAOImpl implements RaceHasBirthMeritDAO {
     }
 
     @Override
-    public List<RaceHasBirthMerit> getRaceHasBirthMeritByRaceId(int raceId) {
+    public List<RaceHasBirthMerit> getRaceHasBirthMeritsByRaceId(int raceId) {
         Session session = sessionFactory.getCurrentSession();
         List<RaceHasBirthMerit> raceHasBirthMerits = session.createSQLQuery(
                 "select * from race_has_birth_merit where race_id = :id"

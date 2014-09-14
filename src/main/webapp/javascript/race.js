@@ -19,6 +19,10 @@ $(document).ready(function () {
         renderMeritListJson(meritListJson);
     }, errorHandler);
 
+    ajax.getJsonData('/rest/birthMerit/', function (birthMeritListJson) {
+        renderBirthMeritListJson(birthMeritListJson);
+    }, errorHandler);
+
     $(".modalbox").fancybox();
 
     $("#linkAttributeToRaceForm").submit(function (event) {
@@ -75,6 +79,24 @@ $(document).ready(function () {
             $.fancybox.hideLoading();
         }, errorHandler);
     });
+
+    $("#linkBirthMeritToRaceForm").submit(function (event) {
+        event.preventDefault();
+        $.fancybox.showLoading();
+        var raceHasBirthMerit = $(this).serializeObject();
+        raceHasBirthMerit.birthMerit = {id: raceHasBirthMerit.birthMerit};
+        raceHasBirthMerit.race = {id: raceHasBirthMerit.race};
+        ajax.putJsonData($(this), JSON.stringify(raceHasBirthMerit), function (raceWithAllRelatedEntitiesJson) {
+            renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson);
+            $.fancybox.close();
+            new PNotify({
+                title: 'Инфо',
+                text: 'Врожденное достоинство добавлено к расе успешно.'
+            });
+            $.fancybox.close();
+            $.fancybox.hideLoading();
+        }, errorHandler);
+    });
 });
 
 function renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson) {
@@ -84,6 +106,7 @@ function renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson) {
     $("#raceByAttributeId").html($("#raceByAttributeTemplate").tmpl(raceWithAllRelatedEntitiesJson));
     $("#raceByMeritId").html($("#raceByMeritTemplate").tmpl(raceWithAllRelatedEntitiesJson));
     $("#raceByFlawId").html($("#raceByFlawTemplate").tmpl(raceWithAllRelatedEntitiesJson));
+    $("#raceByBirthMeritId").html($("#raceByBirthMeritTemplate").tmpl(raceWithAllRelatedEntitiesJson));
 
     $("#raceHasAttributeList").html($("#raceHasAttributeListTemplate").tmpl(raceWithAllRelatedEntitiesJson.valueOf()['raceAttributes']));
 
@@ -120,18 +143,34 @@ function renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson) {
             });
         }, errorHandler);
     });
+
+    $("#raceHasBirthMeritList").html($("#raceHasBirthMeritListTemplate").tmpl(raceWithAllRelatedEntitiesJson.valueOf()['raceBirthMerits']));
+
+    $('.unlinkBirthMeritFromRace').click(function () {
+        var id = $(this).parent().find("[name=id]").val();
+        _this = $(this);
+        ajax.deleteJsonData('/rest/race/raceBirthMerit', id, function (raceMerit) {
+            $(_this).parent().parent().fadeToggle("slow", function () {
+                $(this).remove();
+            });
+        }, errorHandler);
+    });
 }
 
 function renderAttributeListJson(attributeListJson) {
-    $("#attributeByRaceSelectTemplate").tmpl(attributeListJson).appendTo("#attribute");
+    $("#attribute").html($("#attributeByRaceSelectTemplate").tmpl(attributeListJson));
 }
 
 function renderFlawListJson(flawListJson) {
-    $("#flawByRaceSelectTemplate").tmpl(flawListJson).appendTo("#flaw");
+    $("#flaw").html($("#flawByRaceSelectTemplate").tmpl(flawListJson));
 }
 
 function renderMeritListJson(meritListJson) {
-    $("#meritByRaceSelectTemplate").tmpl(meritListJson).appendTo("#merit");
+    $("#merit").html($("#meritByRaceSelectTemplate").tmpl(meritListJson));
+}
+
+function renderBirthMeritListJson(birthMeritListJson) {
+    $("#birthMerit").html($("#birthMeritByRaceSelectTemplate").tmpl(birthMeritListJson));
 }
 
 function errorHandler(raceWithAllRelatedEntitiesJson) {

@@ -57,7 +57,11 @@ public class PersonageHasBirthMeritDAOImpl implements PersonageHasBirthMeritDAO{
                 .setInteger("birth_merit_id", birthMeritId)
                 .setInteger("personage_id", personageId)
                 .list();
-        return personageHasBirthMerits.get(0);
+        if(personageHasBirthMerits.isEmpty()) {
+            return null;
+        } else {
+            return personageHasBirthMerits.get(0);
+        }
     }
 
     @Override

@@ -22,5 +22,5 @@ public interface RaceHasBirthMeritDAO {
 
     public RaceHasBirthMerit getRaceHasBirthMeritByBirthMeritIdAndRaceId(int birthMeritId, int raceId);
 
-    public List<RaceHasBirthMerit> getRaceHasBirthMeritByRaceId(int raceId);
+    public List<RaceHasBirthMerit> getRaceHasBirthMeritsByRaceId(int raceId);
 }

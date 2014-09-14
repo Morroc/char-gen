@@ -16,15 +16,20 @@ public class RaceWithAllRelatedEntitiesDTO {
 
     private List<RaceHasFlawDTO> raceFlaws;
 
+    private List<RaceHasBirthMeritDTO> raceBirthMerits;
+
     public RaceWithAllRelatedEntitiesDTO() {
     }
 
     public RaceWithAllRelatedEntitiesDTO(RaceDTO race, List<RaceHasAttributeDTO> raceAttributes,
-                                         List<RaceHasMeritDTO> raceMerits, List<RaceHasFlawDTO> raceFlaws) {
+                                         List<RaceHasMeritDTO> raceMerits,
+                                         List<RaceHasFlawDTO> raceFlaws,
+                                         List<RaceHasBirthMeritDTO> raceBirthMerits) {
         this.race = race;
         this.raceAttributes = raceAttributes;
         this.raceMerits = raceMerits;
         this.raceFlaws = raceFlaws;
+        this.raceBirthMerits = raceBirthMerits;
     }
 
     public RaceDTO getRace() {
@@ -57,5 +62,13 @@ public class RaceWithAllRelatedEntitiesDTO {
 
     public void setRaceFlaws(List<RaceHasFlawDTO> raceFlaws) {
         this.raceFlaws = raceFlaws;
+    }
+
+    public List<RaceHasBirthMeritDTO> getRaceBirthMerits() {
+        return raceBirthMerits;
+    }
+
+    public void setRaceBirthMerits(List<RaceHasBirthMeritDTO> raceBirthMerits) {
+        this.raceBirthMerits = raceBirthMerits;
     }
 }

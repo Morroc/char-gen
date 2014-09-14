@@ -324,7 +324,6 @@
                     <select id="flaw" name="flaw"></select>
                     <script id="flawByRaceSelectTemplate" type="text/x-jquery-tmpl">
                         <option value="${id}">${name}</option>
-
                     </script>
                 </td>
             </tr>
@@ -332,7 +331,6 @@
             <tr id="raceByFlawId"></tr>
             <script id="raceByFlawTemplate" type="text/x-jQuery-tmpl">
                 <input id="raceByFlaw" name="race" type="hidden" value="${race.id}"/>
-
             </script>
 
             <tr>
@@ -349,6 +347,85 @@
             <tr>
                 <td colspan="2"><input type="submit" id="linkFlawToRaceSubmit" name="linkFlawToRaceSubmit"
                                        value="Добавить недостаток"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="raceHasBirthMeritTable">
+    <h2>Врожденные достоинства</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Название достоинства</th>
+            <th>Вероятность выпадения</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody id="raceHasBirthMeritList">
+
+        </tbody>
+    </table>
+</div>
+
+<script id="raceHasBirthMeritListTemplate" type="text/x-jQuery-tmpl">
+            <tr>
+                <td>${birthMerit.name}</td>
+                <td>1/${probability}</td>
+
+                <td>
+                    <input type="hidden" name="id" value="${id}"/>
+                    <a href="javascript:void(0)" class="unlinkBirthMeritFromRace">Убрать</a>
+                </td>
+            </tr>
+</script>
+
+<div id="linkBirthMeritToRaceButton">
+    <a class="modalbox" href="#linkBirthMeritToRaceWindow">
+        <div class="s_button">
+            Добавить врожденное достоинство
+        </div>
+    </a>
+</div>
+
+
+<div id="linkBirthMeritToRaceWindow" style="display:none">
+    <form id="linkBirthMeritToRaceForm" method="post" action="/rest/race/raceBirthMerit">
+
+        <table>
+            <tr>
+                <td>
+                    <label for="birthMerit">
+                        Врожденное достоинство
+                    </label>
+                </td>
+                <td>
+                    <select id="birthMerit" name="birthMerit"></select>
+                    <script id="birthMeritByRaceSelectTemplate" type="text/x-jquery-tmpl">
+                        <option value="${id}">${name}</option>
+                    </script>
+                </td>
+            </tr>
+
+            <tr id="raceByBirthMeritId"></tr>
+            <script id="raceByBirthMeritTemplate" type="text/x-jQuery-tmpl">
+                <input id="raceByBirthMerit" name="race" type="hidden" value="${race.id}"/>
+            </script>
+
+            <tr>
+                <td>
+                    <label for="probability">
+                        Вероятность выпадения
+                    </label>
+                </td>
+                <td>
+                    <input type="text" id="probability" name="probability"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2"><input type="submit" id="linkBirthMeritToRaceSubmit" name="linkBirthMeritToRaceSubmit"
+                                       value="Добавить врожденное достоинство"/></td>
             </tr>
         </table>
     </form>
