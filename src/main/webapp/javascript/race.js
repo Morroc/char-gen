@@ -81,9 +81,9 @@ function renderRaceWithAllRelatedEntitiesJson(raceWithAllRelatedEntitiesJson) {
     var raceNameTemplate = $("#raceNameTemplate");
     $("#raceTitle").html(raceNameTemplate.tmpl(raceWithAllRelatedEntitiesJson));
     $("#raceName").html(raceNameTemplate.tmpl(raceWithAllRelatedEntitiesJson));
-    $("#raceByAttributeTemplate").tmpl(raceWithAllRelatedEntitiesJson).appendTo("#linkAttributeToRaceForm");
-    $("#raceByMeritTemplate").tmpl(raceWithAllRelatedEntitiesJson).appendTo("#linkMeritToRaceForm");
-    $("#raceByFlawTemplate").tmpl(raceWithAllRelatedEntitiesJson).appendTo("#linkFlawToRaceForm");
+    $("#raceByAttributeId").html($("#raceByAttributeTemplate").tmpl(raceWithAllRelatedEntitiesJson));
+    $("#raceByMeritId").html($("#raceByMeritTemplate").tmpl(raceWithAllRelatedEntitiesJson));
+    $("#raceByFlawId").html($("#raceByFlawTemplate").tmpl(raceWithAllRelatedEntitiesJson));
 
     $("#raceHasAttributeList").html($("#raceHasAttributeListTemplate").tmpl(raceWithAllRelatedEntitiesJson.valueOf()['raceAttributes']));
 
