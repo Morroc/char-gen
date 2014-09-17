@@ -28,9 +28,6 @@ public class Merit {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "preconditions")
-    private String preconditions;
-
     @Column(name = "action_bonus")
     private String actionBonus;
 
@@ -43,12 +40,11 @@ public class Merit {
     public Merit() {
     }
 
-    public Merit(int id, String name, int cost, String description, String preconditions, String actionBonus) {
+    public Merit(int id, String name, int cost, String description, String actionBonus) {
         this.id = id;
         this.name = name;
         this.cost = cost;
         this.description = description;
-        this.preconditions = preconditions;
         this.actionBonus = actionBonus;
     }
 
@@ -82,14 +78,6 @@ public class Merit {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getPreconditions() {
-        return preconditions;
-    }
-
-    public void setPreconditions(String preconditions) {
-        this.preconditions = preconditions;
     }
 
     public String getActionBonus() {

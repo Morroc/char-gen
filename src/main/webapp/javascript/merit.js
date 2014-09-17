@@ -61,7 +61,6 @@ function render(meritListJson) {
                     $('#updateCost').val(window.meritListJson[i].cost);
                     $('#updateDescription').val(window.meritListJson[i].description);
                     $('#updateActionBonus').val(window.meritListJson[i].actionBonus);
-                    $('#updatePreconditions').val(window.meritListJson[i].preconditions);
                     break;
                 }
             }

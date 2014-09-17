@@ -14,19 +14,16 @@ public class MeritDTO {
 
     private String description;
 
-    private String preconditions;
-
     private String actionBonus;
 
     public MeritDTO() {
     }
 
-    public MeritDTO(int id, String name, int cost, String description, String preconditions, String actionBonus) {
+    public MeritDTO(int id, String name, int cost, String description, String actionBonus) {
         this.id = id;
         this.name = name;
         this.cost = cost;
         this.description = description;
-        this.preconditions = preconditions;
         this.actionBonus = actionBonus;
     }
 
@@ -60,14 +57,6 @@ public class MeritDTO {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public String getPreconditions() {
-        return preconditions;
-    }
-
-    public void setPreconditions(String preconditions) {
-        this.preconditions = preconditions;
     }
 
     public String getActionBonus() {
