@@ -26,6 +26,16 @@ public class PersonageHasBirthMerit {
     @Column(name = "current_value")
     private int currentValue;
 
+    public PersonageHasBirthMerit() {
+    }
+
+    public PersonageHasBirthMerit(int id, BirthMerit birthMeritByPersonage, Personage personageByBirthMerit, int currentValue) {
+        this.id = id;
+        this.birthMeritByPersonage = birthMeritByPersonage;
+        this.personageByBirthMerit = personageByBirthMerit;
+        this.currentValue = currentValue;
+    }
+
     public int getId() {
         return id;
     }

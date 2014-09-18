@@ -1,5 +1,10 @@
 package web.rest.dto;
 
+import entity.MeritHasAttributePrecondition;
+
+import java.util.List;
+import java.util.Set;
+
 /**
  * User: artemk
  * Date: 8/26/14

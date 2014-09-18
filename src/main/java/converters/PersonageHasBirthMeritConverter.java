@@ -13,10 +13,20 @@ import java.util.List;
  */
 public class PersonageHasBirthMeritConverter {
     BirthMeritConverter birthMeritConverter = new BirthMeritConverter();
+    PersonageConverter personageConverter = new PersonageConverter();
 
     public PersonageHasBirthMeritDTO convert(PersonageHasBirthMerit personageHasBirthMerit) {
         return new PersonageHasBirthMeritDTO(personageHasBirthMerit.getId(),
-                birthMeritConverter.convert(personageHasBirthMerit.getBirthMeritByPersonage()), personageHasBirthMerit.getCurrentValue());
+                birthMeritConverter.convert(personageHasBirthMerit.getBirthMeritByPersonage()),
+                personageConverter.convert(personageHasBirthMerit.getPersonageByBirthMerit()),
+                personageHasBirthMerit.getCurrentValue());
+    }
+
+    public PersonageHasBirthMerit convert(PersonageHasBirthMeritDTO personageHasBirthMeritDTO) {
+        return new PersonageHasBirthMerit(personageHasBirthMeritDTO.getId(),
+                birthMeritConverter.convert(personageHasBirthMeritDTO.getBirthMerit()),
+                personageConverter.convert(personageHasBirthMeritDTO.getPersonage()),
+                personageHasBirthMeritDTO.getCurrentValue());
     }
 
     public List<PersonageHasBirthMeritDTO> convert(List<PersonageHasBirthMerit> allPersonageHasBirthMerits) {

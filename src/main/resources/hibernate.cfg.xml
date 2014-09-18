@@ -10,6 +10,7 @@
         <mapping class="entity.BirthMerit" />
         <mapping class="entity.Flaw" />
         <mapping class="entity.Merit" />
+        <mapping class="entity.MeritHasAttributePrecondition" />
         <mapping class="entity.Personage" />
         <mapping class="entity.PersonageHasAttachedSkill" />
         <mapping class="entity.PersonageHasAttribute" />

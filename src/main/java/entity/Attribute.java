@@ -1,8 +1,5 @@
 package entity;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import javax.persistence.*;
 import java.util.Set;
 
@@ -30,6 +27,9 @@ public class Attribute {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "personageByAttribute")
     private Set<PersonageHasAttribute> personageHasAttributes;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "attributeByMerit")
+    private Set<MeritHasAttributePrecondition> meritHasAttributePreconditions;
 
     public Attribute() {
     }
@@ -78,5 +78,13 @@ public class Attribute {
 
     public void setPersonageHasAttributes(Set<PersonageHasAttribute> personageHasAttributes) {
         this.personageHasAttributes = personageHasAttributes;
+    }
+
+    public Set<MeritHasAttributePrecondition> getMeritHasAttributePreconditions() {
+        return meritHasAttributePreconditions;
+    }
+
+    public void setMeritHasAttributePreconditions(Set<MeritHasAttributePrecondition> meritHasAttributePreconditions) {
+        this.meritHasAttributePreconditions = meritHasAttributePreconditions;
     }
 }

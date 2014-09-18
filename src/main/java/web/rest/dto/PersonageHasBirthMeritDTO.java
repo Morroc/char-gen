@@ -10,14 +10,17 @@ public class PersonageHasBirthMeritDTO {
 
     private BirthMeritDTO birthMerit;
 
+    private PersonageDTO personage;
+
     private int currentValue;
 
     public PersonageHasBirthMeritDTO() {
     }
 
-    public PersonageHasBirthMeritDTO(int id, BirthMeritDTO birthMerit, int currentValue) {
+    public PersonageHasBirthMeritDTO(int id, BirthMeritDTO birthMerit, PersonageDTO personage, int currentValue) {
         this.id = id;
         this.birthMerit = birthMerit;
+        this.personage = personage;
         this.currentValue = currentValue;
     }
 
@@ -35,6 +38,14 @@ public class PersonageHasBirthMeritDTO {
 
     public void setBirthMerit(BirthMeritDTO birthMerit) {
         this.birthMerit = birthMerit;
+    }
+
+    public PersonageDTO getPersonage() {
+        return personage;
+    }
+
+    public void setPersonage(PersonageDTO personage) {
+        this.personage = personage;
     }
 
     public int getCurrentValue() {

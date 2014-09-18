@@ -45,6 +45,23 @@ body {
     left: 700px;
 }
 
+li {
+    list-style: none;
+}
+
+ul {
+    padding: 0 0 0 0;
+}
+
+.description {
+    width: 500px;
+}
+
+.bonus{
+    width: 400px;
+}
+
+
 input.plusAttribute { width:25px; height:25px;}
 input.minusAttribute { width:25px; height:25px;}
 

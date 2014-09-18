@@ -1,9 +1,7 @@
 package entity;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
-
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -32,10 +30,13 @@ public class Merit {
     private String actionBonus;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "meritByRace")
-    private Set<RaceHasMerit> meritsByRace;
+    private Set<RaceHasMerit> raceHasMerits;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "meritByPersonage")
-    private Set<PersonageHasMerit> meritsByPersonage;
+    private Set<PersonageHasMerit> personageHasMerits;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "meritByAttribute")
+    private List<MeritHasAttributePrecondition> meritHasAttributePreconditions;
 
     public Merit() {
     }
@@ -88,19 +89,27 @@ public class Merit {
         this.actionBonus = actionBonus;
     }
 
-    public Set<RaceHasMerit> getMeritsByRace() {
-        return meritsByRace;
+    public Set<RaceHasMerit> getRaceHasMerits() {
+        return raceHasMerits;
     }
 
-    public void setMeritsByRace(Set<RaceHasMerit> meritsByRace) {
-        this.meritsByRace = meritsByRace;
+    public void setRaceHasMerits(Set<RaceHasMerit> raceHasMerits) {
+        this.raceHasMerits = raceHasMerits;
     }
 
-    public Set<PersonageHasMerit> getMeritsByPersonage() {
-        return meritsByPersonage;
+    public Set<PersonageHasMerit> getPersonageHasMerits() {
+        return personageHasMerits;
     }
 
-    public void setMeritsByPersonage(Set<PersonageHasMerit> meritsByPersonage) {
-        this.meritsByPersonage = meritsByPersonage;
+    public void setPersonageHasMerits(Set<PersonageHasMerit> personageHasMerits) {
+        this.personageHasMerits = personageHasMerits;
+    }
+
+    public List<MeritHasAttributePrecondition> getMeritHasAttributePreconditions() {
+        return meritHasAttributePreconditions;
+    }
+
+    public void setMeritHasAttributePreconditions(List<MeritHasAttributePrecondition> meritHasAttributePreconditions) {
+        this.meritHasAttributePreconditions = meritHasAttributePreconditions;
     }
 }

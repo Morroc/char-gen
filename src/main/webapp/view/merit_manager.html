@@ -44,17 +44,31 @@
 
 <script id="meritListTemplate" type="text/x-jQuery-tmpl">
     <tr>
-        <td>${name}</td>
-        <td>${cost}</td>
-        <td>${description}</td>
-        <td>${actionBonus}</td>
-        <td>${preconditions}</td>
+        <td>${merit.name}</td>
+        <td>${merit.cost}</td>
+        <td class='description'>${merit.description}</td>
+        <td class='bonus'>${merit.actionBonus}</td>
         <td>
-            <input type="hidden" name="id" value="${id}"/>
+            <ul>
+                {%each preconditions%}
+                    <li>
+                        ${attribute.name} минимум ${neededValue}
+                         <input type="hidden" name="id" value="${id}"/>
+                        <a href="javascript:void(0)" class="deletePrecondition">Убрать</a>
+                    </li>
+                {%/each%}
+                <li>
+                    <input type="hidden" name="id" value="${merit.id}"/>
+                    <a href="#addPreconditionWindow" class="addPrecondition">Добавить</a>
+                </li>
+            </ul>
+        </td>
+        <td>
+            <input type="hidden" name="id" value="${merit.id}"/>
             <a href="#linkUpdateMeritWindow" class="updateMerit">Изменить</a>
         </td>
         <td>
-            <input type="hidden" name="id" value="${id}"/>
+            <input type="hidden" name="id" value="${merit.id}"/>
             <a href="javascript:void(0)" class="deleteMerit">Удалить</a>
         </td>
     </tr>
@@ -137,6 +151,37 @@
             <tr>
                 <td colspan="2"><input type="submit" id="updateMeritSubmitButton" name="updateMeritSubmitButton"
                                        value="Сохранить"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="addPreconditionWindow" style="display:none">
+    <form id="addPreconditionForm" action="/rest/merit/precondition" method="post">
+
+        <table class="precondition">
+            <tr>
+                <td><label for="attribute">
+                    Атрибут
+                </label></td>
+                <td>
+                    <select id="attribute" name="attribute"></select>
+                    <script id="attributeSelectTemplate" type="text/x-jquery-tmpl">
+                        <option value="${id}">${name}</option>
+                    </script>
+                </td>
+            </tr>
+            <tr id="meritByAttributeId"></tr>
+                <input id="merit" name="merit" type="hidden" value=""/>
+            <tr>
+                <td><label for="neededValue">
+                    Минимальное значение
+                </label></td>
+                <td><input type="text" id="neededValue" name="neededValue"/></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" id="addPreconditionSubmitButton" name="addPreconditionSubmitButton"
+                                       value="Добавить условие"/></td>
             </tr>
         </table>
     </form>
