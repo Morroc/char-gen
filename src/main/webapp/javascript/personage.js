@@ -203,6 +203,15 @@ function renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntiti
 
         updateAttachedSkillValue(personageWithAllRelatedEntitiesJson, id, '-');
     });
+
+    $('#linkMeritToPersonageSubmitButton').click(function (event) {
+        event.preventDefault();
+        var meritId = $(this).parent().parent().parent().find(":selected").val();
+
+        ajax.getJsonData('/rest/personage/'.concat(personageWithAllRelatedEntitiesJson.personage.id).concat('/differentTypesOfMeritsForPersonage'), function (differentTypesOfMeritsForPersonageJson) {
+            checkAttributePreconditionsForMerit(personageWithAllRelatedEntitiesJson, differentTypesOfMeritsForPersonageJson, meritId);
+        }, errorHandler);
+    });
 }
 
 function renderAttachedSkillListJson(attachedSkillListJson) {
@@ -272,21 +281,21 @@ function updateAttributeValue(raceWithAllRelatedEntitiesJson, personageWithAllRe
     }
 
     var raceHasAttributeByPersonage;
-    for(var a = 0; a < raceWithAllRelatedEntitiesJson.raceAttributes.length; a++){
-        if(raceWithAllRelatedEntitiesJson.raceAttributes[a].attribute.id == personageHasAttribute.attribute.id) {
+    for (var a = 0; a < raceWithAllRelatedEntitiesJson.raceAttributes.length; a++) {
+        if (raceWithAllRelatedEntitiesJson.raceAttributes[a].attribute.id == personageHasAttribute.attribute.id) {
             raceHasAttributeByPersonage = raceWithAllRelatedEntitiesJson.raceAttributes[a];
         }
     }
 
-    if(plusOrMinusOne == '+') {
-        if(personageHasAttribute.currentValue == raceHasAttributeByPersonage.maxValue) {
+    if (plusOrMinusOne == '+') {
+        if (personageHasAttribute.currentValue == raceHasAttributeByPersonage.maxValue) {
             alert("Для данной расы атрибут " + raceHasAttributeByPersonage.attribute.name
                 + " не может быть больше " + raceHasAttributeByPersonage.maxValue);
             return;
         }
         personageHasAttribute.currentValue = personageHasAttribute.currentValue + 1;
     } else {
-        if(personageHasAttribute.currentValue == 1) {
+        if (personageHasAttribute.currentValue == 1) {
             alert("Атрибут не может быть меньше 1");
             return;
         }
@@ -306,10 +315,10 @@ function updateAttachedSkillValue(personageWithAllRelatedEntitiesJson, personage
         }
     }
 
-    if(plusOrMinusOne == '+') {
+    if (plusOrMinusOne == '+') {
         personageHasAttachedSkill.currentValue = personageHasAttachedSkill.currentValue + 1;
     } else {
-        if(personageHasAttachedSkill.currentValue == 1) {
+        if (personageHasAttachedSkill.currentValue == 1) {
             alert("Навык не может быть меньше 1");
             return;
         }
@@ -319,5 +328,28 @@ function updateAttachedSkillValue(personageWithAllRelatedEntitiesJson, personage
     $("#attachedSkillValue").html($("#attachedSkillValueTemplate").tmpl(personageHasAttachedSkill));
     $('#updatePersonageAttachedSkillForm').attr('action', '/rest/personage/personageAttachedSkill/' + personageHasAttachedSkill.id);
     $("#updatePersonageAttachedSkillForm").submit();
+}
+
+function checkAttributePreconditionsForMerit(personageWithAllRelatedEntitiesJson, differentTypesOfMeritsForPersonageJson, meritId) {
+    var merit;
+    for (var i = 0; i < differentTypesOfMeritsForPersonageJson.allMeritsWithoutRacesMerits.length; i++) {
+        if (differentTypesOfMeritsForPersonageJson.allMeritsWithoutRacesMerits[i].merit.id == meritId) {
+            merit = differentTypesOfMeritsForPersonageJson.allMeritsWithoutRacesMerits[i];
+        }
+    }
+
+    for (var j = 0; j < merit.preconditions.length; j++) {
+        for (a = 0; a < personageWithAllRelatedEntitiesJson.personageAttributes.length; a++) {
+            if (merit.preconditions[j].attribute.id == personageWithAllRelatedEntitiesJson.personageAttributes[a].attribute.id) {
+                var personageHasAttribute = personageWithAllRelatedEntitiesJson.personageAttributes[a];
+                if(personageHasAttribute.currentValue < merit.preconditions[j].neededValue){
+                    alert("Чтобы взять " + merit.merit.name + " нужно " + personageHasAttribute.attribute.name + " минимум " + merit.preconditions[j].neededValue);
+                    return;
+                }
+            }
+        }
+    }
+
+    $("#linkMeritToPersonageForm").submit();
 }
 

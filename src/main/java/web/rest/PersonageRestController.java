@@ -61,6 +61,9 @@ public class PersonageRestController {
     @Autowired
     private RaceHasAttributeService raceHasAttributeService;
 
+    @Autowired
+    private MeritHasAttributePreconditionService meritHasAttributePreconditionService;
+
     PersonageConverter personageConverter = new PersonageConverter();
     PersonageHasAttributeConverter personageHasAttributeConverter = new PersonageHasAttributeConverter();
     PersonageHasBirthMeritConverter personageHasBirthMeritConverter = new PersonageHasBirthMeritConverter();
@@ -72,6 +75,7 @@ public class PersonageRestController {
     MeritConverter meritConverter = new MeritConverter();
     RaceHasFlawConverter raceHasFlawConverter = new RaceHasFlawConverter();
     FlawConverter flawConverter = new FlawConverter();
+    MeritHasAttributePreconditionConverter meritHasAttributePreconditionConverter = new MeritHasAttributePreconditionConverter();
 
     private int personageId;
 
@@ -158,7 +162,18 @@ public class PersonageRestController {
         differentTypesOfMeritsForPersonageDTO.setOnlyForPersonageMerits(onlyForPersonageMerits);
 
         differentTypesOfMeritsForPersonageDTO.setRaceHasMeritsWithoutDefaults(raceHasMeritsWithoutDefaults);
-        differentTypesOfMeritsForPersonageDTO.setAllMeritsWithoutRacesMerits(allMeritsWithoutRacesMerits);
+
+        List<MeritWithPreconditionDTO> allMeritsWithPreconditionsWithoutRacesMerits = new ArrayList<MeritWithPreconditionDTO>();
+        for (MeritDTO merit : allMeritsWithoutRacesMerits) {
+            MeritWithPreconditionDTO meritWithPreconditionDTO = new MeritWithPreconditionDTO();
+            meritWithPreconditionDTO.setMerit(merit);
+            meritWithPreconditionDTO.setPreconditions(
+                    meritHasAttributePreconditionConverter.convert(
+                            meritHasAttributePreconditionService.getMeritHasAttributePreconditionsByMeritId(merit.getId())));
+            allMeritsWithPreconditionsWithoutRacesMerits.add(meritWithPreconditionDTO);
+        }
+
+        differentTypesOfMeritsForPersonageDTO.setAllMeritsWithoutRacesMerits(allMeritsWithPreconditionsWithoutRacesMerits);
 
         return differentTypesOfMeritsForPersonageDTO;
     }

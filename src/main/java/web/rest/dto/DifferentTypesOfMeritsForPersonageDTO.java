@@ -12,7 +12,7 @@ public class DifferentTypesOfMeritsForPersonageDTO {
 
     List<PersonageHasMeritDTO> onlyForPersonageMerits;
 
-    List<MeritDTO> allMeritsWithoutRacesMerits;
+    List<MeritWithPreconditionDTO> allMeritsWithoutRacesMerits;
 
     List<RaceHasMeritDTO> raceHasMeritsWithoutDefaults;
 
@@ -22,7 +22,7 @@ public class DifferentTypesOfMeritsForPersonageDTO {
     public DifferentTypesOfMeritsForPersonageDTO(List<RaceHasMeritDTO> defaultForRaceMerits,
                                                  List<RaceHasMeritDTO> withDifferentCostForRaceMerits,
                                                  List<PersonageHasMeritDTO> onlyForPersonageMerits,
-                                                 List<MeritDTO> allMeritsWithoutRacesMerits,
+                                                 List<MeritWithPreconditionDTO> allMeritsWithoutRacesMerits,
                                                  List<RaceHasMeritDTO> raceHasMeritsWithoutDefaults) {
         this.defaultForRaceMerits = defaultForRaceMerits;
         this.withDifferentCostForRaceMerits = withDifferentCostForRaceMerits;
@@ -55,11 +55,11 @@ public class DifferentTypesOfMeritsForPersonageDTO {
         this.onlyForPersonageMerits = onlyForPersonageMerits;
     }
 
-    public List<MeritDTO> getAllMeritsWithoutRacesMerits() {
+    public List<MeritWithPreconditionDTO> getAllMeritsWithoutRacesMerits() {
         return allMeritsWithoutRacesMerits;
     }
 
-    public void setAllMeritsWithoutRacesMerits(List<MeritDTO> allMeritsWithoutRacesMerits) {
+    public void setAllMeritsWithoutRacesMerits(List<MeritWithPreconditionDTO> allMeritsWithoutRacesMerits) {
         this.allMeritsWithoutRacesMerits = allMeritsWithoutRacesMerits;
     }
 
