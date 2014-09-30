@@ -23,6 +23,9 @@ public class Personage
     @Column(name = "age")
     private int age;
 
+    @Column(name = "generated")
+    private boolean generated;
+
     @ManyToOne
     @JoinColumn(name = "race_id")
     private Race race;
@@ -49,11 +52,12 @@ public class Personage
     public Personage() {
     }
 
-    public Personage(int id, String name, int age, Race race) {
+    public Personage(int id, String name, int age, Race race, boolean generated) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.race = race;
+        this.generated = generated;
     }
 
     public int getId() {
@@ -134,5 +138,13 @@ public class Personage
 
     public void setPersonageHasFlaws(Set<PersonageHasFlaw> personageHasFlaws) {
         this.personageHasFlaws = personageHasFlaws;
+    }
+
+    public boolean isGenerated() {
+        return generated;
+    }
+
+    public void setGenerated(boolean generated) {
+        this.generated = generated;
     }
 }

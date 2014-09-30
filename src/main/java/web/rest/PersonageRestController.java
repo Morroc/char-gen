@@ -2,6 +2,7 @@ package web.rest;
 
 import converters.*;
 import entity.*;
+import enums.AttributePriority;
 import enums.SkillLevel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -85,9 +86,26 @@ public class PersonageRestController {
         Personage personage = personageService.getPersonageById(id);
         PersonageWithAllRelatedEntitiesDTO personageWithAllRelatedEntitiesDTO = new PersonageWithAllRelatedEntitiesDTO();
 
+        List<PersonageHasAttribute> personageHasAttributes = personageHasAttributeService.getPersonageHasAttributesByPersonageId(id);
+
+        int secondaryAttributeCount = 0;
+        for (PersonageHasAttribute personageHasAttribute : personageHasAttributes) {
+            if (personageHasAttribute.getPriority().equals(AttributePriority.PRIMARY)) {
+                personageWithAllRelatedEntitiesDTO.setPrimaryAttributeSet(true);
+            }
+
+            if (personageHasAttribute.getPriority().equals(AttributePriority.SECONDARY)) {
+                secondaryAttributeCount++;
+            }
+        }
+
+        if(secondaryAttributeCount == 2) {
+            personageWithAllRelatedEntitiesDTO.setSecondaryAttributeSet(true);
+        }
+
         personageWithAllRelatedEntitiesDTO.setPersonage(personageConverter.convert(personage));
         personageWithAllRelatedEntitiesDTO.setPersonageAttributes(
-                personageHasAttributeConverter.convert(personageHasAttributeService.getPersonageHasAttributesByPersonageId(id)));
+                personageHasAttributeConverter.convert(personageHasAttributes));
         personageWithAllRelatedEntitiesDTO.setPersonageBirthMerits(
                 personageHasBirthMeritConverter.convert(personageHasBirthMeritService.getPersonageHasBirthMeritsByPersonageId(id)));
         personageWithAllRelatedEntitiesDTO.setPersonageMerits(

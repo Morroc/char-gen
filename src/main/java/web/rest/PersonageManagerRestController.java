@@ -3,6 +3,8 @@ package web.rest;
 import constants.Constants;
 import converters.PersonageConverter;
 import entity.*;
+import enums.AttributePriority;
+import javafx.scene.layout.Priority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import services.*;
@@ -100,6 +102,7 @@ public class PersonageManagerRestController {
             personageHasAttribute.setAttributeByPersonage(raceHasAttribute.getAttributeByRace());
             personageHasAttribute.setPersonageByAttribute(personage);
             personageHasAttribute.setCurrentValue(Constants.DEFAULT_VALUE_OF_ATTRIBUTE);
+            personageHasAttribute.setPriority(AttributePriority.BASIC);
             personageHasAttributeService.addLinkAttributeWithPersonage(personageHasAttribute);
         }
 

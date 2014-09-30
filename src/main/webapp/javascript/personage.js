@@ -146,7 +146,7 @@ function renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntiti
     $("#personageByAttributeId").html($("#personageByAttributeTemplate").tmpl(personageWithAllRelatedEntitiesJson));
     $("#personageByAttachedSkillId").html($("#personageByAttachedSkilTemplate").tmpl(personageWithAllRelatedEntitiesJson));
 
-    $("#personageHasAttributeList").html($("#personageHasAttributeListTemplate").tmpl(personageWithAllRelatedEntitiesJson.valueOf()['personageAttributes']));
+    $("#personageHasAttributeList").html($("#personageHasAttributeListTemplate").tmpl(personageWithAllRelatedEntitiesJson));
 
     $("#personageHasAttachedSkillList").html($("#personageHasAttachedSkillListTemplate").tmpl(personageWithAllRelatedEntitiesJson.valueOf()['personageAttachedSkills']));
 
@@ -211,6 +211,24 @@ function renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntiti
         ajax.getJsonData('/rest/personage/'.concat(personageWithAllRelatedEntitiesJson.personage.id).concat('/differentTypesOfMeritsForPersonage'), function (differentTypesOfMeritsForPersonageJson) {
             checkAttributePreconditionsForMerit(personageWithAllRelatedEntitiesJson, differentTypesOfMeritsForPersonageJson, meritId);
         }, errorHandler);
+    });
+
+    $('.primary').click(function () {
+        var id = $(this).parent().parent().find("[name=id]").val();
+
+        updateAttributePriority(personageWithAllRelatedEntitiesJson, id, 'PRIMARY');
+    });
+
+    $('.secondary').click(function () {
+        var id = $(this).parent().parent().find("[name=id]").val();
+
+        updateAttributePriority(personageWithAllRelatedEntitiesJson, id, 'SECONDARY');
+    });
+
+    $('.basic').click(function () {
+        var id = $(this).parent().parent().find("[name=id]").val();
+
+        updateAttributePriority(personageWithAllRelatedEntitiesJson, id, 'BASIC');
     });
 }
 
@@ -303,6 +321,7 @@ function updateAttributeValue(raceWithAllRelatedEntitiesJson, personageWithAllRe
     }
     $("#attributeByPersonageId").html($("#attributeByPersonageTemplate").tmpl(personageHasAttribute));
     $("#attributeCurrentValue").html($("#currentValueTemplate").tmpl(personageHasAttribute));
+    $("#priority").html($("#priorityTemplate").tmpl(personageHasAttribute));
     $('#updatePersonageAttributeForm').attr('action', '/rest/personage/personageAttribute/' + personageHasAttribute.id);
     $("#updatePersonageAttributeForm").submit();
 }
@@ -351,5 +370,22 @@ function checkAttributePreconditionsForMerit(personageWithAllRelatedEntitiesJson
     }
 
     $("#linkMeritToPersonageForm").submit();
+}
+
+function updateAttributePriority(personageWithAllRelatedEntitiesJson, personageAttributeId, priority) {
+    var personageHasAttribute;
+    for (var i = 0; i < personageWithAllRelatedEntitiesJson.personageAttributes.length; i++) {
+        if (personageWithAllRelatedEntitiesJson.personageAttributes[i].id == personageAttributeId) {
+            personageHasAttribute = personageWithAllRelatedEntitiesJson.personageAttributes[i];
+        }
+    }
+
+    personageHasAttribute.priority.name = priority;
+
+    $("#attributeByPersonageId").html($("#attributeByPersonageTemplate").tmpl(personageHasAttribute));
+    $("#attributeCurrentValue").html($("#currentValueTemplate").tmpl(personageHasAttribute));
+    $("#priority").html($("#priorityTemplate").tmpl(personageHasAttribute));
+    $('#updatePersonageAttributeForm').attr('action', '/rest/personage/personageAttribute/' + personageHasAttribute.id);
+    $("#updatePersonageAttributeForm").submit();
 }
 

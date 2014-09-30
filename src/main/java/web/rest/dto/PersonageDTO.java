@@ -14,14 +14,17 @@ public class PersonageDTO {
 
     private RaceDTO race;
 
+    private boolean generated;
+
     public PersonageDTO() {
     }
 
-    public PersonageDTO(int id, String name, int age, RaceDTO race) {
+    public PersonageDTO(int id, String name, int age, RaceDTO race, boolean generated) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.race = race;
+        this.generated = generated;
     }
 
     public int getId() {
@@ -54,5 +57,13 @@ public class PersonageDTO {
 
     public void setRace(RaceDTO race) {
         this.race = race;
+    }
+
+    public boolean isGenerated() {
+        return generated;
+    }
+
+    public void setGenerated(boolean generated) {
+        this.generated = generated;
     }
 }

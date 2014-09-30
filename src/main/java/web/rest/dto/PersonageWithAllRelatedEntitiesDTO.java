@@ -22,6 +22,10 @@ public class PersonageWithAllRelatedEntitiesDTO {
 
     private List<PersonageHasBirthMeritDTO> personageBirthMerits;
 
+    private boolean primaryAttributeSet = false;
+
+    private boolean secondaryAttributeSet = false;
+
     public PersonageWithAllRelatedEntitiesDTO() {
     }
 
@@ -95,5 +99,21 @@ public class PersonageWithAllRelatedEntitiesDTO {
 
     public void setPersonageBirthMerits(List<PersonageHasBirthMeritDTO> personageBirthMerits) {
         this.personageBirthMerits = personageBirthMerits;
+    }
+
+    public boolean isPrimaryAttributeSet() {
+        return primaryAttributeSet;
+    }
+
+    public void setPrimaryAttributeSet(boolean isPrimaryAttributeSet) {
+        this.primaryAttributeSet = isPrimaryAttributeSet;
+    }
+
+    public boolean isSecondaryAttributeSet() {
+        return secondaryAttributeSet;
+    }
+
+    public void setSecondaryAttributeSet(boolean isSecondaryAttributeSet) {
+        this.secondaryAttributeSet = isSecondaryAttributeSet;
     }
 }

@@ -32,6 +32,7 @@
 </div>
 
 <script id="personageHasAttributeListTemplate" type="text/x-jQuery-tmpl">
+        {%each personageAttributes%}
             <tr>
                 <td class='personageTables'>${attribute.name}</td>
                 <input name="id" type="hidden" value="${id}"/>
@@ -42,7 +43,34 @@
                 <td>
                     <a href="javascript:void(0)" class="plusAttribute"><button>+</button></a>
                 </td>
+                <td class='personageTables'>${priority.name}</td>
+                {%if primaryAttributeSet && secondaryAttributeSet%}
+                    {%if priority.name != "BASIC"%}
+                        <td>
+                            <a href="javascript:void(0)" class="basic"><button class="priorityButton">Set basic</button></a>
+                        </td>
+                    {%/if%}
+                {%else%}
+                    {%if primaryAttributeSet && !secondaryAttributeSet%}
+                        {%if priority.name == "BASIC"%}
+                            <td>
+                                <a href="javascript:void(0)" class="secondary"><button class="priorityButton">Set secondary</button></a>
+                            </td>
+                        {%else%}
+                            <td>
+                                <a href="javascript:void(0)" class="basic"><button class="priorityButton">Set basic</button></a>
+                            </td>
+                        {%/if%}
+                    {%else%}
+                        {%if priority.name == "BASIC"%}
+                            <td>
+                                <a href="javascript:void(0)" class="primary"><button class="priorityButton">Set primary</button></a>
+                            </td>
+                        {%/if%}
+                    {%/if%}
+                {%/if%}
             </tr>
+        {%/each%}
 </script>
 
 <div id="updatePersonageAttributeFormContainer" style="display:none">
@@ -59,6 +87,10 @@
             <tr id="attributeCurrentValue"></tr>
             <script id="currentValueTemplate" type="text/x-jQuery-tmpl">
                 <input id="currentValue" name="currentValue" type="hidden" value="${currentValue}"/>
+            </script>
+            <tr id="priority"></tr>
+            <script id="priorityTemplate" type="text/x-jQuery-tmpl">
+                <input id="priority" name="priority" type="hidden" value="${priority.name}"/>
             </script>
         </table>
     </form>

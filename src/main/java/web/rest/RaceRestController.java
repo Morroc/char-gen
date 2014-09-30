@@ -3,6 +3,7 @@ package web.rest;
 import constants.Constants;
 import converters.*;
 import entity.*;
+import enums.AttributePriority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -81,6 +82,7 @@ public class RaceRestController {
             personageHasAttribute.setAttributeByPersonage(raceHasAttribute.getAttributeByRace());
             personageHasAttribute.setPersonageByAttribute(personage);
             personageHasAttribute.setCurrentValue(Constants.DEFAULT_VALUE_OF_ATTRIBUTE);
+            personageHasAttribute.setPriority(AttributePriority.BASIC);
             personageHasAttributeService.addLinkAttributeWithPersonage(personageHasAttribute);
         }
         return getRace(raceId);

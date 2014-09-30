@@ -1,5 +1,7 @@
 package entity;
 
+import enums.AttributePriority;
+
 import javax.persistence.*;
 
 /**
@@ -26,14 +28,19 @@ public class PersonageHasAttribute {
     @Column(name = "current_value")
     private int currentValue;
 
+    @Column(name = "priority", columnDefinition = "enum('BASIC','EXPERT','MASTER','POST_MASTER')")
+    private AttributePriority priority;
+
     public PersonageHasAttribute() {
     }
 
-    public PersonageHasAttribute(int id, Attribute attributeByPersonage, Personage personageByAttribute, int currentValue) {
+    public PersonageHasAttribute(int id, Attribute attributeByPersonage, Personage personageByAttribute,
+                                 int currentValue, AttributePriority priority) {
         this.id = id;
         this.attributeByPersonage = attributeByPersonage;
         this.personageByAttribute = personageByAttribute;
         this.currentValue = currentValue;
+        this.priority = priority;
     }
 
     public int getId() {
@@ -66,5 +73,13 @@ public class PersonageHasAttribute {
 
     public void setCurrentValue(int currentValue) {
         this.currentValue = currentValue;
+    }
+
+    public AttributePriority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(AttributePriority priority) {
+        this.priority = priority;
     }
 }
