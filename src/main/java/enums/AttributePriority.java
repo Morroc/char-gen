@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  */
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum AttributePriority {
-    BASIC(2),
-    SECONDARY(3),
-    PRIMARY(4);
+    BASIC(3),
+    SECONDARY(4),
+    PRIMARY(5);
 
     private int value;
 

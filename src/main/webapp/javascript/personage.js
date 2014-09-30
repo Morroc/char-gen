@@ -1,6 +1,8 @@
 /**
  * Created by artemk on 9/2/14.
  */
+var LEGENDARY_FIVE = 5;
+
 $(document).ready(function () {
     $("#mainMenu").load("main_menu.html");
 
@@ -306,6 +308,13 @@ function updateAttributeValue(raceWithAllRelatedEntitiesJson, personageWithAllRe
     }
 
     if (plusOrMinusOne == '+') {
+        if(!personageWithAllRelatedEntitiesJson.personage.generated) {
+            var maxGeneratingValue = personageHasAttribute.priority.value + LEGENDARY_FIVE - raceHasAttributeByPersonage.baseCost;
+            if(maxGeneratingValue <= 0 || personageHasAttribute.currentValue == maxGeneratingValue) {
+                alert("Достигнут максимум атрибута по генерильной цене");
+                return;
+            }
+        }
         if (personageHasAttribute.currentValue == raceHasAttributeByPersonage.maxValue) {
             alert("Для данной расы атрибут " + raceHasAttributeByPersonage.attribute.name
                 + " не может быть больше " + raceHasAttributeByPersonage.maxValue);
@@ -377,6 +386,23 @@ function updateAttributePriority(personageWithAllRelatedEntitiesJson, personageA
     for (var i = 0; i < personageWithAllRelatedEntitiesJson.personageAttributes.length; i++) {
         if (personageWithAllRelatedEntitiesJson.personageAttributes[i].id == personageAttributeId) {
             personageHasAttribute = personageWithAllRelatedEntitiesJson.personageAttributes[i];
+        }
+    }
+
+    if(priority == 'BASIC') {
+        var attributeValueAfterCorrection;
+        if(personageHasAttribute.priority.name == 'PRIMARY') {
+            attributeValueAfterCorrection = personageHasAttribute.currentValue - 2;
+        }
+
+        if(personageHasAttribute.priority.name == 'SECONDARY') {
+            attributeValueAfterCorrection = personageHasAttribute.currentValue - 1;
+        }
+
+        if(attributeValueAfterCorrection > 1) {
+            personageHasAttribute.currentValue = attributeValueAfterCorrection;
+        } else {
+            personageHasAttribute.currentValue = 1;
         }
     }
 

@@ -62,7 +62,7 @@
                             </td>
                         {%/if%}
                     {%else%}
-                        {%if priority.name == "BASIC"%}
+                        {%if priority.name != "PRIMARY"%}
                             <td>
                                 <a href="javascript:void(0)" class="primary"><button class="priorityButton">Set primary</button></a>
                             </td>
