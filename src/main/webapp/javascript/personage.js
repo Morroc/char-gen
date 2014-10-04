@@ -34,24 +34,6 @@ $(document).ready(function () {
 
     $(".modalbox").fancybox();
 
-    $("#linkAttachedSkillToPersonageForm").submit(function (event) {
-        event.preventDefault();
-        $.fancybox.showLoading();
-        var personageHasAttachedSkill = $(this).serializeObject();
-        personageHasAttachedSkill.attachedSkill = {id: personageHasAttachedSkill.attachedSkill};
-        personageHasAttachedSkill.personage = {id: personageHasAttachedSkill.personage};
-        personageHasAttachedSkill.personage.race = {id: personageHasAttachedSkill.personage.race};
-        ajax.putJsonData($(this), JSON.stringify(personageHasAttachedSkill), function (personageWithAllRelatedEntitiesJson) {
-            renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntitiesJson);
-            new PNotify({
-                title: 'Инфо',
-                text: 'Прикрепленный навык добавлен успешно.'
-            });
-            $.fancybox.close();
-            $.fancybox.hideLoading();
-        }, errorHandler);
-    });
-
     $("#linkTriggerSkillToPersonageForm").submit(function (event) {
         event.preventDefault();
         $.fancybox.showLoading();
@@ -151,6 +133,31 @@ function renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntiti
     $("#personageHasAttributeList").html($("#personageHasAttributeListTemplate").tmpl(personageWithAllRelatedEntitiesJson));
 
     $("#personageHasAttachedSkillList").html($("#personageHasAttachedSkillListTemplate").tmpl(personageWithAllRelatedEntitiesJson.valueOf()['personageAttachedSkills']));
+
+    $("#linkAttachedSkillToPersonageForm").submit(function (event) {
+        event.preventDefault();
+        $.fancybox.showLoading();
+        var personageHasAttachedSkill = $(this).serializeObject();
+        personageHasAttachedSkill.attachedSkill = {id: personageHasAttachedSkill.attachedSkill};
+        personageHasAttachedSkill.personage = {id: personageHasAttachedSkill.personage};
+        personageHasAttachedSkill.personage.race = {id: personageHasAttachedSkill.personage.race};
+        personageHasAttachedSkill.currentValue = personageHasAttachedSkill.currentValue - 1;
+        if(checkAttachedSkillMaxValueWithGeneratedCost(personageWithAllRelatedEntitiesJson, personageHasAttachedSkill)) {
+            personageHasAttachedSkill.currentValue = personageHasAttachedSkill.currentValue + 1;
+            ajax.putJsonData($(this), JSON.stringify(personageHasAttachedSkill), function (personageWithAllRelatedEntitiesJson) {
+                renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntitiesJson);
+                new PNotify({
+                    title: 'Инфо',
+                    text: 'Прикрепленный навык добавлен успешно.'
+                });
+                $.fancybox.close();
+                $.fancybox.hideLoading();
+            }, errorHandler);
+        } else {
+            $.fancybox.close();
+            $.fancybox.hideLoading();
+        }
+    });
 
     $('.unlinkAttachedSkillFromPersonage').click(function () {
         var id = $(this).parent().find("[name=id]").val();
@@ -308,9 +315,9 @@ function updateAttributeValue(raceWithAllRelatedEntitiesJson, personageWithAllRe
     }
 
     if (plusOrMinusOne == '+') {
-        if(!personageWithAllRelatedEntitiesJson.personage.generated) {
+        if (!personageWithAllRelatedEntitiesJson.personage.generated) {
             var maxGeneratingValue = personageHasAttribute.priority.value + LEGENDARY_FIVE - raceHasAttributeByPersonage.baseCost;
-            if(maxGeneratingValue <= 0 || personageHasAttribute.currentValue == maxGeneratingValue) {
+            if (maxGeneratingValue <= 0 || personageHasAttribute.currentValue == maxGeneratingValue) {
                 alert("Достигнут максимум атрибута по генерильной цене");
                 return;
             }
@@ -344,7 +351,11 @@ function updateAttachedSkillValue(personageWithAllRelatedEntitiesJson, personage
     }
 
     if (plusOrMinusOne == '+') {
-        personageHasAttachedSkill.currentValue = personageHasAttachedSkill.currentValue + 1;
+        if (checkAttachedSkillMaxValueWithGeneratedCost(personageWithAllRelatedEntitiesJson, personageHasAttachedSkill)) {
+            personageHasAttachedSkill.currentValue = personageHasAttachedSkill.currentValue + 1;
+        } else {
+            return;
+        }
     } else {
         if (personageHasAttachedSkill.currentValue == 1) {
             alert("Навык не может быть меньше 1");
@@ -370,7 +381,7 @@ function checkAttributePreconditionsForMerit(personageWithAllRelatedEntitiesJson
         for (a = 0; a < personageWithAllRelatedEntitiesJson.personageAttributes.length; a++) {
             if (merit.preconditions[j].attribute.id == personageWithAllRelatedEntitiesJson.personageAttributes[a].attribute.id) {
                 var personageHasAttribute = personageWithAllRelatedEntitiesJson.personageAttributes[a];
-                if(personageHasAttribute.currentValue < merit.preconditions[j].neededValue){
+                if (personageHasAttribute.currentValue < merit.preconditions[j].neededValue) {
                     alert("Чтобы взять " + merit.merit.name + " нужно " + personageHasAttribute.attribute.name + " минимум " + merit.preconditions[j].neededValue);
                     return;
                 }
@@ -389,17 +400,17 @@ function updateAttributePriority(personageWithAllRelatedEntitiesJson, personageA
         }
     }
 
-    if(priority == 'BASIC') {
+    if (priority == 'BASIC') {
         var attributeValueAfterCorrection;
-        if(personageHasAttribute.priority.name == 'PRIMARY') {
+        if (personageHasAttribute.priority.name == 'PRIMARY') {
             attributeValueAfterCorrection = personageHasAttribute.currentValue - 2;
         }
 
-        if(personageHasAttribute.priority.name == 'SECONDARY') {
+        if (personageHasAttribute.priority.name == 'SECONDARY') {
             attributeValueAfterCorrection = personageHasAttribute.currentValue - 1;
         }
 
-        if(attributeValueAfterCorrection > 1) {
+        if (attributeValueAfterCorrection > 1) {
             personageHasAttribute.currentValue = attributeValueAfterCorrection;
         } else {
             personageHasAttribute.currentValue = 1;
@@ -413,5 +424,40 @@ function updateAttributePriority(personageWithAllRelatedEntitiesJson, personageA
     $("#priority").html($("#priorityTemplate").tmpl(personageHasAttribute));
     $('#updatePersonageAttributeForm').attr('action', '/rest/personage/personageAttribute/' + personageHasAttribute.id);
     $("#updatePersonageAttributeForm").submit();
+}
+
+function checkAttachedSkillMaxValueWithGeneratedCost(personageWithAllRelatedEntitiesJson, personageHasAttachedSkill) {
+    if (!personageWithAllRelatedEntitiesJson.personage.generated) {
+        if (personageHasAttachedSkill.currentValue + 1 > 5) {
+            alert("Вы не можете взять навык выше 5 по генерильной цене");
+            return false;
+        }
+        if (personageHasAttachedSkill.currentValue + 1 > 3) {
+            var fourSkillCount = 0;
+            var fiveSkillExist = false;
+            for (var j = 0; j < personageWithAllRelatedEntitiesJson.personageAttachedSkills.length; j++) {
+                if (personageWithAllRelatedEntitiesJson.personageAttachedSkills[j].currentValue == 4) {
+                    fourSkillCount++;
+                }
+
+                if (personageWithAllRelatedEntitiesJson.personageAttachedSkills[j].currentValue == 5) {
+                    fiveSkillExist = true;
+                }
+            }
+
+            if (personageHasAttachedSkill.currentValue + 1 > 4 && fiveSkillExist) {
+                alert("Вы не можете взять этот навык выше 4 по генерильной цене,\n" +
+                    "вы уже имеете 1 навык на 5 по генерильной цене");
+                return false;
+            }
+
+            if ((fourSkillCount == 2 && fiveSkillExist) || fourSkillCount == 3 && personageHasAttachedSkill.currentValue + 1 == 4) {
+                alert("Вы не можете взять этот навык выше 3 по генерильной цене,\n" +
+                    "вы уже имеете 2 навыка на 4 и 1 навык на 5 или 3 навыка на 4 по генерильной цене");
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
