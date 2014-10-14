@@ -2,7 +2,8 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="/css/pnotify.custom.min.css">
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!--<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
+    <script type="text/javascript" src="/javascript/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="/javascript/jquery.tmpl.js"></script>
     <script type="text/javascript" src="/javascript/ajax.js"></script>
     <script type="text/javascript" src="/javascript/personage_manager.js"></script>
@@ -30,6 +31,7 @@
             <th>Имя</th>
             <th>Возраст</th>
             <th>Раса</th>
+            <th>Опыт</th>
             <th>&nbsp;</th>
         </tr>
         </thead>
@@ -44,6 +46,7 @@
         <td><a href="/view/personage.html?id=${id}">${name}</a></td>
         <td>${age}</td>
         <td>${race.name}</td>
+        <td>${experience}</td>
         <td>
             <input type="hidden" name="id" value="${id}"/>
             <a href="#updatePersonageWindow" class="updatePersonage">Изменить</a>
@@ -82,6 +85,12 @@
                 <td><input type="text" id="age" name="age"/></td>
             </tr>
             <tr>
+                <td><label for="experience">
+                    Очки опыта для генерации
+                </label></td>
+                <td><input type="text" id="experience" name="experience"/></td>
+            </tr>
+            <tr>
                 <td>
                     <label for="race">
                         Раса
@@ -118,6 +127,12 @@
                     Возраст персонажа
                 </label></td>
                 <td><input type="text" id="updateAge" name="age"/></td>
+            </tr>
+            <tr>
+                <td><label for="updateExperience">
+                    Очки опыта для генерации
+                </label></td>
+                <td><input type="text" id="updateExperience" name="experience" disabled="disabled"/></td>
             </tr>
             <tr>
                 <td>

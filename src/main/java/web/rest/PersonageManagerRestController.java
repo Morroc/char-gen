@@ -148,6 +148,7 @@ public class PersonageManagerRestController {
         personageDTO.setId(id);
         Personage personage = personageConverter.convert(personageDTO);
         personage.setRace(personageService.getPersonageById(id).getRace());
+        personage.setExperience(personageService.getPersonageById(id).getExperience());
         personageService.updatePersonage(personage);
         return listPersonages();
     }

@@ -12,6 +12,8 @@ public class PersonageDTO {
 
     private int age;
 
+    private int experience;
+
     private RaceDTO race;
 
     private boolean generated;
@@ -19,12 +21,13 @@ public class PersonageDTO {
     public PersonageDTO() {
     }
 
-    public PersonageDTO(int id, String name, int age, RaceDTO race, boolean generated) {
+    public PersonageDTO(int id, String name, int age, RaceDTO race, boolean generated, int experience) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.race = race;
         this.generated = generated;
+        this.experience = experience;
     }
 
     public int getId() {
@@ -65,5 +68,13 @@ public class PersonageDTO {
 
     public void setGenerated(boolean generated) {
         this.generated = generated;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
     }
 }

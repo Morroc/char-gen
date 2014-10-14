@@ -28,11 +28,13 @@ public class PersonageConverter {
 
     public PersonageDTO convert(Personage personage) {
         return new PersonageDTO(personage.getId(), personage.getName(),
-                personage.getAge(), raceConverter.convert(personage.getRace()), personage.isGenerated());
+                personage.getAge(), raceConverter.convert(personage.getRace()), personage.isGenerated(),
+                personage.getExperience());
     }
 
     public Personage convert(PersonageDTO personageDTO) {
         return new Personage(personageDTO.getId(), personageDTO.getName(),
-                personageDTO.getAge(), raceConverter.convert(personageDTO.getRace()), personageDTO.isGenerated());
+                personageDTO.getAge(), raceConverter.convert(personageDTO.getRace()), personageDTO.isGenerated(),
+                personageDTO.getExperience());
     }
 }

@@ -2,7 +2,9 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="/css/pnotify.custom.min.css">
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!--<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
+    <script type="text/javascript" src="/javascript/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/javascript/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="/javascript/jquery.tmpl.js"></script>
     <script type="text/javascript" src="/javascript/ajax.js"></script>
     <script type="text/javascript" src="/javascript/personage.js"></script>
@@ -22,7 +24,24 @@
 
 <h2 id="personageName"></h2>
 
-<script id="personageNameTemplate" type="text/x-jQuery-tmpl">Персонаж ${personage.name}</script>
+<script id="personageNameTemplate" type="text/x-jQuery-tmpl">Персонаж ${personage.name}. Доступные очки опыта: ${personage.experience}</script>
+
+<div id="generatedButtonDiv">
+    <a class="generate" id="generatedButton">
+    </a>
+</div>
+
+<script id="generatedButtonTemplate" type="text/x-jQuery-tmpl">
+        {%if personage.generated%}
+            <button>
+                Вернуться в режим создания
+            </button>
+        {%else%}
+            <button>
+                В игровой режим
+            </button>
+        {%/if%}
+</script>
 
 <div id="personageHasAttributeTable">
     <h2>Атрибуты</h2>
@@ -44,28 +63,30 @@
                     <a href="javascript:void(0)" class="plusAttribute"><button>+</button></a>
                 </td>
                 <td class='personageTables'>${priority.name}</td>
-                {%if primaryAttributeSet && secondaryAttributeSet%}
-                    {%if priority.name != "BASIC"%}
-                        <td>
-                            <a href="javascript:void(0)" class="basic"><button class="priorityButton">Set basic</button></a>
-                        </td>
-                    {%/if%}
-                {%else%}
-                    {%if primaryAttributeSet && !secondaryAttributeSet%}
-                        {%if priority.name == "BASIC"%}
-                            <td>
-                                <a href="javascript:void(0)" class="secondary"><button class="priorityButton">Set secondary</button></a>
-                            </td>
-                        {%else%}
+                {%if !personage.generated%}
+                    {%if primaryAttributeSet && secondaryAttributeSet%}
+                        {%if priority.name != "BASIC"%}
                             <td>
                                 <a href="javascript:void(0)" class="basic"><button class="priorityButton">Set basic</button></a>
                             </td>
                         {%/if%}
                     {%else%}
-                        {%if priority.name != "PRIMARY"%}
-                            <td>
-                                <a href="javascript:void(0)" class="primary"><button class="priorityButton">Set primary</button></a>
-                            </td>
+                        {%if primaryAttributeSet && !secondaryAttributeSet%}
+                            {%if priority.name == "BASIC"%}
+                                <td>
+                                    <a href="javascript:void(0)" class="secondary"><button class="priorityButton">Set secondary</button></a>
+                                </td>
+                            {%else%}
+                                <td>
+                                    <a href="javascript:void(0)" class="basic"><button class="priorityButton">Set basic</button></a>
+                                </td>
+                            {%/if%}
+                        {%else%}
+                            {%if priority.name != "PRIMARY"%}
+                                <td>
+                                    <a href="javascript:void(0)" class="primary"><button class="priorityButton">Set primary</button></a>
+                                </td>
+                            {%/if%}
                         {%/if%}
                     {%/if%}
                 {%/if%}
@@ -111,21 +132,27 @@
 </div>
 
 <script id="personageHasAttachedSkillListTemplate" type="text/x-jQuery-tmpl">
+        {%each personageAttachedSkills%}
             <tr>
                 <td class='personageTables'>${attachedSkill.name}</td>
                 <input name="id" type="hidden" value="${id}"/>
-                <td>
-                    <a href="javascript:void(0)" class="minusAttachedSkill"><button>-</button></a>
-                </td>
+                {%if !personage.generated%}
+                    <td>
+                        <a href="javascript:void(0)" class="minusAttachedSkill"><button>-</button></a>
+                    </td>
+                {%/if%}
                 <td class='personageTables'>${currentValue}</td>
                 <td>
                     <a href="javascript:void(0)" class="plusAttachedSkill"><button>+</button></a>
                 </td>
-                <td>
-                    <input type="hidden" name="id" value="${id}"/>
-                    <a href="javascript:void(0)" class="unlinkAttachedSkillFromPersonage">Убрать</a>
-                </td>
+                {%if !personage.generated%}
+                    <td>
+                        <input type="hidden" name="id" value="${id}"/>
+                        <a href="javascript:void(0)" class="unlinkAttachedSkillFromPersonage">Убрать</a>
+                    </td>
+                {%/if%}
             </tr>
+        {%/each%}
 </script>
 
 <div id="linkAttachedSkillToPersonageWindow" style="display:none">
@@ -154,16 +181,7 @@
                 <input id="personageByAttachedSkill" name="personage" type="hidden" value="${personage.id}"/>
             </script>
 
-            <tr>
-                <td>
-                    <label for="currentValue">
-                        Значение
-                    </label>
-                </td>
-                <td>
-                    <input id="currentValue" name="currentValue"/>
-                </td>
-            </tr>
+            <input type="hidden" id="currentValue" name="currentValue" value="1"/>
 
             <tr>
                 <td colspan="2"><input type="submit" id="linkAttachedSkillToPersonageSubmitButton"
@@ -195,7 +213,19 @@
 
 <div id="personageHasTriggerSkillTable">
     <h2>Триггерные навыки</h2>
-    <table id="personageHasTriggerSkillList">
+    <table class="data">
+        <thead>
+        <tr>
+            <th></th>
+            <th>Уровень</th>
+            <th>Талант</th>
+            <th>Учитель</th>
+            <th>&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody id="personageHasTriggerSkillList">
+
+        </tbody>
 
     </table>
     <div id="linkTriggerSkillToPersonageButton">
@@ -225,10 +255,12 @@
                         <input type="checkbox" disabled="disabled"/>
                     {%/if%}
                 </td>
-                <td>
-                    <input type="hidden" name="id" value="${id}"/>
-                    <a href="javascript:void(0)" class="unlinkTriggerSkillFromPersonage">Убрать</a>
-                </td>
+                {%if !personage.generated%}
+                    <td>
+                        <input type="hidden" name="id" value="${id}"/>
+                        <a href="javascript:void(0)" class="unlinkTriggerSkillFromPersonage">Убрать</a>
+                    </td>
+                {%/if%}
             </tr>
 </script>
 
@@ -337,10 +369,12 @@
                 <td class='personageTables'>
                     РС: ${raceCost} БС: ${merit.cost}
                 </td>
-                <td>
-                    <input type="hidden" name="id" value="${id}"/>
-                    <a href="javascript:void(0)" class="unlinkMeritFromPersonageByRaceHasMeritId">Убрать</a>
-                </td>
+                {%if !personage.generated%}
+                    <td>
+                        <input type="hidden" name="id" value="${id}"/>
+                        <a href="javascript:void(0)" class="unlinkMeritFromPersonageByRaceHasMeritId">Убрать</a>
+                    </td>
+                {%/if%}
             </tr>
         {%/each%}
 
@@ -352,10 +386,12 @@
                 <td class='personageTables'>
                     ${merit.cost}
                 </td>
-                 <td>
-                    <input type="hidden" name="id" value="${id}"/>
-                    <a href="javascript:void(0)" class="unlinkMeritFromPersonage">Убрать</a>
-                </td>
+                {%if !personage.generated%}
+                    <td>
+                        <input type="hidden" name="id" value="${id}"/>
+                        <a href="javascript:void(0)" class="unlinkMeritFromPersonage">Убрать</a>
+                    </td>
+                {%/if%}
             </tr>
         {%/each%}
 </script>

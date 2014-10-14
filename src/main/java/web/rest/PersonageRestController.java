@@ -99,7 +99,7 @@ public class PersonageRestController {
             }
         }
 
-        if(secondaryAttributeCount == 2) {
+        if (secondaryAttributeCount == 2) {
             personageWithAllRelatedEntitiesDTO.setSecondaryAttributeSet(true);
         }
 
@@ -253,10 +253,39 @@ public class PersonageRestController {
         return differentTypesOfFlawsForPersonageDTO;
     }
 
+    @RequestMapping(value = "/setGenerated", method = RequestMethod.GET)
+    public PersonageWithAllRelatedEntitiesDTO setGenerated() {
+        Personage personage = personageService.getPersonageById(personageId);
+
+        if(personage.isGenerated()) {
+            personage.setGenerated(false);
+        } else {
+            personage.setGenerated(true);
+        }
+
+        personageService.updatePersonage(personage);
+        return getPersonage(personageId);
+    }
+
     @RequestMapping(value = "/personageAttachedSkill", method = RequestMethod.PUT)
     public PersonageWithAllRelatedEntitiesDTO addPersonageHasAttachedSkill(@RequestBody PersonageHasAttachedSkillDTO personageHasAttachedSkillDTO) {
         PersonageHasAttachedSkill personageHasAttachedSkill = personageHasAttachedSkillConverter.convert(personageHasAttachedSkillDTO);
+        Personage personage = personageService.getPersonageById(personageId);
+        AttachedSkill attachedSkill = attachedSkillService.getAttachedSkillById(personageHasAttachedSkill.getAttachedSkillByPersonage().getId());
 
+        int costOfAttachedSkillAdding = personageHasAttachedSkill.getCurrentValue() * attachedSkill.getBaseCost();
+
+        if (personage.isGenerated() && !attachedSkill.isDefaultSkill()) {
+            costOfAttachedSkillAdding = attachedSkill.getAcquiringCost();
+        }
+
+        if (attachedSkill.isDifficult()) {
+            costOfAttachedSkillAdding = costOfAttachedSkillAdding * 2;
+        }
+
+        personage.setExperience(personage.getExperience() - costOfAttachedSkillAdding);
+
+        personageService.updatePersonage(personage);
         personageHasAttachedSkillService.addLinkAttachedSkillWithPersonage(personageHasAttachedSkill);
 
         return getPersonage(personageId);
@@ -267,6 +296,35 @@ public class PersonageRestController {
                                                                               @RequestBody PersonageHasAttachedSkillDTO personageHasAttachedSkillDTO) {
         personageHasAttachedSkillDTO.setId(id);
         PersonageHasAttachedSkill personageHasAttachedSkill = personageHasAttachedSkillConverter.convert(personageHasAttachedSkillDTO);
+        AttachedSkill attachedSkill = attachedSkillService.getAttachedSkillById(personageHasAttachedSkill.getAttachedSkillByPersonage().getId());
+        int personageHasAttachedSkillCurrentValue = personageHasAttachedSkillService.getPersonageHasAttachedSkillById(id).getCurrentValue();
+        int personageHasAttachedSkillNewValue = personageHasAttachedSkill.getCurrentValue();
+        Personage personage = personageService.getPersonageById(personageId);
+
+
+        int updateValue = personageHasAttachedSkillCurrentValue - personageHasAttachedSkillNewValue;
+        int costOfUpdate = 0;
+
+        if (personage.isGenerated()) {
+            if (updateValue < 0) {
+                for (int i = 0; i < updateValue * -1; i++) {
+                    costOfUpdate = costOfUpdate - personageHasAttachedSkill.getCurrentValue() - i;
+                }
+            } else {
+                for (int i = 0; i < updateValue; i++) {
+                    costOfUpdate = costOfUpdate + personageHasAttachedSkill.getCurrentValue() + i;
+                }
+            }
+        } else {
+            costOfUpdate = updateValue * attachedSkill.getBaseCost();
+        }
+
+        if (attachedSkill.isDifficult()) {
+            costOfUpdate = costOfUpdate * 2;
+        }
+
+        personage.setExperience(personage.getExperience() + costOfUpdate);
+        personageService.updatePersonage(personage);
 
         personageHasAttachedSkillService.updatePersonageHasAttachedSkill(personageHasAttachedSkill);
         return getPersonage(personageId);
@@ -276,6 +334,20 @@ public class PersonageRestController {
     public PersonageWithAllRelatedEntitiesDTO deletePersonageHasAttachedSkill(@PathVariable Integer id) {
         PersonageHasAttachedSkill personageHasAttachedSkill = personageHasAttachedSkillService.getPersonageHasAttachedSkillById(id);
 
+        Personage personage = personageService.getPersonageById(personageId);
+        AttachedSkill attachedSkill = attachedSkillService.getAttachedSkillById(personageHasAttachedSkill.getAttachedSkillByPersonage().getId());
+
+        int costOfAttachedSkillRemove = personageHasAttachedSkill.getCurrentValue() * attachedSkill.getBaseCost();
+
+
+        if (attachedSkill.isDifficult()) {
+            costOfAttachedSkillRemove = costOfAttachedSkillRemove * 2;
+        }
+
+        personage.setExperience(personage.getExperience() + costOfAttachedSkillRemove);
+
+        personageService.updatePersonage(personage);
+
         personageHasAttachedSkillService.deleteLinkAttachedSkillWithPersonage(personageHasAttachedSkill);
         return getPersonage(personageId);
     }
@@ -283,6 +355,41 @@ public class PersonageRestController {
     @RequestMapping(value = "/personageTriggerSkill", method = RequestMethod.PUT)
     public PersonageWithAllRelatedEntitiesDTO addPersonageHasTriggerSkill(@RequestBody PersonageHasTriggerSkillDTO personageHasTriggerSkillDTO) {
         PersonageHasTriggerSkill personageHasTriggerSkill = personageHasTriggerSkillConverter.convert(personageHasTriggerSkillDTO);
+
+        Personage personage = personageService.getPersonageById(personageId);
+        TriggerSkill triggerSkill = triggerSkillService.getTriggerSkillById(personageHasTriggerSkill.getTriggerSkillByPersonage().getId());
+
+        int addingCost = triggerSkill.getBaseCost();
+
+        switch (personageHasTriggerSkill.getCurrentLevel()) {
+            case EXPERT: {
+                addingCost = addingCost + triggerSkill.getExpertCost();
+                break;
+            }
+            case MASTER: {
+                addingCost = addingCost + triggerSkill.getExpertCost() + triggerSkill.getMasterCost();
+                break;
+            }
+            case POST_MASTER: {
+                addingCost = addingCost + triggerSkill.getExpertCost() + triggerSkill.getMasterCost() + triggerSkill.getPostMasterCost();
+                break;
+            }
+            default:
+                break;
+        }
+
+        if (!personageHasTriggerSkill.getCurrentLevel().equals(SkillLevel.BASIC)) {
+            if (personageHasTriggerSkill.isHasTalent()) {
+                addingCost = addingCost - 2;
+            }
+
+            if (personageHasTriggerSkill.isHasTeacher()) {
+                addingCost = addingCost - 3;
+            }
+        }
+
+        personage.setExperience(personage.getExperience() - addingCost);
+        personageService.updatePersonage(personage);
 
         personageHasTriggerSkillService.addLinkTriggerSkillWithPersonage(personageHasTriggerSkill);
 
@@ -308,6 +415,12 @@ public class PersonageRestController {
     public PersonageWithAllRelatedEntitiesDTO deletePersonageHasTriggerSkill(@PathVariable Integer id) {
         PersonageHasTriggerSkill personageHasTriggerSkill = personageHasTriggerSkillService.getPersonageHasTriggerSkillById(id);
 
+        Personage personage = personageService.getPersonageById(personageId);
+
+        TriggerSkill triggerSkill = triggerSkillService.getTriggerSkillById(personageHasTriggerSkill.getTriggerSkillByPersonage().getId());
+        personage.setExperience(personage.getExperience() + triggerSkill.getBaseCost());
+        personageService.updatePersonage(personage);
+
         personageHasTriggerSkillService.deleteLinkTriggerSkillWithPersonage(personageHasTriggerSkill);
         return getPersonage(personageId);
     }
@@ -322,11 +435,23 @@ public class PersonageRestController {
     }
 
     @RequestMapping(value = "/personageMerit", method = RequestMethod.PUT)
-    public PersonageWithAllRelatedEntitiesDTO addPersonageHasMerit(@RequestBody PersonageHasMeritDTO personageHasMeritDTO) {
+    public DifferentTypesOfMeritsForPersonageDTO addPersonageHasMerit(@RequestBody PersonageHasMeritDTO personageHasMeritDTO) {
         PersonageHasMerit personageHasMerit = personageHasMeritConverter.convert(personageHasMeritDTO);
+        Personage personage = personageService.getPersonageById(personageId);
+        Merit merit = meritService.getMeritById(personageHasMerit.getMeritByPersonage().getId());
 
+        int addingCost = merit.getCost();
+        for (RaceHasMerit raceHasMerit : raceHasMeritService.getRaceHasMeritsByRaceId(personage.getRace().getId())) {
+            if (raceHasMerit.getMeritByRace().getId() == merit.getId()) {
+                addingCost = raceHasMerit.getRaceCost();
+            }
+        }
+
+        personage.setExperience(personage.getExperience() - addingCost);
+
+        personageService.updatePersonage(personage);
         personageHasMeritService.addLinkMeritWithPersonage(personageHasMerit);
-        return getPersonage(personageId);
+        return differentTypesOfMeritsForPersonage(personageId);
     }
 
     @RequestMapping(value = "/personageMerit/{id}", method = RequestMethod.POST)
@@ -347,6 +472,19 @@ public class PersonageRestController {
     @RequestMapping(value = "/personageMerit/{id}", method = RequestMethod.DELETE)
     public PersonageWithAllRelatedEntitiesDTO deletePersonageHasMerit(@PathVariable Integer id) {
         PersonageHasMerit personageHasMerit = personageHasMeritService.getPersonageHasMeritById(id);
+        Personage personage = personageService.getPersonageById(personageId);
+        Merit merit = meritService.getMeritById(personageHasMerit.getMeritByPersonage().getId());
+
+        int addingCost = merit.getCost();
+        for (RaceHasMerit raceHasMerit : raceHasMeritService.getRaceHasMeritsByRaceId(personage.getRace().getId())) {
+            if (raceHasMerit.getMeritByRace().getId() == merit.getId()) {
+                addingCost = raceHasMerit.getRaceCost();
+            }
+        }
+
+        personage.setExperience(personage.getExperience() + addingCost);
+
+        personageService.updatePersonage(personage);
 
         personageHasMeritService.deleteLinkMeritWithPersonage(personageHasMerit);
         return getPersonage(personageId);
@@ -358,6 +496,10 @@ public class PersonageRestController {
         int meritId = raceHasMerit.getMeritByRace().getId();
 
         PersonageHasMerit personageHasMerit = personageHasMeritService.getPersonageHasMeritByMeritIdAndPersonageId(meritId, personageId);
+        Personage personage = personageService.getPersonageById(personageId);
+        personage.setExperience(personage.getExperience() + raceHasMerit.getRaceCost());
+        personageService.updatePersonage(personage);
+
         personageHasMeritService.deleteLinkMeritWithPersonage(personageHasMerit);
 
         return getPersonage(personageId);
@@ -365,11 +507,16 @@ public class PersonageRestController {
 
 
     @RequestMapping(value = "/personageFlaw", method = RequestMethod.PUT)
-    public PersonageWithAllRelatedEntitiesDTO addPersonageHasFlaw(@RequestBody PersonageHasFlawDTO personageHasFlawDTO) {
+    public DifferentTypesOfFlawsForPersonageDTO addPersonageHasFlaw(@RequestBody PersonageHasFlawDTO personageHasFlawDTO) {
         PersonageHasFlaw personageHasFlaw = personageHasFlawConverter.convert(personageHasFlawDTO);
 
+        Personage personage = personageService.getPersonageById(personageId);
+        Flaw flaw = flawService.getFlawById(personageHasFlaw.getFlawByPersonage().getId());
+        personage.setExperience(personage.getExperience() + flaw.getCost());
+        personageService.updatePersonage(personage);
+
         personageHasFlawService.addLinkFlawWithPersonage(personageHasFlaw);
-        return getPersonage(personageId);
+        return differentTypesOfFlawsForPersonage(personageId);
     }
 
     @RequestMapping(value = "/personageFlaw/{id}", method = RequestMethod.POST)
@@ -391,6 +538,11 @@ public class PersonageRestController {
     public PersonageWithAllRelatedEntitiesDTO deletePersonageHasFlaw(@PathVariable Integer id) {
         PersonageHasFlaw personageHasFlaw = personageHasFlawService.getPersonageHasFlawById(id);
 
+        Personage personage = personageService.getPersonageById(personageId);
+        Flaw flaw = flawService.getFlawById(personageHasFlaw.getFlawByPersonage().getId());
+        personage.setExperience(personage.getExperience() - flaw.getCost());
+        personageService.updatePersonage(personage);
+
         personageHasFlawService.deleteLinkFlawWithPersonage(personageHasFlaw);
         return getPersonage(personageId);
     }
@@ -399,12 +551,53 @@ public class PersonageRestController {
     public PersonageWithAllRelatedEntitiesDTO updatePersonageHasAttribute(@PathVariable Integer id,
                                                                           @RequestBody PersonageHasAttributeDTO personageHasAttributeDTO) {
         personageHasAttributeDTO.setId(id);
+        PersonageHasAttribute personageHasAttributeNew = personageHasAttributeConverter.convert(personageHasAttributeDTO);
+        PersonageHasAttribute personageHasAttributeOld = personageHasAttributeService.getPersonageHasAttributeById(personageHasAttributeDTO.getId());
 
-        PersonageHasAttribute personageHasAttribute = personageHasAttributeConverter.convert(personageHasAttributeDTO);
+        Personage personage = personageService.getPersonageById(personageId);
+        RaceHasAttribute raceHasAttribute = raceHasAttributeService.getRaceHasAttributeByAttributeIdAndRaceId(
+                personageHasAttributeNew.getAttributeByPersonage().getId(), personage.getRace().getId());
+        int newValue = personageHasAttributeNew.getCurrentValue();
+        int oldValue = personageHasAttributeOld.getCurrentValue();
+        int differenceBetweenValues = newValue - oldValue;
+        int changeCost = 0;
 
-        personageHasAttributeService.updatePersonageHasAttribute(personageHasAttribute);
+        if (personage.isGenerated()) {
+            if (differenceBetweenValues > 0) {
+                if (newValue > 1 && newValue <= 3) {
+                    changeCost = differenceBetweenValues * raceHasAttribute.getFrom1To3NonGeneratingCost();
+                }
+                if (newValue > 3 && newValue <= 6) {
+                    changeCost = differenceBetweenValues * raceHasAttribute.getFrom3To6NonGeneratingCost();
+                }
+                if (newValue > 6 && newValue <= 9) {
+                    changeCost = differenceBetweenValues * raceHasAttribute.getFrom6To9NonGeneratingCost();
+                }
+                if (newValue > 9 && newValue <= 12) {
+                    changeCost = differenceBetweenValues * raceHasAttribute.getFrom9To12NonGeneratingCost();
+                }
+            } else {
+                if (newValue >= 1 && newValue < 3) {
+                    changeCost = differenceBetweenValues * raceHasAttribute.getFrom1To3NonGeneratingCost();
+                }
+                if (newValue >= 3 && newValue < 6) {
+                    changeCost = differenceBetweenValues * raceHasAttribute.getFrom3To6NonGeneratingCost();
+                }
+                if (newValue >= 6 && newValue < 9) {
+                    changeCost = differenceBetweenValues * raceHasAttribute.getFrom6To9NonGeneratingCost();
+                }
+                if (newValue >= 9 && newValue < 12) {
+                    changeCost = differenceBetweenValues * raceHasAttribute.getFrom9To12NonGeneratingCost();
+                }
+            }
+        } else {
+            changeCost = differenceBetweenValues * raceHasAttribute.getBaseCost();
+        }
 
+        personage.setExperience(personage.getExperience() - changeCost);
+        personageService.updatePersonage(personage);
+
+        personageHasAttributeService.updatePersonageHasAttribute(personageHasAttributeNew);
         return getPersonage(personageId);
     }
-
 }

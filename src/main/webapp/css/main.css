@@ -45,6 +45,13 @@ body {
     left: 700px;
 }
 
+#generatedButtonDiv {
+    position: relative;
+    top: -45px;
+    left: 600px;
+    height: 0;
+}
+
 li {
     list-style: none;
 }
@@ -57,17 +64,30 @@ ul {
     width: 500px;
 }
 
-.bonus{
+.bonus {
     width: 400px;
 }
 
-.priorityButton{
+.priorityButton {
     width: 120px;
 }
 
+input.plusAttribute {
+    width: 25px;
+    height: 25px;
+}
 
-input.plusAttribute { width:25px; height:25px;}
-input.minusAttribute { width:25px; height:25px;}
+input.minusAttribute {
+    width: 25px;
+    height: 25px;
+}
 
-input.plusAttachedSkill { width:25px; height:25px;}
-input.minusAttachedSkill { width:25px; height:25px;}
+input.plusAttachedSkill {
+    width: 25px;
+    height: 25px;
+}
+
+input.minusAttachedSkill {
+    width: 25px;
+    height: 25px;
+}

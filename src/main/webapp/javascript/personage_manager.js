@@ -72,6 +72,7 @@ function renderPersonages(personageListJson) {
                     $('#updateName').val(window.personageListJson[i].name);
                     $('#updateAge').val(window.personageListJson[i].age);
                     $('#updateRace').val(window.personageListJson[i].race);
+                    $('#updateExperience').val(window.personageListJson[i].experience);
                     break;
                 }
             }
