@@ -132,6 +132,19 @@ $(document).ready(function () {
         }, errorHandler);
     });
 
+    $("#updatePersonageTriggerSkillForm").submit(function (event) {
+        event.preventDefault();
+        var personageHasTriggerSkill = $(this).serializeObject();
+        personageHasTriggerSkill.triggerSkill = {id: personageHasTriggerSkill.triggerSkill};
+        personageHasTriggerSkill.personage = {id: personageHasTriggerSkill.personage};
+        personageHasTriggerSkill.personage.race = {id: personageHasTriggerSkill.personage.race};
+        personageHasTriggerSkill.hasTalent = $("#updateHasTalent").prop('checked');
+        personageHasTriggerSkill.hasTeacher = $("#updateHasTeacher").prop('checked');
+        ajax.postJsonData($(this), JSON.stringify(personageHasTriggerSkill), function (personageWithAllRelatedEntitiesJson) {
+            renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntitiesJson);
+        }, errorHandler);
+    });
+
     $('.generate').click(function () {
         ajax.getJsonData('/rest/personage/setGenerated', function (personageWithAllRelatedEntitiesJson) {
             location.reload();
@@ -166,7 +179,7 @@ function renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntiti
         }, errorHandler);
     });
 
-    if(personageWithAllRelatedEntitiesJson.personage.generated) {
+    if (personageWithAllRelatedEntitiesJson.personage.generated) {
         $("#linkFlawToPersonageButton").hide();
     }
 
@@ -242,9 +255,36 @@ function renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntiti
         updateAttributePriority(personageWithAllRelatedEntitiesJson, id, 'BASIC');
     });
 
+    $('.updateTriggerSkillLevel').click(function () {
+        var id = $(this).parent().find("[name=id]").val();
+
+        var triggerSkills = personageWithAllRelatedEntitiesJson.personageTriggerSkills;
+
+        for (var i = 0; i < triggerSkills.length; i++) {
+            if (triggerSkills[i].id == id) {
+                $('#updatePersonageTriggerSkillForm').attr('action', '/rest/personage/personageTriggerSkill/' + triggerSkills[i].id);
+                $('#updateTriggerSkill').val(triggerSkills[i].triggerSkill.id);
+                $('#updatePersonageByTriggerSkill').val(triggerSkills[i].personage.id);
+                if (triggerSkills[i].currentLevel.name == 'BASIC') {
+                    $('#updateCurrentLevel').val('EXPERT');
+                }
+                if (triggerSkills[i].currentLevel.name == 'EXPERT') {
+                    $('#updateCurrentLevel').val('MASTER');
+                }
+                if (triggerSkills[i].currentLevel.name == 'MASTER') {
+                    $('#updateCurrentLevel').val('POST_MASTER');
+                }
+                $('#updateHasTalent').prop('checked', triggerSkills[i].hasTalent);
+                $('#updateHasTeacher').prop('checked', triggerSkills[i].hasTeacher);
+                break;
+            }
+        }
+        $('#updatePersonageTriggerSkillForm').submit();
+    });
+
     ajax.getJsonData('/rest/personage/personageTriggerSkill/skillLevels', function (skillLevelList) {
         if (!personageWithAllRelatedEntitiesJson.personage.generated) {
-            skillLevelList = {name : 'BASIC'};
+            skillLevelList = {name: 'BASIC'};
         }
         $("#currentLevel").html($("#skillLevelTemplate").tmpl(skillLevelList));
     }, errorHandler);

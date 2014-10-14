@@ -261,6 +261,14 @@
                         <a href="javascript:void(0)" class="unlinkTriggerSkillFromPersonage">Убрать</a>
                     </td>
                 {%/if%}
+                {%if personage.generated%}
+                    {%if currentLevel.name != 'POST_MASTER'%}
+                        <td>
+                            <input type="hidden" name="id" value="${id}"/>
+                            <a href="javascript:void(0)" class="updateTriggerSkillLevel">Увеличть уровень</a>
+                        </td>
+                    {%/if%}
+                {%/if%}
             </tr>
 </script>
 
@@ -330,6 +338,40 @@
                 <td colspan="2"><input type="submit" id="linkTriggerSkillToPersonageSubmitButton"
                                        name="linkTriggerSkillToPersonageSubmitButton"
                                        value="Добавить тригерный навык"/></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="updatePersonageTriggerSkillFormContainer" style="display:none">
+    <form id="updatePersonageTriggerSkillForm" action="/rest/personage/personageTriggerSkill" method="post">
+        <table class="data">
+            <tr>
+                <td>
+                    <input id="updateTriggerSkill" name="triggerSkill"/>
+                </td>
+            </tr>
+
+            <tr>
+                <input id="updatePersonageByTriggerSkill" name="personage" type="hidden"/>
+            </tr>
+
+            <tr>
+                <td>
+                    <input id="updateCurrentLevel" name="currentLevel"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <input type="checkbox" id="updateHasTalent" name="hasTalent"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <input type="checkbox" id="updateHasTeacher" name="hasTeacher"/>
+                </td>
             </tr>
         </table>
     </form>
