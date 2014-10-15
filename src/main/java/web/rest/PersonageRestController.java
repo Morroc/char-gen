@@ -6,7 +6,6 @@ import entity.*;
 import enums.AttributePriority;
 import enums.SkillLevel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.Trigger;
 import org.springframework.web.bind.annotation.*;
 import services.*;
 import web.rest.dto.*;
@@ -406,15 +405,15 @@ public class PersonageRestController {
         int increaseLevelCost = 0;
 
         switch (personageHasTriggerSkill.getCurrentLevel()) {
-            case EXPERT:{
+            case EXPERT: {
                 increaseLevelCost = triggerSkill.getExpertCost();
                 break;
             }
-            case MASTER:{
+            case MASTER: {
                 increaseLevelCost = triggerSkill.getMasterCost();
                 break;
             }
-            case POST_MASTER:{
+            case POST_MASTER: {
                 increaseLevelCost = triggerSkill.getPostMasterCost();
                 break;
             }
@@ -423,7 +422,7 @@ public class PersonageRestController {
             }
         }
 
-        if(personageHasTriggerSkill.isHasTalent()) {
+        if (personageHasTriggerSkill.isHasTalent()) {
             increaseLevelCost = (int) Math.ceil(increaseLevelCost * Constants.TALENT_COEFFICIENT);
         }
 
