@@ -1,10 +1,12 @@
 package web.rest;
 
+import constants.Constants;
 import converters.*;
 import entity.*;
 import enums.AttributePriority;
 import enums.SkillLevel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.Trigger;
 import org.springframework.web.bind.annotation.*;
 import services.*;
 import web.rest.dto.*;
@@ -257,7 +259,7 @@ public class PersonageRestController {
     public PersonageWithAllRelatedEntitiesDTO setGenerated() {
         Personage personage = personageService.getPersonageById(personageId);
 
-        if(personage.isGenerated()) {
+        if (personage.isGenerated()) {
             personage.setGenerated(false);
         } else {
             personage.setGenerated(true);
@@ -360,33 +362,30 @@ public class PersonageRestController {
         TriggerSkill triggerSkill = triggerSkillService.getTriggerSkillById(personageHasTriggerSkill.getTriggerSkillByPersonage().getId());
 
         int addingCost = triggerSkill.getBaseCost();
+        int increaseLevelCost = 0;
 
         switch (personageHasTriggerSkill.getCurrentLevel()) {
             case EXPERT: {
-                addingCost = addingCost + triggerSkill.getExpertCost();
+                increaseLevelCost = increaseLevelCost + triggerSkill.getExpertCost();
                 break;
             }
             case MASTER: {
-                addingCost = addingCost + triggerSkill.getExpertCost() + triggerSkill.getMasterCost();
+                increaseLevelCost = increaseLevelCost + triggerSkill.getExpertCost() + triggerSkill.getMasterCost();
                 break;
             }
             case POST_MASTER: {
-                addingCost = addingCost + triggerSkill.getExpertCost() + triggerSkill.getMasterCost() + triggerSkill.getPostMasterCost();
+                increaseLevelCost = increaseLevelCost + triggerSkill.getExpertCost() + triggerSkill.getMasterCost() + triggerSkill.getPostMasterCost();
                 break;
             }
             default:
                 break;
         }
 
-        if (!personageHasTriggerSkill.getCurrentLevel().equals(SkillLevel.BASIC)) {
-            if (personageHasTriggerSkill.isHasTalent()) {
-                addingCost = addingCost - 2;
-            }
-
-            if (personageHasTriggerSkill.isHasTeacher()) {
-                addingCost = addingCost - 3;
-            }
+        if (personageHasTriggerSkill.isHasTalent()) {
+            increaseLevelCost = (int) Math.ceil(increaseLevelCost * Constants.TALENT_COEFFICIENT);
         }
+
+        addingCost = addingCost + increaseLevelCost;
 
         personage.setExperience(personage.getExperience() - addingCost);
         personageService.updatePersonage(personage);
@@ -401,11 +400,35 @@ public class PersonageRestController {
                                                                              @RequestBody PersonageHasTriggerSkillDTO personageHasTriggerSkillDTO) {
         personageHasTriggerSkillDTO.setId(id);
         PersonageHasTriggerSkill personageHasTriggerSkill = personageHasTriggerSkillConverter.convert(personageHasTriggerSkillDTO);
+        Personage personage = personageService.getPersonageById(personageId);
+        TriggerSkill triggerSkill = triggerSkillService.getTriggerSkillById(personageHasTriggerSkill.getTriggerSkillByPersonage().getId());
 
-        personageHasTriggerSkill.setTriggerSkillByPersonage(
-                personageHasTriggerSkillService.getPersonageHasTriggerSkillById(id).getTriggerSkillByPersonage());
-        personageHasTriggerSkill.setPersonageByTriggerSkill(
-                personageHasTriggerSkillService.getPersonageHasTriggerSkillById(id).getPersonageByTriggerSkill());
+        int increaseLevelCost = 0;
+
+        switch (personageHasTriggerSkill.getCurrentLevel()) {
+            case EXPERT:{
+                increaseLevelCost = triggerSkill.getExpertCost();
+                break;
+            }
+            case MASTER:{
+                increaseLevelCost = triggerSkill.getMasterCost();
+                break;
+            }
+            case POST_MASTER:{
+                increaseLevelCost = triggerSkill.getPostMasterCost();
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+
+        if(personageHasTriggerSkill.isHasTalent()) {
+            increaseLevelCost = (int) Math.ceil(increaseLevelCost * Constants.TALENT_COEFFICIENT);
+        }
+
+        personage.setExperience(personage.getExperience() - increaseLevelCost);
+        personageService.updatePersonage(personage);
 
         personageHasTriggerSkillService.updatePersonageHasTriggerSkill(personageHasTriggerSkill);
         return getPersonage(personageId);

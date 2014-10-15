@@ -262,21 +262,26 @@ function renderPersonageWithAllRelatedEntitiesJson(personageWithAllRelatedEntiti
 
         for (var i = 0; i < triggerSkills.length; i++) {
             if (triggerSkills[i].id == id) {
-                $('#updatePersonageTriggerSkillForm').attr('action', '/rest/personage/personageTriggerSkill/' + triggerSkills[i].id);
-                $('#updateTriggerSkill').val(triggerSkills[i].triggerSkill.id);
-                $('#updatePersonageByTriggerSkill').val(triggerSkills[i].personage.id);
-                if (triggerSkills[i].currentLevel.name == 'BASIC') {
-                    $('#updateCurrentLevel').val('EXPERT');
+                if (triggerSkills[i].triggerSkill.type.name == 'DIFFICULT' && !triggerSkills[i].hasTeacher) {
+                    alert("Вы не можете увеличть уровень этого навыка без учителя");
+                    return;
+                } else {
+                    $('#updatePersonageTriggerSkillForm').attr('action', '/rest/personage/personageTriggerSkill/' + triggerSkills[i].id);
+                    $('#updateTriggerSkill').val(triggerSkills[i].triggerSkill.id);
+                    $('#updatePersonageByTriggerSkill').val(triggerSkills[i].personage.id);
+                    if (triggerSkills[i].currentLevel.name == 'BASIC') {
+                        $('#updateCurrentLevel').val('EXPERT');
+                    }
+                    if (triggerSkills[i].currentLevel.name == 'EXPERT') {
+                        $('#updateCurrentLevel').val('MASTER');
+                    }
+                    if (triggerSkills[i].currentLevel.name == 'MASTER') {
+                        $('#updateCurrentLevel').val('POST_MASTER');
+                    }
+                    $('#updateHasTalent').prop('checked', triggerSkills[i].hasTalent);
+                    $('#updateHasTeacher').prop('checked', triggerSkills[i].hasTeacher);
+                    break;
                 }
-                if (triggerSkills[i].currentLevel.name == 'EXPERT') {
-                    $('#updateCurrentLevel').val('MASTER');
-                }
-                if (triggerSkills[i].currentLevel.name == 'MASTER') {
-                    $('#updateCurrentLevel').val('POST_MASTER');
-                }
-                $('#updateHasTalent').prop('checked', triggerSkills[i].hasTalent);
-                $('#updateHasTeacher').prop('checked', triggerSkills[i].hasTeacher);
-                break;
             }
         }
         $('#updatePersonageTriggerSkillForm').submit();
