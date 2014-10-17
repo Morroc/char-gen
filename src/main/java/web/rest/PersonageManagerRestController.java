@@ -4,13 +4,11 @@ import constants.Constants;
 import converters.PersonageConverter;
 import entity.*;
 import enums.AttributePriority;
-import javafx.scene.layout.Priority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import services.*;
 import web.rest.dto.PersonageDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
